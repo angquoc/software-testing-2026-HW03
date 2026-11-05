@@ -1,0 +1,27 @@
+# File đề bài: Không đưa lên repo
+2026.HW03.*
+
+# File tạm của Word / Excel khi đang mở
+~$*
+
+# Video (demo skill để trên YouTube; video phiên usability nặng, chỉ đưa vào bản nộp)
+*.mp4
+*.mov
+*.mkv
+
+# File zip nộp Moodle
+*.zip
+*.zip.*
+
+# Ghi chú nháp cá nhân: Không nộp
+_NOTES.md
+
+# Python cache của tools/
+__pycache__/
+
+# Thư mục ngoài repo, chỉ để gọn trong HW03
+HW03_group/
+HW03_submit/
+
+# Git log xuất khi đóng gói (chỉ có trong file nộp)
+git_log.txt
