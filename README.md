@@ -18,6 +18,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | `skills/` | Agent Skill |
 | `forms/` | [AI-02] Audit Report, [AI-03] Disclosure, [AI-05] Privacy Checklist |
 | `tools/` | Script hỗ trợ (xuất prompt log, xuất PDF, ...) |
+| `WORKFLOW.md` / `.pdf` | Quy trình làm bài: Các bước của từng task, nguyên tắc kiểm thử hộp đen, cách lưu bản AI và bảng "Thay đổi so với bản AI", riêng tư người tham gia |
 | `git_log.txt` | Git commit log |
 
 ## Phạm vi đã chọn
@@ -25,7 +26,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Task | Lựa chọn |
 |---|---|
 | Task 1: GUI checklist | Màn hình chính: Hồ sơ cá nhân & lịch sử đơn hàng (Web, `/profile`); màn hình phụ: Đăng ký (`/register`), Đăng nhập (`/login`) |
-| Task 2: Usability | (Chưa chốt) |
+| Task 2: Usability | Luồng Web Admin: Đăng nhập Admin → Tạo danh mục → Thêm sản phẩm vào danh mục mới (7 người tham gia) |
 | Task 3: Cross-platform | (Chưa chốt) |
 
 ## Test Summary Report

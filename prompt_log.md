@@ -484,6 +484,7 @@ Hai link repo: https://github.com/angquoc/software-testing-2026-HW03 và https:
 - Write: d:\Dang\Test\Homeworks\HW03\README.md
 - Bash: Export prompt log, verify sessions, clone group repo, check status
 - Bash: Filter browser_instruction tag and re-export log
+- Bash: Update tracker with repo setup and participant info
 
 **Output AI (nguyên văn):**
 
@@ -491,6 +492,436 @@ Hai link repo: https://github.com/angquoc/software-testing-2026-HW03 và https:
 Kiểm tra hai repo (quyền truy cập, visibility) và xem lại các luồng còn trống phù hợp với người mua hàng thông thường.
 
 Giờ dựng khung repo cá nhân tại `Homeworks/HW03` (giống cách HW02 đặt repo ngay trong thư mục bài). Bước này chưa phụ thuộc việc chọn luồng.
+
+Giờ cập nhật tracker: Đánh dấu D1 xong, ghi tiến độ dựng khung và ghi nhận thông tin người tham gia.
+
+Cả hai repo cứ để Private. Riêng luồng usability nên đổi, vì chỉ 1 trong 7 người bạn tuyển hợp với FL-05.
+
+## 1. Repo: Giữ Private cả hai
+
+- **Repo cá nhân:** Để Private để không ai chép được prompt (chép prompt thì cả hai cùng 0 điểm). Người chấm xem `git_log.txt` trong file zip, không cần vào repo.
+- **Repo nhóm:** Private vẫn được, nhưng phải mời An và Hương làm collaborator thì họ mới tạo issue được. Đề yêu cầu nộp ảnh chụp trang Issues trong zip, nên TA không cần mở repo. Nếu TA đòi xem trực tiếp thì mời TA làm collaborator, không cần chuyển sang Public.
+- Máy không có `gh` nên tôi không xem được visibility hay danh sách collaborator. Tôi chỉ xác nhận được cả hai repo truy cập được bằng tài khoản của bạn và đang trống.
+
+## 2. Khung repo cá nhân đã dựng xong (chưa commit)
+
+Repo nằm tại [Homeworks/HW03](.), cách đặt giống HW02:
+- **Git:** Đã chạy `git init` với nhánh `main` và gắn remote vào `software-testing-2026-HW03`.
+- **[.gitignore](.gitignore):** Chặn `_NOTES.md`, file đề, zip, video, `HW03_group/`, `HW03_submit/`, `git_log.txt`.
+- **[README.md](README.md):** Khung có phạm vi đã chọn và bảng tự chấm 30/40/20/10.
+- **[prompt_log.md](prompt_log.md):** Đã xuất 4 lượt, chỉ từ phiên này.
+- **Thư mục:** `checklist/`, `usability/`, `cross_platform/`, `bugs/`, `skills/`, `forms/`, `tools/`.
+- **[tools/](tools/):**
+  - `export_prompt_log.py`: Chỉ lấy phiên `949bce7e`. Tôi lọc thêm một dòng do hệ thống tự chèn vào prompt đầu tiên.
+  - `md_to_pdf.py`: Bỏ qua thư mục của nhóm.
+  - `docx_to_md.py`: Copy nguyên từ HW02.
+  - Hai script điền form chứa nội dung HW02, nên để tới bước G4 mới viết lại.
+- **Repo nhóm:** Đã clone vào `HW03_group/` (repo cá nhân không theo dõi thư mục này). Bạn đặt quy ước nhóm, nên tôi chưa viết gì vào đó. Khi cần, tôi có thể soạn nháp README và issue template cho bạn sửa, giống HW02.
+
+Lệnh commit đầu tiên (định dạng theo HW02, vì D3 chưa chốt nên bạn có thể đổi):
+```
+cd D:\Dang\Test\Homeworks\HW03
+git add .
+git commit -m "[setup] Init folder structure, README, prompt log and tools"
+git push -u origin main
+```
+`git status` đã xác nhận `_NOTES.md` và `HW03_group/` không bị đưa vào commit.
+
+## 3. Luồng FL-05 không hợp với người đã tuyển
+
+Đề yêu cầu 7 người khớp chân dung người dùng mục tiêu. Luồng Admin (tạo danh mục, đăng sản phẩm) có người dùng mục tiêu là chủ shop, trong khi bạn có 1 người bán hàng trên TikTok và 6 người mua hàng thông thường. Giữ FL-05 thì Task 2 (40 điểm) dễ bị trừ ở tiêu chí chọn người. Các luồng dành cho người mua mà chưa ai lấy:
+
+| Lựa chọn | Luồng | Hợp với 7 người | Ảnh hưởng tới An | Ghi chú |
+|---|---|---|---|---|
+| **A (tôi đề xuất)** | FL-02 Web: Đăng ký → Đăng nhập → Cập nhật hồ sơ | Cả 7 người | Gói 2 đang gợi ý FL-10, cùng nhóm "Tài khoản", nên An phải đổi luồng | Độ nặng "Vừa", bằng FL-05, nên tổng độ nặng của gói không đổi. Đi qua đúng 3 màn của bạn (W-04, W-03, W-06), nên kết quả usability bổ sung cho Task 1 |
+| B | FL-03 Web: Quên mật khẩu → OTP → Đặt lại → Đăng nhập | Cả 7 người | Không | Không đụng ai. Luồng ngắn, nên ít phát hiện hơn. Mỗi người cần có sẵn một tài khoản. Câu hỏi về độ tin cậy (trust) rất hợp với luồng này |
+| C | FL-04 Web: Xem lịch sử đơn → Hủy đơn | Cả 7 người | Không | Độ nặng "Nhẹ". Policy nói chọn việc quá đơn giản sẽ bị giới hạn điểm tối đa |
+| D | Giữ FL-05 | 1/7 | Không | Phải viết lý do trong test plan; rủi ro điểm cao nhất |
+
+Nếu chọn A, An có thể lấy một luồng Admin hợp với màn hình chính A-05 (ví dụ FL-06 tạo mã giảm giá). Nhưng khi đó An cũng gặp đúng vấn đề tìm người từng bán hàng, nên nên hỏi An đã tuyển những ai.
+
+Tracker đã cập nhật: D1 ✅; D2, 1.5, 2.1 chuyển sang 🔄 (luồng đang xem lại); D13 ghi thông tin về 7 người. Mục "Cần khai báo" ghi việc phiên này đã đọc mã nguồn EShop để kiểm tra màn hình, vì việc đó phải khai trong Audit.
+
+Bạn chọn A, B, C hay D? Chốt xong thì sửa sheet, tôi sẽ kiểm tra lại.
+````
+
+---
+
+### C05 | 10:26 05/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Khoan, tôi chưa hiểu, chỉ là chủ shop thôi đúng không, ý tôi là bạn ấy có bán hàng ở tiktok, cũng có web riêng để bán á, không đạt sao?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Mình viết chưa rõ nên bạn hiểu nhầm. **Người bạn bán hàng trên TikTok và có web riêng là đạt, và còn là người tham gia lý tưởng nhất cho FL-05.** Vấn đề nằm ở 6 người còn lại.
+
+- **Đề yêu cầu cả 7 người đều khớp chân dung người dùng mục tiêu:** "Recruit seven (7) real participants who match your target user profile" (§6, Task 2).
+- **FL-05 là luồng của Admin:** Người dùng mục tiêu là người quản lý shop (tạo danh mục, đăng sản phẩm).
+- **Với 7 người bạn đã kể:** 1 người bán hàng đạt, còn 6 người chỉ hay mua hàng thì không khớp vai chủ shop. Vì vậy FL-05 chỉ có 1/7 người đúng đối tượng.
+
+Mình chưa biết rõ về 6 người kia nên hỏi lại: Trong 6 người đó có ai **từng bán hàng hoặc đang định bán hàng online** không, kể cả bán nhỏ lẻ trên Facebook, Shopee hay Zalo? Họ không cần chuyên nghiệp.
+- **Nếu phần lớn là có:** Giữ FL-05 được. Chân dung người dùng ghi là "người bán hàng nhỏ lẻ hoặc sắp mở shop online", và bảng 7 người ghi rõ kinh nghiệm bán hàng của từng người.
+- **Nếu phần lớn chỉ là người mua:** Nên đổi sang một luồng của người mua (A, B hoặc C ở tin trước). Cả 7 người đều hợp các luồng đó, kể cả người bạn bán hàng, vì người đó cũng là người mua.
+````
+
+---
+
+### C06 | 10:27 05/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Bạn nói rõ đi, nói xem người tôi cần tuyển phải đạt chỉ tiêu nào, tôi sẽ tìm, không đổi luồng.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record kept flow and recruitment criteria in tracker
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn giữ FL-05, nên tôi ghi lại quyết định này vào tracker cùng bộ tiêu chí tuyển người bên dưới.
+
+Giữ FL-05 thì đây là tiêu chí để tuyển. Người bạn bán hàng trên TikTok và có web riêng đã đạt, nên bạn cần tìm thêm **6 người đạt**, cộng **1 người cho pilot** (pilot không tính vào 7 người).
+
+## Bắt buộc: Cả 7 người phải đạt đủ 6 điều
+
+| # | Tiêu chí | Lý do |
+|---|---|---|
+| 1 | **Đang hoặc đã từng bán hàng online, và tự tay đăng sản phẩm** (tên, giá, ảnh, mô tả) ít nhất vài lần. Kênh nào cũng được: Shopee, Lazada, TikTok Shop, Facebook, Zalo, Instagram, web riêng | Luồng là "tạo danh mục, đăng sản phẩm", đúng việc của người bán. Chỉ phụ đóng gói hay trả lời khách mà chưa từng tự đăng sản phẩm thì **không tính** |
+| 2 | Tự dùng được máy tính hoặc laptop với trình duyệt | Trang Admin chỉ có trên máy tính |
+| 3 | Chưa từng thấy hoặc dùng EShop | Để quan sát được lần đầu dùng |
+| 4 | Không học môn Kiểm thử phần mềm kỳ này | Đề loại người đang làm HW03 |
+| 5 | Có Zalo, email hoặc SĐT, và **đồng ý để TA gọi xác minh** | TA gọi ngẫu nhiên 2 người; mạo danh thì Task 2 bị 0 điểm |
+| 6 | Đồng ý cho quay màn hình (ghi âm nếu được) | Đề yêu cầu nộp bằng chứng của từng phiên |
+
+## Ưu tiên (có thì tốt hơn, không bắt buộc)
+
+- Không làm IT hay tester (đề ghi là "preferred").
+- Đa dạng về kênh bán (sàn, mạng xã hội, web riêng), thời gian bán (mới bán vs bán lâu), độ tuổi. Phần phân tích sẽ có nhiều thứ để so sánh hơn.
+- Có người từng dùng trang quản lý của sàn (Seller Center hoặc trang admin của web riêng, như người bạn TikTok), và có người chỉ bán qua Facebook hoặc Zalo.
+
+## Câu hỏi để sàng lọc nhanh khi rủ người
+
+1. Bạn có bán hàng online không? Bán ở đâu, bao lâu rồi?
+2. Bạn có tự đăng sản phẩm lên (tên, giá, ảnh, mô tả) không, hay người khác đăng?
+3. Bạn có hay dùng máy tính không?
+4. Bạn có làm IT không? Có đang học môn Kiểm thử phần mềm không?
+5. Bạn có đồng ý cho quay màn hình, và đồng ý để giảng viên gọi điện xác nhận không?
+
+Câu 1 và 2 phải trả lời "có", câu 4 phải trả lời "không".
+
+## Ghi lại cho mỗi người (dùng cho bảng 7 người)
+
+Họ tên; liên lạc (che 4 số giữa, ví dụ `091****678`); nhóm tuổi; nghề; kênh bán và thời gian bán; đã từng dùng trang quản lý shop chưa; mức dùng máy tính; có làm IT không; ngày giờ phiên; đã đồng ý ghi hình và đồng ý cho TA gọi chưa.
+
+Trong 6 người mua hàng bạn đã tuyển, ai từng tự đăng bán món gì đó online (kể cả bán nhỏ lẻ trên Facebook) thì vẫn có thể giữ. Khi đó ghi rõ kinh nghiệm bán của họ trong bảng. Tôi cũng khuyên không dùng chung người với An và Hương. Đề không cấm, nhưng tránh nhầm khi TA gọi.
+
+Tôi đã ghi các tiêu chí này vào [_NOTES.md](_NOTES.md), ở mục "Tiêu chí tuyển người tham gia". Tracker cũng đã cập nhật: D2 và D13 xong, luồng chốt là FL-05, còn 1.9 ghi "1/7 người đạt, đang tuyển thêm".
+````
+
+---
+
+### C07 | 10:33 05/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã commit repo cá nhân.
+- Tôi cần bạn quy ước repo nhóm, có thể tham khảo bên HW02, tôi sẽ là người đọc file và duyệt, nếu ok thì tôi commit, nếu cần sửa thì tôi sẽ sửa hoặc nói bạn sửa.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read HW02 issue config and HW03 commit log
+- Write: d:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- Edit: d:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- Write: d:\Dang\Test\Homeworks\HW03\HW03_group\.github\ISSUE_TEMPLATE\bug_report.yml
+- Write: d:\Dang\Test\Homeworks\HW03\HW03_group\.github\ISSUE_TEMPLATE\config.yml
+- Bash: Validate issue form YAML and check separators
+- Bash: Update tracker for repo setup and group draft
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi soạn README quy ước và issue template cho repo nhóm trong `HW03_group/`, dựa theo HW02 và chỉnh cho HW03. Trước hết xem lại config template của HW02.
+
+Các ví dụ tiêu đề đang dùng MSSV của Hương, như vậy không ổn. Đổi sang MSSV giả để không gán ví dụ cho ai.
+
+Tôi đã soạn xong bản nháp quy ước cho repo nhóm, nằm trong `HW03/HW03_group/` và chưa commit. YAML của issue form đã kiểm tra hợp lệ, không có dấu "—" hay "·". Tôi cũng thấy commit `7372a21 [setup]` của bạn trên repo cá nhân.
+
+**File để duyệt:**
+- [HW03_group/README.md](HW03_group/README.md)
+- [HW03_group/.github/ISSUE_TEMPLATE/bug_report.yml](HW03_group/.github/ISSUE_TEMPLATE/bug_report.yml)
+- [HW03_group/.github/ISSUE_TEMPLATE/config.yml](HW03_group/.github/ISSUE_TEMPLATE/config.yml) (tắt issue trống)
+
+## README có 5 mục, giữ khung của HW02
+
+1. **Phân công:** Quy tắc giống trong sheet (trùng màn hình chính hay trùng luồng đều không được, Web và Mobile tính chung; màn hình phụ dùng chung được). Bảng đã điền lựa chọn của Hương và của bạn, An để trống. Thêm cột "Nền tảng (Task 3)" để mỗi người tự điền khi chốt.
+2. **Repo cá nhân:** Như HW02, thêm 2 điều: Không gửi nhau checklist do AI sinh, và không đưa thông tin người tham gia lên repo nhóm.
+3. **Quy ước commit:** Giữ định dạng `[<phạm vi>][<bước>] <Verb> ...`, đổi tag cho HW03:
+   - **T1:** `survey`, `oracle`, `ai-draft`, `review`, `add`, `excel`, `exec`, `bugs`
+   - **T2:** `plan`, `scenario`, `instruments`, `participants`, `pilot`, `P1` đến `P7` (mỗi phiên một commit, đúng §12 của đề), `score`, `analysis`, `bugs`
+   - **T3:** `setup`, tên nền tảng (`chrome`, `firefox`, `safari`, `android-chrome`, `expo-go`), `bugs`, `compare`
+4. **Quy ước Issues:** Mục 4.1 đến 4.5, xem phần cần duyệt bên dưới.
+5. **Môi trường dùng chung:** URL; tài khoản admin (mật khẩu đúng là `Admin123!`); reset DB trước mỗi phiên; dữ liệu mẫu không có đơn hàng; mã giảm giá chỉ dùng 1 lần mỗi người; cách chạy mobile; cảnh báo Safari trên cloud.
+
+**Issue template** có thêm các trường cho HW03: Task, mã màn hình hoặc luồng, IA (chọn được nhiều), mục checklist hoặc mã phiên kèm mốc thời gian trong video, trình duyệt / OS / thiết bị.
+
+## Những chỗ tôi tự đặt ra, bạn nên xem kỹ
+
+| # | Nội dung | Vị trí |
+|---|---|---|
+| 1 | **Bug ở navbar hoặc màn hình phụ dùng chung:** Chỉ một issue; người gặp sau comment vào issue đó và ghi `Related` trong report cá nhân. **Bug trên màn hình chính của người khác:** Báo cho chủ màn hình, không tự tạo issue | 4.1 |
+| 2 | Bug trùng với HW02 vẫn được tạo issue mới cho HW03, nhưng phải dẫn chiếu sang issue của repo HW02 | 4.1 |
+| 3 | **Task 2:** Chỉ bug thật mới lên Issues; vấn đề thiết kế (khó hiểu, chậm, thiếu tin cậy nhưng không sai đặc tả) chỉ ghi trong report. Đề dùng chữ "genuine bugs" nên tôi hiểu như vậy | 4.1 |
+| 4 | Tiêu đề issue: `[MSSV][T1/T2/T3][Mã màn hình/luồng][Nền tảng] ...`. Ví dụ dùng `2312xxxx` để không gán cho ai | 4.2 |
+| 5 | **Label:** Bỏ `technique` và `pool` của HW02; thêm `task: *` (3 label) và `ia: *` (4 label). Mỗi issue gắn đủ severity, platform, task, ia | 4.3 |
+| 6 | Cách tách T1 với T3: Bug chỉ xuất hiện trên một số nền tảng thì gắn T3 | 4.3 |
+| 7 | Thang severity: Giữ 4 mức và bộ câu hỏi chọn mức của HW02, sửa ví dụ cho GUI. Severity trong phần usability của report cá nhân được dùng thang riêng | 4.3 |
+| 8 | **Ảnh:** Ảnh T3 có lớp chữ đè MSSV, họ tên, email; ảnh T2 không để lộ người tham gia | 4.4 |
+| 9 | Không dùng chung người tham gia giữa các thành viên (đề không cấm, đây là gợi ý của tôi) | 2.5 |
+
+Trong tracker, D3 (quy ước commit) và D6 (thang severity) đang để 🔄 chờ bạn duyệt.
+
+## Sau khi bạn duyệt
+
+Commit tách đôi giống HW02:
+```
+cd D:\Dang\Test\Homeworks\HW03\HW03_group
+git add README.md
+git commit -m "[docs] Add README: allocation, commit and issue conventions, labels"
+git add .github
+git commit -m "[template] Add bug report issue form and disable blank issues"
+git push -u origin main
+```
+
+Hai việc phải làm tay trên GitHub (máy không có `gh`):
+- **Tạo 14 label**, màu theo bảng ở mục 4.3: `severity: critical`, `severity: high`, `severity: medium`, `severity: low`; `platform: web`, `platform: admin`, `platform: mobile`; `task: T1 checklist`, `task: T2 usability`, `task: T3 cross-platform`; `ia: IA-01`, `ia: IA-02`, `ia: IA-03`, `ia: IA-04`. Label `bug` GitHub có sẵn.
+- **Mời An và Hương** làm collaborator, vì repo đang Private.
+````
+
+---
+
+### C08 | 10:47 05/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Không dùng chung người tham gia giữa các thành viên (đề không cấm, đây là gợi ý của tôi) -> Bỏ phần này. Đề không cấm thì không quy định vào. 
+
+Các phần khác thì tôi duyệt.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: d:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- Bash: Update tracker and confirm rule removed
+- Write: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\no-extra-rules-beyond-assignment.md
+- Edit: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\MEMORY.md
+
+**Output AI (nguyên văn):**
+
+````text
+Bỏ quy định đó ở README nhóm, và bỏ luôn dòng tương ứng trong tiêu chí tuyển người ở tracker.
+
+Đã bỏ quy định không dùng chung người tham gia ở cả hai nơi. Câu này chỉ còn xuất hiện trong dòng 0.6 của tracker, ở dạng ghi lại việc bạn đã bỏ nó.
+
+- **[README nhóm](HW03_group/README.md) mục 2.5:** Chỉ giữ ý "không đưa thông tin cá nhân của người tham gia lên repo nhóm".
+- **[_NOTES.md](_NOTES.md):** Bỏ dòng này khỏi tiêu chí tuyển người. D3 và D6 chuyển sang ✅ (bạn đã duyệt). Bước 0.6 chờ bạn commit, tạo label và mời thành viên.
+
+Tôi cũng đã ghi nhớ: Từ giờ điều gì đề không yêu cầu hay cấm thì tôi chỉ nêu trong chat, không đưa vào tài liệu.
+
+Lệnh commit cho repo nhóm:
+```
+cd D:\Dang\Test\Homeworks\HW03\HW03_group
+git add README.md
+git commit -m "[docs] Add README: allocation, commit and issue conventions, labels"
+git add .github
+git commit -m "[template] Add bug report issue form and disable blank issues"
+git push -u origin main
+```
+
+Sau khi push, còn hai việc làm tay trên GitHub:
+- **Tạo 14 label**, màu theo bảng ở mục 4.3.
+- **Mời An và Hương** làm collaborator.
+````
+
+---
+
+### C09 | 15:22 05/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Đã mời An và Hương
+- Hướng dẫn chi tiết cách tạo 14 label.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check group repo commits and recent session files
+- Bash: Check if HW02 session has HW03 work today
+- Bash: Update tracker step 0.6
+
+**Output AI (nguyên văn):**
+
+````text
+Trước khi viết hướng dẫn, tôi kiểm tra hai việc: Repo nhóm đã push chưa, và phiên này có phải phiên mới không (nếu mới thì phải thêm vào danh sách phiên của prompt log).
+
+Đây là cách tạo 14 label trên giao diện web của GitHub. Tôi đã kiểm tra: Repo nhóm có đủ 2 commit (`4206224` docs, `8148302` template) và đã khớp với GitHub. Tracker bước 0.6 cũng đã cập nhật.
+
+## Các bước
+
+1. Mở trang label của repo nhóm: https://github.com/angquoc/software-testing-2026-HW03-group/labels
+   (Hoặc vào tab **Issues** → bấm nút **Labels** cạnh ô tìm kiếm.)
+2. Bấm nút **New label** màu xanh ở góc phải.
+3. Điền 3 ô theo bảng bên dưới:
+   - **Label name:** Gõ **đúng y** tên trong bảng, kể cả dấu cách sau dấu `:` và chữ hoa/thường. Issue template và README dùng đúng tên này.
+   - **Description:** Không bắt buộc, nhưng nên điền. Khi chọn label, mô tả hiện ra giúp cả nhóm gắn đúng.
+   - **Color:** Xóa mã màu đang có trong ô, dán mã hex có dấu `#` (ví dụ `#B60205`). Ô xem trước bên trên sẽ đổi màu.
+4. Bấm **Create label**.
+5. Lặp lại bước 2 đến 4 cho đủ 14 label.
+
+## 14 label cần tạo
+
+| # | Label name | Description | Color |
+|---|---|---|---|
+| 1 | `severity: critical` | Mất hoặc lộ dữ liệu, vượt quyền, chặn luồng chính | `#B60205` |
+| 2 | `severity: high` | Sai đặc tả quan trọng, không có cách đi vòng | `#D93F0B` |
+| 3 | `severity: medium` | Sai đặc tả hoặc khó dùng, có cách đi vòng | `#FBCA04` |
+| 4 | `severity: low` | Lỗi hiển thị, câu chữ, màu sắc, căn chỉnh | `#C2E0C6` |
+| 5 | `platform: web` | Frontend Web (localhost:5173) | `#1D76DB` |
+| 6 | `platform: admin` | Web Admin (localhost:5174) | `#1D76DB` |
+| 7 | `platform: mobile` | App Mobile (Expo Go) | `#1D76DB` |
+| 8 | `task: T1 checklist` | Phát hiện khi chạy GUI checklist | `#0E8A16` |
+| 9 | `task: T2 usability` | Phát hiện qua phiên usability | `#0E8A16` |
+| 10 | `task: T3 cross-platform` | Chỉ xuất hiện trên một số nền tảng | `#0E8A16` |
+| 11 | `ia: IA-01` | Chuẩn giao diện chung (FR-21) | `#5319E7` |
+| 12 | `ia: IA-02` | Form (FR-22) | `#5319E7` |
+| 13 | `ia: IA-03` | Điều hướng (FR-23) | `#5319E7` |
+| 14 | `ia: IA-04` | Phản hồi và trạng thái (FR-24) | `#5319E7` |
+
+## Lưu ý
+
+- **Label `bug`:** GitHub tạo sẵn khi lập repo, và template tự gắn label này. **Không xóa, không đổi tên.**
+- **Các label mặc định khác** (`documentation`, `duplicate`, `enhancement`, `good first issue`, `help wanted`, `invalid`, `question`, `wontfix`): Giữ hay xóa tùy bạn. Quy ước nhóm không dùng tới chúng.
+- **Gõ sai tên hoặc màu:** Bấm **Edit** ở dòng label đó để sửa. Issue đã gắn label vẫn giữ nguyên.
+- **Kiểm tra sau khi tạo:**
+  1. Trang Labels hiện đủ 15 label (14 label mới cộng `bug`).
+  2. Vào **Issues** → **New issue**, thấy form **Bug report** với các trường MSSV, Task, Màn hình hoặc luồng, IA.
+  3. Chỉ xem form, **đừng bấm Submit**. Quy ước nhóm là không xóa issue, nên một issue thử sẽ phải nằm lại trên repo.
+
+Tạo xong thì báo tôi để đánh dấu ✅ bước 0.6.
+````
+
+---
+
+### C10 | 23:00 06/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã tạo và kiểm tra.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Mark step 0.6 done and list prep status
+
+**Output AI (nguyên văn):**
+
+````text
+Bước 0.6 đã chuyển sang ✅ (06/11) trong [_NOTES.md](Homeworks/HW03/_NOTES.md). Repo nhóm đã có đủ quy ước, issue template, 14 label và đủ thành viên.
+
+Phần chuẩn bị còn 4 việc:
+
+| # | Việc | Ai làm |
+|---|---|---|
+| 0.2 | Xem deadline trên Moodle | Bạn |
+| 0.4 | Hai script điền form AI-02, AI-03, AI-05: Đã hẹn làm ở bước G4 nên chưa cần làm bây giờ | Tôi |
+| 0.7 | Chạy EShop: Backend, Web, Admin, và Mobile nếu cần | Bạn chạy, tôi hỗ trợ nếu lỗi |
+| 0.8 | Viết `WORKFLOW.md` cho HW03: Nguyên tắc dẫn AI từng bước; cách lưu `ai_raw/` và bảng "Thay đổi so với bản AI"; cách đặt tên ảnh; quy tắc riêng tư cho người tham gia | Tôi soạn, bạn duyệt |
+
+Bên cạnh đó, việc tuyển thêm 6 người cho FL-05 vẫn đang chạy song song (mục 1.9).
+
+Bạn muốn tôi soạn `WORKFLOW.md` (0.8) trước, hay bắt đầu Task 1 bước 1.1 (khảo sát màn hình W-06, W-04, W-03)? Nếu bắt đầu Task 1 thì EShop cần đang chạy (0.7).
+````
+
+---
+
+### C11 | 23:05 06/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Deadline 13h 11/11. Nhưng tôi muốn nộp muộn nhất là vào tối ngày 10/11
+2. Viết WORKFLOW trước đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record deadline; read HW02 workflow
+- Bash: Copy assignment PDF into HW03 and confirm ignored
+- Write: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Bash: Check separators, add WORKFLOW to README, update tracker
+- Edit: d:\Dang\Test\Homeworks\HW03\README.md
+
+**Output AI (nguyên văn):**
+
+````text
+Ghi deadline vào tracker, rồi đọc `WORKFLOW.md` của HW02 để dựng bản HW03 theo cùng khung.
+
+README vẫn ghi Task 2 "Chưa chốt", trong khi luồng đã chốt là FL-05. Sửa luôn.
+
+Tôi đã soạn xong [WORKFLOW.md](Homeworks/HW03/WORKFLOW.md), dựa theo khung của HW02 và chỉnh cho 3 task của HW03. Deadline cũng đã ghi vào tracker: 13:00 ngày 11/11, mục tiêu nộp muộn nhất tối 10/11.
+
+## Nội dung WORKFLOW
+
+| Mục | Nội dung chính |
+|---|---|
+| Phạm vi | W-06 (chính), W-04, W-03 (phụ); luồng FL-05; Task 3 chốt khi làm tới |
+| 1.1 Hộp đen | Căn cứ là SRS (bảng ánh xạ IA-01 đến IA-04 sang FR-21 đến FR-24) và các nguồn trong slide (Nielsen, Norman, Shneiderman, WCAG, checklist theo control). Mục lấy ngoài SRS phải ghi rõ nguồn và ghi là "khuyến nghị". Không đọc mã nguồn, không dùng DevTools khi thiết kế, chỉ dùng khi chạy |
+| 1.2 AI-First | Mỗi lượt AI làm một bước; output gốc để trong `ai_raw/` và không bao giờ sửa. Thêm quy tắc của đề §11: AI không được tạo hay bịa danh sách người tham gia, ghi chú phiên, kết quả chạy, ảnh nền tảng |
+| 1.3, 1.4 | Phân biệt phiên điều phối và phiên thiết kế, cùng danh sách file phiên thiết kế được đọc và không được đọc. Mới so với HW02: Cấm đọc thư mục HW02 (bug cũ sẽ làm lệch bản AI), `participants.md` và video |
+| 1.5 Riêng tư | Thông tin cá nhân chỉ nằm trong `participants.md` và video gốc. Các file khác chỉ dùng mã P1 đến P7 và `PL` (người pilot) |
+| 2 Cấu trúc | Cây thư mục của từng task. Bảng "Thay đổi so với bản AI" thêm cột **"Vì sao AI bỏ sót"**, nhận 3 giá trị Prompt / Giới hạn model / Đặc thù giao diện, đúng yêu cầu §6 Task 1 |
+| 3.1 Task 1 | Các bước `survey` → `oracle` → `ai-draft` (mỗi lượt một IA) → `review` → `add` → `excel` → `exec` → `bugs`. Có tiêu chí cho một mục checklist tốt; mã mục AI có dạng `AI-02-07`, mã mục cuối có dạng `CL-23`, kèm cột Nguồn (AI / AI, SV sửa / SV thêm); quy tắc chạy checklist (Passed / Failed / N/A, Notes, ảnh chỉ cho mục Failed) |
+| 3.2 Task 2 | 9 bước từ `plan` tới `bugs`, tiêu chí 7 người đã chốt, cách chạy một phiên (5 bước), danh sách file của mỗi phiên, quy tắc phân tích (AI chỉ đọc dữ liệu đã ẩn danh, severity do bạn chốt) |
+| 3.3 Task 3 | Dùng đúng checklist của Task 1, mục không áp dụng ghi N/A, yêu cầu về ảnh (tên nền tảng, URL localhost, lớp chữ đè) |
+| 4 đến 7 | Quy ước commit theo README nhóm, cách tách commit bản AI và bản review, cách đặt tên ảnh, quy ước Issues, định dạng văn bản |
+
+## Những chỗ bạn nên xem kỹ
+
+1. **Ngôn ngữ báo cáo (D4):** Mục 7 ghi "Viết tiếng Việt" giống HW02, nhưng D4 trong tracker vẫn đang mở. Bạn xác nhận giúp tiếng Việt hay đổi ngôn ngữ khác.
+2. **Mục do bạn thêm sau khi chạy (3.1.3):** Nếu lúc chạy checklist phát hiện điều đáng kiểm mà checklist chưa có, mục đó được thêm bằng commit riêng và ghi rõ là "thêm sau khi chạy". Như vậy phần so sánh AI với người không bị lẫn.
+3. **Ảnh trong phiên usability (3.2.2):** Chỉ chụp từ video và phải che thông tin cá nhân. Video gốc không đưa lên git, chỉ có trong bản nộp.
+4. **Các quyết định còn mở** vẫn để ngỏ trong WORKFLOW: Định dạng Excel (chốt ở bước `excel`), nền tảng Task 3, thang đo SUS hay UEQ-S (chọn ở bước `instruments`).
+
+## Việc khác tôi đã làm
+
+- Copy file đề vào `Homeworks/HW03/` để phiên thiết kế đọc được. File này đã bị `.gitignore` chặn nên không lên repo.
+- [README.md](Homeworks/HW03/README.md): Thêm dòng `WORKFLOW.md` vào bảng cấu trúc, điền luồng Task 2 (trước đó ghi "Chưa chốt").
+- Tracker: Bước 0.8 để 🔄 chờ bạn duyệt.
+
+Duyệt xong thì commit:
+```
+cd D:\Dang\Test\Homeworks\HW03
+python tools/export_prompt_log.py
+git add WORKFLOW.md README.md prompt_log.md
+git commit -m "[setup] Add HW03 workflow and update scope in README"
+git push
+```
 ````
 
 
