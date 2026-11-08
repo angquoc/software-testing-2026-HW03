@@ -2,13 +2,13 @@
 
 Bước: `[T1][survey]`, bản đã đối chiếu với ảnh
 Bản AI gốc: `ai_raw/T1_survey.md` (tạo lúc 2026-11-07 23:15)
-Cập nhật: 2026-11-08 20:58
+Cập nhật: 2026-11-09 01:12
 
 Ai điền phần nào:
 
 - Bảng môi trường (mục 1) và cột "Đã chụp" (mục 2): Sinh viên điền.
 - Các bảng quan sát ở mục 3 đến mục 6: AI điền dựa trên 7 ảnh trong `screenshots/` theo yêu cầu của sinh viên; sinh viên kiểm tra lại.
-- Ô ghi `? (SV bổ sung)`: Ảnh không cho thấy điều này, sinh viên cần xem trực tiếp rồi điền (danh sách ở mục 7).
+- Các ô ảnh không cho thấy (tiêu đề tab, ô mật khẩu có che ký tự không, ô Email có khóa không, giỏ hàng lúc chụp): Sinh viên xem trực tiếp rồi điền.
 
 ---
 
@@ -31,6 +31,7 @@ Môi trường khi chụp:
 | OS | Windows 11 Version 26H2 (Build 26300.9818) |
 | Độ phân giải màn hình / kích thước cửa sổ | 2560 x 1440 |
 | Mức zoom trình duyệt | 100% |
+| Scale của Windows | 150% |
 | Ngày giờ chụp | 08/11/2026, từ 20:40 đến 20:54 (theo đồng hồ Windows trong ảnh) |
 | Tài khoản dùng khi đã đăng nhập | test@eshop.com / Test1234! (Dùng cho Lịch sử có đơn) và newuser@eshop.com / NewUser123! (Dùng cho Lịch sử trống) |
 | Đã reset dữ liệu trước khi chụp (`node database.js`) | x |
@@ -66,7 +67,7 @@ Môi trường khi chụp:
 | Mục | Quan sát | Ảnh |
 |---|---|---|
 | Khi chưa đăng nhập, gõ `/profile` thì thấy gì (ở lại trang, chuyển sang trang khác, thông báo gì) | Ở lại `/profile`, không chuyển trang. Giữa trang chỉ có một dòng chữ "Vui lòng đăng nhập", không có link hay nút dẫn tới trang đăng nhập. Navbar ở trạng thái chưa đăng nhập | 03 |
-| Tiêu đề trên tab trình duyệt | ? (SV bổ sung) | |
+| Tiêu đề trên tab trình duyệt | frontend-web | |
 | Tiêu đề lớn nhất trên trang (chữ nguyên văn) | Có hai tiêu đề cùng cỡ chữ, in đậm: "Hồ sơ của bạn" (khối trái) và "Lịch sử đơn hàng" (khối phải). Không có tiêu đề chung cho cả trang | 04, 05 |
 | Các tiêu đề phụ trên trang (theo thứ tự từ trên xuống) | Không có ngoài hai tiêu đề trên | 04, 05 |
 | Trang chia thành những phần nào (khối, cột, tab), phần nào nằm trên / bên trái | Hai khối nền trắng đặt cạnh nhau, không có tab: Bên trái (hẹp hơn) là form "Hồ sơ của bạn"; bên phải (rộng hơn) là "Lịch sử đơn hàng" | 04, 05 |
@@ -78,8 +79,8 @@ Môi trường khi chụp:
 
 | # | Nhãn (nguyên văn) | Có `*` cạnh nhãn | Placeholder | Loại ô nhìn thấy được (ô chữ, ô nhiều dòng, dropdown, ô bị khóa / chỉ đọc, chỉ là chữ không sửa được...) | Giá trị có sẵn khi mở trang | Chữ hướng dẫn quanh ô | Ảnh |
 |---|---|---|---|---|---|---|---|
-| 1 | Email (Không đổi) | Không có | ? (ô đã có giá trị nên không thấy placeholder) | Ô một dòng, nền xám, nhìn giống ô bị khóa; ? (SV bổ sung: bấm thử xem có sửa được không) | Email của tài khoản đang đăng nhập (`newuser@eshop.com`, `test@eshop.com`) | Không có (ngoài chữ "(Không đổi)" trong nhãn) | 04, 05 |
-| 2 | Họ Tên | Không có | ? (ô đã có giá trị nên không thấy placeholder) | Ô chữ một dòng, nền trắng | Họ tên của tài khoản ("Khách Mới", "Test User") | Không có | 04, 05 |
+| 1 | Email (Không đổi) | Không có | Ô đã có giá trị nên không thấy placeholder | Ô một dòng, nền xám, bị khóa | Email của tài khoản đang đăng nhập (`newuser@eshop.com`, `test@eshop.com`) | Không có (ngoài chữ "(Không đổi)" trong nhãn) | 04, 05 |
+| 2 | Họ Tên | Không có | Không thấy (ô đã có giá trị) | Ô chữ một dòng, nền trắng | Họ tên của tài khoản ("Khách Mới", "Test User") | Không có | 04, 05 |
 | 3 | Số điện thoại | Không có | VD: 0912345678 | Ô chữ một dòng, nền trắng | Trống | Không có | 04, 05 |
 | 4 | Địa chỉ giao hàng | Không có | Nhập địa chỉ của bạn | Ô nhiều dòng (có góc kéo giãn ở góc dưới phải) | Trống | Không có | 04, 05 |
 
@@ -102,7 +103,7 @@ Khi **có** đơn:
 | Số đơn đang hiển thị | 5 | 05 |
 | Thứ tự sắp xếp nhìn thấy được (mới nhất trên cùng, cũ nhất trên cùng, không rõ) | Mã đơn giảm dần từ trên xuống (#5, #4, #3, #2, #1). Cả 5 đơn cùng một ngày nên không thấy được thứ tự theo ngày | 05 |
 | Cách ghi mã đơn (ví dụ chép một mã) | #5 | 05 |
-| Cách ghi ngày đặt (ví dụ chép một ngày) | 11/8/2026 (xem câu hỏi mở số 4) | 05 |
+| Cách ghi ngày đặt (ví dụ chép một ngày) | 11/8/2026 (dạng M/D/YYYY) | 05 |
 | Cách ghi tổng tiền (ví dụ chép một số tiền, kể cả ký hiệu tiền và dấu phân cách) | 10,000,000 ₫ (dấu phẩy phân cách hàng nghìn, ký hiệu nhìn như ₫ tức chữ đ có gạch dưới, đặt sau số, cách một khoảng). Chữ đỏ, in đậm | 05 |
 | Có phân trang / nút "xem thêm" không | Không có | 05 |
 | Mỗi đơn có nút hoặc link nào (nguyên văn, màu) | Nút "Hủy đơn" (nền đỏ, chữ trắng) ở 3 đơn: #5 "Chờ xác nhận", #3 "Đã xác nhận", #2 "Đang giao". Đơn #4 "Đã hủy" và #1 "Đã giao" để trống cột Thao tác. Mã đơn không có dạng link | 05 |
@@ -133,7 +134,7 @@ Khi **chưa có** đơn (trạng thái trống):
 
 | Mục | Quan sát | Ảnh |
 |---|---|---|
-| Tiêu đề trên tab trình duyệt | ? (SV bổ sung) | |
+| Tiêu đề trên tab trình duyệt | frontend-web | |
 | Tiêu đề lớn nhất trên trang (chữ nguyên văn) | Đăng Ký Tài Khoản | 02 |
 | Các tiêu đề phụ, chữ giới thiệu dưới tiêu đề | Không có | 02 |
 | Form nằm ở đâu trên trang (giữa, trái, trong khung...) | Giữa trang, trong một khung nền trắng có viền mảnh; tiêu đề căn giữa | 02 |
@@ -149,11 +150,9 @@ Khi **chưa có** đơn (trạng thái trống):
 |---|---|---|---|---|---|---|---|---|
 | 1 | Họ Tên | Không có | Không có | Ô chữ một dòng | Không áp dụng | Trống | Không có | 02 |
 | 2 | Email | Không có | Không có | Ô chữ một dòng | Không áp dụng | Trống | Không có | 02 |
-| 3 | Mật khẩu | Không có | Không có | Ô một dòng; ? (SV bổ sung: gõ thử vài ký tự xem có bị che không) | Không thấy nút nào trong ô (lúc ô trống) | Trống | "Yêu cầu: Tối thiểu 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt." | 02 |
+| 3 | Mật khẩu | Không có | Không có | Ô một dòng; ký tự bị che | Không thấy nút nào trong ô (lúc ô trống) | Trống | "Yêu cầu: Tối thiểu 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt." | 02 |
 
 Form chỉ có 3 ô trên; không có ô nào khác (không có ô xác nhận mật khẩu, checkbox hay dropdown).
-
-Ghi chú cho cột "Loại ô": Muốn biết ô mật khẩu có che ký tự không thì gõ thử vài ký tự **hợp lệ** rồi nhìn; không bấm nút gửi.
 
 ### 4.3 Nút và link (không tính navbar)
 
@@ -170,7 +169,7 @@ Ghi chú cho cột "Loại ô": Muốn biết ô mật khẩu có che ký tự k
 
 | Mục | Quan sát | Ảnh |
 |---|---|---|
-| Tiêu đề trên tab trình duyệt | ? (SV bổ sung) | |
+| Tiêu đề trên tab trình duyệt | frontend-web | |
 | Tiêu đề lớn nhất trên trang (chữ nguyên văn) | Đăng Ký | 01 |
 | Các tiêu đề phụ, chữ giới thiệu dưới tiêu đề | Không có | 01 |
 | Form nằm ở đâu trên trang | Giữa trang, trong một khung nền trắng có viền mảnh; tiêu đề căn giữa (bố cục giống trang Đăng ký) | 01 |
@@ -184,7 +183,7 @@ Ghi chú cho cột "Loại ô": Muốn biết ô mật khẩu có che ký tự k
 | # | Nhãn (nguyên văn) | Có `*` cạnh nhãn | Placeholder | Loại ô nhìn thấy được | Có nút ẩn / hiện mật khẩu không | Giá trị có sẵn | Chữ hướng dẫn quanh ô | Ảnh |
 |---|---|---|---|---|---|---|---|---|
 | 1 | Username | Không có | Không có | Ô chữ một dòng | Không áp dụng | Trống | Không có | 01 |
-| 2 | Mật khẩu | Không có | Không có | Ô một dòng; ? (SV bổ sung: gõ thử vài ký tự xem có bị che không) | Không thấy nút nào trong ô (lúc ô trống) | Trống | Không có | 01 |
+| 2 | Mật khẩu | Không có | Không có | Ô một dòng; ký tự bị che | Không thấy nút nào trong ô (lúc ô trống) | Trống | Không có | 01 |
 
 Form chỉ có 2 ô trên; không có checkbox (ví dụ "Ghi nhớ đăng nhập").
 
@@ -205,7 +204,7 @@ Form chỉ có 2 ô trên; không có checkbox (ví dụ "Ghi nhớ đăng nhậ
 | Logo / tên cửa hàng (nguyên văn) | "EShop", chữ trắng in đậm, góc trái; nền navbar xanh dương | Giống khi chưa đăng nhập | 01 đến 07 |
 | Các mục trên navbar, theo thứ tự từ trái sang phải (nguyên văn) | Bên phải: Giỏ hàng, Đăng nhập, Đăng ký (đều chữ trắng) | Bên phải: Giỏ hàng (chữ trắng), Chào, <Họ Tên> (chữ vàng), Thoát (nút) | 01, 03, 04, 05 |
 | Có ô tìm kiếm không (placeholder nguyên văn) | Không có | Không có | 01 đến 07 |
-| Link "Giỏ hàng": Có badge số lượng không, badge đang hiện số mấy | Không thấy badge; ? (không rõ lúc chụp giỏ có hàng hay không, xem câu hỏi mở số 5) | Không thấy badge; ? (như bên trái) | 01 đến 07 |
+| Link "Giỏ hàng": Có badge số lượng không, badge đang hiện số mấy | Không thấy badge vì giỏ không có hàng | Không thấy badge vì giỏ không có hàng | 01 đến 07 |
 | Tên / avatar người dùng hiển thị thế nào | Không áp dụng | Chữ "Chào, <Họ Tên>" màu vàng (ví dụ "Chào, Test User", "Chào, Khách Mới"); không có avatar | 04, 05 |
 | Chữ trên nút đăng xuất (nguyên văn) | Không áp dụng | Thoát (nút nền đỏ, chữ trắng, ở góc phải) | 04 đến 07 |
 | Đang ở `/login`: Mục nào trên navbar được làm nổi bật (khác màu, gạch chân, in đậm), hay không mục nào | Không mục nào ("Đăng nhập" cùng màu, cùng kiểu với các mục khác) | Không mục nào (chữ vàng "Chào, ..." hiện giống nhau ở mọi trang nên không phải dấu hiệu trang đang chọn) | 01, 06 |
@@ -221,12 +220,9 @@ Ghi những điểm chưa chắc khi quan sát, hoặc điều thấy lạ mà c
 
 | # | Màn hình | Ghi chú / câu hỏi | Ảnh |
 |---|---|---|---|
-| 1 | Cả 3 | Ảnh bắt đầu từ thanh địa chỉ nên không thấy tiêu đề trên tab trình duyệt. SV bổ sung chữ trên tab của `/login`, `/register`, `/profile` vào mục 3.1, 4.1, 5.1 | |
-| 2 | W-03, W-04 | Ảnh chụp lúc ô trống nên không biết ô Mật khẩu có che ký tự không. SV gõ thử vài ký tự hợp lệ (không bấm gửi) rồi ghi vào 4.2 và 5.2 | |
-| 3 | W-06 | Ô Email nền xám, nhìn như bị khóa. SV bấm thử vào ô xem có gõ được không rồi ghi vào 3.2 | 04, 05 |
-| 4 | W-06 | Ngày đặt hiện "11/8/2026" trong khi ảnh chụp ngày 08/11/2026 (đồng hồ Windows). Nếu 5 đơn đều đặt ngày 08/11/2026 thì trang đang ghi theo dạng tháng/ngày/năm. SV xác nhận ngày đặt thật của các đơn | 05 |
-| 5 | Cả 3 | Không thấy badge trên "Giỏ hàng" ở ảnh nào, nhưng không rõ lúc chụp giỏ có hàng không. Nếu muốn ghi trạng thái này: Thêm 1 sản phẩm vào giỏ rồi chụp navbar thành `survey_08_navbar_cart_has_items.png` (không bắt buộc) | 01 đến 07 |
-| 6 | Cả 3 | Mức scale hiển thị của Windows (Settings, Display, Scale) chưa ghi; ảnh rộng 2560 px. Nên ghi thêm vì ảnh hưởng cỡ chữ khi so sánh giữa các nền tảng ở Task 3 | |
+| 1 | Cả 3 | Ảnh bắt đầu từ thanh địa chỉ nên không thấy tiêu đề trên tab trình duyệt. SV đã bổ sung chữ trên tab của `/login`, `/register`, `/profile` vào mục 3.1, 4.1, 5.1 | |
+| 2 | W-06 | Ngày đặt hiện "11/8/2026" được viết dưới dạng M/D/YYYY | 05 |
+| 3 | Cả 3 | Không thấy badge trên "Giỏ hàng" ở ảnh nào vì trong giỏ khi đó không có hàng | 01 đến 07 |
 
 ---
 
