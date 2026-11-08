@@ -89,6 +89,7 @@ HW03/
 │   ├── participants.md         Bảng 7 người (chỉ SV đọc, mục 1.5)
 │   ├── pilot/                  Hồ sơ phiên pilot và các điểm đã sửa sau pilot
 │   ├── sessions/P1/ ... P7/    Hồ sơ từng phiên
+│   ├── screenshots/            Ảnh khảo sát các trang Admin của luồng
 │   ├── 04_scores.md            Điểm thang đo và số liệu hiệu suất
 │   ├── 05_findings.md          Gom pain point, bug và vấn đề thiết kế, severity, đề xuất
 │   └── ai_raw/
@@ -293,6 +294,7 @@ Sửa lại một bước đã commit thì giữ nguyên tag của bước đó.
 | Khảo sát | `checklist/screenshots/` | `survey_<số>_<nội dung>.png`, ví dụ `survey_01_profile_logged_in.png` |
 | Mục Failed (nền tảng thứ nhất) | `checklist/screenshots/` | `<mã mục>_<nền tảng>.png`, ví dụ `CL-23_chrome.png`; nhiều ảnh thì thêm `_2`, `_3` |
 | Cross-platform | `cross_platform/screenshots/<nền tảng>/` | `<mã mục>.png` hoặc `overview_<màn hình>.png` |
+| Khảo sát trang Admin (Task 2) | `usability/screenshots/` | `admin_<số>_<nội dung>.png`, ví dụ `admin_01_login.png` |
 | Phiên usability | `usability/sessions/P<n>/` | `P<n>_<số>_<nội dung>.png` |
 | Trang issue | `bugs/screenshots/` | `issue_<số issue>.png` |
 
