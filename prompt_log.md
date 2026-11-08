@@ -1148,11 +1148,306 @@ Việc chọn công cụ và chia 5 người gặp trực tiếp, 2 người onl
 - Bash: Create 5 orders in 5 statuses and an empty account
 - Bash: Verify empty account logs in with no orders
 - Bash: Save seed script to tools, log audit note, export log
+- Bash: Update tracker for EShop run and survey status
 
 **Output AI (nguyên văn):**
 
 ````text
 Bắt đầu với 3 việc chạy song song: Xem phiên Task 1 đã tạo những file gì (để chia commit cho đúng), kiểm tra EShop đã cài thư viện chưa, và đọc API spec để chuẩn bị tạo đơn hàng.
+
+Đã xong cả 4 việc. EShop đang chạy với dữ liệu mới, và ước tính thời gian thì khá căng so với mốc tối 10/11.
+
+## 1. Commit cho bước vừa xong
+
+Phiên Task 1 mới làm xong phần AI của bước survey: `ai_raw/T1_survey.md` và `00_survey.md` giống hệt nhau, đúng commit thứ nhất của bước survey trong WORKFLOW. Prompt log đã xuất lại: 16 lượt từ 2 phiên.
+
+```
+cd D:\Dang\Test\Homeworks\HW03
+git add tools/export_prompt_log.py
+git commit -m "[setup] Add Task 1 design session to prompt log whitelist"
+git add tools/seed_orders.py
+git commit -m "[setup] Add script to seed orders in all statuses for Task 1"
+git add checklist prompt_log.md
+git commit -m "[T1][survey] Add screen survey table (AI draft)"
+git push
+```
+Lệnh `git add checklist` cũng ghi nhận việc xóa file `checklist/ai_raw/.gitkeep` (thư mục giờ đã có file thật nên không cần nữa).
+
+## 2. EShop đang chạy
+
+Web `http://localhost:5173`, Admin `http://localhost:5174`, Backend cổng 3000. Tôi đã reset DB trước khi bật.
+
+## 3. Dữ liệu đơn hàng ở đủ 5 trạng thái
+
+Đơn hàng được tạo qua API thanh toán, đúng đường mà trang web dùng. Trạng thái đổi qua API Admin theo đúng thứ tự của state machine trong FR-10.
+
+| Tài khoản | Dùng để chụp |
+|---|---|
+| `test@eshop.com` / `Test1234!` | Lịch sử **có đơn**: #5 pending, #4 canceled (người dùng tự hủy khi còn chờ), #3 confirmed, #2 shipping, #1 delivered. Tổng tiền mỗi đơn khác nhau, từ 8 triệu tới 45 triệu |
+| `newuser@eshop.com` / `NewUser123!` | Lịch sử **trống** (ảnh 04). Tài khoản này được thêm vào, vì sau khi tạo đơn thì `test@eshop.com` không còn trống nữa |
+
+Lưu ý:
+- **Báo phiên Task 1** rằng ảnh 04 chụp bằng `newuser@eshop.com`, và các trạng thái còn lại chụp thành ảnh `survey_08` trở đi.
+- **Đừng reset DB trong lúc đang chụp.** Nếu đã lỡ reset, chạy lại `python tools/seed_orders.py`. Mục đích dùng của script đã ghi trong phần đầu file.
+- Để viết script, tôi phải đọc các route liên quan trong backend. Việc này đã ghi vào mục "Cần khai báo" trong tracker.
+
+## 4. Ước tính thời gian: Khá căng
+
+| Phần | Ước tính |
+|---|---|
+| Task 1 (từ survey tới báo bug) | 10 đến 12 giờ |
+| Task 2 (chuẩn bị 3 giờ, pilot 1 giờ, 7 phiên khoảng 7 giờ chưa tính đi lại, ghi chép sau phiên 3 giờ, phân tích và báo bug 4 giờ) | 18 đến 20 giờ |
+| Task 3 (thiết lập 1 đến 2 giờ, 2 nền tảng còn lại 3 đến 4 giờ, so sánh và bug 1 giờ) | 5 đến 7 giờ |
+| Agent Skill và video | 3 đến 4 giờ |
+| Tổng hợp (report, Critique, Audit, form, README, PDF, zip) | 6 đến 8 giờ |
+| **Tổng** | **Khoảng 42 đến 50 giờ làm việc** |
+
+Bây giờ là 19:36 ngày 08/11. Từ giờ tới tối 10/11, nếu làm rất dồn thì có khoảng 30 đến 32 giờ. Tính tới deadline thật (13:00 ngày 11/11) thì thêm được chừng 5 đến 6 giờ buổi sáng. Như vậy:
+- Làm đủ tất cả ở mức kỹ như HW02 thì khó xong trước tối 10/11.
+- Muốn kịp phải làm song song và bớt bớt ở vài chỗ.
+
+**Đường găng là Task 2:** Phải xong test plan, kịch bản và bộ câu hỏi, rồi chạy pilot, mới chạy được 7 phiên thật. Lịch của 7 người lại không do bạn quyết. Vài gợi ý để bạn cân nhắc (quyết định là của bạn):
+- **Mở thêm một phiên thiết kế riêng cho Task 2 ngay tối nay hoặc sáng mai**, chạy song song với phiên Task 1, để có test plan và kịch bản sớm.
+- **Hẹn lịch với 7 người** trong ngày 9 và 10/11 ngay bây giờ.
+- **Thứ tự ưu tiên theo điểm:** Task 2 (40), Task 1 (30), Task 3 (20), Skill (10).
+- **Khoảng dự phòng:** Nếu tối 10/11 chưa xong thì còn buổi sáng 11/11 trước 13:00.
+````
+
+---
+
+### C17 | 20:00 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã commit.
+- Bây giờ tôi sẽ chụp, không reset db.
+- Trong lúc đó, tôi sẽ mở 1 phiên chạy task 2 được, đúng không? Về lịch của 7 người, bạn yên tâm, tôi đều hẹn được, tôi đã hỏi trước rồi, họ sẽ luôn rảnh khi tôi cần.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Confirm the three new commits
+
+**Output AI (nguyên văn):**
+
+````text
+Đã thấy đủ 3 commit, working tree sạch.
+
+Được, mở phiên Task 2 song song với phiên Task 1 không có vấn đề gì. Hai phiên ghi vào hai thư mục khác nhau (`checklist/` và `usability/`), nên không đụng file của nhau. Có vài điểm cần giữ:
+
+1. **Prompt đầu tiên:** Bảo phiên mới đọc `Homeworks/HW03/WORKFLOW.md` rồi làm bước `[T2][plan]` (mục 3.2), chỉ làm một bước rồi dừng chờ bạn review. Tiêu chí 7 người đã có sẵn trong WORKFLOW mục 3.2.1, nên phiên đó tự đọc được.
+2. **Không đưa tên, liên lạc của 7 người cho phiên Task 2** (WORKFLOW mục 1.5). Bảng `participants.md` bạn tự lập. Phiên Task 2 chỉ cần biết số người, cách tổ chức (5 gặp trực tiếp, 2 online) và chân dung chung, không cần biết là ai.
+3. **Commit tách theo thư mục:** Commit của Task 1 chỉ `git add checklist/ ...`, của Task 2 chỉ `git add usability/ ...`. `prompt_log.md` dùng chung, nên đi kèm commit nào làm sau cũng được. Trước khi commit thì nhờ tôi xuất prompt log như cũ, tôi sẽ đưa lệnh tách sẵn cho từng task.
+4. **Dữ liệu EShop dùng chung:**
+   - Các bước chuẩn bị của Task 2 (plan, scenario, instruments) không cần reset DB. Chụp ảnh trang Admin để làm kịch bản thì cứ chụp, không ảnh hưởng tới đơn hàng của Task 1.
+   - Khi tới pilot và 7 phiên thật thì phải reset DB trước mỗi phiên, và reset sẽ xóa 5 đơn hàng. Vì vậy reset thì báo tôi: Tôi reset và chạy lại `tools/seed_orders.py`, để dữ liệu của Task 1 luôn có sẵn khi cần.
+5. **Gửi tôi session ID của phiên Task 2** (hoặc báo "đã mở" để tôi tự tìm) để tôi thêm vào danh sách phiên của prompt log.
+````
+
+---
+
+### C18 | 20:21 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đọc file WORKFLOW.md cho tôi và làm theo trong WORKFLOW đã yêu cầu. Rồi hãy làm bước plan của task 2.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Glob: **/WORKFLOW.md
+- Read: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Read: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\hw03-coordination.md
+- PowerShell: List HW03, Templates and Slides files
+- PowerShell: List course templates and slides
+- Read: D:\Dang\Test\Homeworks\HW03\README.md
+- Read: D:\Dang\Test\Homeworks\HW03\2026.HW03.GUI Usability_En.pdf
+- Bash: Search S13 slide text for test plan sections
+- Bash: Print usability portion of S13 slide
+- Bash: Search AI-First slide for usability content
+- Bash: Print usability part of AI-First slide
+- PowerShell: Extract text from usability testing template via Word
+- Grep: ^#{1,4}
+- Read: D:\Dang\Test\Homeworks\eshop-sut\README.md
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\tasks\b23qlz0f6.output
+- ToolSearch
+- TaskStop
+- PowerShell: List running Word processes
+- Bash: Extract readable text from usability template .doc
+- Grep: severity|T2|usability|FL-
+- PowerShell: Get current date and time
+- Write: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_plan.md
+- Grep: —|·
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc WORKFLOW.md và đề bài. Đang đọc slide S13 (phần test plan 9 mục) và SRS mục FR-12/14/15 để soạn bản AI cho bước `plan` của Task 2.
+
+Đang đọc SRS (mục 1, 6 và 8) để lấy căn cứ cho test plan.
+
+Tôi đã viết xong bản AI cho bước `plan` của Task 2 trong [usability/ai_raw/T2_plan.md](Homeworks/HW03/usability/ai_raw/T2_plan.md). Theo WORKFLOW, giờ tôi dừng để bạn review. Tôi chưa tạo `01_test_plan.md`, vì đó là bản review của bạn.
+
+**Tôi đã đọc:** WORKFLOW.md, README HW03, đề bài, README nhóm, SRS (mục 1, 6, 8), slide S13, slide GUI + Usability AI-First và template UsabilityTestingTemplate. Tôi không đọc các file bị cấm (`_NOTES.md`, `prompt_log.md`, HW02, mã nguồn EShop) và không mở giao diện EShop.
+
+**Nội dung bản AI:** Gồm 9 phần theo slide S13, cộng phần giả định, rủi ro và bảng quyết định để mở.
+- **Mục đích:** Loại test Assessment (theo cách phân loại của Rubin trong slide).
+- **10 câu hỏi cần trả lời (Q1 đến Q10):** Mỗi câu gắn với một trong bốn khía cạnh đề yêu cầu: clarity, error recovery, speed, trust.
+- **Chia luồng thành 3 chặng để đo:** M1 Đăng nhập, M2 Tạo danh mục, M3 Thêm sản phẩm. Người tham gia vẫn chỉ nhận một kịch bản dạng mục tiêu.
+- **Chân dung người dùng:** Theo đúng 6 tiêu chí ở WORKFLOW 3.2.1.
+- **Số liệu:** 7 loại số liệu hiệu suất (D1 đến D7) và 3 loại số liệu ý kiến (D8 đến D10), có bảng nối từng câu hỏi với số liệu.
+- **Tổng hợp:** Cách tính theo slide, xếp ưu tiên bằng criticality = severity × probability.
+
+**Những chỗ bạn nên xem kỹ khi review:**
+1. **4 giả định G1 đến G4 (mục 10):** Tôi viết khi chưa có ảnh màn hình Admin. Chỗ cần kiểm nhất là G3: Form thêm sản phẩm có ô nhập URL ảnh hay không. SRS không nói rõ điều này.
+2. **6 quyết định để mở QĐ1 đến QĐ6 (mục 11):** Tôi chỉ đưa gợi ý, không chốt. QĐ3 (làm trực tiếp hay từ xa) thuộc ngay bước `plan` nên bạn chốt khi review. Các quyết định còn lại để tới bước `scenario`, `instruments` hoặc `analysis`.
+3. **Bỏ phần demo giao diện trước phiên:** Template của môn có mục "User Training", nhưng tôi bỏ vì đề yêu cầu chỉ đưa mục tiêu, không hướng dẫn. Đây là một điểm bạn cần xác nhận.
+
+**Commit (1) bản AI** (bạn tự commit). Trước khi commit, nhờ phiên điều phối xuất prompt log. Nhắc phiên đó thêm phiên này vào danh sách phiên của HW03 (whitelist), ID có thể là `de8fb2a8-8661-4c27-bebc-c7667ef44584` (tôi suy ra từ đường dẫn thư mục tạm, phiên điều phối nên kiểm lại).
+
+```
+cd Homeworks/HW03
+git add usability/ai_raw/T2_plan.md
+git commit -m "[T2][plan] Add usability test plan (AI draft)"
+```
+
+Review xong, bạn gửi tôi các điểm muốn sửa. Tôi sẽ viết `01_test_plan.md` kèm bảng "Thay đổi so với bản AI", rồi đưa bạn message cho commit (2).
+````
+
+---
+
+### C19 | 20:57 08/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chụp đầy đủ các ảnh và điền thông tin ở mục đầu, hãy kiểm tra. Để tiết kiệm thời gian, bạn hãy dựa vào ảnh tôi chụp (nếu thiếu gì bảo tôi bổ sung) và điền thông tin vào bảng ở những gì có thể điền nhờ ảnh, tôi sẽ là người kiểm tra lại.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C20 | 20:57 08/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user]
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C21 | 20:57 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chụp đầy đủ các ảnh và điền thông tin ở mục đầu, hãy kiểm tra. Để tiết kiệm thời gian, bạn hãy dựa vào ảnh tôi chụp (nếu thiếu gì bảo tôi bổ sung) và điền thông tin vào bảng ở những gì có thể điền nhờ ảnh, tôi sẽ là người kiểm tra lại.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List screenshots and diff the filled survey against AI draft
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_01_login_logged_out.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_02_register_logged_out.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_03_profile_logged_out.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_04_profile_logged_in_no_orders.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_05_profile_logged_in_with_orders.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_06_login_logged_in.png
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\screenshots\survey_07_register_logged_in.png
+- Bash: Get time and back up the student-filled survey
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\00_survey.md
+- Bash: Check for banned dash characters and count open fill-ins
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền các bảng quan sát trong [00_survey.md](Homeworks/HW03/checklist/00_survey.md) dựa trên 7 ảnh. Bảng môi trường và cột "Đã chụp" vẫn giữ phần bạn điền. Đầu file ghi rõ phần nào bạn điền, phần nào AI điền từ ảnh. File [ai_raw/T1_survey.md](Homeworks/HW03/checklist/ai_raw/T1_survey.md) giữ nguyên.
+
+**Ảnh không cho thấy những điểm sau, bạn cần bổ sung** (đã ghi `? (SV bổ sung)` trong file và liệt kê ở mục 7):
+1. **Tiêu đề trên tab trình duyệt** của cả 3 trang. Ảnh bắt đầu từ thanh địa chỉ nên không thấy tab. Bạn chỉ cần ghi chữ, không cần chụp lại.
+2. **Ô Mật khẩu có che ký tự không** (trang Đăng nhập và Đăng ký). Gõ thử vài ký tự hợp lệ rồi nhìn, không bấm gửi.
+3. **Ô Email ở trang hồ sơ có sửa được không.** Ô có nền xám, nhìn như bị khóa; bạn bấm vào thử.
+4. **Ngày đặt thật của các đơn.** Bảng hiện "11/8/2026" nhưng bạn chụp ngày 08/11/2026. Nếu đơn đặt ngày 08/11 thì trang đang ghi theo kiểu tháng/ngày/năm.
+5. **Không bắt buộc:** Không ảnh nào thấy badge trên "Giỏ hàng", nhưng chưa rõ lúc chụp giỏ có hàng không. Nếu muốn ghi trạng thái này thì thêm 1 sản phẩm vào giỏ rồi chụp `survey_08_navbar_cart_has_items.png`.
+6. **Không bắt buộc:** Mức Scale hiển thị của Windows, sẽ có ích khi so sánh ở Task 3.
+
+**Tôi đã sửa một chỗ bạn ghi** (có ghi lại ở mục 9 của file): "Ngày giờ chụp" thành "từ 20:40 đến 20:54", theo đồng hồ Windows trong ảnh. Ảnh 06 và 07 chụp lúc 20:54.
+
+**Vài điểm đáng chú ý khi đọc ảnh.** Tôi chỉ ghi lại như quan sát, việc đánh giá đúng sai để sang bước `oracle` / `ai-draft`:
+- Trang `/login` có tiêu đề "Đăng Ký", ô "Username" và nút "Sign In".
+- Form đăng ký chỉ có 3 ô, không có ô xác nhận mật khẩu. Nút "Đăng Ký" màu đỏ.
+- Không có dấu `*` ở bất kỳ ô nào. Không có breadcrumb, và navbar không làm nổi bật mục nào ở cả 3 trang.
+- Nút đăng xuất ghi "Thoát". Khi đã đăng nhập, vào `/login` và `/register` vẫn thấy form.
+- Đơn "Đang giao" vẫn có nút "Hủy đơn".
+- Lịch sử đơn trống chỉ có dòng chữ, không có icon. Vào `/profile` khi chưa đăng nhập chỉ thấy "Vui lòng đăng nhập", không có link tới trang đăng nhập.
+
+**Commit.** WORKFLOW tách commit (2) là bản bạn điền và commit (3) là bản AI viết lại. Trước khi sửa, tôi đã lưu bản bạn điền tại `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\00_survey_SV.md`. Nếu đã commit bản AI (1), bạn nhờ phiên điều phối xuất prompt log rồi chạy ngay, trước khi sửa gì thêm:
+
+```
+cd d:/Dang/Test/Homeworks/HW03
+S=C:/Users/Lenovo/AppData/Local/Temp/claude/1ee42ba0f2ad5af7/f2487351-0e33-45bc-9c36-5d86cc37bed3/scratchpad
+cp checklist/00_survey.md $S/00_survey_AI.md
+cp $S/00_survey_SV.md checklist/00_survey.md
+git add checklist/screenshots checklist/00_survey.md
+git commit -m "[T1][survey] Record UI observations and screenshots"
+cp $S/00_survey_AI.md checklist/00_survey.md
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Review survey against screenshots"
+```
+
+Sau đó bạn kiểm tra lại và điền các ô `? (SV bổ sung)`, rồi commit riêng phần này với message như `[T1][survey] Fill remaining observations after check`.
+
+Khi xong, bạn báo tôi để sang bước `oracle`.
+````
+
+---
+
+### C22 | 21:02 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã chụp xong các ảnh cho phiên 1 và bảo phiên 1 điền bảng dựa trên ảnh, tôi kiểm tra sau. Hiện tại phiên đó đã làm xong phần điền bảng, bảo tôi nên commit 2 lần: 1 lần ảnh tôi chụp và điền, 1 lần AI điền. Tôi review xong sẽ ra commit thứ ba. Nên cần bạn xuất log, đưa message để tôi commit.
+- Phiên 2 cũng đã có và viết xong kế hoạch plan ban đầu. Tôi nên commit hay bổ sung ảnh chụp màn hình admin cho phiên 2 viết lại rồi mới commit?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show HW03 changes and newest session files
+- Bash: Show hunk layout of survey file changes
+- Bash: Read recent turns of the Task 1 session
+- Bash: Find backup of user-filled survey and diff vs AI draft
+- Bash: Back up user version; skim Task 2 plan structure
+- Bash: Whitelist Task 2 session, update tracker, export log
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm tra trạng thái repo, tìm session ID của phiên Task 2, và xem phiên Task 1 đã lưu những gì (để chia commit cho đúng).
+
+Diff gồm nhiều đoạn xen kẽ nhau. Tôi xem phiên Task 1 đã hướng dẫn tách commit cụ thể thế nào, và có lưu riêng bản bạn điền ở đâu không.
 ````
 
 
