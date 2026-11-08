@@ -89,9 +89,9 @@ HW03/
 │   ├── participants.md         Bảng 7 người (chỉ SV đọc, mục 1.5)
 │   ├── pilot/                  Hồ sơ phiên pilot và các điểm đã sửa sau pilot
 │   ├── sessions/P1/ ... P7/    Hồ sơ từng phiên
-│   ├── screenshots/            Ảnh khảo sát các trang Admin của luồng
 │   ├── 04_scores.md            Điểm thang đo và số liệu hiệu suất
 │   ├── 05_findings.md          Gom pain point, bug và vấn đề thiết kế, severity, đề xuất
+│   ├── screenshots/            Ảnh khảo sát các trang Admin của luồng FL-05 (SV chụp)
 │   └── ai_raw/
 ├── cross_platform/             Task 3
 │   ├── 01_setup.md             Công cụ, nền tảng, cách tạo lớp chữ đè
@@ -292,11 +292,13 @@ Sửa lại một bước đã commit thì giữ nguyên tag của bước đó.
 | Loại | Thư mục | Tên file |
 |---|---|---|
 | Khảo sát | `checklist/screenshots/` | `survey_<số>_<nội dung>.png`, ví dụ `survey_01_profile_logged_in.png` |
-| Mục Failed (nền tảng thứ nhất) | `checklist/screenshots/` | `<mã mục>_<nền tảng>.png`, ví dụ `CL-23_chrome.png`; nhiều ảnh thì thêm `_2`, `_3` |
+| Khảo sát luồng usability (Web Admin) | `usability/screenshots/` | `flow_<số>_<nội dung>.png`, ví dụ `flow_03_category_list.png` |
+| Mục Failed (nền tảng thứ nhất) | `checklist/screenshots/` | `<mã mục>_<nền tảng>.png`, ví dụ `CL-23_chrome.png` |
 | Cross-platform | `cross_platform/screenshots/<nền tảng>/` | `<mã mục>.png` hoặc `overview_<màn hình>.png` |
-| Khảo sát trang Admin (Task 2) | `usability/screenshots/` | `admin_<số>_<nội dung>.png`, ví dụ `admin_01_login.png` |
 | Phiên usability | `usability/sessions/P<n>/` | `P<n>_<số>_<nội dung>.png` |
 | Trang issue | `bugs/screenshots/` | `issue_<số issue>.png` |
+
+Nhiều ảnh cho cùng một nội dung (ví dụ trang dài phải cuộn, một mục Failed cần nhiều ảnh): Mọi ảnh đều có hậu tố chung đánh số từ `_1`, ví dụ `flow_06_product_list_1.png`, `flow_06_product_list_2.png`. Chỉ có một ảnh thì không thêm hậu tố.
 
 ---
 
