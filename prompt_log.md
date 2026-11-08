@@ -924,6 +924,237 @@ git push
 ```
 ````
 
+---
+
+### C12 | 23:09 07/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Tiếng Việt.
+2 + 3. Đồng ý
+4. Làm tới bước nào, tôi sẽ chốt bước đó, vì không thể chắc chắn bây giờ khi chưa làm được.
+
+Tôi đã commit.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check commit and mark D4, 0.8 done in tracker
+
+**Output AI (nguyên văn):**
+
+````text
+Tracker đã cập nhật: D4 ✅ (Tiếng Việt), 0.8 ✅ (commit `0f28406`). Các quyết định còn lại để mở tới khi làm tới bước tương ứng (đã ghi nhớ từ trước).
+
+Phần chuẩn bị chỉ còn **0.7: Chạy EShop**. Theo WORKFLOW mục 1.3, phiên điều phối (phiên này) lo việc chạy server, nên tôi có thể bật Backend, Web và Admin ngay khi bạn bảo.
+
+**Task 1 nên làm ở một phiên Claude mới**, không làm ở phiên này. Phiên này đã đọc mã nguồn EShop để kiểm tra màn hình, nên nếu dùng nó để thiết kế checklist thì vi phạm quy tắc hộp đen trong WORKFLOW mục 1.1. Cách làm giống HW02:
+
+1. Mở phiên Claude Code mới trong `D:\Dang\Test`.
+2. Prompt đầu tiên nên nói rõ: Đọc `Homeworks/HW03/WORKFLOW.md` trước, làm bước `[T1][survey]` cho W-06, W-04, W-03, chỉ làm một bước rồi dừng chờ bạn review.
+3. Gửi tôi session ID của phiên mới để tôi thêm vào danh sách phiên trong `tools/export_prompt_log.py`.
+
+**Thời gian:** Từ hôm nay (07/11) tới tối 10/11 còn khoảng 4 ngày. Việc dễ trễ nhất là Task 2, vì còn phải tuyển thêm 6 người rồi chạy 8 phiên (pilot và 7 phiên). Nên hẹn lịch với người tham gia ngay từ bây giờ, làm song song với Task 1.
+
+Bạn muốn tôi bật EShop luôn không?
+````
+
+---
+
+### C13 | 23:13 07/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Đọc file WORKFLOW.md cho tôi và làm theo trong WORKFLOW đã yêu cầu. Rồi hãy làm bước survey của task 1.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Glob: **/WORKFLOW.md
+- Read: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Read: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\hw03-coordination.md
+- Bash: List HW03 folder and show its README
+- Bash: Show SRS outline and lines mentioning target screens
+- Bash: Read SRS overview, account, order history and GUI sections
+- Bash: Extract assignment PDF text and grep Task 1 parts
+- Bash: Read Task 1 section of assignment and screen codes in group README
+- Bash: Get current time and confirm output folders are empty
+- Write: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_survey.md
+- Bash: Copy survey to 00_survey.md, verify identical and no banned dashes
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc WORKFLOW.md (HW03) và SRS; giờ xem đề bài PDF phần Task 1 để lấy đúng mô tả màn hình W-03, W-04, W-06.
+
+Tôi đã đọc [WORKFLOW.md](Homeworks/HW03/WORKFLOW.md) của HW03 (phiên này là phiên thiết kế) và làm xong bước `survey` của Task 1, đúng mục 3.1.1. Tôi chỉ đọc SRS, đề bài PDF và README; không đọc mã nguồn, không mở trang, không đọc `_NOTES.md` hay `prompt_log.md`.
+
+**Hai file đã tạo, nội dung giống hệt nhau (đã so bằng `cmp`):**
+- [checklist/ai_raw/T1_survey.md](Homeworks/HW03/checklist/ai_raw/T1_survey.md): Bản gốc của AI, không sửa về sau.
+- [checklist/00_survey.md](Homeworks/HW03/checklist/00_survey.md): Bạn điền quan sát vào file này.
+
+**Trong file có:**
+- Bảng ghi môi trường lúc chụp, danh sách 3 màn hình W-06, W-04, W-03 và 7 ảnh cần chụp, đã đặt sẵn tên theo dạng `survey_<số>_<nội dung>.png`.
+- Bảng quan sát còn trống cho từng màn hình: Thông tin chung, ô nhập, nút và link.
+- Riêng W-06 có thêm bảng lịch sử đơn cho 3 trường hợp: Có đơn, từng trạng thái đơn (chữ và màu), và lịch sử trống.
+- Bảng navbar so sánh lúc chưa và đã đăng nhập, kèm mục nào được làm nổi bật ở từng trang.
+- Bảng câu hỏi mở, và danh sách những điểm không khảo sát ở bước này vì cần DevTools, bàn phím hoặc nhập dữ liệu sai.
+
+**Một việc bạn cần quyết định (để mở ⏳ trong file, mục 2):** Dữ liệu mẫu không có đơn hàng. Bạn có muốn tự tạo đơn ở nhiều trạng thái khác nhau để chụp chữ và màu của từng trạng thái không, và nếu có thì những trạng thái nào.
+
+**Việc tiếp theo của bạn:**
+1. Nhờ phiên điều phối xuất prompt log, rồi commit bản AI:
+   ```
+   cd d:/Dang/Test/Homeworks/HW03
+   git add checklist/ai_raw/T1_survey.md checklist/00_survey.md
+   git commit -m "[T1][survey] Add screen survey table (AI draft)"
+   ```
+2. Chụp ảnh vào `checklist/screenshots/` và điền bảng ngay trong `00_survey.md`. Sau đó commit `[T1][survey] Record UI observations and screenshots`.
+3. Báo tôi khi xong. Tôi sẽ đọc ảnh và bảng bạn điền rồi viết lại `00_survey.md` (đối chiếu với ảnh, sửa chỗ ghi nhầm). File trong `ai_raw/` giữ nguyên.
+````
+
+---
+
+### C14 | 23:14 07/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã đang mở phiên mới để nó chạy.
+- Tôi gom đủ 7 người rồi. Quan trọng là để họ test được thì mình phải deploy lên chứ nhỉ (?) chứ họ đâu thể tự chạy dưới local như mình, họ chỉ là user bình thường mà.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Identify newest sessions and their first prompts
+- Bash: Confirm new session is HW03 Task 1; check Vite host config
+- Bash: Whitelist new session, update tracker, re-export log
+- Edit: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\hw03-coordination.md
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm tra phiên mới bạn vừa mở để thêm vào danh sách phiên của prompt log, và xem lại cách Admin gọi API (ảnh hưởng trực tiếp tới câu hỏi deploy).
+
+Phiên mới (`f2487351`) đúng là phiên làm Task 1. Thêm vào danh sách phiên của prompt log.
+
+Không cần deploy. Đây là đánh giá **có người điều phối** (moderated): Người tham gia dùng **máy của bạn**, EShop vẫn chạy local, bạn ngồi cạnh (hoặc gọi online) để quan sát và quay màn hình. Đề không yêu cầu người tham gia tự chạy hay tự truy cập app. Slide S13 cũng mô tả đúng cách này: Phòng đơn giản, người quan sát ngồi gần người dùng.
+
+## Hai cách tổ chức phiên mà không cần deploy
+
+| Cách | Làm thế nào | Phù hợp khi |
+|---|---|---|
+| **Gặp trực tiếp** | Người tham gia ngồi vào laptop của bạn, mở sẵn trang Admin `localhost:5174`. Bạn quay màn hình (OBS hoặc Xbox Game Bar), có thể thu cả tiếng | Gặp được người tham gia. Đơn giản nhất và ít rủi ro nhất |
+| **Online, điều khiển từ xa** | Gọi qua Zoom, Google Meet hoặc Zalo. Người tham gia điều khiển máy bạn qua AnyDesk, TeamViewer, Chrome Remote Desktop, hoặc tính năng Remote Control của Zoom. Bạn quay màn hình máy mình | Người ở xa. Google Meet không cho điều khiển máy, nên phải kết hợp với một trong các công cụ trên |
+
+Hai cách này dùng xen kẽ được, ví dụ người gần thì gặp trực tiếp, người xa thì làm online. Chỉ cần ghi rõ phiên nào làm theo cách nào trong test plan và trong `notes.md` của phiên đó.
+
+## Vì sao không nên deploy hay mở tunnel (ngrok, Cloudflare...)
+
+1. **Trang Admin gọi API bằng địa chỉ ghi cố định `http://localhost:3000/api`.** Trên máy người tham gia, địa chỉ này trỏ về chính máy của họ, nên đăng nhập sẽ không được. Muốn chạy được thì phải **sửa mã nguồn EShop**, tức là đổi SUT, và phải khai báo việc này.
+2. **Vite 8 mặc định chặn tên miền lạ.** Muốn dùng được thì phải sửa thêm cấu hình.
+3. **Lộ trang Admin ra internet với mật khẩu mặc định:** Ai có link cũng sửa được dữ liệu. Ngoài ra vẫn phải reset DB giữa các phiên.
+4. **Tốn thời gian**, trong khi chỉ còn khoảng 4 ngày.
+
+Chọn gặp trực tiếp hay online là một phần của test plan (bước `[T2][plan]`, mục "Môi trường và thiết bị"), nên bạn chốt khi làm tới bước đó.
+
+## Việc khác tôi đã làm
+
+- Phiên mới `f2487351` (Task 1) đã được thêm vào danh sách phiên của prompt log. Tôi đã xuất lại prompt log: 14 lượt từ 2 phiên.
+- Tracker: Mục 1.9 ghi "đã gom đủ 7 người, chưa lập bảng `participants.md`". Thêm mục "Phiên Claude của HW03".
+- EShop: Nếu phiên Task 1 cần server, bạn bảo tôi để bật Backend, Web và Admin.
+````
+
+---
+
+### C15 | 23:34 07/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Gặp trực tiếp thì tôi có thể gặp cỡ 5 người, quay màn hình thao tác có cần quay mặt người thực hiện không?
+- Qua online là phải xài TeamViewer hả?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+## 1. Không cần quay mặt người tham gia
+
+Đề chỉ yêu cầu "Record the screen (and audio, with consent)", tức là quay **màn hình**, và ghi **âm** nếu người tham gia đồng ý. Không có yêu cầu quay mặt.
+
+- **Không quay mặt** còn khớp với WORKFLOW mục 1.5 (khuôn mặt là thông tin cá nhân, không đưa vào repo hay AI), và video cũng nhẹ hơn để vừa giới hạn 20 MB của Moodle.
+- **TA xác minh** bằng cách gọi điện cho 2 người trong bảng danh sách, không dựa vào video.
+- **Nên ghi âm** nếu họ đồng ý. Phần think-aloud (vừa làm vừa nói) nằm trong tiếng nói, nên có âm thanh thì ghi chú và trích lời người tham gia sẽ chính xác hơn.
+
+Cách quay khi gặp trực tiếp: Dùng OBS hoặc Xbox Game Bar (`Win + G`) trên laptop của bạn, bật micro để thu cả lời think-aloud.
+
+## 2. Online không bắt buộc dùng TeamViewer
+
+Cần một công cụ cho phép người tham gia **điều khiển máy của bạn**. Có vài lựa chọn:
+
+| Công cụ | Cách dùng | Lưu ý |
+|---|---|---|
+| **Zoom** | Bạn chia sẻ màn hình, người tham gia bấm xin điều khiển (Request Remote Control), bạn bấm đồng ý | Gọi điện và điều khiển trong cùng một app. Cả hai nên dùng app Zoom trên máy tính; trên trình duyệt hoặc điện thoại thường không điều khiển được |
+| **AnyDesk** | Người tham gia cài AnyDesk, nhập ID máy bạn, bạn bấm chấp nhận. Gọi điện riêng qua Zalo hoặc Meet | Nhẹ, dễ dùng với người không làm IT |
+| **Chrome Remote Desktop** | Bạn tạo mã hỗ trợ, người tham gia nhập mã trên trình duyệt Chrome | Thường phải đăng nhập tài khoản Google |
+| **TeamViewer** | Tương tự AnyDesk | Bản miễn phí đôi khi bị khóa vì nghi là dùng thương mại, nên không phải lựa chọn ổn định nhất |
+
+Nếu 2 người làm online đã có sẵn Zoom thì Zoom là gọn nhất. Nếu chưa có thì AnyDesk dễ cài nhất.
+
+Ba lưu ý khi làm online:
+- **Người tham gia phải dùng máy tính**, không dùng điện thoại, đúng với tiêu chí số 2.
+- **Quay màn hình bằng OBS trên máy bạn**, chọn thu cả âm thanh máy tính (tiếng người tham gia qua cuộc gọi) và micro của bạn.
+- **Điều khiển từ xa có độ trễ.** Ghi rõ trong test plan rằng 2 phiên này làm online. Khi phân tích các câu trả lời về tốc độ (speed), cần xét đến yếu tố này.
+
+**Không được** làm theo kiểu người tham gia đọc cho bạn bấm hộ. Khi đó người thao tác là bạn, không còn đo được người dùng thật gặp khó ở đâu.
+
+Việc chọn công cụ và chia 5 người gặp trực tiếp, 2 người online sẽ ghi vào test plan ở bước `[T2][plan]`, mục "Môi trường và thiết bị".
+````
+
+---
+
+### C16 | 19:33 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Phiên 1 đã làm xong, xuất log và đưa commit.
+- Chạy ứng dụng.
+- Quyết định mở (SV chốt): Có tạo thêm đơn ở nhiều trạng thái khác nhau (đổi trạng thái ở Admin) để thấy được chữ và màu của từng trạng thái hay không, và tạo những trạng thái nào. -> Tôi muốn nhiều trạng thái để có thể thấy chữ và màu của từng trạng thái đầy đủ có thể có. Chắc nhờ bạn luôn vì bạn chạy ứng dụng và có thể reset db các thứ mà nhỉ?
+- Tổng thể cả HW03 này, theo ứng tính của bạn, sẽ hoàn thành trong bao nhiêu tiếng? Tôi có kịp theo deadline tôi đặt ra không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show HW03 changes from Task 1 session
+- Bash: Check EShop deps, server status, API endpoints
+- Bash: Verify survey copies identical; skim headings
+- Bash: Check seeded users and cart/checkout API spec
+- Bash: Locate backend routes for setup data
+- Bash: Find route definitions with any quote style
+- Bash: Read register, cart, checkout, cancel, status routes
+- Bash: Reset EShop database to seed data
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop web frontend on port 5173
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Wait for servers to respond; list products
+- Bash: Create 5 orders in 5 statuses and an empty account
+- Bash: Verify empty account logs in with no orders
+- Bash: Save seed script to tools, log audit note, export log
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu với 3 việc chạy song song: Xem phiên Task 1 đã tạo những file gì (để chia commit cho đúng), kiểm tra EShop đã cài thư viện chưa, và đọc API spec để chuẩn bị tạo đơn hàng.
+````
+
 
 <!-- CLAUDE-LOG:END -->
 
