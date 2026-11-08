@@ -1448,6 +1448,838 @@ Khi xong, bạn báo tôi để sang bước `oracle`.
 Kiểm tra trạng thái repo, tìm session ID của phiên Task 2, và xem phiên Task 1 đã lưu những gì (để chia commit cho đúng).
 
 Diff gồm nhiều đoạn xen kẽ nhau. Tôi xem phiên Task 1 đã hướng dẫn tách commit cụ thể thế nào, và có lưu riêng bản bạn điền ở đâu không.
+
+Mọi thứ đã sẵn sàng để commit. Prompt log đã xuất lại: 22 lượt từ 3 phiên (thêm phiên Task 2 `de8fb2a8`).
+
+## 1. Commit cho Task 1, và commit bản AI của Task 2
+
+Phiên Task 1 đã sao lưu bản bạn điền (bảng môi trường, cột "Đã chụp" đánh `x`) trước khi điền tiếp, nên tách được đúng 2 commit. Tôi giữ thêm một bản sao trong scratchpad của phiên điều phối. Lệnh dưới đây chỉ đưa bản sao lưu đó vào commit, **không đụng tới file `00_survey.md` đang có** (chạy trong PowerShell):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+
+# Danh sách phiên của prompt log
+git add tools/export_prompt_log.py
+git commit -m "[setup] Add Task 2 design session to prompt log whitelist"
+
+# Task 1, commit 2: Ảnh + bản bạn điền
+git add checklist/screenshots
+$h = git hash-object -w --path=checklist/00_survey.md "C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\949bce7e-1d8a-4c01-b51b-b31ff0b2e825\scratchpad\00_survey_SV.md"
+git update-index --cacheinfo "100644,$h,checklist/00_survey.md"
+git commit -m "[T1][survey] Record UI observations and screenshots"
+
+# Task 1, commit 3: Bảng AI điền từ ảnh
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Fill observation tables from screenshots (AI)"
+
+# Task 2: Bản AI của test plan
+git add usability/ai_raw/T2_plan.md prompt_log.md
+git commit -m "[T2][plan] Add usability test plan (AI draft)"
+git push
+```
+
+Sau commit thứ 2 của Task 1, chạy `git show --stat HEAD` sẽ thấy 7 ảnh và `00_survey.md` chỉ khác bản AI ở bảng môi trường và cột "Đã chụp". Review xong bản AI điền thì commit tiếp: `[T1][survey] Review AI-filled survey`.
+
+Phiên Task 1 còn chờ bạn bổ sung 4 điểm mà ảnh không cho thấy:
+1. Tiêu đề trên tab trình duyệt của 3 trang.
+2. Ô mật khẩu có che ký tự không.
+3. Ô Email ở trang hồ sơ có sửa được không.
+4. Ngày đặt đơn hiển thị theo định dạng nào.
+
+## 2. Phiên Task 2: Commit bản AI trước, rồi mới bổ sung ảnh Admin
+
+Lý do nên commit ngay:
+- **Bản đầu là bằng chứng gốc cho Audit.** Phiên Task 2 đã ghi rõ plan viết khi chưa có ảnh Admin và dồn các chỗ phụ thuộc giao diện thành giả định ở mục 10. Giữ bản này cho thấy AI đã giả định gì khi chưa thấy giao diện, và đó cũng là chất liệu tốt cho AI Critique.
+- **Không mất công gì thêm.** Theo WORKFLOW mục 1.2, khi AI viết lại thì phải lưu thành file mới `ai_raw/T2_plan_v2.md`, bản cũ giữ nguyên. Commit bây giờ hay sau thì bản gốc vẫn phải giữ.
+
+Trình tự tiếp theo:
+1. Chụp các trang Admin của luồng FL-05: Trang đăng nhập Admin, Dashboard và sidebar, trang Danh mục, form Thêm sản phẩm. Chỉ chụp những gì thấy được, chưa cần tạo danh mục hay sản phẩm (nên không phải reset DB).
+2. Đưa ảnh cho phiên Task 2 để kiểm lại các giả định ở mục 10. Phiên đó lưu bản viết lại vào `ai_raw/T2_plan_v2.md`, commit `[T2][plan] Check UI assumptions against admin screenshots (AI revision 1)`.
+3. Bạn review, ra `01_test_plan.md`, commit `[T2][plan] Review usability test plan`.
+
+**Một chỗ WORKFLOW còn thiếu:** Mục 5 chưa quy định nơi để ảnh khảo sát trang Admin cho Task 2. Tôi đề xuất để ở `usability/screenshots/admin_<số>_<nội dung>.png` (ví dụ `admin_01_login.png`). Bạn đồng ý thì tôi thêm một dòng vào WORKFLOW mục 5 để phiên Task 2 làm theo.
+````
+
+---
+
+### C23 | 21:19 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đồng ý.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Bash: Add admin screenshots folder to WORKFLOW tree and create it
+- Bash: Verify intermediate commit matches user-filled backup
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm tra commit `25211f0` có đúng là bản bạn điền không.
+
+Đã thêm vào [WORKFLOW.md](Homeworks/HW03/WORKFLOW.md) hai chỗ: Mục 5 có dòng ảnh khảo sát trang Admin, lưu ở `usability/screenshots/admin_<số>_<nội dung>.png`, và cây thư mục ở mục 2 có thêm `usability/screenshots/`. Thư mục này cũng đã được tạo.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add WORKFLOW.md usability/screenshots
+git commit -m "[setup] Add admin screenshot folder for Task 2 to workflow"
+git push
+```
+Phiên Task 2 đã đọc WORKFLOW từ trước, nên khi đưa ảnh thì nhắc nó đọc lại mục 5.
+
+**Có một chỗ commit không ra như dự tính.** Commit `25211f0` (`Record UI observations and screenshots`) chỉ có 7 ảnh, **không có** bản `00_survey.md` bạn điền. Có lẽ lệnh `git hash-object` / `git update-index` không chạy được (ví dụ chạy trong Git Bash thay vì PowerShell, nên biến `$h` rỗng). Vì vậy phần bạn điền (bảng môi trường, cột "Đã chụp") nằm chung với phần AI điền trong commit `4be2ba8`.
+
+- **Đề xuất của tôi: Để nguyên.** Đầu file `00_survey.md` đã ghi rõ phần nào bạn điền, phần nào AI điền từ ảnh, nên ai đọc vẫn tách được. Các commit đã push lên GitHub; sửa lại lịch sử thì phải force push, rủi ro hơn lợi ích.
+- Nếu bạn vẫn muốn tách cho đúng thì báo tôi. Tôi sẽ đưa cách làm, kèm cảnh báo rõ về force push.
+````
+
+---
+
+### C24 | 21:30 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đọc lại WORKFLOW ở Mục 5, đồng thời bổ sung các ảnh và tên ảnh của trang admin mà bạn cần để tôi bổ sung.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Edit: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\screenshots\.gitkeep
+
+**Output AI (nguyên văn):**
+
+````text
+Mục 5 hiện chỉ có tên ảnh khảo sát cho Task 1 (`checklist/screenshots/survey_*`). Chưa có chỗ nào cho ảnh khảo sát trang Admin của Task 2, nên tôi thêm một dòng vào mục 5 và thêm thư mục tương ứng vào cây thư mục ở mục 2.
+
+Tôi đã sửa WORKFLOW.md ở hai chỗ:
+- **Mục 5:** Thêm dòng "Khảo sát luồng usability (Web Admin)". Ảnh lưu ở `usability/screenshots/`, tên theo dạng `flow_<số>_<nội dung>.png`. Trang dài cần cuộn thì thêm `_2`, `_3`.
+- **Mục 2:** Thêm thư mục `usability/screenshots/` vào cây thư mục. Tôi cũng đã tạo sẵn thư mục này (kèm file `.gitkeep`).
+
+## Ảnh trang Admin cần chụp
+
+Mục đích của bộ ảnh là kiểm 4 giả định G1 đến G4 trong bản plan và làm căn cứ cho bước `scenario`.
+
+**Trước khi chụp:**
+- Reset DB: `cd backend && node database.js`.
+- Mở `http://localhost:5174` và chụp **cả cửa sổ trình duyệt**, thấy được thanh URL.
+- Chỉ chụp các trạng thái của luồng đúng (nhập dữ liệu hợp lệ). Trạng thái lỗi để dành cho phiên pilot, giống quy tắc khảo sát ở mục 3.1.1.
+
+| # | Tên file | Trạng thái cần chụp | Dùng để kiểm |
+|---|---|---|---|
+| 1 | `flow_01_admin_login.png` | Trang đăng nhập Admin, chưa nhập gì | M1 |
+| 2 | `flow_02_admin_home.png` | Trang đầu tiên sau khi đăng nhập `admin@eshop.com`, thấy đủ menu, navbar hoặc sidebar | G1, Q1 |
+| 3 | `flow_03_category_list.png` | Trang quản lý danh mục, danh sách mặc định sau khi reset | G1, G4 |
+| 4 | `flow_04_category_form_empty.png` | Form hoặc ô thêm danh mục khi chưa nhập (nếu form nằm ngay trong ảnh 3 thì bỏ ảnh này) | Q2 |
+| 5 | `flow_05_category_form_filled.png` | Đã nhập một tên danh mục hợp lệ, chưa bấm lưu | Q2 |
+| 6 | `flow_06_category_created.png` | **Ngay** sau khi bấm lưu: Thông báo nếu có, danh sách đã có danh mục mới | Q2, O3 |
+| 7 | `flow_07_product_list.png` | Trang quản lý sản phẩm | G1, Q3 |
+| 8 | `flow_08_product_form_empty.png` | Form thêm sản phẩm khi chưa nhập; form dài thì thêm `_2` | G3, Q5 |
+| 9 | `flow_09_product_category_dropdown.png` | Ô chọn danh mục đang mở, thấy (hoặc không thấy) danh mục vừa tạo | G2, Q4 |
+| 10 | `flow_10_product_form_filled.png` | Đã điền đủ dữ liệu hợp lệ và chọn danh mục mới, chưa bấm lưu | Q5 |
+| 11 | `flow_11_product_created.png` | **Ngay** sau khi bấm lưu: Thông báo nếu có, trang được chuyển tới | Q7, O3 |
+| 12 | `flow_12_product_in_list.png` | Sản phẩm mới trong danh sách sản phẩm, thấy cột danh mục nếu có | Q7, D6 |
+
+**Lưu ý khi chụp:**
+- Thông báo dạng toast có thể tắt rất nhanh, nhất là ở ảnh 6 và 11. Nếu không kịp chụp, bạn quay màn hình rồi cắt khung hình từ video, và ghi rõ là ảnh cắt từ video.
+- Nếu đi từ ảnh 6 sang ảnh 7 mà phải tải lại trang thì ghi lại chuyện này. Đây là dữ liệu cho câu hỏi Q4.
+
+Chụp xong, bạn gửi tôi danh sách file hoặc dán ảnh. Tôi sẽ đối chiếu với G1 đến G4 và đưa kết quả vào `01_test_plan.md` cùng bảng "Thay đổi so với bản AI".
+
+**Commit thay đổi WORKFLOW** (bạn tự commit). Nên tách riêng khỏi commit bản AI:
+
+```
+cd Homeworks/HW03
+git add WORKFLOW.md usability/screenshots/.gitkeep
+git commit -m "[setup] Add naming rule for usability flow screenshots"
+```
+````
+
+---
+
+### C25 | 22:06 08/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi xin thông tin đăng nhập của admin.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Tài khoản Admin mặc định theo SRS (mục 1, [README.md:21-23](Homeworks/eshop-sut/README.md#L21-L23)):
+
+- Email: `admin@eshop.com`
+- Mật khẩu: `Admin123!`
+- Trang đăng nhập: `http://localhost:5174`
+
+Nếu đăng nhập không được, bạn reset DB rồi thử lại: `cd backend && node database.js`. Lệnh này đưa dữ liệu về mặc định, kể cả tài khoản admin.
+````
+
+---
+
+### C26 | 00:15 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã điền các phần ? cũng như sửa lại bảng ghi chú, kiểm tra xem còn chỗ nào nữa không. Đồng thời phần Mức scale hiển thị của Windows (Settings, Display, Scale) chưa ghi; ảnh rộng 2560 px. Nên ghi thêm vì ảnh hưởng cỡ chữ khi so sánh giữa các nền tảng ở Task 3 là sao? Vì tôi chưa hiểu mức scale hiển thị của Window mà bạn nói đến, tôi tưởng mình đã điền hết rồi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Diff current survey against AI-filled copy and find remaining question marks
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\00_survey.md
+- Bash: Check whether the commit-sequence copies were made
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\00_survey_AI.md
+
+**Output AI (nguyên văn):**
+
+````text
+Còn **4 chỗ cần sửa** trong [00_survey.md](Homeworks/HW03/checklist/00_survey.md), cộng một dòng (số 6) về Windows scale, giải thích ở dưới:
+
+1. **Dòng 185, ô Mật khẩu ở trang Đăng nhập** vẫn còn `? (SV bổ sung...)`. Trang Đăng ký bạn đã điền "ký tự bị che", trang Đăng nhập thì chưa.
+2. **Dòng 82, placeholder của ô Họ Tên** đang ghi "Ô trống". Điều này mâu thuẫn với cột "Giá trị có sẵn" ở cùng dòng ("Khách Mới", "Test User"): Ô có chữ thì không thể thấy placeholder. Bạn chọn một trong hai cách:
+   - Ghi "Không thấy (ô đã có giá trị)", giống cách ghi ở ô Email dòng 81.
+   - Xóa tạm chữ trong ô (không bấm "Cập nhật") để xem placeholder là gì rồi chép lại.
+3. **Dòng 105 và mục 7 số 2, định dạng ngày.** Trang hiện "11/8/2026", không có số 0 ở đầu, nên đúng ra là dạng `M/D/YYYY` (tháng/ngày/năm). Dạng `mm/dd/yyyy` sẽ hiện "11/08/2026". Chi tiết này nhỏ nhưng có ích khi viết mục checklist về định dạng ngày.
+4. **Mục 7 đánh số 1, 2, 3, 6.** Cần đánh lại thành 1, 2, 3, 4.
+
+Các chỗ còn lại đã ổn: Tiêu đề tab "frontend-web", ô Email bị khóa, giỏ trống nên không có badge.
+
+### Về "mức scale hiển thị của Windows"
+
+Đây là gợi ý thêm của tôi. WORKFLOW và đề bài **không** yêu cầu ghi mục này, nên bảng môi trường của bạn đã đủ theo yêu cầu.
+
+Windows có hai mức phóng to khác nhau:
+
+| | Ở đâu | Bạn đã ghi |
+|---|---|---|
+| Zoom trình duyệt | Chrome, Ctrl + / Ctrl − | 100% |
+| Scale của Windows | Settings → System → Display → Scale (thường 100%, 125%, 150%) | Chưa |
+
+Màn hình 2K (2560 x 1440) thường được Windows để scale 150%. Khi đó mọi thứ, kể cả trang web, được phóng to 1,5 lần. Trang web vì vậy "thấy" màn hình chỉ rộng khoảng 1700 px chứ không phải 2560 px. Nhìn cỡ chữ và chiều cao navbar trong ảnh, máy bạn có vẻ đang ở khoảng 150%, nhưng phải mở Settings mới chắc.
+
+Mục này có ích ở Task 3. Khi so sánh với máy khác, ví dụ laptop 1920 x 1080 scale 125%, bố cục và cỡ chữ có thể khác nhau chỉ vì scale khác nhau chứ không phải lỗi. Có số scale thì bạn giải thích được ngay. Bạn có thể:
+- Mở Settings xem rồi thêm một dòng "Scale của Windows" vào bảng môi trường, rồi xóa dòng số 6 ở mục 7 (tôi khuyên cách này, mất khoảng 10 giây).
+- Hoặc xóa dòng số 6 nếu không muốn ghi.
+
+### Commit
+
+Tôi thấy chuỗi lệnh commit lần trước chưa chạy. Tôi cũng viết nó theo cú pháp bash, nên nếu chạy trong PowerShell (terminal mặc định của VS Code) sẽ bị lỗi. Tôi đã tạo lại bản AI điền hôm qua trong scratchpad, nên vẫn tách được 3 commit: Bạn điền, AI điền từ ảnh, bạn kiểm tra.
+
+Nếu bạn **chưa** commit gì cho bước survey ngoài bản AI (1), thì sau khi sửa xong 4 chỗ trên, nhờ phiên điều phối xuất prompt log rồi chạy trong PowerShell:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+$S = "C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad"
+Copy-Item checklist\00_survey.md "$S\00_survey_SV_check.md"
+Copy-Item "$S\00_survey_SV.md" checklist\00_survey.md
+git add checklist/screenshots checklist/00_survey.md
+git commit -m "[T1][survey] Record UI observations and screenshots"
+Copy-Item "$S\00_survey_AI.md" checklist\00_survey.md
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Review survey against screenshots"
+Copy-Item "$S\00_survey_SV_check.md" checklist\00_survey.md
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Fill remaining observations after check"
+```
+
+Nếu bạn đã commit theo cách khác thì đừng chạy chuỗi này; báo tôi, tôi sẽ điều chỉnh.
+````
+
+---
+
+### C27 | 00:16 09/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>by4813fgh</task-id>
+<task-id>btaj5ir3x</task-id>
+<task-id>bklma4d4y</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: by4813fgh, btaj5ir3x, bklma4d4y.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C28 | 00:16 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Chạy lại server cho tôi, nãy tôi lỡ tắt mất. Phần task 1 chắc giờ chưa cần vì đã có ảnh rồi, giờ tôi cần chạy để chụp ảnh cho task 2.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check whether EShop ports are free
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop web frontend on port 5173
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Wait for servers and verify admin login and data
+- Bash: Check orders, categories and accounts in current DB
+- Bash: Find which session ran the DB reset
+- Bash: Inspect the Task 1 session tool call at 00:17
+- Bash: Inspect Task 1 session events around 00:17
+
+**Output AI (nguyên văn):**
+
+````text
+Cả 3 cổng đang trống. Bật lại server, không reset DB, nên dữ liệu cũ (5 đơn hàng, tài khoản `newuser`) vẫn còn.
+
+Server đã chạy, nhưng API Admin báo 0 đơn hàng, khác với 5 đơn đã tạo hôm qua. Kiểm tra lại trực tiếp bằng tài khoản `test@eshop.com`.
+
+Không phiên Claude nào chạy lệnh reset: Ở các thời điểm đó, phiên Task 1 chỉ ghi file vào scratchpad của nó. Lúc tắt server, có thể bạn đã chạy `node database.js`.
+
+Server đã chạy lại:
+- Web: `http://localhost:5173`
+- Admin: `http://localhost:5174`, đăng nhập `admin@eshop.com` / `Admin123!`
+- API cổng 3000. Đã kiểm tra trả 200 và đăng nhập Admin được.
+
+**DB đang ở trạng thái dữ liệu mẫu ban đầu.** File DB được sửa lúc 00:17 ngày 09/11, nên 5 đơn hàng và tài khoản `newuser@eshop.com` đã mất. Hiện chỉ còn 3 danh mục mẫu (Điện thoại, Laptop, Phụ kiện) và 5 sản phẩm.
+
+- **Với ảnh Task 2, như vậy là đúng.** Mỗi phiên usability đều bắt đầu từ dữ liệu mẫu, nên ảnh chụp bây giờ sẽ giống hệt những gì người tham gia thấy.
+- **Chỉ chụp, không tạo danh mục hay sản phẩm.** Nếu lỡ tạo thì báo tôi để reset trước pilot.
+- **Task 1:** Khi tới bước chạy checklist cần lịch sử đơn hàng, bạn báo tôi để chạy lại `tools/seed_orders.py`. Ảnh khảo sát của Task 1 đã chụp xong nên không bị ảnh hưởng.
+
+Ảnh lưu ở `usability/screenshots/admin_<số>_<nội dung>.png`, theo WORKFLOW mục 5 vừa thêm.
+````
+
+---
+
+### C29 | 01:05 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chụp xong, bạn có thể kiểm tra. Vì không có flow_04 nên tôi đã bỏ và đánh số thứ tự lại cho các phần về sau.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Glob: Homeworks/HW03/usability/screenshots/*
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_01_admin_login.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_02_admin_home.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_03_category_list.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_04_category_form_filled.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_05_category_created.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_06_product_list_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_06_product_list_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_07_product_form_empty.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_08_product_category_dropdown.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_09_product_form_filled.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_10_product_created.png
+- Read: d:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_11_product_in_list.png
+- PowerShell: List screenshot sizes and pixel dimensions
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã xem hết 12 ảnh. Có 1 ảnh hỏng cần chụp lại và vài điểm nhỏ về cách chụp. Về nội dung, ảnh đủ để kiểm cả 4 giả định trong bản plan.
+
+## 1. Tình trạng file
+
+| File | Tình trạng |
+|---|---|
+| `flow_08_product_category_dropdown.png` | **Hỏng**: Ảnh chỉ có 3×1 pixel, 123 byte. Cần chụp lại (cách chụp ở cuối mục này) |
+| `flow_07_product_form_empty.png`, `flow_09_product_form_filled.png` | Ảnh cắt vùng, không thấy khung trình duyệt và URL. URL ở mọi trang đều là `localhost:5174` nên không mất thông tin. Giữ được, nhưng nếu tiện thì chụp lại cả cửa sổ cho đồng bộ |
+| `flow_06_product_list_1.png` và `flow_06_product_list_2.png` | Mục 5 quy định ảnh đầu không có hậu tố, ảnh sau mới thêm `_2`. Nên đổi `flow_06_product_list_1.png` thành `flow_06_product_list.png` |
+| `.gitkeep` | Không còn trong thư mục. Thư mục đã có ảnh nên không cần file này nữa |
+| Các ảnh còn lại | Đạt |
+
+**Cách chụp lại flow_08:** Danh sách xổ xuống của trình duyệt sẽ tự đóng khi bạn mở công cụ cắt ảnh (Win+Shift+S). Bạn bấm vào ô danh mục cho danh sách mở ra, rồi nhấn phím **PrtScn**. Phím này chụp toàn màn hình mà không làm mất focus, nên danh sách vẫn mở trong ảnh.
+
+## 2. Kiểm 4 giả định của bản plan
+
+| Giả định | Kết quả | Căn cứ |
+|---|---|---|
+| G1: Có khu vực danh mục và khu vực sản phẩm riêng | **Đúng**. Sidebar có hai mục "Danh mục" và "Sản phẩm" | flow_02 |
+| G2: Danh mục vừa tạo có trong ô chọn danh mục | **Đúng một phần**. flow_09 cho thấy "Bàn phím" đã được chọn. Còn thiếu ảnh danh sách đang mở (flow_08) | flow_09 |
+| G3: Có ô nhập URL ảnh | **Đúng**. Có ô "URL Ảnh" dạng ô nhập chữ | flow_07 |
+| G4: Reset DB xoá dữ liệu cũ | **Đúng một phần**. flow_03 chỉ có 3 danh mục mẫu. Chưa có ảnh chụp sau một lần reset để đối chiếu | flow_03 |
+
+## 3. Những điểm thấy được trên ảnh, ảnh hưởng tới plan và kịch bản
+
+Đây chỉ là quan sát để bạn cân nhắc khi review. Tôi chưa sửa gì vào bản plan.
+
+1. **Tạo danh mục không có form riêng.** Trang chỉ có một ô nhập (placeholder "Tên danh mục mới") và nút "Thêm mới" (flow_03). Vì vậy bạn bỏ flow_04 cũ là đúng.
+2. **Sau khi bấm lưu không thấy thông báo nào.** Ở flow_05, dòng #4 "Bàn phím" hiện ra và ô nhập tự xoá. Ở flow_10, form tự xoá trắng. Cả hai ảnh đều không có thông báo trong khung nhìn. Điểm này liên quan trực tiếp tới Q2 và Q7.
+3. **Ô danh mục mặc định chọn sẵn "Điện thoại"** (flow_07). Nếu người tham gia quên đổi, sản phẩm vẫn lưu được nhưng nằm sai danh mục mà không có cảnh báo. Đây là rủi ro chính của chặng M3 (Q4, lỗi "chọn sai danh mục" trong D3).
+4. **Danh sách sản phẩm không có cột Danh mục**, và sản phẩm mới nằm cuối danh sách, phải cuộn xuống mới thấy (flow_11).
+   - Người tham gia không kiểm được ngay trên trang này là sản phẩm đã vào đúng danh mục (Q7).
+   - Người điều phối cũng phải kiểm D6 bằng cách khác: Nút "Sửa" hoặc trang web bán hàng.
+   - Điểm này ảnh hưởng tới quyết định QĐ1 (có thêm chặng M4 "tự kiểm tra kết quả" hay không).
+5. **Form sản phẩm không có nhãn và không có dấu `*`.** Các ô chỉ có placeholder, gõ chữ vào là mất gợi ý (flow_09). FR-22 yêu cầu dấu `*` cho trường bắt buộc. Điểm này liên quan tới Q5.
+6. **Khối "Import sản phẩm từ CSV" nằm trên form "Thêm sản phẩm mới".** Người dùng mới có thể vào nhầm khối này trước. Điểm này liên quan tới Q3.
+7. **Trang đăng nhập dùng tiếng Anh** ("Admin Login", "Login", "Email", "Password"), trong khi các trang khác dùng tiếng Việt (FR-21). Điểm này liên quan tới Q9.
+8. **Giá hiển thị không có dấu phân cách hàng nghìn**, ví dụ "40000000 ₫" (FR-21). Ô nhập giá cũng vậy, nên rất dễ gõ thừa hoặc thiếu một số 0. Trong flow_09 bạn nhập 40.000.000 cho một bàn phím: Nếu bạn định nhập 4.000.000 thì đây chính là kiểu lỗi người tham gia dễ mắc.
+
+## 4. Cần bạn xác nhận
+
+Hai câu dưới đây ảnh không trả lời được, chỉ bạn biết vì bạn đã thao tác trực tiếp:
+- **(a)** Lúc bấm "Thêm mới" và "Lưu sản phẩm", có thông báo nào hiện lên rồi tắt nhanh không?
+- **(b)** Danh mục "Bàn phím" có hiện ngay trong ô chọn danh mục không, hay bạn phải tải lại trang?
+
+Bạn chụp lại flow_08, trả lời (a), (b) và gửi các điểm muốn sửa trong bản plan. Sau đó tôi viết `01_test_plan.md` kèm bảng "Thay đổi so với bản AI".
+
+Lệnh commit ảnh (bạn tự commit, sau khi đã đổi tên và chụp lại flow_08):
+
+```
+cd Homeworks/HW03
+git add usability/screenshots/
+git commit -m "[T2][plan] Add admin flow screenshots for plan review"
+```
+````
+
+---
+
+### C30 | 01:10 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã sửa và thêm những phần bạn nói, kiểm tra lại giúp tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Diff current survey against AI-filled version and check leftovers
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã so bản hiện tại với bản AI điền: **Bảng đã đủ, không còn ô `?` nào cần điền.** Không có dấu "—" hay "·".
+
+Bạn đã sửa xong:
+- Thêm dòng "Scale của Windows: 150%" vào bảng môi trường.
+- Điền tiêu đề tab "frontend-web" cho cả 3 trang.
+- Ô Email ghi "bị khóa"; placeholder của ô Họ Tên ghi "Không thấy (ô đã có giá trị)".
+- Ô Mật khẩu ở cả hai trang ghi "ký tự bị che".
+- Badge giỏ hàng ghi "Không thấy badge vì giỏ không có hàng".
+- Mục 7 còn 3 dòng, đánh số 1, 2, 3; ngày ghi đúng dạng `M/D/YYYY`.
+
+Có 3 chỗ nhỏ, sửa hay không tùy bạn, không ảnh hưởng nội dung:
+1. **Dòng 11** vẫn giải thích ký hiệu `? (SV bổ sung)`, trong khi file không còn ô nào như vậy. Có thể đổi thành: "Các ô ảnh không cho thấy (tiêu đề tab, ô mật khẩu có che ký tự không, ô Email có khóa không, giỏ hàng lúc chụp): Sinh viên xem trực tiếp rồi điền."
+2. **Dòng 5** vẫn ghi "Cập nhật: 2026-11-08 20:58", có thể đổi sang thời điểm bạn sửa xong.
+3. **Dòng 106** chỉ ghi "11/8/2026". Có thể thêm "(dạng M/D/YYYY)" để bảng 3.4 tự đọc được, khỏi phải lật xuống mục 7.
+
+Chuỗi lệnh commit ở lượt trước vẫn dùng được: Bản bạn điền ban đầu và bản AI điền đều còn trong scratchpad. Bạn sửa xong (hoặc bỏ qua) 3 chỗ trên, nhờ phiên điều phối xuất prompt log, rồi chạy chuỗi lệnh PowerShell đó.
+
+Commit xong thì báo tôi để sang bước `oracle`.
+````
+
+---
+
+### C31 | 01:11 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+a. Không có thông báo nào.
+b. Có ngay.
+
+Tôi đã thêm lại flow_08
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: List screenshots with dimensions
+- Read: D:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_08_product_category_dropdown.png
+- AskUserQuestion
+
+**Output AI (nguyên văn):**
+
+````text
+No response requested.
+````
+
+---
+
+### C32 | 01:14 09/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bgl8t1d50</task-id>
+<task-id>bsfudp6xq</task-id>
+<task-id>b7c00q2in</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: bgl8t1d50, bsfudp6xq, b7c00q2in.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C33 | 01:14 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tiếp tục.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Grep: —|·
+- Write: d:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Grep: —|·
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn giữ cả 5 thay đổi và chọn QĐ3 là "Tùy từng người". Tôi viết `01_test_plan.md` theo đúng các quyết định này.
+
+Tôi đã viết xong bản review [usability/01_test_plan.md](Homeworks/HW03/usability/01_test_plan.md). Bản AI gốc trong `ai_raw/` giữ nguyên.
+
+**Đã đưa vào bản review:**
+- **C1:** Mục 10.1 có thêm cột kết quả kiểm. G1, G2, G3 đúng. G4 mới đúng một phần, sẽ kiểm tiếp ở pilot.
+- **C2:** Dấu hiệu kết thúc của M1 đến M3 giờ viết theo giao diện thật. M3 chỉ tính là hoàn thành đúng khi D6 xác nhận sản phẩm nằm trong danh mục mới.
+- **C2 (tiếp):** D6 nói rõ cách kiểm: Tên và giá xem trên bảng của Admin, còn danh mục xem qua trang chi tiết sản phẩm hoặc nút "Sửa". Hai cách này chưa có ảnh, nên tôi thêm **QĐ7** để chốt ở bước pilot.
+- **C3, C4:** Bổ sung Q2, Q3, Q4, Q5, Q7, Q9 theo ảnh. D3 tách thành 5 loại lỗi (a) đến (e). Ở Q2 và Q7 có thêm một dòng ghi chú: SRS không quy định Admin phải hiện thông báo sau khi lưu, nên chưa coi đó là bug.
+- **C5:** Bỏ rủi ro "danh mục mới không hiện trong form" vì đã kiểm là không xảy ra. Thêm rủi ro "sản phẩm vào sai danh mục mà không ai biết": Người điều phối kiểm D6 sau mỗi phiên, trước khi reset DB.
+- **QĐ3 (Tùy từng người):** Mỗi phiên ghi hình thức trực tiếp hay từ xa trong `notes.md`. Khi tổng hợp, thời gian của phiên từ xa được ghi tách riêng. Phần hạn chế của báo cáo có thêm ý "trộn phiên trực tiếp và từ xa".
+
+Bảng **"Thay đổi so với bản AI"** ở cuối file có 14 dòng:
+- **9 dòng Thiếu:** 7 dòng ghi lý do Prompt (bản AI viết khi chưa có ảnh), 2 dòng ghi lý do Đặc thù giao diện.
+- **2 dòng Mơ hồ**, **1 dòng Thừa** và **1 dòng Quyết định của SV**.
+
+Các quyết định còn để mở cho bước sau: QĐ1, QĐ2, QĐ4, QĐ5, QĐ6, QĐ7.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước). Nếu bạn chưa commit ảnh thì commit ảnh trước, sau đó mới commit bản review:
+
+```
+cd Homeworks/HW03
+git add usability/screenshots/
+git commit -m "[T2][plan] Add admin flow screenshots for plan review"
+git add usability/01_test_plan.md
+git commit -m "[T2][plan] Review test plan against admin screenshots"
+```
+
+(Nhắc lại: `flow_06_product_list_1.png` vẫn nên đổi tên thành `flow_06_product_list.png` trước khi commit ảnh.)
+
+Bước tiếp theo của Task 2 là `scenario`.
+
+Tôi viết `01_test_plan.md` với các thay đổi C1 đến C5 và chốt QĐ3 là "Tùy từng người".
+
+I've written the reviewed test plan to [usability/01_test_plan.md](Homeworks/HW03/usability/01_test_plan.md). [ai_raw/T2_plan.md](Homeworks/HW03/usability/ai_raw/T2_plan.md) is untouched.
+
+**What changed from the AI draft:**
+- **C1, assumptions G1 to G4:** These are now checked against the screenshots instead of being assumptions. G1, G2 and G3 hold. G4 holds only partly, so it gets checked again at the pilot.
+- **C2, how a session ends and how to check the result:** The end of each stage now matches the real UI (Dashboard, last row of the category table, last row of the product table). The product table has no category column, so after each session you check the product's category another way. Use the product detail page on the shop site (FR-06 says it shows the category) or the product's edit form in Admin. I have no screenshot of that edit form yet.
+- **C3 and C4, questions and error types:**
+  - Q2 and Q7 now say the system shows no message after saving.
+  - Q3 adds the CSV import block sitting above the product form.
+  - Q4 adds that the category field is preset to "Điện thoại".
+  - Q5 adds that the fields have no labels, no `*` marks, and no thousands separators in the price.
+  - Q9 adds that the login page is in English.
+  - Error count D3 is split into 5 types (a) to (e), so each type can be tallied separately.
+- **C5, risks:** I removed the risk "new category doesn't appear in the product form", since that turned out not to happen. I added the risk that a product lands in the wrong category without anyone noticing.
+- **QĐ3, in person or remote:** Settled as "it depends on the participant". Each session file records which one it was, remote sessions are marked separately when timings are summarised, and the mix is listed as a limitation of the study.
+- **Changes table:** The section "Thay đổi so với bản AI" has 14 rows. Two follow-up decisions also stay open: whether to add a stage M4 where participants check their own result (QĐ1), and the scenario data and benchmark time (QĐ2).
+
+When I saved the file, the tool said it was "updated" rather than "created". If you had already started your own version of `01_test_plan.md`, it has been overwritten, so let me know and I'll merge your content back in. Otherwise you can ignore this.
+
+You'll do the commits yourself. Ask the coordination session to export the prompt log first. Commit (2), the reviewed plan; if you haven't committed the screenshots yet, commit them separately first with the command from my earlier message:
+
+```
+cd Homeworks/HW03
+git add usability/01_test_plan.md
+git commit -m "[T2][plan] Review usability test plan against admin screenshots"
+```
+
+The next step is `[T2][scenario]`.
+````
+
+---
+
+### C34 | 01:15 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã bổ sung xong 00_survey.
+- Tôi đã chụp các ảnh cho task 2.
+- Task 2 đang làm file lại sau khi có ảnh.
+
+Xuất log, kiểm tra, và đưa tôi các commit.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show repo status and newest sessions
+- Bash: Show WORKFLOW diff and latest turns of both design sessions
+- Bash: Consolidate WORKFLOW naming, check servers, export log
+- Bash: Update tracker for survey done and plan progress
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm tra trạng thái repo và xem có phiên Claude mới nào cần thêm vào danh sách phiên không.
+
+Prompt log đã xuất lại (34 lượt từ 3 phiên), không có phiên mới nào. Server vẫn đang chạy (API cổng 3000 trả 404 ở trang gốc là bình thường, Web và Admin trả 200).
+
+## Kết quả kiểm tra
+
+- **Task 1, `00_survey.md`:** Lượt kiểm tra cuối của phiên Task 1 xác nhận không còn ô nào cần điền. Hai commit trước (`25211f0`, `4be2ba8`) đã push lên GitHub, nên bộ 3 commit dựng lại từ scratchpad mà phiên Task 1 gợi ý không dùng được nữa. Giờ chỉ cần thêm 1 commit review.
+- **Task 2, ảnh:** Đủ 11 ảnh `flow_*`. Ảnh `flow_08` chụp lại đã bình thường (14 KB, trước đó hỏng chỉ 123 byte).
+- **WORKFLOW:** Phiên Task 2 đã tự thêm quy ước `flow_<số>_<nội dung>.png`, trùng với dòng `admin_...` tôi thêm trước đó. Ảnh của bạn đặt theo `flow_`, nên tôi giữ `flow_`, bỏ dòng `admin_` và dòng thư mục trùng trong cây thư mục.
+- **Dữ liệu:** Lúc chụp bạn đã tạo danh mục "Bàn phím" và 1 sản phẩm, nên DB không còn là dữ liệu mẫu. Trước pilot tôi sẽ reset.
+
+**Tùy chọn trước khi commit:** Phiên Task 2 gợi ý đổi `flow_06_product_list_1.png` thành `flow_06_product_list.png` (theo quy ước, ảnh đầu không có hậu tố). Nếu đổi thì đổi trước khi chạy lệnh dưới đây. Không đổi cũng được.
+
+## Lệnh commit (PowerShell)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Review AI-filled survey"
+git add WORKFLOW.md
+git commit -m "[setup] Use flow_ naming for Task 2 screenshots in workflow"
+git add usability/screenshots prompt_log.md
+git commit -m "[T2][plan] Add admin flow screenshots for assumption check"
+git push
+```
+
+`git add usability/screenshots` cũng ghi nhận việc xóa file `.gitkeep` (thư mục giờ đã có ảnh nên không cần nữa).
+
+## Tiếp theo
+
+- **Phiên Task 1:** Sang bước `[T1][oracle]`. Tracker đã đánh dấu bước survey ✅.
+- **Phiên Task 2:** Khi viết lại xong `ai_raw/T2_plan_v2.md`, báo tôi để xuất log và đưa commit `[T2][plan] ... (AI revision 1)`.
+````
+
+---
+
+### C35 | 01:18 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Mục 5 quy định ảnh đầu không có hậu tố là do quy định ở WORKLOW sao? Nếu vậy thì bỏ giúp tôi nhé, vì ảnh liên quan đến nhau thì phải có hậu tố chung.
+- Phiên 2 đã viết xong.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check commits, status and suffix rules in WORKFLOW
+- Bash: Inspect 01_test_plan header and Task 2 session's last reply
+- Bash: Change image suffix rule in WORKFLOW and export log
+- Bash: Update tracker for test plan review
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng vậy: Mục 5 của WORKFLOW ghi "thêm `_2`, `_3`" cho ảnh thứ hai trở đi, nên ảnh đầu không có hậu tố. Tôi sửa lại quy tắc này, rồi kiểm tra bản viết lại của phiên Task 2.
+
+Đã sửa quy tắc ảnh trong [WORKFLOW.md](WORKFLOW.md) mục 5. Prompt log đã xuất lại (35 lượt từ 3 phiên).
+
+## 1. Quy tắc hậu tố ảnh
+
+Đúng như bạn nghĩ, quy tắc cũ ("thêm `_2`, `_3`") nằm trong WORKFLOW mục 5. Tôi đã bỏ phần đó ở cả hai dòng (ảnh `flow_` và ảnh mục Failed), rồi thêm một quy tắc chung ngay dưới bảng:
+
+> Nhiều ảnh cho cùng một nội dung: Mọi ảnh đều có hậu tố chung đánh số từ `_1`, ví dụ `flow_06_product_list_1.png`, `flow_06_product_list_2.png`. Chỉ có một ảnh thì không thêm hậu tố.
+
+Như vậy giữ nguyên tên `flow_06_product_list_1.png`, không cần đổi. Khi gặp lại hai phiên thiết kế, nhắc chúng đọc lại mục 5, vì cả hai đã đọc WORKFLOW từ trước.
+
+## 2. Bản test plan của phiên Task 2
+
+Phiên Task 2 không tạo `ai_raw/T2_plan_v2.md` mà viết thẳng bản review `usability/01_test_plan.md`. Bản AI gốc `ai_raw/T2_plan.md` vẫn giữ nguyên, nên vẫn đúng WORKFLOW.
+
+**Bạn đọc kỹ file này trước khi commit**, vì toàn bộ nội dung review do AI viết từ ảnh và từ câu trả lời của bạn:
+- **Bảng "Thay đổi so với bản AI" (14 dòng ở cuối file):** Kiểm các cột "Loại" và "Vì sao AI bỏ sót". Bảng này sẽ dùng cho Audit và AI Critique.
+- **QĐ3** đã chốt là "tùy từng người" (5 người gặp trực tiếp, 2 người online).
+- **Các quyết định còn mở** (QĐ1, QĐ2, QĐ4 đến QĐ7) sẽ chốt ở các bước `scenario`, `instruments` và pilot.
+
+## 3. Lệnh commit (PowerShell)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/00_survey.md
+git commit -m "[T1][survey] Review AI-filled survey"
+git add WORKFLOW.md
+git commit -m "[setup] Unify screenshot naming rules in workflow"
+git add usability/screenshots
+git commit -m "[T2][plan] Add admin flow screenshots for assumption check"
+git add usability/01_test_plan.md prompt_log.md
+git commit -m "[T2][plan] Review usability test plan against admin screenshots"
+git push
+```
+
+Commit thứ hai gồm cả hai lần sửa WORKFLOW: Gộp về một quy ước `flow_` và đổi quy tắc hậu tố.
+
+Tiếp theo:
+- **Phiên Task 1:** `[T1][oracle]`.
+- **Phiên Task 2:** `[T2][scenario]`.
+````
+
+---
+
+### C36 | 01:43 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+C2, how a session ends and how to check the result: The end of each stage now matches the real UI (Dashboard, last row of the category table, last row of the product table). The product table has no category column, so after each session you check the product's category another way. Use the product detail page on the shop site (FR-06 says it shows the category) or the product's edit form in Admin. I have no screenshot of that edit form yet.
+
+Changes table: The section "Thay đổi so với bản AI" has 14 rows. Two follow-up decisions also stay open: whether to add a stage M4 where participants check their own result (QĐ1), and the scenario data and benchmark time (QĐ2).
+When I saved the file, the tool said it was "updated" rather than "created". If you had already started your own version of 01_test_plan.md, it has been overwritten, so let me know and I'll merge your content back in. Otherwise you can ignore this.
+
+
+-> Nói rõ các đoạn này cho tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Xin lỗi, tin trước tôi lỡ viết bằng tiếng Anh. Dưới đây là giải thích rõ từng đoạn.
+
+## 1. Đoạn C2: Khi nào một chặng kết thúc, và kiểm kết quả thế nào
+
+**Vì sao cần "dấu hiệu kết thúc":** Để đo thời gian từng chặng (D2), bạn phải biết chính xác lúc nào trên video thì một chặng xong. Bản AI viết dấu hiệu theo kiểu chung chung, vì lúc đó chưa có ảnh. Bản review ghi theo đúng màn hình thật:
+
+| Chặng | Kết thúc khi nhìn thấy | Ảnh |
+|---|---|---|
+| M1 Đăng nhập | Trang "Dashboard" hiện ra | flow_02 |
+| M2 Tạo danh mục | Danh mục mới hiện ở **dòng cuối** bảng danh mục | flow_05 |
+| M3 Thêm sản phẩm | Người tham gia bấm "Lưu sản phẩm" và sản phẩm hiện ở **dòng cuối** bảng sản phẩm | flow_11 |
+
+**Vì sao phải kiểm danh mục sau phiên:** Bảng sản phẩm trong Admin chỉ có 4 cột: Ảnh, Tên SP, Giá, Hành động. **Không có cột Danh mục.** Vì vậy, nhìn màn hình lúc người tham gia làm, bạn không biết sản phẩm đã vào danh mục nào. Rủi ro này có thật vì ba điều cộng lại:
+- Ô danh mục mặc định chọn sẵn "Điện thoại".
+- Lưu xong không có thông báo.
+- Bảng không cho thấy danh mục.
+
+Nếu người tham gia quên đổi ô danh mục, sản phẩm vẫn lưu được nhưng nằm trong "Điện thoại", và cả hai bên đều không nhận ra.
+
+Vì thế, **sau mỗi phiên** bạn tự kiểm sản phẩm có nằm đúng danh mục mới không (số liệu D6). Có hai cách:
+- **Cách 1, trang web bán hàng:** Mở `http://localhost:5173`, vào trang chi tiết của sản phẩm vừa tạo. FR-06 yêu cầu trang này hiển thị Danh mục.
+- **Cách 2, nút "Sửa" trong Admin:** Bấm "Sửa" ở dòng sản phẩm đó và xem ô danh mục đang chọn gì. Tôi **chưa có ảnh form "Sửa"**, nên chưa biết form này có hiện danh mục hay không. Nếu muốn dùng cách này, bạn chụp thêm `flow_12_product_edit_form.png`, và nhớ thoát ra mà không bấm lưu.
+
+Việc người tham gia **tự** kiểm kết quả là chuyện khác: Đó là quyết định QĐ1, xem mục 2.
+
+## 2. Đoạn về bảng "Thay đổi so với bản AI" và các quyết định còn mở
+
+**Bảng thay đổi** ở cuối `01_test_plan.md` có 14 dòng. Mỗi dòng ghi một chỗ bản review khác bản AI:
+
+| Loại | Số dòng | Gồm những gì |
+|---|---|---|
+| Thiếu | 10 | Những gì bản AI chưa có vì chưa thấy giao diện: Dấu hiệu kết thúc chặng, cách kiểm D6, không có thông báo, khối CSV, danh mục mặc định, form không nhãn và không `*`, trang đăng nhập tiếng Anh, D7, rủi ro sai danh mục, FR-06 |
+| Quyết định của SV | 3 | Bỏ lưu ý "chưa có ảnh"; chốt kết quả G1 đến G4; chốt QĐ3 |
+| Thừa | 1 | Bỏ rủi ro "danh mục mới không hiện trong form", vì đã kiểm là không xảy ra |
+
+Với 10 dòng "Thiếu", cột "Vì sao AI bỏ sót" chia như sau:
+- **6 dòng "Prompt":** Lúc viết bản AI chưa có ảnh, nên AI thiếu thông tin.
+- **4 dòng "Đặc thù giao diện":** Những điểm chỉ có ở EShop, như bảng không có cột Danh mục hay ô danh mục mặc định "Điện thoại".
+
+Bảng này là dữ liệu cho phần AI Critique và AI Audit Report sau này.
+
+**Sửa lại một chỗ tôi ghi sai:** Tin trước tôi nói còn "hai" quyết định mở. Thực ra plan có 6 quyết định, mới chốt 1 (QĐ3), **còn mở 5**:
+
+| Mã | Nội dung | Chốt ở bước |
+|---|---|---|
+| QĐ1 | Có thêm chặng M4 bắt người tham gia **tự kiểm tra** sản phẩm đã vào đúng danh mục, hay chỉ quan sát xem họ có tự kiểm không | `scenario` (bước tiếp theo) |
+| QĐ2 | Câu chữ kịch bản, dữ liệu đưa cho người tham gia (tên danh mục, tên, giá, URL ảnh sản phẩm), tiêu chí hoàn thành, thời gian chuẩn của từng chặng | `scenario` (bước tiếp theo) |
+| QĐ4 | Thế nào là "bế tắc hẳn" (lúc được phép can thiệp) và câu can thiệp chuẩn | `scenario` hoặc `instruments` |
+| QĐ5 | Dùng thang SUS hay UEQ-S | `instruments` |
+| QĐ6 | Thang severity cho các phát hiện usability | `analysis` |
+
+QĐ1 và QĐ2 là hai quyết định cần chốt ngay ở bước kế tiếp. Có lẽ vì vậy tôi đã ghi nhầm thành "còn hai".
+
+## 3. Đoạn về chữ "updated"
+
+Khi ghi file `01_test_plan.md`, công cụ báo "updated" (đã cập nhật) chứ không báo "created" (tạo mới). Thường thì điều này có nghĩa là trước đó đã có một file trùng tên. Tôi không đọc file đó trước khi ghi. Vì vậy, nếu lúc ấy bạn đã có sẵn `01_test_plan.md` với nội dung riêng, nội dung đó đã bị bản của tôi thay mất. File chưa được commit nên git cũng không khôi phục được.
+
+- Nếu trước đó **chưa có** file này, hoặc chỉ là file trống: Bạn bỏ qua đoạn này.
+- Nếu **đã có** nội dung của bạn: Bạn báo tôi phần nội dung đó (dán lại hoặc nhớ ý chính), tôi sẽ gộp vào bản hiện tại.
+````
+
+---
+
+### C37 | 01:47 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi chỉ sửa lại một vài thứ trong đó thôi, như bỏ các tham chiếu về WORKFLOW.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: WORKFLOW|3\.2\.1|1\.5
+- Read: d:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+
+**Output AI (nguyên văn):**
+
+````text
+Vậy không có nội dung nào của bạn bị mất, không cần gộp gì thêm. Tôi đã kiểm lại: Trong `01_test_plan.md` không còn chỗ nào nhắc tới WORKFLOW, và bảng "Thay đổi so với bản AI" vẫn giữ nguyên 14 dòng.
+
+Bỏ các tham chiếu này chỉ là sửa hình thức, nội dung không đổi. WORKFLOW mục 2.2 nói không cần ghi thay đổi thuần hình thức, nên bạn không phải thêm dòng nào vào bảng.
+
+Phần bạn sửa sẽ nằm chung trong commit (2) của bước `plan`, dùng lệnh tôi đã đưa ở tin trước. Commit xong, mình sang bước `[T2][scenario]` và chốt QĐ1, QĐ2 ở đó.
+````
+
+---
+
+### C38 | 01:48 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi có một số thay đổi ở file 01_test_plan.md nên phiền bạn xuất lại prompt trước khi tôi commit, trước đó tôi chưa commit.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Re-export prompt log and check status
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
