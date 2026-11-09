@@ -2838,7 +2838,258 @@ Do có sự thay đổi nên tôi cần bạn kiểm tra, xuất lại log
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Thay đổi về lời chào trên navbar đã được ghi nhất quán ở cả hai file, có ảnh bằng chứng đi kèm. Prompt log đã xuất lại: 49 lượt từ 3 phiên.
+
+## Kết quả kiểm tra
+
+**`00_survey.md` (khảo sát):**
+- Thêm dòng ảnh 08 `survey_08_navbar_greeting_link.png`, có ghi chú "chụp bổ sung ngày 09/11/2026".
+- Bảng navbar sửa 2 dòng: Lời chào "Chào, <Họ Tên>" là link tới `/profile`, và đó là mục dẫn tới trang hồ sơ.
+- Ghi chú ở mục 7 và bảng thay đổi đều ghi rõ là sửa sau khi đã commit bước survey, kèm lý do (ảnh 01 đến 07 không cho thấy lời chào là link).
+- Không có dấu "—" hay "·".
+
+**`01_oracle.md` (bản review):**
+- UI-R41 tách mong đợi ở W-06 thành 2 trường hợp:
+  - Đã đăng nhập: Lời chào được highlight khi đang ở `/profile`.
+  - Chưa đăng nhập: Không mục nào được highlight.
+- CH-09 có thêm phần bổ sung.
+- Bảng thay đổi thêm một dòng loại **"Sai"**: Bản AI ghi navbar không có mục cho `/profile`. Đây là ghi nhận đáng giá cho AI Critique, vì AI chỉ dựa vào ảnh tĩnh nên không biết một đoạn chữ có bấm được hay không.
+- 5 dấu "—" còn lại vẫn chỉ nằm trong câu trích nguyên văn SRS.
+
+## Lệnh commit
+
+Sửa khảo sát là thay đổi của bước survey, nên tách thành commit riêng và commit trước bản review oracle:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/00_survey.md checklist/screenshots/survey_08_navbar_greeting_link.png
+git commit -m "[T1][survey] Fix navbar greeting link to profile with new screenshot"
+git add checklist/01_oracle.md prompt_log.md
+git commit -m "[T1][oracle] Review UI requirement extract"
+git push
+```
+
+⏱ Còn khoảng **39,5 giờ** làm việc | Còn **33 giờ 13 phút** tới mốc 22:00 10/11 | **48 giờ 13 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C50 | 12:49 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã commit xong. Bây giờ bạn hãy tiếp tục sang bước ai-draft đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List course slides, refs and templates
+- Glob: **/*{S13,GUI,Usability,UI Checklist,UI_Checklist,UsabilityTesting}*
+- Bash: Extract slide PDFs to text in scratchpad
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\s13.txt
+- Bash: Grep AI-First slides for GUI checklist topics
+- Bash: Read GUI checklist section of AI-First slides
+- Bash: Dump the Vietnamese GUI checklist template contents
+- Bash: Dump the Vietnamese GUI checklist template with UTF-8 output
+- Bash: Dump the Vietnamese GUI checklist template with UTF-8 stdout
+- Bash: Show IA-01 rows, summary and assumptions in reviewed oracle
+- Bash: Get current time for file header
+- Write: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-01.md
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-01.md
+- Bash: Verify item count, duplicates and banned characters
+
+**Output AI (nguyên văn):**
+
+````text
+Đang đọc slide AI-First (phần checklist theo control và heuristic) để làm nguồn ngoài SRS cho bản nháp IA-01.
+
+Đã đọc xong nguồn (oracle đã review, survey, slide S13, slide AI-First, template GUI checklist). Giờ tôi viết bản nháp IA-01.
+
+Xong bản nháp IA-01: [checklist/ai_raw/T1_draft_IA-01.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-01.md). Theo WORKFLOW, bước `ai-draft` chỉ có bản AI trong `ai_raw/`; bạn review sau ở `02_checklist.md`.
+
+**35 mục, từ `AI-01-01` đến `AI-01-35`:**
+
+| Nhóm | Số mục | Nội dung |
+|---|---|---|
+| Căn cứ SRS (mục 3.1) | 18 | Ngôn ngữ tiếng Việt, tách theo loại phần tử (nhãn, nút, tiêu đề, navbar, thông báo, tiêu đề tab, chữ trạng thái đơn); màu nút xanh dương / đỏ; định dạng tiền `₫`; đúng 1 thẻ `<h1>` và nội dung của nó; thứ tự Tab; bảng lịch sử đủ 4 thông tin |
+| Khuyến nghị ngoài SRS (mục 3.2) | 17 | Mỗi mục ghi nguồn: WCAG 2.2 (`lang="vi"`, tiêu đề trang, focus nhìn thấy được, tương phản, zoom 200%); Nielsen 4 và Shneiderman 1 (dùng từ và kiểu viết hoa nhất quán); checklist theo control trong slide AI-First; template `GUI checklist_Template_Vi.xlsx`; slide S13 (chữ tràn, định dạng ngày) |
+
+Mỗi mục ghi IA, màn hình, oracle, cách kiểm và kết quả mong đợi. Một kiểm tra dùng cho nhiều màn hình chỉ là một mục.
+
+File còn có:
+- Điều kiện chuẩn bị khi chạy (mục 2), ví dụ cần có đơn ở đủ 5 trạng thái.
+- Ma trận trạng thái đơn theo CH-06 (mục 4), có thể dùng chung với IA-04.
+- Bảng truy vết oracle sang mục (mục 5).
+- Các ý đã xét nhưng không đưa vào (mục 6). Ví dụ: Phần màu trạng thái để sang IA-04; dark mode và RTL để bạn xét ở bước `add`.
+
+**4 câu hỏi để bạn quyết định khi review (mục 7):**
+
+| Mã | Câu hỏi | Liên quan |
+|---|---|---|
+| CHD-01 | Giữ 6 mục ngôn ngữ riêng theo loại phần tử, hay gộp lại thành ít mục hơn | AI-01-01 đến AI-01-06 |
+| CHD-02 | Giữ hay bỏ mục yêu cầu ngày hiển thị theo ngày / tháng / năm; SRS không quy định định dạng ngày | AI-01-24 |
+| CHD-03 | Ô Email bị khóa ở W-06 nên bị bỏ qua khi Tab (theo template của môn) hay vẫn nhận focus (để screen reader đọc được) | AI-01-22 |
+| CHD-04 | Thứ tự Tab mong đợi đang suy từ vị trí phần tử trong ảnh survey. Đây là ghi chú hơn là câu hỏi: Nếu bố cục lúc chạy khác thì lấy theo bố cục thực tế | AI-01-16, AI-01-17 |
+
+Commit bản nháp (nhờ phiên điều phối xuất prompt log trước):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/ai_raw/T1_draft_IA-01.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-01"
+```
+
+Mỗi lượt chỉ làm một IA, nên tôi dừng ở đây. Khi bạn muốn, gửi lệnh làm IA-02 (Form).
+````
+
+---
+
+### C51 | 13:25 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+QĐ1. B
+QĐ2a. A
+QĐ2b. Khi gõ 2.990.000 thì giao diện tự nuốt thành 2.990000 (không đổi sang dấu phẩy được). Nên chúng ta để 2990000.
+QĐ2c. B
+QĐ2d. Tôi sẽ làm và đo sau khi file này hoàn thành và không còn gì phải review, sửa đổi.
+QĐ4. Đồng ý cách bạn định nghĩa.
+
+Tôi đã thêm URL ảnh.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: List usability folder files with timestamps
+- Read: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_scenario.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Grep: QĐ7|—|·
+- Grep: QĐ|D6|Sửa
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+
+**Output AI (nguyên văn):**
+
+````text
+Bản test plan bạn đã sửa không còn QĐ7, nên tôi sửa hai chỗ trong `02_scenario.md` đang nhắc tới QĐ7.
+
+Tôi đã viết xong [usability/02_scenario.md](Homeworks/HW03/usability/02_scenario.md) theo các quyết định của bạn.
+
+**⚠️ Cần xử lý trước:** File [ai_raw/T2_scenario.md](Homeworks/HW03/usability/ai_raw/T2_scenario.md) đã bị sửa sau khi AI tạo. File được tạo lúc 01:50 nhưng lần sửa cuối là 13:10. Dòng 63 có URL ảnh, trong khi dòng 68 của chính bản AI viết rằng AI không tự đặt URL. Có vẻ bạn đã thêm URL vào bản này. WORKFLOW mục 1.2 cấm sửa file trong `ai_raw/`. Tôi đã chuyển URL sang `02_scenario.md`, nên bạn khôi phục bản gốc:
+- **Nếu bản AI đã được commit:** Chạy `git checkout -- usability/ai_raw/T2_scenario.md` trong `Homeworks/HW03`. WORKFLOW mục 1.4 cho phép lệnh này.
+- **Nếu chưa commit:** Bản gốc vẫn còn trong prompt log của phiên đã tạo ra file. Nhờ phiên điều phối lấy lại.
+
+**Các quyết định đã đưa vào `02_scenario.md`:**
+
+| Mã | Đã chốt | Ảnh hưởng tới file |
+|---|---|---|
+| QĐ1 | B: Chỉ quan sát, không thêm M4 | Câu hỏi "Làm sao bạn biết sản phẩm đã vào đúng danh mục?" chuyển sang bước `instruments` (⏳) |
+| QĐ2a | A: Dùng từ "danh mục" | Thêm lưu ý: Khi phân tích Q1, nhớ rằng từ này trùng nhãn trên sidebar |
+| QĐ2b | Giá ghi `2990000` | Thêm hành vi bạn thử được (ô giá tự đổi `2.990.000` thành `2.990000`) vào phần căn cứ và tình huống đặc biệt. Tiêu chí M3 giờ là "cột Giá hiện `2990000 ₫`", đúng như bảng hiển thị |
+| QĐ2c | B: Kịch bản và phiếu dữ liệu nằm trong một file mở sẵn; phiên từ xa thì gửi qua tin nhắn | Sửa trạng thái ban đầu và trình tự phiên. Thêm vào danh sách kiểm ở pilot: Người tham gia chuyển qua lại giữa file và trình duyệt có dễ không |
+| QĐ2d | Bạn đo sau khi file chốt | Bỏ các con số AI đề xuất, thay bằng bảng trống để bạn điền |
+| QĐ4 | Theo đề xuất của AI | Giữ nguyên ngưỡng 3 phút và 4 mức can thiệp |
+
+Bảng "Thay đổi so với bản AI" có 12 dòng: 8 Quyết định của SV, 2 Thiếu, 1 Sai, 1 Thừa.
+
+**Lưu ý:**
+- Tôi xếp **kịch bản** chung một file với phiếu dữ liệu, vì phương án B ghi là "toàn bộ phiếu". Nếu bạn muốn kịch bản để riêng (ví dụ in giấy) thì báo tôi sửa.
+- Bản test plan bạn sửa đã bỏ QĐ7. Tôi đã sửa hai chỗ trong `02_scenario.md` từng dẫn tới QĐ7 để giờ dẫn tới D6 (test plan mục 8.1).
+- Mục 11 của `01_test_plan.md` vẫn ghi QĐ1, QĐ2, QĐ4 là "⏳". Nếu muốn hai file khớp nhau, tôi có thể cập nhật mục đó. Thay đổi này giữ tag `[T2][plan]` của bước plan.
+
+Khi bạn thấy file không còn gì phải sửa thì đo thời gian theo mục 4.4 và điền vào bảng ở đó.
+
+**Commit** (bạn tự commit sau khi đã khôi phục bản AI; nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/02_scenario.md
+git commit -m "[T2][scenario] Review task scenario and record decisions"
+```
+````
+
+---
+
+### C52 | 14:16 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã điền các thời gian vào bảng sau khi thử rồi, những chỗ nào tôi chưa điền hết thì bạn điền dựa trên các con số đã có, cái nào cần tôi điền do thiếu thông tin thì báo.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: Thời gian chuẩn|Chờ SV đo|^\| (M1|M2|M3|Toàn luồng) \||bội số|Bội số
+- Read: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- AskUserQuestion
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền xong mục 4.4 trong [02_scenario.md](Homeworks/HW03/usability/02_scenario.md). Thời gian chuẩn là thời gian bạn tự làm nhân bội số ×5 bạn vừa chọn:
+
+| Chặng | Thời gian SV tự làm | Bội số | Thời gian chuẩn |
+|---|---|---|---|
+| M1 | 00:07.03 | ×5 | 00:35.15 |
+| M2 | 00:16.19 | ×5 | 01:20.95 |
+| M3 | 00:20.28 | ×5 | 01:41.40 |
+| Toàn luồng | 00:46.25 | ×5 | 03:51.25 |
+
+**Đã sửa thêm:**
+- **Mục 4.1 và 4.2:** Bạn ghi số đo vào cột "Thời gian chuẩn". Tôi chuyển các số này sang cột "Thời gian SV tự làm" ở mục 4.4, còn cột "Thời gian chuẩn" ở 4.1 và 4.2 giờ dẫn tới mục 4.4. Số đo giữ nguyên, không thay đổi gì.
+- **Ghi chú dưới bảng:** Tổng ba chặng là 00:43.50, ít hơn toàn luồng 2,75 giây. Phần chênh là khoảng T3 đến T4, tức từ lúc bấm "Lưu sản phẩm" tới lúc nói "Tôi làm xong rồi".
+- **Lý do chọn ×5:** Tôi viết theo mô tả của phương án bạn chọn, kèm so sánh với ×3 và ×10. Nếu lý do của bạn khác thì sửa trực tiếp đoạn ngay dưới bảng.
+- **Mục 10 và bảng "Thay đổi so với bản AI":** QĐ2d chuyển thành "Đã chốt", chỉ còn chỉnh lại sau pilot.
+
+**Còn lại chỉ bạn điền được:** Cột "Sau pilot" ở mục 4.4, sau khi chạy phiên pilot. Ngoài cột này, mục 4 không còn ô nào trống.
+
+**Commit** (bạn tự commit; nhớ khôi phục bản AI `ai_raw/T2_scenario.md` và nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/02_scenario.md
+git commit -m "[T2][scenario] Review task scenario and set benchmark times"
+```
+````
+
+---
+
+### C53 | 14:20 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1: Xong bản nháp IA-01. Chưa review, tôi sẽ review lúc bạn kiểm tra, xuất log và đưa message.
+- Task 2: Đã review xong 02_scenario.
+
+Kiểm tra giúp tôi, sau đó xuất log, đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show git status, recent commits and file times
+- Bash: Show diff of modified AI raw scenario file
+- Bash: Find where the image URL was introduced in the Task 2 session
+- Bash: Check URL in reviewed scenario and file sizes
+- Read: d:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-01.md
+- Bash: Check workflow naming, oracle IA-01 codes, raw URL notes, current DB categories
+- Bash: Export prompt log and locate tracker rows
+
+**Output AI (nguyên văn):**
+
+````text
+Đang kiểm tra hai file mới và đã phát hiện một chỗ sửa trong `ai_raw`. Giờ tôi xuất log và cập nhật tracker.
 ````
 
 
