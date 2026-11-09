@@ -30,6 +30,7 @@ SESSIONS = [
     "f2487351-0e33-45bc-9c36-5d86cc37bed3",  # 07/11/2026: phiên thiết kế Task 1 (GUI checklist), bắt đầu từ bước survey
     "de8fb2a8-8661-4c27-bebc-c7667ef44584",  # 08/11/2026: phiên thiết kế Task 2 (usability), bắt đầu từ bước plan
     "99fcf7b9-eb3b-4691-b21a-fd831b8e6157",  # 09/11/2026: phiên thiết kế Task 3 (cross-platform), bắt đầu từ bước setup
+    "a498e700-7577-4448-9f6b-acab1d1b9fec",  # 10/11/2026: phiên Agent Skill (GUI checklist, usability)
 ]
 
 # Ghi chú của sinh viên cho từng phiên (8 ký tự đầu của session id), hiển thị dưới tiêu đề mỗi mục
