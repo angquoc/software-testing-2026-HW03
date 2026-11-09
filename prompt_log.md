@@ -3546,11 +3546,152 @@ Phiền bạn kiểm tra, xuất log và đưa commit message.
 - Bash: Compare oracle IA mapping with draft trace tables and recruitment criteria
 - Bash: Find WCAG criteria reused across IA drafts and IA-04 preconditions
 - Bash: Export prompt log and update tracker statuses and estimates
+- Bash: Mark instruments step done in tracker and get time
 
 **Output AI (nguyên văn):**
 
 ````text
 Ba bản nháp IA và bộ công cụ Task 2 đã đọc xong, không có vấn đề chặn commit. Giờ xuất log và cập nhật tracker.
+
+Cả hai phần đều ổn và sẵn sàng commit. Log đã xuất lại: 59 lượt từ 3 phiên. Lần này `ai_raw/` không bị sửa.
+
+## Task 1: Ba bản nháp IA-02, IA-03, IA-04 (bản AI)
+
+Ba bản nháp phủ đủ các mã oracle trong `01_oracle.md` mục 3. Cả 4 IA cộng lại có **109 mục**, vượt xa mức 40 đề yêu cầu.
+
+| IA | Mục theo SRS | Khuyến nghị | Tổng |
+|---|---|---|---|
+| IA-01 | 18 | 17 | 35 |
+| IA-02 | 18 | 13 | 31 |
+| IA-03 | 5 | 13 | 18 |
+| IA-04 | 9 | 16 | 25 |
+
+Không có mục nào trùng tiêu chí WCAG giữa các IA, trừ một chỗ. UI-R39 nằm ở cả IA-02 và IA-04 nhưng chỉ sinh một mục (AI-02-13), và IA-04 trỏ lại mục đó. Cách này đúng quy ước "trùng ý thì một mục".
+
+Gợi ý khi bạn review:
+- **109 mục là nhiều:** Bước exec sẽ nặng, vì IA-04 có ĐK-03 bắt chạy lại reset và seed trước 6 mục hủy đơn. Việc gộp hay bỏ mục do bạn quyết ở bước review, tôi không chốt trước. Tôi đã tăng ước tính exec từ 2,5 lên 3,5 giờ.
+- **IA-04 đã ghi `seed_orders.py` vào ĐK-01:** Nên khi review IA-01, ĐK-02 và ĐK-03 có thể ghi theo cách này cho thống nhất.
+
+## Task 2: `03_instruments.md`
+
+Tài liệu đủ các phần mà bước 2.4 yêu cầu:
+- Thang đo SUS, kèm cách tính.
+- Câu hỏi mở C1 đến C9, có đủ clarity, error recovery, speed, trust.
+- Phiếu ghi chú có mã sự kiện, gắn với D3 đến D10.
+- Phiếu thông tin trước phiên: Phần A khớp với 4 tiêu chí trong WORKFLOW 3.2.1. Hai tiêu chí còn lại (đồng ý để TA gọi xác minh, đồng ý cho quay màn hình) được xin trong tin nhắn đồng ý I2.1.
+- Đồng ý ghi hình và đồng ý để TA gọi xác minh, xin qua tin nhắn.
+
+Phần riêng tư cũng ổn: Ảnh chụp tin nhắn lưu ngoài repo, Google Form không thu email. Dấu "−" trong công thức T1 − T0 là dấu trừ, không phải "—", nên hợp lệ.
+
+`01_test_plan.md` và `02_scenario.md` có sửa thêm để đổi các quyết định QĐ1, QĐ2, QĐ4, QĐ5 từ ⏳ thành "Đã chốt" và trỏ tới đúng chỗ. Phần này cũng khớp.
+
+Một điểm nhỏ, không bắt buộc: Dòng 401 của bảng thay đổi ("Bỏ hướng người điều phối đọc từng câu") gần trùng ý với dòng 400. Thao tác ở đây là bỏ một phương án, mà lại xếp Loại "Thiếu". Có thể gộp vào dòng 400.
+
+**Việc của bạn trước pilot:** Tạo Google Form SUS theo bảng thiết lập ở I5. Tôi đã ghi việc này vào tracker là ⏳.
+
+## Lệnh commit
+
+Mỗi IA một commit (theo WORKFLOW). Bản AI của instruments được commit trước bản review.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/ai_raw/T1_draft_IA-02.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-02"
+git add checklist/ai_raw/T1_draft_IA-03.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-03"
+git add checklist/ai_raw/T1_draft_IA-04.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-04"
+git add usability/ai_raw/T2_instruments.md
+git commit -m "[T2][instruments] Add session instruments (AI draft)"
+git add usability/03_instruments.md usability/01_test_plan.md usability/02_scenario.md prompt_log.md
+git commit -m "[T2][instruments] Review session instruments with SUS form and message consent"
+git push
+```
+
+Tracker đã cập nhật: Ai-draft ✅ (đủ 4 IA), scenario ✅ (`d4b7d99`), instruments ✅ (chờ commit). Ước tính thời gian đã chỉnh lại.
+
+⏱ Còn khoảng **38,25 giờ** làm việc | Còn **30 giờ 33 phút** tới mốc 22:00 10/11 | **45 giờ 33 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C60 | 15:32 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã commit xong. Bây giờ tôi sẽ tự làm, nhưng bảng participants có thể nhờ bạn tạo form sẵn để tôi điền không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: D:\Dang\Test\Homeworks\HW03\usability\participants.md
+- PowerShell: Save verbatim AI copy of the participants template to ai_raw
+- Read: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_participants_template.md
+
+**Output AI (nguyên văn):**
+
+````text
+Được. Tôi chỉ tạo khung bảng trống, không điền dữ liệu nào. Theo WORKFLOW mục 1.4, sau khi bạn điền xong, phiên thiết kế không được đọc file này nữa, nên tôi sẽ không mở lại. Khung bảng cũng là output của AI, nên tôi lưu thêm một bản nguyên văn vào `ai_raw/` như các bước trước.
+
+Tôi đã tạo khung bảng trống để bạn điền:
+
+- **[usability/participants.md](Homeworks/HW03/usability/participants.md):** File bạn điền.
+- **[usability/ai_raw/T2_participants_template.md](Homeworks/HW03/usability/ai_raw/T2_participants_template.md):** Bản nguyên văn của khung, có thêm phần đầu ghi bước và thời gian tạo.
+
+**File gồm 4 bảng**, mỗi bảng có 8 dòng (P1 đến P7 và PL):
+
+| Bảng | Nội dung |
+|---|---|
+| 1. Danh sách người tham gia | Mã, họ tên, kênh liên lạc, liên lạc đã che 4 số giữa. Đây là bảng TA dùng để gọi xác minh |
+| 2. Tiêu chí tham gia | 6 tiêu chí bắt buộc và cột ưu tiên "không làm IT / tester" |
+| 3. Đồng ý | Ngày nhắn, kênh, ý 1, 2, 3 theo tin nhắn I2.1, và cột xác nhận lại đầu phiên |
+| 4. Lịch phiên | Ngày giờ, hình thức trực tiếp hay từ xa, trạng thái, ghi chú |
+
+**Lưu ý:**
+- Đề chỉ nói cách che với số điện thoại và Zalo (che 4 số giữa). Nếu ai liên lạc bằng email thì bạn tự chọn cách che.
+- Sau khi bạn điền, tôi sẽ không đọc lại `participants.md`. Những bước sau cần đến đặc điểm người tham gia thì chỉ dùng mã P1 đến P7.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước). Tách hai commit để lịch sử git thấy rõ đâu là khung của AI, đâu là dữ liệu bạn điền:
+
+```
+cd Homeworks/HW03
+git add usability/ai_raw/T2_participants_template.md usability/participants.md
+git commit -m "[T2][participants] Add participant table template (AI draft)"
+```
+
+Điền xong thì commit lần hai:
+
+```
+git add usability/participants.md
+git commit -m "[T2][participants] Add participant list"
+```
+````
+
+---
+
+### C61 | 15:33 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 2 tôi đã nhờ tạo form sẵn nên cần xuất log và commit message.
+- Trong lúc tôi review task 1 thì liệu có thể mở task 3 làm song song để tiết kiệm thời gian không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status, recent commits, latest transcripts
+- Bash: Check gitignore, workflow rules and participants files
+- Bash: List WORKFLOW headings
+- Read: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Grep: Task 3|BrowserStack|LambdaTest|D1[0-3]|3\.[0-9] \|
+- Bash: Export prompt log and update tracker for participants step
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
