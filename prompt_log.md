@@ -3691,7 +3691,582 @@ git commit -m "[T2][participants] Add participant list"
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Log đã xuất lại: 61 lượt từ 3 phiên. Có thể mở Task 3 song song, nhưng chỉ nên làm bước `setup`.
+
+## Task 2: `participants.md` (khung bảng)
+
+"Form" ở đây là khung bảng người tham gia. Bảng mới có cột trống, chưa có thông tin cá nhân nào, nên commit được. Bản AI nằm ở `ai_raw/T2_participants_template.md`. File `participants.md` giống bản AI, chỉ bỏ phần đầu ghi thông tin bản AI. 6 tiêu chí trong bảng khớp nguyên văn WORKFLOW 3.2.1.
+
+**Lưu ý khi điền:** Từ khi bạn điền tên và liên lạc, phiên Task 2 **không được đọc lại file này** (WORKFLOW mục 1.5). Nếu sau này cần sửa cấu trúc bảng thì nhờ AI sửa trước khi điền, hoặc tự sửa tay.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/ai_raw/T2_participants_template.md
+git commit -m "[T2][participants] Add participant table template (AI draft)"
+git add usability/participants.md prompt_log.md
+git commit -m "[T2][participants] Add empty participant table for student to fill"
+git push
+```
+
+## Mở Task 3 song song: Nên mở, nhưng chỉ làm bước `setup`
+
+**Vì sao nên mở bây giờ:**
+- Lưu ý L1 trong tracker: Nếu lần chạy Task 1 (bước exec) được tính là 1 trong 3 nền tảng, ảnh của lần chạy đó phải có lớp chữ đè và thấy rõ URL localhost. Vậy nên nền tảng và lớp chữ đè cần chốt **trước khi chạy Task 1**. Bước `setup` của Task 3 làm đúng việc này.
+- AI soạn `01_setup.md` trong lúc bạn review Task 1, nên tận dụng được thời gian chờ.
+
+**Giới hạn:**
+- **Chỉ làm `setup`.** Task 3 phải chạy **đúng checklist cuối** của Task 1, nên phải chờ Task 1 xong bước review, add và excel mới chạy được.
+- **Chưa bật trial.** Trial của BrowserStack hay LambdaTest có giới hạn phút. Ở bước setup chỉ nên thử tunnel một lần thật ngắn, giữ số phút cho lúc chạy thật.
+- **Bạn vẫn là người quyết.** Chọn 3 nền tảng (D8) là quyết định của bạn, nên vẫn tốn một chút thời gian của bạn xen giữa lúc review.
+- **Không reset DB lúc này.** Bước setup không cần reset, nên không đụng tới dữ liệu.
+- **Không dán lý do Safari vào phiên Task 3.** Nếu cân nhắc Safari thì nên thử sớm trên tunnel. Rủi ro này tôi biết từ lúc đọc mã nguồn ngày 05/11, nên không được đưa vào phiên thiết kế (hộp đen). Cứ để phiên đó tự thấy lỗi khi thử.
+
+**Prompt mở đầu gợi ý cho phiên mới:**
+
+```text
+Đây là phiên thiết kế Task 3 (Cross-Browser / Cross-Platform) của HW03. Đọc Homeworks/HW03/WORKFLOW.md (nhất là mục 1, 3.3, 5, 7) và đề bài HW03 phần Task 3.
+Bước hiện tại: chỉ làm `setup`, đầu ra cross_platform/01_setup.md (bản AI lưu nguyên văn vào cross_platform/ai_raw/T3_setup.md trước).
+Nội dung: đề xuất các phương án nền tảng và công cụ (ít nhất 3 nền tảng), cách cho cloud mở được localhost, cách tạo lớp chữ đè MSSV, họ tên, email; nêu ưu nhược để tôi chọn. Không tự chốt: mọi lựa chọn để dạng quyết định mở cho tôi quyết.
+Lưu ý: lần chạy checklist Task 1 có thể được tính là 1 trong 3 nền tảng, nên cần chỉ rõ yêu cầu ảnh nếu tính như vậy.
+Không đọc mã nguồn EShop, _NOTES.md, prompt_log.md, participants.md, thư mục HW02.
+```
+
+Mở phiên xong thì báo tôi. Tôi sẽ thêm session id vào `export_prompt_log.py` trước lần xuất log tiếp theo.
+
+Tracker đã cập nhật: Instruments ✅ (`4db03b0`), participants 🔄 (đã có khung, chờ bạn điền).
+
+⏱ Còn khoảng **38 giờ** làm việc | Còn **30 giờ 24 phút** tới mốc 22:00 10/11 | **45 giờ 24 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C62 | 15:37 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là phiên thiết kế Task 3 (Cross-Browser / Cross-Platform) của HW03. Đọc Homeworks/HW03/WORKFLOW.md (nhất là mục 1, 3.3, 5, 7) và đề bài HW03 phần Task 3.
+Bước hiện tại: chỉ làm `setup`, đầu ra cross_platform/01_setup.md (bản AI lưu nguyên văn vào cross_platform/ai_raw/T3_setup.md trước).
+Nội dung: đề xuất các phương án nền tảng và công cụ (ít nhất 3 nền tảng), cách cho cloud mở được localhost, cách tạo lớp chữ đè MSSV, họ tên, email; nêu ưu nhược để tôi chọn. Không tự chốt, chỉ gợi ý: mọi lựa chọn để dạng quyết định mở cho tôi quyết.
+Lưu ý: lần chạy checklist Task 1 có thể được tính là 1 trong 3 nền tảng, nên cần chỉ rõ yêu cầu ảnh nếu tính như vậy.
+Không đọc mã nguồn EShop, _NOTES.md, prompt_log.md, participants.md, thư mục HW02.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List HW03 folder structure
+- Bash: List non-git files in HW03
+- Read: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Read: d:\Dang\Test\Homeworks\HW03\2026.HW03.GUI Usability_En.pdf
+- Read: d:\Dang\Test\Homeworks\HW03\README.md
+- Read: d:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- Bash: Scan SRS headings and mobile/browser mentions
+- Read: d:\Dang\Test\Homeworks\eshop-sut\README.md
+- Read: d:\Dang\Test\Homeworks\eshop-sut\README.md
+- ToolSearch
+- WebSearch
+- WebSearch
+- WebSearch
+- Bash: Get current time and list Task 3 folder
+- Write: d:\Dang\Test\Homeworks\HW03\cross_platform\ai_raw\T3_setup.md
+- Bash: Build review copy and check forbidden characters
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi sẽ đọc WORKFLOW.md và đề bài HW03 trước.
+
+Đã có đủ thông tin. Lấy giờ hiện tại để ghi vào đầu file ai_raw.
+
+Tôi đã viết xong bước `setup` của Task 3: bản AI nguyên văn ở [ai_raw/T3_setup.md](HW03/cross_platform/ai_raw/T3_setup.md), bản để bạn review ở [01_setup.md](HW03/cross_platform/01_setup.md). Hai bản cùng nội dung; bản review có thêm bảng "Thay đổi so với bản AI" còn trống ở cuối. Tôi không chốt lựa chọn nào: mọi lựa chọn nằm trong bảng quyết định mở D-01 đến D-10 và Q-06 (mục 11).
+
+**Nội dung chính**
+- **9 nền tảng ứng viên** (mục 4), mỗi cái có cách mở SUT, URL sẽ hiện trong ảnh, ưu nhược và các mục dự kiến N/A. Ví dụ: Chrome hoặc Firefox chạy trên máy bạn, chạy trên cloud, Safari trên macOS/iOS, Android Chrome trên điện thoại thật hoặc trên cloud, Expo Go.
+- **3 công cụ cloud** (mục 5): BrowserStack, LambdaTest, Sauce Labs. Trial BrowserStack khoảng 30 phút, LambdaTest khoảng 60 phút/tháng. Hai con số này lấy từ trang tổng hợp, bạn cần xem lại trên trang chính thức.
+- **Cách cho cloud mở localhost** (mục 6): tunnel của BrowserStack hoặc LambdaTest, kèm các bước và một lần thử nhanh trước khi chạy cả checklist.
+- **6 cách tạo lớp chữ đè** (mục 8). Mẫu nội dung là `23120061 | Nguyễn Thị Ánh Ngọc | <email sinh viên>`.
+- **Yêu cầu ảnh nếu tính lần chạy Task 1 là một nền tảng** (mục 9):
+  - Mọi ảnh, kể cả ảnh mục Failed của Task 1, phải có lớp chữ đè.
+  - Ảnh phải thấy thanh địa chỉ `localhost:5173/...` và bằng chứng tên trình duyệt và OS, không được chỉ cắt vùng lỗi.
+  - Lớp chữ đè phải có ngay lúc chụp. Vì vậy cần chốt D-01, D-02, D-05, D-06 **trước** khi chạy `exec` của Task 1.
+
+**Ba rủi ro nên biết trước khi chọn**
+1. **Safari qua cloud:** BrowserStack đổi `localhost` thành `bs-local.com`. Frontend lại gọi API `localhost:3000` ghi cố định, nên các trang Đăng nhập và Hồ sơ có thể không tải được. URL trong ảnh cũng không còn là localhost.
+2. **Phút trial có thể không đủ:** Tôi ước lượng một lượt hơn 40 mục trên 3 màn hình mất khoảng 45 đến 90 phút. Con số này chưa đo thật, nhưng nếu đúng thì trial 30 phút không đủ cho trọn một nền tảng.
+3. **Chạy toàn bộ trên máy bạn:** Đề viết BrowserStack/LambdaTest được "strongly preferred", còn thiết bị thật là phương án khi trial hết hạn. Tôi để điểm này thành câu hỏi Q-05.
+
+Ngoài ra, Android Chrome trên điện thoại thật dùng `adb reverse` thì giữ được URL `localhost` thật và API vẫn chạy. Nếu bạn có điện thoại Android và cáp thì đây là phương án ít rủi ro nhất về URL.
+
+**Bạn cần trả lời trước khi chốt** (mục 3): bạn có thiết bị nào, đã dùng trial chưa, email sinh viên là gì, và đã chạy `exec` của Task 1 chưa.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```
+git add cross_platform/ai_raw/T3_setup.md cross_platform/01_setup.md
+git commit -m "[T3][setup] Add platform, tunnel and overlay options (AI draft)"
+```
+
+Nguồn:
+- [BrowserStack Local Testing FAQs](https://www.browserstack.com/docs/local-testing/references/faqs)
+- [BrowserStack: localhost redirected to bs-local.com on iOS](https://www.browserstack.com/support/faq/live/local-testing-live/why-is-my-localhost-url-redirected-to-bs-local-com-on-ios-ipados-devices)
+- [BrowserStack iOS Local Testing troubleshooting](https://www.browserstack.com/docs/live/local-testing/ios-troubleshooting-guide)
+- [BrowserStack free trial (nguồn tổng hợp)](https://bug0.com/knowledge-base/browserstack-free-trial)
+- [LambdaTest pricing (nguồn tổng hợp)](https://toolradar.com/tools/lambdatest/pricing)
+````
+
+---
+
+### C63 | 15:40 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Vì 4 file IA đều rất nhiều nên tôi có thể nhờ bạn review qua cùng tôi không? IA-1 tôi đã review rồi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check status, checklist files, session rules and review step
+- Bash: Show Task 1 step table and time
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi khuyên **không** review nội dung checklist ở phiên này. Nên nhờ phiên thiết kế Task 1 (`f2487351`) review cùng bạn.
+
+## Vì sao không nên review ở phiên điều phối
+
+Phiên này đã đọc mã nguồn EShop, gồm đúng 3 màn hình bạn đang kiểm (`Profile.jsx`, `Register.jsx`, `Login.jsx`). Việc đó ghi ở mục Audit, ngày 05/11. Nếu tôi góp ý giữ, sửa hay bỏ mục nào, góp ý có thể bị ảnh hưởng bởi những gì tôi biết về mã. Ví dụ: Biết trước chỗ nào sẽ Failed nên ưu tiên giữ mục đó. Như vậy checklist không còn là hộp đen, và phần Audit phải khai thêm điều này.
+
+Phiên Task 1 thì không gặp vấn đề đó: Nó chưa từng đọc mã, và đã có sẵn ngữ cảnh oracle, survey và 4 bản nháp.
+
+## Cách làm cho nhanh
+
+Không cần đọc hết 109 mục từ đầu. Nhờ phiên Task 1 **lọc trước** theo tiêu chí trong WORKFLOW 3.1.2. Bạn chỉ quyết các mục bị gắn cờ, còn mục không có cờ thì đọc lướt.
+
+Prompt gợi ý gửi phiên Task 1:
+
+```text
+Bước `review`. Tôi đã review xong IA-01. Với IA-02, IA-03, IA-04, hãy giúp tôi lọc trước, mỗi lượt một IA (bắt đầu IA-02), KHÔNG ghi vào 02_checklist.md, chỉ trả về bảng cho tôi quyết:
+- Mục kiểm nhiều hơn một điều (nên tách).
+- Mục mơ hồ, khó trả lời Passed / Failed (đề xuất câu mong đợi đo được).
+- Mục trùng với mục khác, kể cả trùng chéo với IA-01 đã review và các IA khác (đề xuất gộp vào mục nào).
+- Mục khuyến nghị có nguồn yếu hoặc ít giá trị với 3 màn hình (để tôi cân nhắc bỏ).
+- Mục lệch với quyết định CH-01 đến CH-10 hoặc giả định GĐ trong 01_oracle.md.
+Mỗi dòng: Mã mục, vấn đề, đề xuất, lý do. Mục không có vấn đề thì không liệt kê. Câu hỏi mở CHD-xx của bản nháp thì gom riêng cuối bảng.
+```
+
+Để lọc chéo được với IA-01, bản review IA-01 phải nằm ở chỗ phiên đó đọc được. Theo WORKFLOW, đầu ra của bước review là `checklist/02_checklist.md`. Hiện file này chưa có. Nếu bạn đang ghi IA-01 ở chỗ khác thì đưa vào `02_checklist.md` trước, hoặc dán phần đã chốt cho phiên Task 1.
+
+## Phần tôi vẫn làm được
+
+Khi bạn có `02_checklist.md`, tôi kiểm phần cơ học:
+- Đếm số mục trên 40, đủ 4 IA.
+- Đủ các cột theo WORKFLOW (Nguồn `AI` / `AI, SV sửa` / `SV thêm`, mã `CL-` cố định).
+- Bảng "Thay đổi so với bản AI" đủ cột, ghi đúng Loại.
+- Không có dấu bị cấm.
+
+Phần này không đánh giá nội dung mục, nên không bị ảnh hưởng bởi việc tôi đã đọc mã.
+
+⏱ Còn khoảng **38 giờ** làm việc | Còn **30 giờ 20 phút** tới mốc 22:00 10/11 | **45 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C64 | 15:42 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã review xong IA-01. Với IA-02, IA-03, IA-04, hãy giúp tôi lọc trước, mỗi lượt một IA (bắt đầu IA-02), KHÔNG ghi vào 02_checklist.md, chỉ trả về bảng cho tôi quyết:
+- Mục kiểm nhiều hơn một điều (nên tách).
+- Mục mơ hồ, khó trả lời Passed / Failed (đề xuất câu mong đợi đo được).
+- Mục trùng với mục khác, kể cả trùng chéo với IA-01 đã review và các IA khác (đề xuất gộp vào mục nào).
+- Mục khuyến nghị có nguồn yếu hoặc ít giá trị với 3 màn hình (để tôi cân nhắc bỏ).
+- Mục lệch với quyết định CH-01 đến CH-10 hoặc giả định GĐ trong 01_oracle.md.
+Mỗi dòng: Mã mục, vấn đề, đề xuất, lý do. Mục không có vấn đề thì không liệt kê. Câu hỏi mở CHD-xx của bản nháp thì gom riêng cuối bảng.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Glob: *.md
+- Bash: Find files changed after the IA-04 draft
+
+**Output AI (nguyên văn):**
+
+````text
+Đây là phần lọc trước cho IA-02. Tôi không sửa file nào.
+
+Trong repo chưa có file nào lưu bản IA-01 đã review. Vì vậy, khi so trùng chéo với IA-01, tôi dùng [T1_draft_IA-01.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-01.md) cộng với các quyết định bạn gửi ở lượt trước: AI-01-22 sửa theo chuẩn HTML và accessibility, AI-01-24 đổi điều kiện "ngày khác tháng", ĐK dùng `tools/seed_orders.py`. Nếu bản review của bạn khác, cho tôi biết.
+
+## 1. Mục kiểm nhiều hơn một điều (nên tách)
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-02-03, 04, 05, 06, 16 | Mong đợi gồm "bị từ chối / không đăng ký" và "có thông báo lỗi". AI-02-03 và AI-02-05 còn đòi nội dung thông báo ("về việc hai mật khẩu không khớp", "email đã được dùng") | Chỉ giữ một điều: "Có thông báo lỗi, vẫn ở trang hiện tại". Nội dung thông báo kiểm ở AI-02-22 | "Bị từ chối" là kết quả chức năng (CH-05). Nội dung thông báo trùng với AI-02-22 |
+| AI-02-20 | Kiểm 2 điều: Nền xám và con trỏ chuột không đổi thành dạng nhập chữ | Chỉ giữ: "Ô Email có nền khác các ô sửa được" | Ý con trỏ ít giá trị: Ô `disabled` trên Chrome tự hiện con trỏ mũi tên |
+| AI-02-21 | Kiểm 2 điều: "Name" trong DevTools khớp nhãn, và bấm vào nhãn thì con trỏ nhảy vào ô | Mong đợi chỉ còn "Name khớp với nhãn nhìn thấy". Bấm vào nhãn chuyển thành cách kiểm phụ, không phải điều kiện Passed | Hai quan sát cùng kiểm một quan hệ (nhãn gắn với ô). Gộp thì khi Failed khó biết vì sao |
+| AI-02-22 | Kiểm 2 điều: Thông báo nói ô nào sai, và nói cần sửa thế nào | Tách thành 2 mục. 22a (WCAG 3.3.1): "Thông báo có tên ô, hoặc nằm ngay dưới ô bị lỗi". 22b (WCAG 3.3.3): "Thông báo nêu điều kiện cần đạt, ví dụ 'tối thiểu 8 ký tự'" | Hai tiêu chí WCAG khác nhau, có thể đạt cái này mà không đạt cái kia |
+| AI-02-24 | Kiểm 2 điều: Ô lỗi được làm nổi bật, và dấu hiệu không chỉ dựa vào màu | Chỉ giữ: "Ô bị lỗi nhìn khác các ô còn lại (viền, nền hoặc biểu tượng)" | Ý "không chỉ dựa vào màu" đã đạt khi có chữ thông báo, mà chữ đã kiểm ở 22a |
+| AI-02-30 | Kiểm 2 điều: Nêu đủ 5 điều kiện, và nêu danh sách ký tự đặc biệt | Phụ thuộc CHD-07. Nếu danh sách là danh sách đóng thì tách 2 mục. Nếu chỉ là ví dụ thì bỏ ý danh sách | Danh sách ký tự chỉ có nghĩa khi SRS giới hạn đúng các ký tự đó |
+
+## 2. Mục mơ hồ, khó trả lời Passed / Failed
+
+| Mã mục | Vấn đề | Đề xuất câu mong đợi đo được | Lý do |
+|---|---|---|---|
+| AI-02-02 | "Hoặc tương đương" không rõ chữ nào được chấp nhận | "Có ô thứ hai cho mật khẩu, nhãn chứa cụm 'Xác nhận mật khẩu' hoặc 'Nhập lại mật khẩu'" | Để người chạy không phải tự đoán |
+| AI-02-04 | Giá trị `abc@domain` khó kết luận. Ô `type="email"` của trình duyệt chấp nhận giá trị này. SRS ghi mẫu `user@domain.com` nhưng không nói có bắt buộc phần đuôi `.com` hay không | Thay `abc@domain` bằng `@domain.com`. Bộ dữ liệu còn: `abc`, `abc@`, `@domain.com` | Cả 3 giá trị chắc chắn sai định dạng theo mọi cách hiểu |
+| AI-02-19 | "So với dữ liệu đã lưu ở lần cập nhật trước" không cho giá trị cụ thể | Thêm bước chuẩn bị: Cập nhật Số điện thoại `0912345678`, Địa chỉ `227 Nguyễn Văn Cừ`, rồi tải lại trang. Mong đợi: Email `test@eshop.com`; Họ Tên, Số điện thoại, Địa chỉ hiện đúng các giá trị vừa lưu | Giá trị mong đợi lấy từ dữ liệu do người chạy tạo, không lấy từ ảnh survey |
+| AI-02-22 | "Không chỉ ghi chung chung" không đo được | Dùng câu mong đợi của 22a, 22b ở mục 1 | Như trên |
+| AI-02-23 | Không nói lỗi nào. Với lỗi định dạng email, trình duyệt tự đưa focus về ô, nên mục luôn Passed mà không kiểm được gì về trang | Chỉ dùng lỗi do trang báo: W-04 email trùng (focus mong đợi ở ô Email), W-06 Số điện thoại `123` (focus ở ô Số điện thoại). Bỏ W-03 | Ở W-03, khi đăng nhập sai không xác định được "ô bị lỗi" là ô nào (xem mục 5) |
+
+## 3. Mục trùng với mục khác
+
+| Mã mục | Trùng với | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-02-12 | AI-02-11 | Gộp AI-02-12 vào AI-02-11. Hoặc giữ AI-02-12 nếu muốn có một mục kiểm bằng mắt, không cần DevTools | Ô `type="password"` thì trình duyệt luôn che ký tự. Hai mục gần như luôn cùng kết quả |
+| AI-02-15 | AI-01-22 (bản đã sửa có ý "gõ phím không đổi được giá trị") và AI-02-20 | Phân việc: AI-02-15 giữ "gõ không đổi giá trị" (căn cứ SRS, UI-R15). AI-01-22 chỉ giữ ý thuộc tính `readonly` / `disabled` và hành vi khi bấm Tab. AI-02-20 chỉ giữ ý nhìn khác ô thường | Ba mục đang cùng kiểm "không sửa được". Ưu tiên giữ ý này ở mục có căn cứ SRS |
+| AI-02-17 | AI-04-18 (báo cập nhật thành công) | Bỏ AI-02-17. Hoặc dùng số `0912345678` làm dữ liệu cho AI-04-18 để vẫn có một số hợp lệ được lưu | Cả hai đều cần một lần cập nhật thành công. Riêng AI-02-17 gần với kiểm thử chức năng (xem mục 5) |
+| AI-02-03, 05 (phần nội dung thông báo), AI-02-24 (phần "không chỉ dựa vào màu") | AI-02-22 | Như mục 1 | Như mục 1 |
+
+## 4. Mục khuyến nghị có nguồn yếu hoặc ít giá trị
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-02-31 | Chỉ kiểm một dòng chữ cố định (placeholder số điện thoại). Nguồn chung chung (Nielsen 4) | Cân nhắc bỏ | Ít giá trị. Placeholder chỉ hiện khi ô trống |
+| AI-02-29 | WCAG 3.3.8 áp dụng cho bước xác thực (đăng nhập), không cho đăng ký | Bỏ W-04, chỉ giữ W-03 | Ở W-04, nguồn không khớp với màn hình |
+| AI-02-28 | Tiêu chí AA, có giá trị. Nhưng mong đợi từng ô rất chi tiết, ví dụ `street-address` | Theo CHD-08 | Mức chi tiết càng cao, càng dễ Failed vì lý do nhỏ |
+| AI-02-20 | Ý con trỏ chuột (như mục 1) | Bỏ ý con trỏ | Như mục 1 |
+
+## 5. Mục lệch với quyết định CH hoặc giả định GĐ
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-02-06, AI-02-16 | Dữ liệu 6 và 4 giá trị, mỗi giá trị kiểm một quy tắc riêng. Đây là cách làm của domain testing. Chính mục 5 của bản nháp cũng ghi "chỉ đủ để làm hiện thông báo" | Giảm còn 1 giá trị cho mỗi mục, đủ làm hiện thông báo: AI-02-06 dùng `abcdefgh`, AI-02-16 dùng `123`. Riêng `Abcdef1#` thì giữ hay bỏ theo CHD-07 | CH-05: Checklist GUI không kiểm logic. Kiểm từng quy tắc là việc của kiểm thử chức năng |
+| AI-02-17 | Kiểm số điện thoại hợp lệ ở hai biên 10 và 11 chữ số được chấp nhận | Bỏ (xem mục 3) | CH-05: Phân tích giá trị biên là kiểm chức năng |
+| AI-02-22 | Cột màn hình có W-03. Ở W-03, đòi thông báo đăng nhập sai nói rõ ô nào sai (email hay mật khẩu) | Bỏ W-03 khỏi AI-02-22 | UI-R08 yêu cầu không để lộ chi tiết nguyên nhân. Mục AI-04-07 (IA-04) cũng kiểm đúng ý này, nên hai mục mâu thuẫn |
+| AI-02-26 | Mục áp dụng cả W-06. Nhưng SRS không quy định trường bắt buộc ở W-06 (`01_oracle.md`, UI-R36, CH-01) | Hai phương án: (a) Chỉ giữ W-04; (b) Giữ W-06, ghi rõ căn cứ chỉ là checklist Text Box | Ở W-06, mong đợi "Họ Tên chỉ có khoảng trắng thì báo lỗi" không có căn cứ SRS |
+
+## 6. Câu hỏi mở của bản nháp (CHD-05 đến CHD-08)
+
+| Mã | Câu hỏi | Phương án |
+|---|---|---|
+| CHD-05 | Nếu không có ô Xác nhận mật khẩu (AI-02-02 Failed) thì ghi AI-02-03 thế nào? Câu này cũng áp dụng cho mọi mục cần một thông báo đã hiện ra mới kiểm được (AI-02-13, 22, 23, 24) | (a) Failed, ghi chú phụ thuộc; (b) Ghi "Không chạy được", không tính vào Passed / Failed |
+| CHD-06 | Bong bóng báo lỗi của trình duyệt có tính khi kiểm "thông báo lỗi nằm trên nút gửi" (AI-02-13, UI-R39) không? | (a) Không tính, vì trang không quyết định vị trí của bong bóng; (b) Có tính |
+| CHD-07 | Danh sách `@ $ ! % * ? &` của UI-R03 là danh sách đóng hay chỉ là ví dụ? | (a) Danh sách đóng: Giữ `Abcdef1#` ở AI-02-06, AI-02-30 kiểm cả danh sách; (b) Chỉ là ví dụ: Bỏ cả hai |
+| CHD-08 | Mong đợi của AI-02-28 (`autocomplete`) chi tiết tới mức nào? | (a) Giữ giá trị cụ thể cho từng ô; (b) Chỉ kiểm "ô Email, Mật khẩu, Số điện thoại có `autocomplete` phù hợp"; (c) Bỏ mục |
+
+Các mục không có vấn đề: AI-02-01, 07, 08, 09, 10, 11, 13, 14, 18, 25, 27. Gửi quyết định cho IA-02 khi bạn xong; lượt sau tôi lọc IA-03.
+````
+
+---
+
+### C65 | 15:55 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đồng ý 100% với toàn bộ các đề xuất tinh chỉnh của bạn ở Mục 1, 2, 3, 4, và 5.
+
+Vấn đề W-06 với ô khoảng trắng (AI-02-26): Chọn Phương án (a): Chỉ giữ W-04. Vì SRS không định nghĩa trường bắt buộc ở W-06, Frontend không có cơ sở logic để chặn khoảng trắng.
+
+CHD-05. b
+CHD-06. a
+CHD-07. b
+CHD-08. b
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Append IA-02 review decisions to scratchpad notes
+
+**Output AI (nguyên văn):**
+
+````text
+Đã ghi nhận quyết định IA-02, kể cả AI-02-26 theo phương án (a) và CHD-05 b, CHD-06 a, CHD-07 b, CHD-08 b. Tôi lưu chúng vào cùng file ghi chú với IA-01, trong scratchpad, để dùng khi soạn `02_checklist.md`. Không có file nào trong repo bị sửa.
+
+Bạn chọn CHD-07 (b), nên AI-02-30 không còn ý danh sách ký tự đặc biệt và không cần tách. AI-02-06 chỉ còn giá trị `abcdefgh`.
+
+Dưới đây là phần lọc trước cho IA-03.
+
+## 1. Mục kiểm nhiều hơn một điều (nên tách)
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-03-16 | Kiểm 2 điều: Trang rời `/login`, và navbar chuyển sang trạng thái đã đăng nhập | Chỉ giữ: "Navbar có lời chào và nút đăng xuất ngay sau khi đăng nhập". Ý "rời `/login`" để cho AI-03-15 (xem CHD-11) | SRS không nói đăng nhập xong thì đi đâu. Ý "không thấy lại form đăng nhập" đã là nội dung của AI-03-15 |
+| AI-03-17 | Kiểm 2 điều: Trang không còn dữ liệu hồ sơ, và navbar về trạng thái chưa đăng nhập | Tách 2 mục. 17a: "Sau khi đăng xuất, không còn thấy Họ Tên, Email và lịch sử đơn". 17b: "Navbar hiện 'Đăng nhập', 'Đăng ký', không còn lời chào" | Một ý là dữ liệu trên trang, một ý là trạng thái navbar. Có thể đạt ý này mà không đạt ý kia |
+| AI-03-18 | Kiểm 2 điều: Có `<nav>` và có `<main>` | Gộp thành một điều: "Trang có vùng nội dung chính được đánh dấu (`<main>` hoặc vai trò `main`)". Ý `<nav>` bỏ, hoặc bỏ cả mục (xem mục 4) | WCAG 2.4.1 cần một cách nhảy qua navbar để tới nội dung. Có `<main>` là đủ |
+| AI-03-12 | Kiểm 2 điều: "Mọi link nói rõ nơi sẽ tới" và riêng lời chào | Chỉ giữ lời chào: "Chữ, `title` hoặc Name của lời chào cho biết link dẫn tới hồ sơ / tài khoản" | Các link khác ("Đăng ký ngay", "Quên mật khẩu?", "Giỏ hàng") đã tự nói rõ nơi tới. Phần chung không thêm giá trị |
+
+## 2. Mục mơ hồ, khó trả lời Passed / Failed
+
+| Mã mục | Vấn đề | Đề xuất câu mong đợi đo được | Lý do |
+|---|---|---|---|
+| Quy ước "Highlight" (mục 1), dùng cho AI-03-02, AI-03-03 | Quy ước định nghĩa highlight là "nhìn khác các mục còn lại". Nhưng khi đã đăng nhập, lời chào **luôn** màu vàng, khác các mục màu trắng (`00_survey.md` mục 6). Theo định nghĩa này, lời chào bị coi là highlight ở mọi trang | Định nghĩa lại: "Highlight là mục navbar của trang đang mở nhìn khác **chính mục đó** khi đang ở trang khác (không rê chuột)". Mong đợi AI-03-03: "Mọi mục navbar hiện giống hệt khi ở trang chủ" | Định nghĩa cũ làm AI-03-03 Failed sai ở trạng thái đã đăng nhập. Định nghĩa mới cũng khớp cách AI-03-02 đang so lời chào ở W-06 |
+| AI-03-04 | ĐK-02 không nói thêm sản phẩm khi đang đăng nhập hay chưa. Màn hình lại gồm cả hai trạng thái. Nếu giỏ hàng gắn với tài khoản thì số trên badge có thể khác giữa hai trạng thái | Ghi rõ: "Thêm 2 sản phẩm khi đang đăng nhập `test@eshop.com`, kiểm W-06, W-04, W-03 ở trạng thái đăng nhập". Bỏ "W-06 (cả hai trạng thái)" | Mong đợi "số 2" chỉ đúng trong trạng thái đã dùng để thêm sản phẩm |
+| AI-03-13 | "Trang hiện đầy đủ" chưa đo được | "URL và tiêu đề trang (`<h1>`) giống trang trước; form hoặc bảng hiện ra, không trắng trang" | Có tiêu chí cụ thể để đối chiếu |
+
+## 3. Mục trùng với mục khác
+
+| Mã mục | Trùng với | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-03-09 | AI-04-24 (nút đổi hình thức khi rê chuột), ở nút đăng xuất trên navbar | AI-03-09 ghi rõ "trừ nút đăng xuất (xem AI-04-24)" | Nút đăng xuất là nút, đã được kiểm hover ở IA-04 |
+| AI-03-10 | AI-03-09 (cùng là phản hồi khi rê chuột) | Bỏ AI-03-10. Hoặc gộp ý con trỏ bàn tay vào AI-03-09, chỉ cho link | Hai mục cùng kiểm phản hồi khi rê chuột lên link (xem thêm mục 4) |
+| AI-03-16 | AI-03-15 (ở phần "rời `/login`") | Như mục 1 | Như mục 1 |
+
+## 4. Mục khuyến nghị có nguồn yếu hoặc ít giá trị
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-03-10 | Mong đợi con trỏ bàn tay trên **nút** không có nguồn chắc: Nút HTML mặc định dùng con trỏ mũi tên, và các bộ quy tắc giao diện không thống nhất ý này. Nguồn trong bản nháp (Norman, Affordance) là nguyên tắc chung | Bỏ mục, hoặc chỉ giữ ý con trỏ trên link và gộp vào AI-03-09 | Dễ Failed vì một quy ước còn tranh cãi |
+| AI-03-18 | Navbar chỉ có 3 đến 4 mục, nên ích lợi của việc nhảy qua navbar thấp | Cân nhắc bỏ. Nếu giữ thì theo đề xuất ở mục 1 | Ít giá trị với 3 màn hình |
+| AI-03-08 | Thẻ `<a>` thật luôn mở được bằng Enter. Mục chỉ Failed khi link được làm giả bằng thẻ khác, ví dụ `<div>` có sự kiện bấm | Giữ hoặc bỏ tùy bạn | Giá trị trung bình, nhưng nguồn mạnh (WCAG 2.1.1, mức A) |
+
+## 5. Mục lệch với quyết định CH hoặc giả định GĐ
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-03-03, AI-03-04, AI-03-11 và AI-01-09 (IA-01) | Các mục này kiểm W-03 và W-04 **khi đã đăng nhập**. Còn AI-03-15 mong đợi người đã đăng nhập không ở lại hai trang đó. Nếu giữ AI-03-15 và EShop làm đúng như mong đợi, các trạng thái này không còn để kiểm | Nếu giữ AI-03-15 (CHD-11): Ghi chú các mục trên rằng W-03, W-04 đã đăng nhập là "Không chạy được" khi trang tự chuyển đi (theo CHD-05 b). AI-01-09 vẫn kiểm được ở W-06 | Tránh hai mục mâu thuẫn nhau về một trạng thái màn hình |
+| AI-03-03 (W-06 chưa đăng nhập) và AI-03-14 | AI-03-14 chấp nhận cả trường hợp trang tự chuyển sang `/login`. Khi đó W-06 chưa đăng nhập (trạng thái đã chốt trong CH-09, GĐ-02) không còn để kiểm | Như dòng trên: Ghi "Không chạy được" cho phần W-06 chưa đăng nhập nếu trang tự chuyển | Giữ đúng CH-09 mà không mâu thuẫn với AI-03-14 |
+| AI-03-04 | Mong đợi "số 2" dựa trên dữ liệu chọn sao cho hai cách hiểu cùng ra một số. Mục không lệch GĐ-04 | Không cần sửa; quyết định ở CHD-09 | Ghi lại để thấy mục đã khớp GĐ-04 |
+
+## 6. Câu hỏi mở của bản nháp (CHD-09 đến CHD-11)
+
+| Mã | Câu hỏi | Phương án |
+|---|---|---|
+| CHD-09 | Badge của "Giỏ hàng" đếm số **loại** sản phẩm hay **tổng số lượng**? | (a) Giữ dữ liệu 2 sản phẩm × 1, không chốt cách hiểu; (b) Thêm một mục: 1 sản phẩm số lượng 2, ghi số quan sát được, coi như câu hỏi cho tài liệu đặc tả (không kết luận Passed / Failed); (c) Chốt một cách hiểu và thêm mục với dữ liệu 1 sản phẩm × 2 |
+| CHD-10 | Áp quy tắc CH-09 cho W-03, W-04 khi đã đăng nhập (navbar không có mục "Đăng nhập", "Đăng ký", nên không mục nào được highlight)? | (a) Đồng ý, giữ hai màn hình này trong AI-03-03; (b) Bỏ hai màn hình này khỏi AI-03-03. Phụ thuộc thêm CHD-11 |
+| CHD-11 | Giữ AI-03-15 (đã đăng nhập thì không thấy lại form đăng nhập / đăng ký) không? | (a) Giữ, kèm ghi chú "Không chạy được" ở mục 5; (b) Bỏ: Khi đó AI-03-16 cần lấy lại ý "rời `/login`" |
+
+Các mục không có vấn đề: AI-03-01, 02 (sau khi sửa quy ước highlight), 05, 06, 07, 11, 14.
+
+Bạn gửi quyết định cho IA-03, lượt sau tôi lọc IA-04.
+````
+
+---
+
+### C66 | 16:03 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Pilot có thể là tôi không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+**Câu trả lời ngắn:** Không nên. Đề không cấm bạn tự làm pilot, nhưng nếu bạn tự làm thì phiên pilot gần như mất tác dụng.
+
+**Lý do:** Đề §6 nói pilot là để "catch an unclear scenario, broken flow, or timing problems". Bạn đã thấy giao diện, đã tự làm luồng và đã bấm giờ, nên bạn không kiểm được những điểm pilot cần kiểm:
+
+| Điểm cần kiểm ở pilot | Bạn tự làm có kiểm được không |
+|---|---|
+| Kịch bản có câu nào khó hiểu không (`02_scenario.md` mục 9) | Không. Bạn biết sẵn ý của từng câu |
+| Thời gian chuẩn ×5 có hợp lý với người mới không (QĐ2d, bước 3) | Không. Bạn đã đo được 00:46.25, và ×5 chính là tính từ con số đó |
+| Ngưỡng 3 phút "bế tắc hẳn" và ngưỡng 20 giây nhắc think-aloud | Không. Bạn sẽ không bế tắc |
+| Bản dịch SUS của AI có câu nào khó hiểu không | Khó, vì bạn đã đọc kỹ bản dịch |
+| Bạn vừa điều phối vừa ghi chú có kịp ghi I4.4 không | Không. Một người không thể vừa làm người tham gia vừa làm người điều phối |
+
+**Tôi đề xuất:**
+- **Pilot là một người khác chưa từng thấy EShop**, ví dụ bạn bè hoặc người thân. Test plan chỉ ghi người pilot "nên" đạt tiêu chí, không bắt buộc, vì người này không tính vào 7 người. Nếu người đó từng bán hàng online thì càng sát thực tế.
+- **Bạn có thể tự chạy thử quy trình trước đó** để kiểm phần kỹ thuật: Danh sách chuẩn bị I1, link Google Form điền sẵn mã, quay màn hình, kiểm D6, reset DB và xem dữ liệu cũ đã mất chưa (giả định G4). Lần chạy thử này không thay được phiên pilot, và không ghi là `PL`.
+
+**Một điều cần báo:** Khi bạn sửa một file do phiên này tạo ra, Claude Code tự hiện nội dung thay đổi cho tôi. Vì vậy vừa rồi tôi đã thấy họ tên trong bảng 1 của `participants.md`. Tôi không dùng hay chép lại các thông tin này ở đâu. Tuy vậy, theo WORKFLOW mục 1.5 thì việc này đã tính là đưa thông tin cá nhân vào AI, nên bạn nên ghi lại sự việc này trong [AI-05] Privacy Checklist. Để tránh lặp lại, các lần sau bạn điền file này khi phiên thiết kế không còn mở, hoặc điền ở một phiên khác không tạo ra file này.
+````
+
+---
+
+### C67 | 16:30 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+CHD-09. c
+CHD-10. a
+CHD-11. a
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Append IA-03 decisions to scratchpad notes
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã ghi nhận quyết định cho IA-03: CHD-09 chọn (c), CHD-10 chọn (a), CHD-11 chọn (a). Vẫn còn 2 việc cần bạn trả lời:
+
+1. **CHD-09 (c):** Bạn chốt badge của "Giỏ hàng" đếm theo cách nào: Số **loại** sản phẩm, hay **tổng số lượng**? Mục mới sẽ dùng 1 sản phẩm, số lượng 2. Mong đợi sẽ là "1" hoặc "2" tùy cách bạn chọn.
+2. **Mục 1 đến 5 của bảng lọc IA-03:** Lượt trước bạn chỉ trả lời các câu CHD. Bạn có đồng ý toàn bộ như với IA-02 không? Có 3 mục tôi chưa đưa đề xuất duy nhất, cần bạn chọn:
+   - AI-03-08 (bấm Enter để mở link): Giữ, hay bỏ?
+   - AI-03-10 (con trỏ bàn tay): Bỏ hẳn, hay gộp ý con trỏ trên link vào AI-03-09?
+   - AI-03-18 (`<nav>`, `<main>`): Bỏ, hay chỉ giữ ý có `<main>`?
+
+Dưới đây là phần lọc trước cho IA-04.
+
+## 1. Mục kiểm nhiều hơn một điều (nên tách)
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-04-05, 17, 18, 20, 22, 25 | Mong đợi gồm "có thông báo" và "thông báo bằng tiếng Việt" (AI-04-05, 22, 25 còn có "không hiện chữ kỹ thuật") | Mỗi mục chỉ giữ "Có thông báo cho biết <kết quả>". Phần tiếng Việt và không có chữ kỹ thuật gom về AI-01-05: Mở rộng danh sách thông báo của AI-01-05 thêm thông báo hủy đơn, khóa tài khoản, mất kết nối, hết phiên | AI-01-05 đã kiểm "mọi thông báo là tiếng Việt, không có thông báo kỹ thuật tiếng Anh". Hiện ý này bị kiểm lại ở 6 mục |
+| AI-04-06 | Kiểm 2 điều: Có thông báo khóa, và "không đăng nhập vào" | Bỏ ý "không đăng nhập vào" | Việc có khóa thật hay không là cơ chế, thuộc kiểm thử chức năng. `01_oracle.md` (UI-R08) chỉ áp dụng phần thông báo |
+| AI-04-09 | Kiểm 3 điều: Câu đầy đủ, không có từ kỹ thuật, có gợi ý bước tiếp theo | Theo CHD-13. Nếu tách: 09a "Thông báo là một câu đầy đủ, không có từ kỹ thuật"; 09b "Có link hoặc nút gợi ý bước tiếp theo" | Ý tiếng Việt đã nằm ở AI-01-05, vì AI-01-05 có liệt kê thông báo lịch sử đơn trống. Ý gợi ý bước tiếp theo là cách hiểu chữ "thân thiện", không phải chữ của SRS |
+| AI-04-13 | Kiểm 2 điều: Có dialog, và đơn chưa bị hủy khi dialog đang mở | Chỉ giữ "Hiện dialog / modal hỏi xác nhận" | Ý thứ hai được bảo đảm khi có dialog. Ý "chọn không thì đơn giữ nguyên" đã có ở AI-04-14 |
+
+## 2. Mục mơ hồ, khó trả lời Passed / Failed
+
+| Mã mục | Vấn đề | Đề xuất câu mong đợi đo được | Lý do |
+|---|---|---|---|
+| AI-04-01 | "5 màu khác nhau" không rõ: Hai trạng thái khác nhau chút ít về sắc độ (ví dụ cùng là xanh) có được tính là khác không? Mỗi trạng thái còn có cả màu chữ và màu nền | "Ghi tên màu (theo cách ghi của survey: vàng, chàm, xanh dương, xanh lá, đỏ...) của **màu nền nhãn** từng trạng thái. Passed khi 5 tên màu khác nhau" | Dùng tên màu như ở bước survey, không cần đo mã màu |
+| AI-04-06 | Không rõ thông báo khóa phải xuất hiện ở lần sai thứ 3 hay lần thử thứ 4 | "Chậm nhất ở lần thử thứ 4 (mật khẩu đúng, trong vòng 30 giây) có thông báo khóa. Ghi lại thông báo xuất hiện ở lần thứ mấy" | SRS nói "sai từ 3 lần trở lên thì khóa" nhưng không nói câu trả lời của lần sai thứ 3 có báo khóa ngay hay không |
+| AI-04-13 | Không rõ hộp xác nhận mặc định của trình duyệt (`confirm()`) có được tính là dialog không | Ghi rõ: "Dialog của trang hoặc hộp xác nhận của trình duyệt đều tính" | NR-02 chỉ yêu cầu có bước xác nhận, không quy định kiểu dialog |
+| AI-04-25 | "Xóa dữ liệu đăng nhập trong Local Storage / Cookies" đòi người chạy biết khóa lưu token, tức biết bên trong hệ thống | Đổi cách kiểm: "DevTools, tab Application, Storage, bấm 'Clear site data', **không** tải lại trang, rồi bấm 'Cập nhật'" | Làm được mà không cần biết hệ thống lưu gì, giữ đúng tinh thần kiểm thử hộp đen |
+| AI-04-18 | Dữ liệu "sửa Địa chỉ giao hàng" | Đổi dữ liệu thành Số điện thoại `0912345678`, theo quyết định bỏ AI-02-17 ở IA-02 | Theo quyết định IA-02 của bạn |
+
+## 3. Mục trùng với mục khác
+
+| Mã mục | Trùng với | Đề xuất | Lý do |
+|---|---|---|---|
+| Phần "tiếng Việt / không chữ kỹ thuật" của AI-04-05, 09, 17, 18, 20, 22, 25 | AI-01-05 | Như mục 1 | Như mục 1 |
+| AI-04-07 (ý "không chứa thông tin kỹ thuật") | AI-01-05 | Bỏ ý này khỏi AI-04-07. Chỉ giữ "không nêu số lần sai, không nêu ô nào sai" | Như trên |
+| AI-04-24 | AI-03-09 (rê chuột lên link và mục navbar) | Giữ như hiện tại. Bạn đã đồng ý ghi rõ AI-03-09 không xét nút đăng xuất | Không còn trùng sau khi sửa AI-03-09 |
+| AI-04-20 | AI-02-13 (vị trí thông báo lỗi ở W-03) | Giữ cả hai. Ghi phụ thuộc: AI-02-13 phần W-03 "Không chạy được" nếu AI-04-20 Failed (CHD-05 b) | Một mục kiểm có thông báo, một mục kiểm vị trí của nó |
+
+## 4. Mục khuyến nghị có nguồn yếu hoặc ít giá trị
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-04-15 | Kiểm dialog có nêu mã đơn. Nguồn chung chung (Nielsen 5). Mục phụ thuộc AI-04-13 | Cân nhắc bỏ | Ít giá trị: Người dùng vừa bấm nút ngay trên dòng đơn đó |
+| AI-04-25 | Phiên đăng nhập hết hạn ngay khi đang ở trang hồ sơ là tình huống hiếm; mục cần thao tác DevTools | Cân nhắc bỏ, hoặc giữ với cách kiểm ở mục 2 | Giá trị trung bình so với công chạy |
+| AI-04-23 | Nguồn mạnh (WCAG 4.1.3, mức AA). Nhưng mục chỉ chạy được khi các thông báo đã xuất hiện | Giữ, ghi phụ thuộc theo CHD-05 b | Không phải nguồn yếu. Ghi lại để bạn biết đây là mục phụ thuộc |
+
+## 5. Mục lệch với quyết định CH hoặc giả định GĐ
+
+| Mã mục | Vấn đề | Đề xuất | Lý do |
+|---|---|---|---|
+| AI-04-06 | Ý "không đăng nhập vào" (như mục 1) | Bỏ | `01_oracle.md` (UI-R08) và CH-05: Cơ chế khóa là chức năng |
+| AI-04-14, 15 | Phụ thuộc AI-04-13. Nếu không có dialog thì không chạy được | Ghi "Không chạy được" khi AI-04-13 Failed | Theo CHD-05 b bạn đã chốt |
+| AI-04-03, 04 | Coi nút "Hủy đơn" hiện ra nhưng bị làm mờ là Failed | Theo CHD-15 | CH-05 kiểm trạng thái hiển thị dựa trên quyền. Nút bị làm mờ vẫn là một trạng thái hiển thị, nên cần bạn chốt |
+
+## 6. Câu hỏi mở của bản nháp (CHD-13 đến CHD-16)
+
+| Mã | Câu hỏi | Phương án |
+|---|---|---|
+| CHD-13 | Tiêu chí "thân thiện" của UI-R47 (AI-04-09) | (a) Tách 09a (câu đầy đủ, không từ kỹ thuật) và 09b (có link / nút gợi ý bước tiếp theo); (b) Chỉ giữ 09a; (c) Giữ một mục gồm cả hai ý |
+| CHD-14 | Hiểu "không để lộ chi tiết nguyên nhân" (UI-R08) thế nào? | (a) Không nêu số lần sai và ô nào sai (theo đề xuất ở mục 3); (b) Hiểu rộng hơn: Cũng không được nói "tài khoản bị khóa", chỉ báo chung "không đăng nhập được, thử lại sau". Nếu chọn (b) thì mong đợi của AI-04-06 phải đổi theo |
+| CHD-15 | Nút "Hủy đơn" hiện ra nhưng bị làm mờ ở đơn `shipping`, `delivered`, `canceled` | (a) Failed: Nút phải ẩn hẳn; (b) Passed: Nút bị làm mờ cũng thể hiện "không được hủy" |
+| CHD-16 | Nếu đơn `shipping` có nút "Hủy đơn" (AI-04-04 Failed), có dùng đơn này làm tình huống thứ hai cho AI-04-05 không? | (a) Có: Bấm "Hủy đơn" ở đơn `shipping` và kiểm có thông báo bị từ chối; (b) Không: AI-04-05 chỉ dùng cách hủy cùng một đơn ở 2 tab |
+
+Các mục không có vấn đề: AI-04-02, 08, 10, 11, 12, 16, 19, 21.
+
+Bạn trả lời 2 câu về IA-03 ở đầu và quyết định cho IA-04. Khi đủ, tôi soạn `02_checklist.md` từ tất cả quyết định của IA-01 đến IA-04.
+````
+
+---
+
+### C68 | 16:37 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+CHD-09 (c) Mong đợi sẽ là "2", đếm Tổng số lượng.
+AI-03-08 (Bấm Enter để mở link): Giữ lại.
+AI-03-10 (Con trỏ bàn tay): Bỏ hẳn.
+AI-03-18 (<nav> và <main>): Chỉ giữ ý có <main>
+
+Tôi Đồng ý hoàn toàn với các phân tích và đề xuất của bạn từ Mục 1 đến Mục 5.
+
+CHD-13. a
+CHD-14. a
+CHD-15. b
+CHD-16. a
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Bash: Get time and append final decisions to notes
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Bash: Verify CL numbering and summary counts
+- Bash: Correct source counts in summary table
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã soạn xong [checklist/02_checklist.md](Homeworks/HW03/checklist/02_checklist.md) từ quyết định của bạn cho cả 4 IA. File có 108 mục, từ CL-01 đến CL-108; không có mã trùng, không có ký tự cấm.
+
+| IA | Số mục | Giữ nguyên bản AI | AI, SV sửa | SV thêm |
+|---|---|---|---|---|
+| IA-01 | 35 | 30 | 5 | 0 |
+| IA-02 | 29 | 11 | 18 | 0 |
+| IA-03 | 19 | 8 | 10 | 1 |
+| IA-04 | 25 | 9 | 16 | 0 |
+| Tổng | 108 | 58 | 49 | 1 |
+
+Trong 108 mục có 50 mục căn cứ SRS và 58 mục khuyến nghị. So với 109 mục của bản AI: Bỏ hoặc gộp 5 mục, tách 3 mục thành 6, thêm CL-69 (badge đếm tổng số lượng).
+
+**Nội dung file:**
+1. Quy ước, gồm "Không chạy được" và định nghĩa mới của highlight.
+2. Điều kiện chuẩn bị, gộp chung cho 4 IA.
+3. Bảng checklist theo IA.
+4. Ma trận trạng thái đơn.
+5. Mục SV thêm: Để trống cho bước `add`.
+6. Mục AI đã bỏ hoặc gộp.
+7. Tổng hợp và truy vết oracle.
+8. Quyết định CHD-01 đến CHD-16.
+9. Bảng "Thay đổi so với bản AI", 55 dòng.
+
+**Những chỗ tôi phải tự hiểu, bạn kiểm giúp:**
+- **IA-01:** Trong repo không có file nào ghi kết quả review IA-01 của bạn. Tôi chỉ áp dụng các quyết định bạn đã gửi: CHD-01 đến CHD-04, AI-01-24, ĐK. Ngoài ra có 2 thay đổi kéo theo từ IA-02 và IA-04: CL-05 nhận thêm phần kiểm ngôn ngữ của các thông báo ở IA-04, và CL-22 bỏ ý gõ phím. Nếu bạn còn sửa gì khác ở IA-01, gửi tôi để thêm vào.
+- **"Đồng ý Mục 1 đến 5":** Tôi hiểu câu này áp dụng cho cả bảng lọc IA-03 và IA-04.
+- **AI-04-25:** Đề xuất ở bảng lọc là "cân nhắc bỏ, hoặc giữ với cách kiểm mới". Bạn đồng ý cả đề xuất đổi cách kiểm, nên tôi giữ mục này thành CL-108, cách kiểm "Clear site data".
+- **CL-69:** Đây là mục mới, nhưng phát sinh từ câu hỏi CHD-09 của bản AI ở bước `review`. Vì vậy tôi để nó trong bảng IA-03, không để ở mục 5 (bước `add`).
+- **Cột "Loại" ở mục 9:** Tôi gán theo bảng loại của WORKFLOW mục 2.2. Một mục kiểm 2 điều bị tách thì tôi xếp vào "Mơ hồ". Bạn xem lại cột này, vì đây là dữ liệu cho phần AI Critique sau này.
+
+Commit bước `review`. Nhờ phiên điều phối xuất prompt log trước. Nếu chưa commit 3 bản nháp IA-02 đến IA-04 thì commit chúng trước, theo lệnh ở lượt trước.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/02_checklist.md
+git commit -m "[T1][review] Review AI checklist items"
+```
+
+Bước tiếp theo là `add`: Bạn thêm các mục AI bỏ sót vào mục 5, mỗi mục có cột "Vì sao AI bỏ sót". Bản nháp IA-01 đã ghi lại một số mảng chưa xét, ví dụ dark mode và RTL, để bạn cân nhắc ở bước này.
+````
+
+---
+
+### C69 | 16:50 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1 đã review xong.
+- Task 3 đã có bản AI.
+
+Kiểm tra, xuất log và đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status, commits, latest transcripts
+- Bash: Check design sessions for reads of forbidden files
+- Bash: Recheck design sessions for forbidden reads with UTF-8 output
+- Bash: Recheck design sessions for forbidden reads
+- Bash: Whitelist Task 3 session and size up new files
+- Bash: Diff setup files and outline checklist
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Bash: Recount checklist items by IA and source; outline setup draft
+- Bash: Export prompt log and update tracker
+
+**Output AI (nguyên văn):**
+
+````text
+Đã thêm phiên Task 3 vào danh sách xuất log; giờ kiểm tra `02_checklist.md` (phần cơ học) và bản setup.
 ````
 
 
