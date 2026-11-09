@@ -4267,6 +4267,608 @@ Kiểm tra, xuất log và đưa commit message.
 
 ````text
 Đã thêm phiên Task 3 vào danh sách xuất log; giờ kiểm tra `02_checklist.md` (phần cơ học) và bản setup.
+
+Review Task 1 và bản AI của Task 3 đều ổn và commit được. Log đã xuất lại: 69 lượt từ **4 phiên**. Tôi đã thêm phiên Task 3 (`99fcf7b9`) vào danh sách trắng trong `tools/export_prompt_log.py`.
+
+## Task 1: `02_checklist.md` (chỉ kiểm phần cơ học)
+
+Như đã nói lần trước, tôi chỉ kiểm phần cơ học, không đánh giá nội dung từng mục.
+
+| Kiểm | Kết quả |
+|---|---|
+| Mã CL-01 đến CL-108 liên tục, không trùng | ✅ |
+| Mỗi dòng đủ 8 cột, có Nguồn và mã `AI-xx-xx` gốc | ✅ |
+| Bảng 7.1 khớp với số đếm lại từ các dòng (theo IA, theo Nguồn, SRS và khuyến nghị) | ✅ Ví dụ IA-02: 11 `AI` + 18 `AI, SV sửa`; 16 SRS + 13 khuyến nghị |
+| 109 − 5 (bỏ / gộp) + 3 (tách thêm) + 1 (CL-69) = 108 | ✅ |
+| Truy vết 7.2 phủ mọi mã IA trong `01_oracle.md` mục 3, UI-R39 chỉ một mục | ✅ |
+| Trên 40 mục, đủ 4 IA | ✅ |
+| Dấu "—" và "·" | 0 |
+
+Hai điểm nhỏ, không chặn commit:
+- **Bảng mục 9 chưa có dòng Loại "Thiếu":** Đúng thứ tự, vì các mục SV thêm thuộc bước `add`. Khi làm `add`, mỗi mục thêm cần điền cột "Vì sao AI bỏ sót".
+- **Dòng 298 (CL-05):** Thay đổi là "mở rộng danh sách", nhưng Loại ghi "Thừa". Lý do của dòng này là gom các ý lặp ở IA-04 về một mục, nên vẫn hợp lý. Chỉ cần câu chữ ở cột Thay đổi nói rõ là gom.
+
+## Task 3: Bản AI `ai_raw/T3_setup.md`
+
+- **Mọi lựa chọn đều để mở:** Gồm D-01 đến D-10 và Q-06, đúng yêu cầu không tự chốt.
+- **D-03 tự phát hiện vấn đề `bs-local.com` với Safari:** Phiên này tìm ra từ tài liệu BrowserStack, nên vẫn là hộp đen.
+- **Phiên không đọc file bị cấm:** Phiên Task 3 có liệt kê tên thư mục `eshop-sut` và đọc `README.md` (là SRS), nhưng không mở mã nguồn.
+- **`01_setup.md` chưa commit:** File này hiện là bản sao của bản AI, bảng thay đổi còn trống, nên để đến khi bạn review xong.
+- **Nên chốt D-01 trước khi chạy Task 1:** D-01 là có tính lần chạy Task 1 là một nền tảng không. Nếu tính, ảnh của lần chạy Task 1 cần có lớp chữ đè (L1).
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/02_checklist.md
+git commit -m "[T1][review] Review AI checklist drafts for IA-01 to IA-04"
+git add cross_platform/ai_raw/T3_setup.md
+git commit -m "[T3][setup] Add platform, tool and overlay options (AI draft)"
+git add tools/export_prompt_log.py prompt_log.md
+git commit -m "[setup] Add Task 3 session to prompt log whitelist"
+git push
+```
+
+**`usability/participants.md`:** File này đang có thay đổi. Tôi đoán bạn đã điền thông tin người tham gia nên tôi **không mở xem**. Nếu muốn commit, bạn tự chạy riêng:
+
+```powershell
+git add usability/participants.md
+git commit -m "[T2][participants] Fill participant table"
+```
+
+Tracker đã cập nhật: Review Task 1 ✅, setup Task 3 🔄, thêm phiên `99fcf7b9`, cập nhật ước tính thời gian.
+
+⏱ Còn khoảng **36,25 giờ** làm việc | Còn **29 giờ 8 phút** tới mốc 22:00 10/11 | **44 giờ 8 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C70 | 16:57 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Việc nhảy liên tục giữa 3 phiên khiến tôi khá đau đầu và rối khi mà nhwos việc của phiên này tới đâu, cần làm gì như nào. Liệu bạn có thể gom từng phiên cho tôi, ví dụ task 1 đang ở bước nào, cần làm gì,... task 2, task 3 tương tự được không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check commit state and Task 2 step definitions
+
+**Output AI (nguyên văn):**
+
+````text
+Đây là bảng tình hình theo từng phiên, kèm việc tiếp theo và thứ tự nên làm, tính đến 16:57 09/11. Mọi commit đã đẩy lên. Chỉ còn `participants.md` (bạn tự commit) và `cross_platform/01_setup.md` (chờ review) chưa commit.
+
+## Task 1: GUI Checklist (phiên `f2487351`)
+
+**Đã xong:** Survey, oracle, bản nháp AI cho 4 IA, review (`02_checklist.md`, 108 mục).
+
+**Đang ở bước `add`.**
+
+| # | Việc tiếp | Ai làm | Ghi chú |
+|---|---|---|---|
+| 1 | `add`: Thêm mục AI bỏ sót (đề gợi ý accessibility, RTL, dark mode; thêm bàn phím, responsive nếu thấy cần). Mỗi mục có cột "Vì sao AI bỏ sót" | **Bạn** nghĩ mục; phiên Task 1 viết lại cho đúng định dạng | Mục thêm vào mục 5 của `02_checklist.md`, Loại "Thiếu" ở bảng mục 9 |
+| 2 | `excel`: Xuất checklist ra Excel | Phiên Task 1 | Cột kết quả nên chừa chỗ cho 3 nền tảng (Task 3 dùng chung file) |
+| 3 | `exec`: Chạy 108+ mục, ghi Passed / Failed, Notes và ảnh cho mục Failed | **Bạn** | **Chờ Task 3 chốt D-01.** Trước khi chạy, tôi reset DB và chạy `seed_orders.py` |
+| 4 | `bugs`: Báo bug lên Issues của repo nhóm, kèm `bug_report.md` | Bạn, phiên Task 1 hỗ trợ viết | |
+
+## Task 2: Usability (phiên `de8fb2a8`)
+
+**Đã xong:** Plan, scenario, instruments, khung bảng người tham gia.
+
+**Đang ở bước `participants`:** Bạn điền tay `participants.md` (đã có thay đổi, chưa commit).
+
+| # | Việc tiếp | Ai làm | Ghi chú |
+|---|---|---|---|
+| 1 | Điền xong `participants.md` (tên, liên lạc đã che, đồng ý, lịch) rồi commit | **Bạn** | Phiên Task 2 không được đọc file này |
+| 2 | Tạo Google Form SUS theo bảng thiết lập ở `03_instruments.md` mục I5 | **Bạn** | Tắt thu email, câu đầu là mã điền sẵn |
+| 3 | Gửi tin nhắn xin đồng ý (I2.1), chụp câu trả lời và lưu ngoài repo | **Bạn** | |
+| 4 | `pilot` với `PL` | **Bạn** chạy; phiên Task 2 sửa scenario và instruments theo ghi chú pilot | Báo tôi để reset DB trước phiên. Sau pilot điền cột "Sau pilot" của thời gian chuẩn |
+| 5 | `P1` đến `P7` | **Bạn** | Mỗi phiên khoảng 30 đến 40 phút. Reset DB trước mỗi phiên |
+| 6 | `score`, `analysis`, `bugs` | Phiên Task 2 hỗ trợ (chỉ dữ liệu đã ẩn danh) | |
+
+## Task 3: Cross-platform (phiên `99fcf7b9`)
+
+**Đã xong:** Bản AI của bước setup.
+
+**Đang ở bước `setup`:** Chờ bạn review `01_setup.md` và chốt quyết định.
+
+| # | Việc tiếp | Ai làm | Ghi chú |
+|---|---|---|---|
+| 1 | **Chốt D-01 ngay:** Có tính lần chạy Task 1 là một nền tảng không | **Bạn** (khoảng 15 phút) | Mở đường cho Task 1 exec. Nếu tính, ảnh exec của Task 1 phải có lớp chữ đè và URL localhost |
+| 2 | Chốt D-02 đến D-10 (bộ nền tảng, công cụ cloud, lớp chữ đè, ảnh, dữ liệu) | Bạn; phiên Task 3 ghi bảng thay đổi | |
+| 3 | Làm sớm các việc ở mục 12 (thử tunnel, lớp chữ đè) | Bạn | Giữ phút trial, chỉ thử ngắn |
+| 4 | Chạy checklist trên từng nền tảng còn lại | **Bạn** | **Chờ Task 1 xong bước excel** |
+| 5 | `bugs`, `compare` | Phiên Task 3 hỗ trợ | |
+
+## Ràng buộc giữa các phiên
+
+- **Chỉ có một DB:** Task 1 exec (reset và seed nhiều lần), phiên usability của Task 2, và lúc chạy Task 3 **không được chạy cùng lúc**. Lúc thiết kế (viết file) thì vẫn làm song song được.
+- **Task 3 ↔ Task 1:** Task 1 exec cần D-01 của Task 3. Task 3 chạy được khi có file Excel của Task 1.
+- **Phiên điều phối (phiên này):** Bật và reset server, xuất log, đưa lệnh commit. Báo tôi trước mỗi lần cần DB sạch.
+
+## Thứ tự nên làm từ giờ
+
+1. **Task 3:** Chốt D-01 (ngắn).
+2. **Task 1:** `add`, rồi `excel` (khoảng 2 giờ). Xen kẽ việc của Task 2: Điền `participants.md`, tạo Google Form, gửi tin nhắn xin đồng ý.
+3. **Task 2:** Pilot, tùy lịch người pilot.
+4. **Task 1:** `exec`, cần DB riêng khoảng 3,5 giờ. Nên làm tối nay, lúc không có phiên usability.
+5. **Ngày 10/11:** P1 đến P7 theo lịch, xen giữa là Task 3 chạy nền tảng. Cuối cùng là Agent Skill, video và báo cáo.
+
+Nếu thấy tiện, tôi có thể thêm bảng rút gọn này vào cuối mỗi tin nhắn, cạnh dòng thời gian.
+
+⏱ Còn khoảng **36,25 giờ** làm việc | Còn **29 giờ 3 phút** tới mốc 22:00 10/11 | **44 giờ 3 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C71 | 20:44 09/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bupmd88dj</task-id>
+<task-id>bg506pytp</task-id>
+<task-id>b8ewoduzq</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: bupmd88dj, bg506pytp, b8ewoduzq.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C72 | 22:27 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi xài máy Window và điện thoại Android.
+- Chưa tạo tài khoản BrowserStack hoặc LambdaTest bao giờ.
+- Email sinh viên bạn sẽ dùng để chèn lên ảnh chụp màn hình là 23120061@student.hcmus.edu.vn
+- Chưa chạy xong task 1. Lấy lần chạy task 1 làm 1 trong 3 nền tảng cho task 3 luôn đi.
+- Chọn tổ hợp T-C.
+- Dùng công cụ ghim cửa sổ Note/Notepad nổi trên màn hình.
+- Chụp full màn hình.
+- Chụp ảnh cho các mục Failed + 1 ảnh tổng quan (overview) cho mỗi màn hình.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check forbidden characters and lowercase after colon
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi sẽ áp các quyết định của bạn vào [01_setup.md](HW03/cross_platform/01_setup.md). Bản AI trong `ai_raw/` vẫn giữ nguyên.
+
+Tôi đã cập nhật [01_setup.md](HW03/cross_platform/01_setup.md) theo các quyết định của bạn; bản AI [ai_raw/T3_setup.md](HW03/cross_platform/ai_raw/T3_setup.md) giữ nguyên.
+
+**Những gì đã chốt**
+- **3 nền tảng (tổ hợp T-C):**
+  - N1: Chrome trên Windows. Đây chính là lần chạy `exec` của Task 1.
+  - N2: Firefox trên cloud, qua tunnel.
+  - N3: Android Chrome trên điện thoại thật, dùng `adb reverse` cho cổng `5173` và `3000`.
+- **Lớp chữ đè:** Một cửa sổ Notepad ghim nổi, ghi `23120061`, Nguyễn Thị Ánh Ngọc, `23120061@student.hcmus.edu.vn`.
+- **Chụp ảnh:** Chụp toàn màn hình. Mỗi nền tảng có ảnh cho mọi mục Failed và 3 ảnh tổng quan (`overview_profile`, `overview_register`, `overview_login`). Tên file và thư mục ở mục 6.3.
+- **Khi chạy Task 1 (mục 7.1):** Mọi ảnh của `exec` phải theo yêu cầu Task 3 ngay từ ảnh đầu tiên. Nên ghim Notepad và chụp thử một ảnh trước khi bắt đầu `exec`.
+
+**Một điểm nảy sinh từ các lựa chọn**
+Cửa sổ Notepad chỉ nằm trên màn hình máy tính, nên ảnh của điện thoại (N3) sẽ không có lớp chữ đè nếu chụp ngay trên điện thoại. Tôi để thành quyết định D-13 với hai lựa chọn:
+- Chiếu màn hình điện thoại lên máy tính bằng scrcpy rồi chụp cùng Notepad. Tiêu đề cửa sổ scrcpy có sẵn tên model điện thoại, nên cũng chứng minh được thiết bị.
+- Chụp điện thoại bằng một máy ảnh khác, đặt thẻ giấy ghi thông tin bên cạnh.
+
+**Còn mở (mục 8):** Dịch vụ cloud cho Firefox (D-03), cách xử lý khi hết phút trial (D-04), có thêm ảnh môi trường hay không (D-05), có thêm nhãn nền tảng và ngày vào lớp chữ đè hay không (D-06b), và D-08 đến D-15.
+
+**Bảng "Thay đổi so với bản AI":** Phần lớn các dòng là "Quyết định của SV". Có 3 dòng loại "Thiếu" do tôi tự thêm khi viết bản review, bạn xem và giữ hoặc xoá:
+- Đánh số `_1`, `_2` khi một ảnh tổng quan cần nhiều ảnh.
+- Bước cài `adb` trước khi dùng `adb reverse`.
+- Các quyết định mở mới D-11 đến D-15.
+
+Bạn có thể cập nhật luôn dòng Task 3 trong `README.md` cá nhân và cột "Nền tảng (Task 3)" trong README repo nhóm; tôi không sửa hai file này.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```
+git add cross_platform/01_setup.md
+git commit -m "[T3][setup] Review setup and record platform decisions"
+```
+````
+
+---
+
+### C73 | 22:33 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Cửa sổ Notepad chỉ nằm trên màn hình máy tính, nên ảnh của điện thoại (N3) sẽ không có lớp chữ đè nếu chụp ngay trên điện thoại.
+-> Điện thoại có chế độ mở đa màn hình, tôi vẫn có thể để chữ đè.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check leftover scrcpy and D-13 mentions
+- Bash: Fix leftover references in three table rows
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng vậy, tôi đã bỏ sót cách này. Tôi đã sửa [01_setup.md](HW03/cross_platform/01_setup.md): ảnh của điện thoại (N3) giờ có lớp chữ đè ngay trên điện thoại, bằng chế độ đa màn hình (ứng dụng ghi chú cùng Chrome), rồi chụp toàn màn hình điện thoại. Hai lựa chọn cũ (scrcpy, chụp bằng máy ảnh khác kèm thẻ giấy) đã bỏ khỏi bản review, bản AI vẫn giữ nguyên.
+
+**Những điểm tôi thêm vì đổi sang cách này** (mục 5.3, 6.2):
+- **Kiểu đa màn hình (D-13b, còn mở):**
+  - Chia đôi màn hình thì Chrome chỉ còn khoảng nửa chiều cao. Bàn phím ảo sẽ che phần lớn nửa đó, có thể làm sai các mục về vị trí thông báo lỗi và nút submit.
+  - Cửa sổ ghi chú nổi nhỏ thì Chrome giữ đủ màn hình, nhưng phải dời cửa sổ cho khỏi che phần đang kiểm.
+- **Thanh địa chỉ:** Chrome trên Android tự ẩn thanh địa chỉ khi cuộn xuống. Trước khi chụp, cuộn ngược lên một chút cho thanh địa chỉ hiện lại.
+- **Tên thiết bị:** Ảnh chụp trên điện thoại không cho thấy tên model, trong khi tiêu đề cửa sổ scrcpy từng cho thấy. Vì vậy D-05 (thêm ảnh trang Giới thiệu điện thoại và `chrome://version`) giờ quan trọng hơn với N3.
+- **Tên ứng dụng ghi chú:** D-15 giờ gồm cả tên ứng dụng ghi chú trên điện thoại.
+
+**Bảng "Thay đổi so với bản AI":** Có thêm 2 dòng loại "Thiếu", lý do "Giới hạn model":
+- Bản AI không nghĩ tới chế độ đa màn hình có sẵn của Android.
+- Các lưu ý ở trên, mà bản AI chưa nêu vì chúng chỉ nảy sinh khi đổi sang cách đa màn hình.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```
+git add cross_platform/01_setup.md
+git commit -m "[T3][setup] Review setup and record platform decisions"
+```
+````
+
+---
+
+### C74 | 22:37 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Thêm nhãn nền tảng và ngày vào lớp chữ đè hay không: ⏳ D-06b. -> Không thêm, có thể để 1 trang riêng chụp các thông số này. Thêm vào cũng đâu chứng minh rằng mình thật sự chụp trên nền tảng đó.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: D-05|D-06b|overview_env|6\.3 Ảnh|Mục Passed và N/A
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check remaining references and forbidden characters
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã ghi vào [01_setup.md](HW03/cross_platform/01_setup.md): lớp chữ đè chỉ có MSSV, họ tên và email, không thêm nhãn nền tảng hay ngày (D-06b, mục 5.1).
+
+Câu "để 1 trang riêng chụp các thông số này" tôi hiểu là bạn đã chốt luôn D-05: mỗi nền tảng chụp thêm một ảnh môi trường `overview_env.png`. Nếu bạn chỉ định nêu đây là một khả năng thì báo tôi, tôi sẽ để D-05 mở lại.
+
+**Ảnh môi trường (mục 6.3):**
+- Ảnh chụp trang thông số do chính hệ thống hiển thị, trong cùng buổi chạy, và vẫn phải có lớp chữ đè.
+- Ngày giờ lấy từ đồng hồ trên thanh tác vụ Windows hoặc thanh trạng thái của điện thoại.
+- Trang tôi gợi ý chụp cho từng nền tảng (bạn đổi được):
+
+| Nền tảng | Trang chụp | Thông số thấy được |
+|---|---|---|
+| N1 Chrome Windows | `chrome://version` | Phiên bản Chrome, phiên bản Windows |
+| N2 Firefox cloud | `about:support` trong Firefox từ xa, cùng thanh công cụ của dịch vụ cloud | Phiên bản Firefox, OS của máy từ xa |
+| N3 Android Chrome | `chrome://version` trên điện thoại, thêm trang Giới thiệu điện thoại nếu cần | Phiên bản Chrome, phiên bản Android, model |
+
+Một trang không đủ thông số thì chụp nhiều ảnh, đặt tên `overview_env_1.png`, `overview_env_2.png`.
+
+Tôi cũng sửa các chỗ liên quan: bảng 6.2, bước 3 của mục 7.1, và bỏ D-05, D-06b khỏi danh sách quyết định mở. Bảng "Thay đổi so với bản AI" có thêm 2 dòng "Quyết định của SV" cho D-06b và D-05.
+
+Các quyết định còn mở: D-03, D-04, D-08 đến D-12, D-13b, D-14, D-15.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```
+git add cross_platform/01_setup.md
+git commit -m "[T3][setup] Review setup and record platform decisions"
+```
+````
+
+---
+
+### C75 | 23:13 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+D-03. Dịch vụ cloud cho N2
+D-04. Chuẩn bị sẵn dữ liệu trước khi bật tunnel
+D-08. Chỉ lưu ở checklist/screenshots/
+D-09. Reset DB và seed lại dữ liệu trước mỗi nền tảng
+D-10. Cùng độ phân giải.
+D-11. Đã đăng nhập, tài khoản test@eshop.com
+D-12. Đưa trực tiếp vào commit [T1][exec]
+D-13b. Cửa sổ nổi nhỏ (Pop-up view)
+D-14. Windows 11
+D-15. Máy tính: Sticky Notes
+Điện thoại: Samsung Notes
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check leftovers and show open decisions section
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+
+**Output AI (nguyên văn):**
+
+````text
+I've added 10 decisions to [01_setup.md](HW03/cross_platform/01_setup.md): D-04 and D-08 to D-15. Only **D-03** is still open. You wrote its title "Dịch vụ cloud cho N2" but didn't pick a service. Which one: **BrowserStack Live** (trial about 30 minutes, one-time) or **LambdaTest Real Time** (about 60 minutes per month)?
+
+**Where each decision went:**
+- **New section 6.4, Data and resolution:**
+  - D-09: Reset the DB and seed again before each platform.
+  - D-10: N1 and N2 use the same resolution. Note the N1 value when you run it, then pick that value for the Windows 11 remote machine.
+- **Section 5.2, D-15:** The computer overlay is now Sticky Notes, replacing Notepad. I left one small point to note down at setup: whether you keep it on top with Sticky Notes' own feature or with PowerToys.
+- **Section 5.3, D-13b and D-15:** On the phone, Chrome stays full screen and Samsung Notes floats on top as a pop-up view. I removed the split-screen comparison table.
+- **Section 6.3:**
+  - D-08: N1 Failed screenshots are stored only in `checklist/screenshots/`.
+  - D-11: The `/profile` overview screenshot is taken logged in as `test@eshop.com`.
+- **Section 7.1, D-12:** N1's overview and environment screenshots go into the `[T1][exec]` commit.
+- **Section 7.2:**
+  - D-04: Finish all preparation before starting the tunnel: server, reset and seed, Sticky Notes, the Excel file at the `firefox` column, and pre-copied form input data. Logging in to the SUT still has to happen inside the cloud session.
+  - D-14: The remote machine runs Windows 11.
+
+The "Thay đổi so với bản AI" table has 9 more "Quyết định của SV" rows.
+
+**One thing to check:** The `/profile` overview shows order history only if the seed step creates orders for `test@eshop.com`. Please ask the coordination session to confirm this when it seeds.
+
+Once you pick D-03, I'll add it and the setup step is complete.
+````
+
+---
+
+### C76 | 23:39 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Kẻ bảng ở phần add cho tôi rồi tôi tự điền.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: ^## 5\.|^## 6\.
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã kẻ bảng ở mục 5 của [02_checklist.md](Homeworks/HW03/checklist/02_checklist.md#L195). Bảng có các cột giống bảng checklist chính, thêm cột "Vì sao AI bỏ sót". Có sẵn 5 dòng trống từ CL-109 đến CL-113, cột "Nguồn" đã ghi sẵn `SV thêm`. Bạn thêm hoặc xóa dòng tùy số mục.
+
+Ngay trên bảng có 4 dòng ghi cách điền:
+- Mã tiếp nối từ CL-109.
+- Cột "Nguồn" ghi `SV thêm`.
+- Cột "Vì sao AI bỏ sót" chỉ nhận `Prompt`, `Giới hạn model` hoặc `Đặc thù giao diện`, kèm giải thích ngắn.
+- Mỗi mục thêm cũng ghi một dòng ở bảng "Thay đổi so với bản AI" (mục 9), Loại `Thiếu`.
+
+Hai lưu ý:
+- Mục 7.1 (bảng số mục) và mục 7.2 (truy vết oracle) chưa tính các mục bạn thêm. Điền xong thì báo tôi để cập nhật hai bảng này.
+- Theo WORKFLOW, bước `review` và `add` mỗi bước một commit. Nếu chưa commit bước `review` thì nên commit trước khi điền. Lúc đó cần tách thay đổi bảng trống này ra, vì nó thuộc bước `add`.
+````
+
+---
+
+### C77 | 23:53 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+D-03. BrowserStack Live
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Edit: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check leftover open markers and LambdaTest mentions
+
+**Output AI (nguyên văn):**
+
+````text
+I've recorded D-03 as BrowserStack Live in [01_setup.md](HW03/cross_platform/01_setup.md). Every decision is now made, so the setup step is complete.
+
+**Changes in this round:**
+- **Section 4 (N2) and section 7.2:** Only the BrowserStack steps remain, with the tunnel command `BrowserStackLocal.exe --key <ACCESS_KEY>`. I removed the LambdaTest steps.
+- **Section 8:** There are no open decisions left.
+- **"Thay đổi so với bản AI" table:** One more "Quyết định của SV" row for D-03.
+
+**Before running Firefox (N2):** The BrowserStack trial is about 30 minutes, used once. This figure comes from aggregator sites, so check the real number when you register and write it into step 1 of section 7.2. If time runs out partway through, section 7.2 already says to record which items weren't run and not to fill in results yourself.
+
+**Commit** (ask the coordination session to export the prompt log first):
+```
+git add cross_platform/01_setup.md
+git commit -m "[T3][setup] Review setup and record platform decisions"
+```
+````
+
+---
+
+### C78 | 00:21 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã bổ sung phần add. Bạn hãy kiểm tra định dạng, format, nội dung cho tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: ^## 5\.|^## 6\.|^## 9\.
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Bash: Check slide text for sources cited in added items
+- Bash: Read slide context for double-submit and responsive
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc mục 5 và mục 9 của [02_checklist.md](Homeworks/HW03/checklist/02_checklist.md), chưa sửa gì trong file. Bảng mục 5 dùng đúng 9 cột và mã CL-109 đến CL-113 nối tiếp đúng. Phần dưới gồm lỗi chung, góp ý từng mục, và những phần trong file chưa cập nhật theo bước `add`.
+
+## 1. Lỗi định dạng chung (cả 5 mục)
+
+| Vấn đề | Đề xuất |
+|---|---|
+| Cột "Vì sao AI bỏ sót" chưa ghi một trong 3 giá trị bắt buộc (`Prompt`, `Giới hạn model`, `Đặc thù giao diện`) | Mở đầu ô bằng giá trị, rồi mới tới giải thích, ví dụ: `Giới hạn model: AI chỉ kiểm ...`. Xem gợi ý cho từng mục ở phần 2 |
+| Mục 9 chưa có dòng nào cho CL-109 đến CL-113 | Mỗi mục thêm một dòng, Loại `Thiếu`, cột "Vì sao AI bỏ sót" ghi giống mục 5 |
+| Cột "Nội dung kiểm" không kết thúc bằng dấu "?". CL-01 đến CL-108 đều có | Thêm "?" vào cuối |
+| Nhiều ô kết thúc bằng dấu chấm. Các ô của CL-01 đến CL-108 không có dấu chấm cuối | Bỏ dấu chấm cuối ô cho đồng bộ |
+| CL-110: Gõ sai "dối với" | Sửa thành "đối với" |
+
+## 2. Góp ý nội dung từng mục
+
+| Mã | Vấn đề | Đề xuất |
+|---|---|---|
+| CL-109 | **Nguồn:** Slide AI-First không có cụm "Mobile viewport layout" và không có nguồn tên "Responsive Web Design". Slide có nhắc kiểm responsive ở các mức 360/768/1024/1440 (phần Responsively App), và slide S13 nhắc "responsive design practices" | Oracle: "Khuyến nghị: WCAG 2.2 SC 1.4.10 Reflow; slide AI-First (Responsively App, mức 360 / 768 / 1024 / 1440); slide S13 (responsive)" |
+| CL-109 | **Mơ hồ, kiểm nhiều điều:** "Kích thước điện thoại" chưa có số đo. Mong đợi gộp 4 điều: Không cuộn ngang, không chồng lấn, chữ đọc được, menu thu gọn. Ý "menu thu gọn (nếu có)" không đo được | Cách kiểm: "DevTools (Device Toolbar, rộng 360 px)". Mong đợi chỉ còn: "Không có thanh cuộn ngang, không có phần tử chồng lên nhau". Bỏ ý menu |
+| CL-109 | **Lý do không đúng:** "Bài test bắt buộc" sai, vì đây là mục khuyến nghị, không phải yêu cầu của SRS | Gợi ý: `Giới hạn model: AI có WCAG và slide về responsive nhưng chỉ kiểm 1366 x 768 (CL-32) và zoom 200% (CL-33), không kiểm khổ điện thoại` |
+| CL-110 | **Nguồn sai:** Slide không có câu "Handles leading/trailing spaces". Checklist Text Box chỉ có "Rejects spaces-only; test spaces + chars" | Nếu giữ: Oracle ghi "Khuyến nghị: Slide AI-First, checklist Text Box ('test spaces + chars'); Nielsen heuristic 5" |
+| CL-110 | **Lệch CH-05, mong đợi sai màn hình:** "Đăng nhập thành công" là kết quả chức năng. Ô Email ở W-06 bị khóa nên không gõ được. Cột "Cách kiểm" chỉ có dữ liệu cho W-03. Với ô `type="email"`, trình duyệt tự cắt khoảng trắng hai đầu theo chuẩn HTML, nên ở W-03, W-04 mục này gần như luôn Passed | Hai phương án: (a) Thu hẹp còn Số điện thoại ở W-06: Dữ liệu `" 0912345678 "`, mong đợi "Không có thông báo lỗi"; (b) Bỏ mục |
+| CL-111 | **Lý do không đúng:** AI không bỏ sót ý này. Bản nháp IA-02 mục 5 đã xét và loại nút hiện / ẩn mật khẩu, lý do "SRS không yêu cầu, không có nguồn rõ trong slide" | Mục 9 ghi Loại `Quyết định của SV` (giữ lại ý AI đã loại), không ghi `Thiếu`. Cột "Vì sao AI bỏ sót" ghi: "AI đã xét và loại (bản nháp IA-02 mục 5); SV giữ lại vì ..." |
+| CL-111 | **Nguồn:** "Slide AI-First" ghi chung chung, slide không có ý này. Nielsen 3 cũng ít liên quan | Oracle: "Khuyến nghị: Nielsen heuristic 5 (Error prevention), heuristic 9". Thêm vào mong đợi: "Mặc định ký tự bị che (CL-46)", để không mâu thuẫn với UI-R38 |
+| CL-112 | **Ngoài phạm vi:** Cột "Màn hình" ghi "Toàn hệ thống". Trang 404 không phải W-06, W-04 hay W-03. Task 1 chỉ kiểm 3 màn hình đã chọn | Hai phương án: (a) Bỏ; (b) Giữ, ghi rõ "Ngoài 3 màn hình (trang lỗi chung)" và chấp nhận lệch phạm vi |
+| CL-112 | **Kiểm nhiều điều:** Mong đợi gộp 4 điều: Có trang 404, chữ tiếng Việt, có link về trang chủ, không trắng trang. Phần tiếng Việt đã có ở CL-05 | Nếu giữ: Mong đợi "Hiện trang báo không tìm thấy, có link hoặc nút về trang chủ" |
+| CL-112 | **Lý do:** Cụm "kiểm thử chưa đăng nhập" khó hiểu | Gợi ý: `Prompt: Prompt chỉ đưa 3 màn hình, không có URL sai` |
+| CL-113 | **Trùng, lý do không đúng:** CL-96 đã chấp nhận "nút bị khóa" là một dấu hiệu đang xử lý. Bản nháp IA-04 mục 6 cũng đã xét ý double-click và loại vì trùng phần nhìn thấy được với CL-96 | Muốn giữ thì cho mục kiểm một điều khác CL-96: Mong đợi "Bấm nhanh 3 lần, tab Network chỉ ghi 1 request gửi form". Mục 9 ghi Loại `Quyết định của SV`, như CL-111 |
+| CL-113 | **Nguồn:** Slide có nguồn sát hơn Nielsen 5 | Oracle: "Khuyến nghị: Slide AI-First, checklist Button ('Single / double / multi-click behave correctly'); ví dụ 'Double-submit on double-click: No debounce, duplicate orders'" |
+
+## 3. Phần chưa cập nhật ngoài mục 5
+
+| Vị trí | Việc cần làm |
+|---|---|
+| Đầu file, dòng 3, 5, 12 | Bước đang ghi `[T1][review]`, ngày cập nhật 09/11, và câu "phần `add` chưa làm". Cần đổi sang bước `add` và ngày hôm nay |
+| Mục 7.1 (bảng số mục) và mục 7.2 (truy vết oracle) | Thêm các mục SV thêm (tổng thành 113 nếu giữ cả 5). Ở 7.2, đưa các mục giữ lại vào dòng "Ngoài SRS khác" |
+| Dark mode, RTL | WORKFLOW mục 3.1.2 yêu cầu bước `add` **xét** các mảng AI hay bỏ sót. Đề gợi ý accessibility, RTL và dark mode. Bạn chưa ghi gì về RTL và dark mode. Không cần thêm mục; một câu ghi kết luận sau khi xét là đủ, ví dụ EShop không có chế độ tối hay ngôn ngữ viết từ phải sang trái |
+
+Mục cần bạn quyết: CL-110 (a hay b), CL-112 (a hay b), và có giữ CL-111, CL-113 với Loại `Quyết định của SV` không. Sau khi bạn quyết, tôi có thể sửa giúp toàn bộ những điểm trên, kể cả mục 7 và mục 9.
+````
+
+---
+
+### C79 | 00:33 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+CL-110. a
+CL-112. a
+CL-111 và 113 giữ lại với laoij Quyết định của SV.
+Các phần còn lại theo đề xuất của bạn và sửa cho đúng.
+Về phần dark mode, đúng là có thể thêm vì tôi cũng không thấy phần dark mode ở đâu.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Get current date and time
+- Bash: Apply add-step fixes, summary counts and change log rows
+- Bash: Verify item counts and question marks after edits
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã sửa xong [02_checklist.md](Homeworks/HW03/checklist/02_checklist.md) theo quyết định của bạn. File giờ có 112 mục (CL-01 đến CL-112), không có mã trùng, không có ký tự cấm. Số liệu ở mục 7.1 đã đối chiếu lại với bảng.
+
+**Mục 5, các mục SV thêm:**
+
+| Mã | Thay đổi |
+|---|---|
+| CL-109 | Thêm khổ rộng 360 px. Mong đợi còn 2 điều: Không cuộn ngang, không chồng lấn. Nguồn đổi thành WCAG 1.4.10 Reflow, slide AI-First và S13. Vì sao AI bỏ sót: `Giới hạn model` |
+| CL-110 | Theo phương án (a): Chỉ kiểm ô Số điện thoại ở W-06, dữ liệu `" 0912345678 "`, mong đợi "Không có thông báo lỗi". Nguồn sửa thành đúng câu trong slide. Vì sao AI bỏ sót: `Giới hạn model` |
+| CL-111 | Nguồn còn Nielsen 5 và 9. Mong đợi thêm "Mặc định ký tự bị che (CL-46)". Cột "Vì sao AI bỏ sót" ghi: Không áp dụng, vì AI đã xét và loại; SV giữ lại vì ... |
+| CL-112 | Là CL-113 cũ. Mã dồn lên vì CL-112 cũ (trang 404) đã bỏ theo phương án (a); mã chưa chốt nên đổi được. Mong đợi đổi thành "tab Network chỉ ghi 1 request", để không trùng CL-96. Nguồn thêm checklist Button và ví dụ double-submit của slide |
+
+**Các phần khác:**
+- **Cuối mục 5:** Thêm bảng kết luận cho các mảng đề gợi ý. Accessibility đã có nhiều mục WCAG. Dark mode và RTL không thêm mục; lý do là bạn không thấy trên giao diện và SRS không yêu cầu.
+- **Mục 9:** Thêm 5 dòng. CL-109 và CL-110 có Loại `Thiếu`. CL-111, CL-112 và kết luận về dark mode, RTL có Loại `Quyết định của SV`.
+- **Mục 7:** Bảng 7.1 cập nhật thành 112 mục: 58 giữ nguyên bản AI, 49 AI sửa, 5 SV thêm; 50 căn cứ SRS, 62 khuyến nghị. Bảng 7.2 thêm CL-109 đến CL-112.
+- **Đầu file:** Ghi cả hai bước `review` và `add`, thời gian cập nhật 10/11 00:34, và ai làm phần `add`.
+- **Mục 2:** ĐK-06 và ĐK-07 thêm CL-112 vào cột "Dùng cho".
+
+**Lưu ý:** Ba câu ở cột "Vì sao AI bỏ sót" là của bạn, tôi chỉ sửa câu chữ. Đó là lý do giữ lại CL-111, CL-112 và lời giải thích của CL-110 ("thói quen sao chép / dán"). Bạn đọc lại xem còn đúng ý không.
+
+Commit bước `add` (nhờ phiên điều phối xuất prompt log trước):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/02_checklist.md
+git commit -m "[T1][add] Add items missed by AI with reasons"
+```
+
+Nếu bạn chưa commit bước `review` thì phần review và phần add đang nằm chung trong file này, nên lệnh trên sẽ đưa cả hai vào một commit. WORKFLOW mục 4.2 yêu cầu mỗi bước một commit. Nếu cần tách thì báo tôi để tính cách làm.
+````
+
+---
+
+### C80 | 00:59 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã xong phần task 3 và task 1 (chưa xuất excel). Bạn hãy kiểm tra nội dung, xuất log và commit message cho tôi.
+- Tôi chưa điền participants (CẤM ĐỌC) xong nên tôi chưa commit, đã xong google form. Ảnh tin nhắn xin đồng ý đã lưu vào folder khác để bạn không đẩy lên git hay đọc thông tin cá nhân.
+- Sáng mai tôi sẽ cho Pilot thử. Là chạy trên máy mình, để kịch bản ở máy luôn, quay lại quá trình đúng không?
+- Tôi có chốt chọn Task 1 như 1 nền tảng.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status, time, latest transcripts
+- Bash: Check sessions for forbidden reads since 16:40 and show checklist diff
+- Bash: Check setup file for picture paths and outline
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: Check screenshot naming rules and group README note
+- Bash: Export prompt log, update tracker, audit note and estimates
+
+**Output AI (nguyên văn):**
+
+````text
+Đang đối chiếu `01_setup.md` với WORKFLOW và README nhóm. Có một điểm cần khai báo ở phần Audit, tôi ghi vào tracker rồi xuất log.
 ````
 
 
