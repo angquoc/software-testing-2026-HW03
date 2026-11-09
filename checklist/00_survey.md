@@ -57,6 +57,7 @@ Môi trường khi chụp:
 | 05 | `survey_05_profile_logged_in_with_orders.png` | W-06 | Đã đăng nhập, lịch sử đơn có đơn | x |
 | 06 | `survey_06_login_logged_in.png` | W-03 | Đã đăng nhập, gõ thẳng URL `/login` (ghi lại trang hiện ra) | x |
 | 07 | `survey_07_register_logged_in.png` | W-04 | Đã đăng nhập, gõ thẳng URL `/register` (ghi lại trang hiện ra) | x |
+| 08 | `survey_08_navbar_greeting_link.png` | W-06 | Đã đăng nhập, bấm vào "Chào, <Họ Tên>" trên navbar, đang rê chuột trên lời chào (chụp bổ sung ngày 09/11/2026) | x |
 
 ---
 
@@ -205,11 +206,11 @@ Form chỉ có 2 ô trên; không có checkbox (ví dụ "Ghi nhớ đăng nhậ
 | Các mục trên navbar, theo thứ tự từ trái sang phải (nguyên văn) | Bên phải: Giỏ hàng, Đăng nhập, Đăng ký (đều chữ trắng) | Bên phải: Giỏ hàng (chữ trắng), Chào, <Họ Tên> (chữ vàng), Thoát (nút) | 01, 03, 04, 05 |
 | Có ô tìm kiếm không (placeholder nguyên văn) | Không có | Không có | 01 đến 07 |
 | Link "Giỏ hàng": Có badge số lượng không, badge đang hiện số mấy | Không thấy badge vì giỏ không có hàng | Không thấy badge vì giỏ không có hàng | 01 đến 07 |
-| Tên / avatar người dùng hiển thị thế nào | Không áp dụng | Chữ "Chào, <Họ Tên>" màu vàng (ví dụ "Chào, Test User", "Chào, Khách Mới"); không có avatar | 04, 05 |
+| Tên / avatar người dùng hiển thị thế nào | Không áp dụng | Chữ "Chào, <Họ Tên>" màu vàng (ví dụ "Chào, Test User", "Chào, Khách Mới"); không có avatar. Lời chào là **link dẫn tới `/profile`**: Bấm vào thì chuyển sang trang hồ sơ; khi rê chuột, chữ có gạch chân và thanh trạng thái trình duyệt hiện `localhost:5173/profile` | 04, 05, 08 |
 | Chữ trên nút đăng xuất (nguyên văn) | Không áp dụng | Thoát (nút nền đỏ, chữ trắng, ở góc phải) | 04 đến 07 |
 | Đang ở `/login`: Mục nào trên navbar được làm nổi bật (khác màu, gạch chân, in đậm), hay không mục nào | Không mục nào ("Đăng nhập" cùng màu, cùng kiểu với các mục khác) | Không mục nào (chữ vàng "Chào, ..." hiện giống nhau ở mọi trang nên không phải dấu hiệu trang đang chọn) | 01, 06 |
 | Đang ở `/register`: Mục nào được làm nổi bật | Không mục nào ("Đăng ký" cùng màu, cùng kiểu với các mục khác) | Không mục nào | 02, 07 |
-| Đang ở `/profile`: Mục nào được làm nổi bật | Không mục nào | Không mục nào (navbar không có mục riêng cho trang hồ sơ) | 03, 04, 05 |
+| Đang ở `/profile`: Mục nào được làm nổi bật | Không mục nào | Mục dẫn tới trang này là lời chào "Chào, <Họ Tên>" (link tới `/profile`). Khi không rê chuột, lời chào có màu vàng, không gạch chân, giống hệt khi ở `/login`, `/register`; không thấy mục nào khác kiểu | 03, 04, 05, 06, 07, 08 |
 | Có footer không, footer có gì | Có, nền xanh đen sẫm, chữ trắng căn giữa: "© 2026 EShop SUT. Dành cho mục đích kiểm thử." | Giống khi chưa đăng nhập | 01 đến 07 |
 
 ---
@@ -223,6 +224,7 @@ Ghi những điểm chưa chắc khi quan sát, hoặc điều thấy lạ mà c
 | 1 | Cả 3 | Ảnh bắt đầu từ thanh địa chỉ nên không thấy tiêu đề trên tab trình duyệt. SV đã bổ sung chữ trên tab của `/login`, `/register`, `/profile` vào mục 3.1, 4.1, 5.1 | |
 | 2 | W-06 | Ngày đặt hiện "11/8/2026" được viết dưới dạng M/D/YYYY | 05 |
 | 3 | Cả 3 | Không thấy badge trên "Giỏ hàng" ở ảnh nào vì trong giỏ khi đó không có hàng | 01 đến 07 |
+| 4 | W-06 | Bổ sung ngày 09/11/2026 (sau khi đã commit bước survey): Lời chào "Chào, <Họ Tên>" trên navbar là link dẫn tới `/profile`. Bản trước ghi "navbar không có mục riêng cho trang hồ sơ" là chưa đúng; đã sửa ở mục 6 | 08 |
 
 ---
 
@@ -242,4 +244,5 @@ Các điểm sau cần DevTools, bàn phím hoặc nhập dữ liệu sai nên *
 | Vị trí | SV ghi | Sau đối chiếu | Căn cứ |
 |---|---|---|---|
 | Mục 1, "Ngày giờ chụp" | 20:40 08/11/2026 | 08/11/2026, từ 20:40 đến 20:54 | Đồng hồ Windows trong ảnh: 01 lúc 20:42, 02 lúc 20:41, 03 lúc 20:43, 04 lúc 20:44, 05 lúc 20:40, 06 và 07 lúc 20:54 |
-| Mục 2, ghi chú dưới bảng ảnh | (SV đã xóa ghi chú "Quyết định mở" về đơn ở nhiều trạng thái) | Giữ theo SV. Ảnh 05 đã có đủ 5 trạng thái đơn nên không cần ảnh `survey_08` trở đi cho trạng thái đơn | Ảnh 05 |
+| Mục 2, ghi chú dưới bảng ảnh | (SV đã xóa ghi chú "Quyết định mở" về đơn ở nhiều trạng thái) | Giữ theo SV. Ảnh 05 đã có đủ 5 trạng thái đơn nên không cần thêm ảnh cho trạng thái đơn | Ảnh 05 |
+| Mục 6, lời chào và "Đang ở `/profile`" | (Bản AI điền từ ảnh 01 đến 07 ghi navbar không có mục riêng cho trang hồ sơ) | Lời chào "Chào, <Họ Tên>" là link tới `/profile` | SV phát hiện và chụp ảnh 08 ngày 09/11/2026; ảnh 01 đến 07 không cho thấy lời chào là link |
