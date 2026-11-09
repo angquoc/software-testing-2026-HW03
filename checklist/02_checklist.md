@@ -1,15 +1,15 @@
 # T1 checklist: Checklist đã review
 
-Bước: `[T1][review]`, bản review (phần mục AI)
+Bước: `[T1][review]` (phần mục AI) và `[T1][add]` (phần mục SV thêm)
 Bản AI gốc: `ai_raw/T1_draft_IA-01.md` (2026-11-09 12:52), `ai_raw/T1_draft_IA-02.md`, `ai_raw/T1_draft_IA-03.md`, `ai_raw/T1_draft_IA-04.md` (2026-11-09 15:03)
-Cập nhật: 2026-11-09 16:39
+Cập nhật: 2026-11-09 16:39 (bước `review`), 2026-11-10 00:34 (bước `add`)
 
 Ai làm phần nào:
 
 - Sinh viên review từng mục AI (giữ, sửa, bỏ, gộp, tách) và trả lời các câu hỏi mở CHD-01 đến CHD-16.
 - Với IA-02, IA-03, IA-04: AI lọc trước theo yêu cầu của sinh viên (mục kiểm nhiều điều, mục mơ hồ, mục trùng, nguồn yếu, mục lệch với `01_oracle.md`). Sinh viên quyết định từng đề xuất.
 - AI soạn file này theo quyết định của sinh viên; sinh viên kiểm tra lại. Mọi thay đổi về nội dung ghi ở mục 9.
-- Phần mục sinh viên tự thêm (bước `add`) chưa làm, xem mục 5.
+- Phần mục sinh viên tự thêm (bước `add`, mục 5): Sinh viên viết nội dung; AI kiểm tra định dạng, nguồn, phạm vi và sửa theo quyết định của sinh viên.
 
 ---
 
@@ -38,8 +38,8 @@ Ai làm phần nào:
 | ĐK-03 | Mỗi lần kiểm thông báo lỗi của form, bắt đầu từ form trống (tải lại trang) | CL-38 đến CL-41, CL-47, CL-50, CL-55 đến CL-60 |
 | ĐK-04 | Giỏ hàng có đúng 2 sản phẩm **khác nhau**, mỗi sản phẩm số lượng 1, thêm từ trang chủ khi đang đăng nhập `test@eshop.com` | CL-68 |
 | ĐK-05 | Giỏ hàng có đúng 1 sản phẩm, số lượng 2, thêm khi đang đăng nhập `test@eshop.com` | CL-69 |
-| ĐK-06 | Một email chưa đăng ký (ví dụ `ia03.<giờ chạy>@eshop.com`) và mật khẩu hợp lệ `Abcdef1!` | CL-65, CL-104 |
-| ĐK-07 | Giả lập mạng chậm: DevTools, tab Network, chọn "Slow 4G" (hoặc "3G") | CL-94 đến CL-96 |
+| ĐK-06 | Một email chưa đăng ký (ví dụ `ia03.<giờ chạy>@eshop.com`) và mật khẩu hợp lệ `Abcdef1!` | CL-65, CL-104, CL-112 |
+| ĐK-07 | Giả lập mạng chậm: DevTools, tab Network, chọn "Slow 4G" (hoặc "3G") | CL-94 đến CL-96, CL-112 |
 | ĐK-08 | Các mục hủy đơn làm đổi dữ liệu: Chạy lại ĐK-01 trước mỗi mục CL-88, CL-97 đến CL-100 | CL-88, CL-97 đến CL-100 |
 | ĐK-09 | Các mục khóa tài khoản làm `test@eshop.com` bị khóa 30 giây: Chạy sau cùng, hoặc chờ hết 30 giây trước mục kế tiếp | CL-89, CL-90 |
 
@@ -194,7 +194,28 @@ Theo CH-06. SRS không cho bản dịch hay màu cụ thể, nên cột "Chữ h
 
 ## 5. Mục sinh viên thêm (bước `add`)
 
-Chưa làm. Sinh viên thêm ở bước `add` (WORKFLOW mục 3.1.2), mỗi mục có cột "Vì sao AI bỏ sót". CL-69 là mục mới nhưng phát sinh từ câu hỏi CHD-09 của bản AI ở bước `review`, nên nằm trong bảng IA-03 (mục 3.3).
+Sinh viên thêm ở bước `add` (WORKFLOW mục 3.1.2). CL-69 là mục mới nhưng phát sinh từ câu hỏi CHD-09 của bản AI ở bước `review`, nên nằm trong bảng IA-03 (mục 3.3).
+
+Cách ghi:
+
+- Mã tiếp nối từ CL-109. Cột "Nguồn" ghi `SV thêm`.
+- Cột "Vì sao AI bỏ sót" ghi một trong ba giá trị `Prompt`, `Giới hạn model`, `Đặc thù giao diện`, kèm giải thích ngắn (WORKFLOW mục 2.2). Mục mà bản AI đã xét và loại (không phải bỏ sót) ghi "Không áp dụng" và giải thích; ở mục 9 các mục này có Loại `Quyết định của SV`.
+- Mỗi mục thêm có một dòng ở bảng mục 9.
+
+| Mã | Nội dung kiểm | IA | Màn hình | Oracle | Cách kiểm | Kết quả mong đợi | Nguồn | Vì sao AI bỏ sót |
+|---|---|---|---|---|---|---|---|---|
+| CL-109 | Ở kích thước màn hình điện thoại (rộng 360 px), trang có hiển thị vừa vặn, không có thanh cuộn ngang và không có phần tử chồng lên nhau không? | IA-01 | W-06 (đăng nhập, có đơn), W-04, W-03 | Khuyến nghị: WCAG 2.2 SC 1.4.10 Reflow; slide AI-First (Responsively App, kiểm ở các mức 360 / 768 / 1024 / 1440); slide S13 (responsive design) | DevTools (Device Toolbar, rộng 360 px) | Không có thanh cuộn ngang, không có phần tử (nhãn, ô nhập, bảng, nút) chồng lên nhau | SV thêm | Giới hạn model: AI có WCAG và slide về responsive trong đầu vào nhưng chỉ kiểm cửa sổ 1366 x 768 (CL-32) và zoom 200% (CL-33), không kiểm khổ màn hình điện thoại |
+| CL-110 | Ô Số điện thoại có chấp nhận số hợp lệ bị dính khoảng trắng ở hai đầu (thường gặp khi sao chép / dán) không? | IA-02 | W-06 (đăng nhập) | Khuyến nghị: Slide AI-First, checklist Text Box ("test spaces + chars"); Nielsen heuristic 5 (Error prevention) | Bàn phím (Số điện thoại `" 0912345678 "`, một dấu cách ở mỗi đầu, bấm "Cập nhật") | Không có thông báo lỗi | SV thêm | Giới hạn model: AI đã kiểm chuỗi chỉ có khoảng trắng ở ô Họ Tên (CL-60) nhưng bỏ qua thói quen sao chép / dán làm dư khoảng trắng ở số điện thoại |
+| CL-111 | Ô mật khẩu có nút (icon con mắt) để người dùng chọn hiện / ẩn mật khẩu vừa nhập không? | IA-02 | W-04, W-03 | Khuyến nghị: Nielsen heuristic 5 (Error prevention), heuristic 9 (Help users recognize, diagnose, and recover from errors) | Chuột, Nhìn (gõ `Abcdef1!`, bấm icon con mắt hai lần) | Mặc định ký tự bị che (CL-46). Bấm icon lần thứ nhất thì ký tự hiện rõ, bấm lần nữa thì che lại | SV thêm | Không áp dụng: AI đã xét và loại (bản nháp IA-02 mục 5: SRS không yêu cầu, không có nguồn rõ trong slide). SV giữ lại vì đây là tính năng UX cơ bản giúp người dùng tự phát hiện lỗi gõ phím |
+| CL-112 | Khi bấm liên tiếp nhiều lần vào nút gửi, form có chỉ được gửi một lần không? | IA-04 | W-06 (đăng nhập), W-04, W-03 | Khuyến nghị: Slide AI-First, checklist Button ("Single / double / multi-click behave correctly"); ví dụ "Double-submit on double-click: No debounce, duplicate orders" | DevTools (ĐK-07, tab Network), Chuột (bấm nhanh 3 lần vào "Cập nhật", "Đăng Ký" với dữ liệu ĐK-06, "Sign In") | Ở mỗi màn hình, tab Network chỉ ghi 1 request gửi form | SV thêm | Không áp dụng: AI đã xét và loại (bản nháp IA-04 mục 6: Phần nhìn thấy được trùng CL-96, phần tạo bản ghi trùng thuộc kiểm thử chức năng). SV giữ lại để kiểm riêng việc chống gửi trùng; CL-96 chỉ kiểm dấu hiệu đang xử lý |
+
+Các mảng đề gợi ý xét thêm (WORKFLOW mục 3.1.2):
+
+| Mảng | Kết luận |
+|---|---|
+| Accessibility | Đã có nhiều mục căn cứ WCAG 2.2 trong bản AI (ví dụ CL-19, CL-21, CL-22, CL-23, CL-54, CL-106) và CL-109 |
+| Dark mode | Không thêm mục. SV không thấy chế độ tối hay nút chuyển giao diện ở 3 màn hình; SRS không yêu cầu |
+| RTL | Không thêm mục. Giao diện chỉ có tiếng Việt, không có lựa chọn ngôn ngữ (`00_survey.md`); SRS không yêu cầu |
 
 ---
 
@@ -216,13 +237,13 @@ Chưa làm. Sinh viên thêm ở bước `add` (WORKFLOW mục 3.1.2), mỗi m�
 
 | IA | Số mục | Nguồn AI | Nguồn AI, SV sửa | Nguồn SV thêm | Căn cứ SRS | Khuyến nghị |
 |---|---|---|---|---|---|---|
-| IA-01 | 35 (CL-01 đến CL-35) | 30 | 5 | 0 | 18 | 17 |
-| IA-02 | 29 (CL-36 đến CL-64) | 11 | 18 | 0 | 16 | 13 |
+| IA-01 | 36 (CL-01 đến CL-35, CL-109) | 30 | 5 | 1 | 18 | 18 |
+| IA-02 | 31 (CL-36 đến CL-64, CL-110, CL-111) | 11 | 18 | 2 | 16 | 15 |
 | IA-03 | 19 (CL-65 đến CL-83) | 8 | 10 | 1 | 6 | 13 |
-| IA-04 | 25 (CL-84 đến CL-108) | 9 | 16 | 0 | 10 | 15 |
-| Tổng | 108 | 58 | 49 | 1 | 50 | 58 |
+| IA-04 | 26 (CL-84 đến CL-108, CL-112) | 9 | 16 | 1 | 10 | 16 |
+| Tổng | 112 | 58 | 49 | 5 | 50 | 62 |
 
-Bản AI có 109 mục. Bỏ hoặc gộp 5 mục (mục 6), tách 3 mục thành 6 (AI-02-22, AI-03-17, AI-04-09), thêm 1 mục (CL-69).
+Bản AI có 109 mục. Bỏ hoặc gộp 5 mục (mục 6), tách 3 mục thành 6 (AI-02-22, AI-03-17, AI-04-09), thêm 1 mục (CL-69). Bước `add` thêm 4 mục (CL-109 đến CL-112).
 
 ### 7.2 Truy vết oracle
 
@@ -260,7 +281,7 @@ Bản AI có 109 mục. Bỏ hoặc gộp 5 mục (mục 6), tách 3 mục thàn
 | UI-R47 | CL-91, CL-92, CL-93 |
 | NR-01 | CL-94, CL-96 |
 | NR-02 | CL-97 |
-| Ngoài SRS khác (khuyến nghị) | CL-19 đến CL-35, CL-52 đến CL-64, CL-71 đến CL-83, CL-95, CL-98 đến CL-108 |
+| Ngoài SRS khác (khuyến nghị) | CL-19 đến CL-35, CL-52 đến CL-64, CL-71 đến CL-83, CL-95, CL-98 đến CL-108, CL-109 đến CL-112 |
 
 ---
 
@@ -347,3 +368,8 @@ Bản AI có 109 mục. Bỏ hoặc gộp 5 mục (mục 6), tách 3 mục thàn
 | CL-103 (AI-04-20) | Là điều kiện của phần W-03 trong CL-47 | Quyết định của SV | | CHD-05 (b) |
 | CL-106 (AI-04-23) | Thêm ghi chú "Không chạy được" khi không có thông báo | Quyết định của SV | | CHD-05 (b) |
 | CL-108 (AI-04-25) | Cách kiểm đổi thành "Clear site data" | Mơ hồ | | Cách kiểm của bản AI đòi biết hệ thống lưu token ở đâu, trái với kiểm thử hộp đen |
+| CL-109 (bước `add`) | Thêm mục kiểm hiển thị ở khổ màn hình điện thoại (rộng 360 px) | Thiếu | Giới hạn model: AI có WCAG và slide về responsive nhưng chỉ kiểm 1366 x 768 và zoom 200% | WCAG 2.2 SC 1.4.10 Reflow; slide AI-First (Responsively App); slide S13 |
+| CL-110 (bước `add`) | Thêm mục ô Số điện thoại chấp nhận số hợp lệ bị dính khoảng trắng hai đầu | Thiếu | Giới hạn model: AI chỉ kiểm chuỗi toàn khoảng trắng (CL-60), bỏ qua khoảng trắng thừa khi sao chép / dán | Slide AI-First, checklist Text Box ("test spaces + chars"); Nielsen heuristic 5 |
+| CL-111 (bước `add`) | Thêm lại mục nút hiện / ẩn mật khẩu mà bản nháp IA-02 (mục 5) đã loại | Quyết định của SV | | Giúp người dùng tự phát hiện lỗi gõ phím (Nielsen heuristic 5, 9); mặc định vẫn che ký tự theo UI-R38 |
+| CL-112 (bước `add`) | Thêm lại mục chống gửi trùng khi bấm nút gửi nhiều lần mà bản nháp IA-04 (mục 6) đã loại; kiểm bằng số request trong tab Network để không trùng CL-96 | Quyết định của SV | | Slide AI-First: Checklist Button ("Single / double / multi-click behave correctly") và ví dụ double-submit |
+| Mục 5 (bước `add`) | Ghi kết luận sau khi xét dark mode và RTL: Không thêm mục | Quyết định của SV | | Bản nháp IA-01 (mục 6) để hai mảng này cho SV xét. SV không thấy chế độ tối hay lựa chọn ngôn ngữ trên giao diện; SRS không yêu cầu |
