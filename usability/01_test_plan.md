@@ -75,7 +75,7 @@ Luồng FL-05 được giao cho người tham gia như **một kịch bản dạ
 
 - Dữ liệu đưa cho người tham gia (tài khoản admin, tên danh mục, thông tin sản phẩm, URL ảnh): Chốt ở bước `scenario`.
 - Câu chữ kịch bản, trạng thái ban đầu, tiêu chí hoàn thành, thời gian chuẩn (benchmark) cho từng chặng và toàn luồng: Chốt ở bước `scenario` (slide S13 "Task components").
-- ⏳ Quyết định để mở: Có thêm chặng M4 "Tự kiểm tra sản phẩm đã nằm trong danh mục mới" vào kịch bản hay không, hay chỉ quan sát xem người tham gia có tự kiểm tra không (phục vụ Q7). Lưu ý khi chốt: Bảng sản phẩm trong Admin không có cột Danh mục (flow_11).
+- QĐ1 (đã chốt ở `02_scenario.md` mục 8): Không thêm chặng M4 "Tự kiểm tra sản phẩm đã nằm trong danh mục mới"; chỉ quan sát xem người tham gia có tự kiểm tra không (D7), rồi hỏi lại bằng câu hỏi mở C7 (`03_instruments.md` mục I6.1).
 
 ---
 
@@ -168,7 +168,7 @@ Sinh viên vừa là người điều phối vừa là người ghi chú.
 | Kết thúc | Đưa thang đo, sau đó hỏi câu hỏi mở và hỏi thêm về những chỗ đã quan sát thấy khó |
 | Sau phiên | Kiểm D6 (mục 8.1); lưu hồ sơ vào `sessions/P<n>/`, chỉ dùng mã P<n>, cắt bỏ khuôn mặt và thông tin cá nhân khỏi ảnh chụp từ video |
 
-⏳ Quyết định để mở: Định nghĩa "bế tắc hẳn" (ví dụ không tiến triển sau một khoảng thời gian nhất định, hoặc người tham gia tự nói muốn bỏ cuộc) và câu can thiệp chuẩn. Chốt ở bước `scenario` hoặc `instruments`, chỉnh lại sau pilot.
+QĐ4 (đã chốt ở `02_scenario.md` mục 5): "Bế tắc hẳn" là không tiến triển ở cùng một chặng khoảng 3 phút, hỏi cách làm từ lần thứ hai, hoặc nói muốn bỏ cuộc; can thiệp theo 4 mức (0 là nhắc think-aloud, không tính). Chỉnh lại sau pilot nếu cần.
 
 ---
 
@@ -194,7 +194,7 @@ Sinh viên vừa là người điều phối vừa là người ghi chú.
 | D9 | Câu trả lời câu hỏi mở về clarity, error recovery, speed, trust | Phỏng vấn sau phiên, ghi theo ý |
 | D10 | Lời nói khi think-aloud và lời than phiền | Video, phiếu ghi chú |
 
-⏳ Quyết định để mở (bước `instruments`): Dùng **SUS** hay **UEQ-S**. Gợi ý của AI: SUS (10 câu, điểm 0 đến 100, cách tính rõ, dễ so với mốc tham khảo thường dùng là 68); UEQ-S (8 cặp tính từ) cho thêm hai mặt pragmatic và hedonic nhưng cần bảng benchmark riêng để diễn giải.
+QĐ5 (đã chốt ở `03_instruments.md` mục I5): Dùng **SUS** (10 câu, điểm 0 đến 100, cách tính rõ, dễ so với mốc tham khảo thường dùng là 68). Người tham gia tự điền Google Form sau khi làm xong nhiệm vụ; câu trả lời chép nguyên văn vào `scale.md` (D8).
 
 ### 8.3 Liên kết câu hỏi với số liệu
 
@@ -265,11 +265,11 @@ Báo cáo usability (phần Task 2 trong báo cáo chính, dựa trên `04_score
 
 | Mã | Quyết định | Trạng thái |
 |---|---|---|
-| QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" vào kịch bản hay chỉ quan sát | ⏳ Bước `scenario` |
-| QĐ2 | Câu chữ kịch bản, dữ liệu đưa cho người tham gia, tiêu chí hoàn thành, thời gian chuẩn | ⏳ Bước `scenario` |
+| QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" vào kịch bản hay chỉ quan sát | Đã chốt ở `02_scenario.md` mục 8: Chỉ quan sát |
+| QĐ2 | Câu chữ kịch bản, dữ liệu đưa cho người tham gia, tiêu chí hoàn thành, thời gian chuẩn | Đã chốt ở `02_scenario.md` (QĐ2a đến QĐ2d): Dùng từ "danh mục"; giá ghi `2990000`; kịch bản và phiếu dữ liệu trong file mở sẵn; thời gian chuẩn bằng thời gian SV tự làm ×5 (toàn luồng 03:51.25), chỉnh sau pilot |
 | QĐ3 | Trực tiếp hay từ xa | Đã chốt: Tùy từng người tham gia, ghi hình thức trong hồ sơ phiên, đánh dấu riêng phiên từ xa khi tổng hợp thời gian |
-| QĐ4 | Định nghĩa "bế tắc hẳn" và câu can thiệp chuẩn | ⏳ Bước `scenario` hoặc `instruments`, chỉnh sau `pilot` |
-| QĐ5 | SUS hay UEQ-S | ⏳ Bước `instruments` |
+| QĐ4 | Định nghĩa "bế tắc hẳn" và câu can thiệp chuẩn | Đã chốt ở `02_scenario.md` mục 5: Ngưỡng 3 phút, 4 mức can thiệp; chỉnh sau `pilot` nếu cần |
+| QĐ5 | SUS hay UEQ-S | Đã chốt ở `03_instruments.md` mục I5: SUS, tự điền Google Form |
 | QĐ6 | Thang severity cho finding usability | ⏳ Bước `analysis` |
 
 ---
@@ -291,4 +291,5 @@ Báo cáo usability (phần Task 2 trong báo cáo chính, dựa trên `04_score
 | Mục 10.2 | Bỏ rủi ro "danh mục mới không hiện trong form sản phẩm" | Thừa | | Đã kiểm là không xảy ra (flow_08, SV xác nhận) |
 | Mục 10.2 | Thêm rủi ro sản phẩm nằm sai danh mục mà không ai nhận ra | Thiếu | Đặc thù giao diện: Danh mục mặc định cộng với việc không có thông báo và không có cột Danh mục | flow_07, flow_10, flow_11 |
 | Mục 5, 6, 8.4, 9, 10.2, 11 (QĐ3) | Chốt địa điểm: Tùy từng người tham gia; ghi hình thức trong hồ sơ phiên; đánh dấu riêng phiên từ xa khi tổng hợp thời gian; thêm vào hạn chế của nghiên cứu | Quyết định của SV | | SV chọn phương án "Tùy từng người" |
+| Mục 3.2, 7, 8.2, 11 (QĐ1, QĐ2, QĐ4, QĐ5) | Cập nhật trạng thái từ "⏳" thành "Đã chốt", dẫn tới chỗ chốt trong `02_scenario.md` và `03_instruments.md` | Quyết định của SV | | SV chốt các quyết định này ở bước `scenario` và `instruments` |
 | Mục 0, 8.4 | Thêm FR-06 vào đặc tả liên quan | Thiếu | Prompt: Bản AI chỉ xét các FR của phân hệ Admin, chưa nghĩ tới việc kiểm kết quả qua web bán hàng | FR-06 |

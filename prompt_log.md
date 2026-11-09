@@ -3085,11 +3085,472 @@ Kiểm tra giúp tôi, sau đó xuất log, đưa commit message.
 - Read: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-01.md
 - Bash: Check workflow naming, oracle IA-01 codes, raw URL notes, current DB categories
 - Bash: Export prompt log and locate tracker rows
+- Read: D:\Dang\Test\Homeworks\HW03\_NOTES.md
+- Read: D:\Dang\Test\Homeworks\HW03\_NOTES.md
+- Read: D:\Dang\Test\Homeworks\HW03\_NOTES.md
+- Bash: Update tracker statuses and time estimates
+- Edit: D:\Dang\Test\Homeworks\HW03\_NOTES.md
+- Bash: Get current time
 
 **Output AI (nguyên văn):**
 
 ````text
 Đang kiểm tra hai file mới và đã phát hiện một chỗ sửa trong `ai_raw`. Giờ tôi xuất log và cập nhật tracker.
+
+Cả hai file đều ổn, nhưng có một việc cần làm trước khi commit: bản gốc của AI `usability/ai_raw/T2_scenario.md` đã bị sửa tay. Log đã xuất lại: 53 lượt từ 3 phiên.
+
+## ⚠ Cần hoàn tác `ai_raw/T2_scenario.md`
+
+Trong file này, chỗ trống `<URL ảnh do SV chọn>` đã bị thay bằng URL cellphones. Phiên Task 2 không có lệnh sửa nào, nên chắc bạn sửa tay. Thư mục `ai_raw/` phải giữ đúng nguyên văn AI. URL đã có trong `02_scenario.md` (dòng 55), nên hoàn tác không mất gì. Lệnh hoàn tác ở đầu khối commit bên dưới.
+
+## Task 2: `02_scenario.md`
+
+Nội dung khớp với test plan, và mọi quyết định QĐ đã chốt. Các phép tính ×5, ×3, ×10 và phần chênh 00:02.75 tôi đã tính lại, đều đúng. Không có dấu "—" hay "·".
+
+Hai chỗ nên sửa câu chữ, không bắt buộc:
+- **Dòng 124:** "SV đã đo sau khi file này chốt" đọc như đo sau khi file xong. Nên đổi thành "SV đã đo sau khi có bản AI".
+- **Dòng 258:** "Giữ URL ảnh do SV chọn" chưa nói rõ thay đổi. Thật ra bạn đã điền một URL cụ thể vào chỗ trống. Nên ghi "Điền URL ảnh cụ thể thay chỗ trống `<URL ảnh do SV chọn>`".
+
+## Task 1: `ai_raw/T1_draft_IA-01.md` (gợi ý khi bạn review)
+
+Bản nháp có 35 mục: 18 theo SRS và 17 khuyến nghị. Nó phủ đủ các mã IA-01 trong oracle (UI-R20/R34, R29 đến R33, R35), và bảng truy vết khớp. Vài điểm đáng xem:
+
+- **AI-01-24:** Yêu cầu "chọn đơn có ngày lớn hơn 12" không làm được, vì đơn do `seed_orders.py` tạo đều mang ngày chạy (09/11 hoặc 10/11). Đổi thành "ngày khác tháng" là đủ, vì 10/11 và 11/10 vẫn phân biệt được. Tôi đã ghi điểm này vào chất liệu AI Critique.
+- **ĐK-02 và ĐK-03:** AI bảo đặt đơn bằng tay rồi đổi trạng thái ở Admin. Bạn có thể ghi là chạy `tools/seed_orders.py` sau khi reset: Script tạo 5 đơn ở 5 trạng thái và tài khoản `newuser@eshop.com` không có đơn.
+- **AI-01-06 và AI-01-20:** Hai mục này đều kiểm tiêu đề tab. Mục 06 kiểm có phải tiếng Việt, mục 20 kiểm có mô tả đúng trang và khác nhau. Có thể gộp, hoặc giữ cả hai nếu bạn muốn tách oracle SRS khỏi khuyến nghị.
+- **Mục 7 (CHD-01 đến CHD-04):** Có 4 câu hỏi để bạn chốt.
+
+## Lệnh commit
+
+Bước ai-draft được commit trước, bản review scenario commit sau. `prompt_log.md` đi kèm commit cuối.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git checkout -- usability/ai_raw/T2_scenario.md
+git add checklist/ai_raw/T1_draft_IA-01.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-01"
+git add usability/02_scenario.md prompt_log.md
+git commit -m "[T2][scenario] Review task scenario and set benchmark times"
+git push
+```
+
+Nếu sửa 2 dòng ở `02_scenario.md` như gợi ý trên thì sửa trước khi chạy lệnh `git add` thứ hai.
+
+**Ghi chú về dữ liệu:** DB hiện có danh mục "Loa Bluetooth" từ lần bạn bấm giờ. Phải reset trước pilot. Đơn hàng của Task 1 cũng không còn, nên đến bước exec cần chạy lại `seed_orders.py`.
+
+Tracker đã cập nhật: Bước 1.2 (oracle) và 2.3 (scenario) ✅, bước 1.3 (ai-draft) 🔄, và phần ước tính thời gian.
+
+⏱ Còn khoảng **38,5 giờ** làm việc | Còn **31 giờ 38 phút** tới mốc 22:00 10/11 | **46 giờ 38 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C54 | 14:26 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã xuất log và commit xong. Tiếp theo đến bước tiếp theo của task 2 đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Read: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- PowerShell: Get current date and time
+- Write: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_instruments.md
+- Grep: —|·
+
+**Output AI (nguyên văn):**
+
+````text
+Bước tiếp theo của Task 2 là `instruments`: Bộ công cụ cho phiên (thang đo, câu hỏi mở, phiếu ghi chú, phiếu thông tin, lời dặn và lời xin đồng ý). WORKFLOW và test plan đều đã đổi trên đĩa, nên tôi đọc lại cả hai trước khi viết.
+
+Tôi đã viết xong bản AI cho bước `instruments` ở [usability/ai_raw/T2_instruments.md](Homeworks/HW03/usability/ai_raw/T2_instruments.md). Theo WORKFLOW, giờ tôi dừng để bạn review. Tôi chưa tạo `03_instruments.md`.
+
+**Bộ công cụ gồm 7 phần:**
+
+| Mã | Công cụ | Ghi chú |
+|---|---|---|
+| I1 | Danh sách chuẩn bị phiên (11 việc) | Gom từ test plan và kịch bản. Có cả việc kiểm D6 của phiên trước, trước khi reset DB |
+| I2 | Lời dặn mở đầu, lời xin đồng ý, giới thiệu think-aloud | Văn bản đọc nguyên văn. Xin đồng ý 3 ý: Quay màn hình, ghi âm, cho TA gọi xác minh |
+| I3 | Phiếu thông tin trước phiên | Phần A xác nhận lại 4 tiêu chí tham gia. Phần B gồm 6 đặc điểm theo test plan, cộng câu B7 do AI đề xuất thêm |
+| I4 | Phiếu ghi chú quan sát (mẫu cho `notes.md`) | Thông tin phiên, các mốc T0 đến T4, kết quả từng chặng so với thời gian chuẩn ×5, nhật ký sự kiện dùng 13 mã gắn với D3 đến D10, bảng kiểm D6 sau phiên |
+| I5 | Thang đo | Viết sẵn cả SUS và UEQ-S, có cách tính và mẫu `scale.md` |
+| I6 | Câu hỏi mở | 9 câu bắt buộc, phủ đủ clarity, error recovery, speed, trust. Thêm 8 câu chỉ hỏi khi đã quan sát thấy tình huống tương ứng |
+| I7 | Lời kết thúc | Nhắc lại việc TA có thể gọi xác minh |
+
+**Các quyết định cần bạn chốt khi review:**
+
+| Mã | Quyết định | Gợi ý của AI |
+|---|---|---|
+| QĐ5 | SUS hay UEQ-S | SUS. Các câu hỏi của test plan đều về mức dễ dùng, và SUS cho một con số dễ tính, dễ giải thích |
+| QĐ-I1 | Lưu bằng chứng đồng ý thế nào | Đồng ý bằng lời trong video, không làm phiếu giấy có tên |
+| QĐ-I2 | Có cho tập think-aloud 1 phút trước nhiệm vụ không | Không |
+| QĐ-I3 | Người tham gia điền thang đo bằng cách nào | Trực tiếp: Phiếu giấy. Từ xa: Người điều phối đọc từng câu |
+| B7 | Có giữ câu "thường đăng sản phẩm bằng thiết bị nào" không | Giữ |
+
+**Lưu ý khi review:**
+- **Bản dịch tiếng Việt của SUS và UEQ-S do AI dịch**, chưa có bản đối chiếu. Hãy đọc kỹ câu chữ và kiểm lại ở pilot.
+- Tôi không biết UEQ-S có bản tiếng Việt chính thức hay không. Nếu bạn chọn UEQ-S thì cần kiểm điều này trên trang của UEQ.
+- Câu C7 ("Làm sao bạn biết sản phẩm đã vào đúng danh mục?") là câu `02_scenario.md` mục 8 để mở cho bước này. Tôi đưa câu này vào nhóm câu bắt buộc.
+- Mục 11 trong test plan vẫn ghi QĐ1, QĐ2, QĐ4 là "⏳", dù cả ba đã chốt trong `02_scenario.md`. Nếu muốn hai file khớp nhau thì nhờ tôi sửa.
+
+**Commit (1) bản AI** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/ai_raw/T2_instruments.md
+git commit -m "[T2][instruments] Add usability instruments (AI draft)"
+```
+
+Bạn gửi tôi lựa chọn cho 5 quyết định trên cùng các điểm muốn sửa. Sau đó tôi viết `03_instruments.md` kèm bảng "Thay đổi so với bản AI".
+````
+
+---
+
+### C55 | 14:50 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+CHD-01 và CHD-02 giữ lại.
+CHD-03 Nên Sửa lại/Làm rõ mục AI-01-22 dựa trên chuẩn HTML và Accessibility (a11y) toàn cầu, thay vì áp dụng máy móc template môn học.
+CHD-04 Đúng, phải lấy theo bố cục thực tế lúc chạy.
+
+AI-01-24 Đổi thành "ngày khác tháng" là đủ, chứ đổi sang > 12 không được vì đơn đo seed_orders.py tạo đều mang ngày 9 hoặc 10.
+
+ĐK-02 và ĐK-03: Có thể chạy tools/seed_orders.py sau khi reset: Script tạo 5 đơn ở 5 trạng thái và tài khoản newuser@eshop.com không có đơn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: ai-draft|review|02_checklist|seed_orders
+- Glob: **/seed_orders.py
+- Grep: AI-01-22|AI-01-24|ĐK-0[1-4]|CHD-0[1-4]
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\review_IA-01_decisions.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã ghi nhận các quyết định, nhưng chưa sửa file nào trong repo. Lý do:
+
+- File [ai_raw/T1_draft_IA-01.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-01.md) phải giữ nguyên văn bản của AI.
+- Theo WORKFLOW mục 3.1, sửa từng mục AI thuộc bước `review` và ghi vào `02_checklist.md`. Bước đó làm sau khi xong bản nháp cả 4 IA.
+
+Tôi đã lưu các quyết định vào `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\review_IA-01_decisions.md` để dùng ở bước `review`.
+
+**Dự kiến áp dụng ở bước `review`:**
+
+| Mục | Thay đổi | Loại | Vì sao AI làm sai |
+|---|---|---|---|
+| AI-01-01 đến 06, AI-01-24 | Giữ (CHD-01, CHD-02) | | |
+| AI-01-22 | Sửa theo chuẩn HTML và accessibility (xem dưới) | Sai | Prompt: Template môn học là nguồn duy nhất được đưa vào |
+| AI-01-16, 17 | Thứ tự focus lấy theo bố cục thực tế lúc chạy (CHD-04) | Quyết định của SV | |
+| AI-01-24 | Bỏ điều kiện "ngày lớn hơn 12". Chọn đơn có số ngày khác số tháng; ví dụ mong đợi đổi thành ngày 9 hoặc 10 | Sai | Prompt: AI không biết dữ liệu do `tools/seed_orders.py` tạo |
+| ĐK-02, ĐK-03 | Reset (ĐK-01) rồi chạy `tools/seed_orders.py`. Script tạo 5 đơn ở 5 trạng thái và tài khoản `newuser@eshop.com` không có đơn | Mơ hồ | Prompt: Như trên |
+
+**Bản dự kiến cho AI-01-22, bạn xem giúp:**
+
+- **Câu hỏi:** Ô Email bị khóa ở W-06 có được khai báo không sửa được bằng thuộc tính chuẩn HTML (`readonly` hoặc `disabled`) không?
+- **Cách kiểm:** DevTools (tab Elements, phần Accessibility), sau đó dùng bàn phím.
+- **Mong đợi:**
+  - Có thuộc tính `readonly` hoặc `disabled`, và cây accessibility hiện trạng thái tương ứng.
+  - Nếu là `readonly`: Tab vẫn dừng ở ô, gõ phím không đổi được giá trị.
+  - Nếu là `disabled`: Tab bỏ qua ô.
+  - Cả hai trường hợp đều Passed. Failed khi ô chỉ bị khóa bằng giao diện (ví dụ tô xám) mà không có thuộc tính nào trong hai thuộc tính trên.
+- **Nguồn (khuyến nghị):** HTML Living Standard, phần thuộc tính `readonly` và `disabled`; WCAG 2.2 tiêu chí 4.1.2 Name, Role, Value.
+
+Tôi sẽ dùng luôn thông tin về `tools/seed_orders.py` trong phần điều kiện chuẩn bị của bản nháp IA-02 đến IA-04. Tôi không mở file script đó. Khi bạn muốn làm tiếp, gửi lệnh làm IA-02.
+````
+
+---
+
+### C56 | 15:00 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Name: ""
+aria-labelledby: Not specified
+aria-label: Not specified
+From label: Not specified
+title: Not specified
+placeholder: Not specified
+aria-placeholder: Not specified
+title: Not specified
+Value: "test@eshop.com"
+Role: textbox
+Disabled: true
+Invalid user entry: false
+Editable: plaintext
+Multi-line: false
+Read-only: false
+Required: false
+
+
+Này sao?
+
+Tiện thể tạo tiếp IA-02 đến IA-04 đi, tôi review 1 lượt rồi gom lại để tạo file 02_checklist luôn cho lẹ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\01_oracle.md
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-01.md
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\00_survey.md
+- Bash: Search slide text for control checklists
+- Bash: Read heuristics and per-control checklist slides
+- Bash: Dump course GUI checklist template contents
+- Bash: Get current date and time
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-02.md
+- Bash: Fix cross-references and split double checks in IA-02 draft
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-03.md
+- Bash: Remove logo duplication between AI-03-06 and AI-03-07
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_draft_IA-04.md
+- Bash: Count items, duplicates and banned characters
+
+**Output AI (nguyên văn):**
+
+````text
+Đang soạn 3 bản nháp IA-02 đến IA-04. Tôi đã đọc xong oracle, survey và các checklist nguồn trong slide; giờ bắt đầu viết file.
+
+Đã viết xong 3 file; đang kiểm tra số mục, mã trùng và ký tự cấm.
+
+Đã tạo xong 3 bản nháp còn lại. Trước hết là đoạn DevTools bạn gửi.
+
+## Đoạn DevTools của ô Email ở W-06 cho thấy gì
+
+| Dòng | Ý nghĩa |
+|---|---|
+| `Disabled: true`, `Read-only: false` | Ô Email bị khóa bằng `disabled`, không phải `readonly`. Theo bản AI-01-22 dự kiến ở lượt trước thì đạt (dùng thuộc tính chuẩn), và phím Tab sẽ bỏ qua ô này. Đó là hành vi đúng của `disabled` |
+| `Name: ""`, `From label: Not specified` | Đây là điểm đáng chú ý: Chữ "Email (Không đổi)" không được gắn với ô. Screen reader sẽ đọc kiểu "ô nhập, test@eshop.com, không dùng được" mà không nói đây là ô Email. Theo WCAG 1.3.1 và 4.1.2 thì đây là lỗi |
+| `Role: textbox` | Phần này không cho biết `type="email"`, vì ô `type="email"` cũng có vai trò textbox. Mục `type="email"` (AI-02-09) vẫn phải xem ở tab Elements |
+
+Có 2 điểm cần bạn biết:
+
+- **Lấy kết quả quá sớm:** WORKFLOW mục 1 không cho dùng DevTools ở bước thiết kế; đây là kết quả của bước chạy (`exec`). Nên chưa ghi nó vào checklist. Đến bước chạy thì làm lại và chụp ảnh làm bằng chứng.
+- **Ảnh hưởng tới bản nháp IA-02:** Tôi viết bản này sau khi đã thấy đoạn trên. Mục AI-02-21 (mỗi ô có nhãn gắn với ô) là mục chuẩn của checklist Text Box và WCAG, nhưng bạn nên ghi rõ điều này ở bước `review`.
+
+## Ba bản nháp
+
+Bạn yêu cầu làm cả 3 IA trong một lượt. Lưu ý: WORKFLOW mục 3.1.2 ghi "Mỗi lượt một IA", và prompt log sẽ cho thấy lượt này làm 3 IA. Mỗi IA vẫn nằm ở một file riêng để commit riêng.
+
+| File | Số mục | Theo SRS | Khuyến nghị | Nội dung chính |
+|---|---|---|---|---|
+| [T1_draft_IA-02.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-02.md) | 31 | 18 | 13 | Các ô của từng form, ô Xác nhận mật khẩu, lỗi email / mật khẩu / số điện thoại, dấu `*`, `type="email"` và `type="password"`, thông báo lỗi nằm trên nút gửi, ô Email bị khóa. Khuyến nghị: Nhãn gắn với ô, focus quay về ô lỗi, giữ dữ liệu sau khi báo lỗi, `autocomplete`, cho dán mật khẩu (WCAG 3.3.8) |
+| [T1_draft_IA-03.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-03.md) | 18 | 5 | 13 | Chuyển tới `/login` sau khi đăng ký, highlight navbar theo CH-09, badge giỏ hàng, nhãn "Đăng xuất". Khuyến nghị: Link dẫn đúng trang, logo về trang chủ, nút Back, `/profile` khi chưa đăng nhập, `<nav>` và `<main>` |
+| [T1_draft_IA-04.md](Homeworks/HW03/checklist/ai_raw/T1_draft_IA-04.md) | 25 | 9 | 16 | Màu 5 trạng thái, nút "Hủy đơn" theo từng trạng thái (ma trận mục 4), thông báo khi lệnh hủy bị từ chối (cách tạo tình huống: hủy cùng một đơn ở 2 tab), thông báo khóa tài khoản, lịch sử đơn trống, NR-01 (loading), NR-02 (dialog xác nhận). Khuyến nghị: Báo thành công, lời chào trên navbar đổi tên ngay, mất mạng, hết phiên đăng nhập |
+
+- Cả 3 file dùng `tools/seed_orders.py` trong phần điều kiện chuẩn bị (ĐK).
+- Kiểm thông báo lỗi nằm trên nút gửi (UI-R39) chỉ có một mục, AI-02-13. IA-04 tham chiếu lại mục này, không viết lặp.
+- Tổng bản AI có 109 mục (35 + 31 + 18 + 25). Không có mã trùng, không có ký tự cấm.
+
+**Câu hỏi để bạn quyết định ở bước `review` (CHD-05 đến CHD-15, không có CHD-12):**
+
+| Mã | Câu hỏi ngắn |
+|---|---|
+| CHD-05 | Nếu không có ô Xác nhận mật khẩu thì ghi AI-02-03 là Failed, hay "Không chạy được"? |
+| CHD-06 | Không tính bong bóng báo lỗi của trình duyệt khi kiểm "thông báo lỗi nằm trên nút gửi" (UI-R39)? |
+| CHD-07 | Danh sách ký tự đặc biệt `@ $ ! % * ? &` của UI-R03 là danh sách đóng, hay chỉ là ví dụ? |
+| CHD-08 | Mức chi tiết của mong đợi về `autocomplete` (AI-02-28) |
+| CHD-09 | Badge giỏ hàng đếm số loại sản phẩm hay tổng số lượng? |
+| CHD-10 | Áp quy tắc CH-09 cho trang `/login` và `/register` khi đã đăng nhập? |
+| CHD-11 | Giữ mục "đã đăng nhập thì không nên thấy lại form đăng nhập / đăng ký" (AI-03-15)? |
+| CHD-13 | Tiêu chí "thân thiện" cho thông báo lịch sử đơn trống (AI-04-09) |
+| CHD-14 | "Không để lộ chi tiết nguyên nhân" khi bị khóa tài khoản nghĩa là gì? |
+| CHD-15 | Nút "Hủy đơn" hiện ra nhưng bị làm mờ thì tính Passed hay Failed? |
+| CHD-16 | Nếu đơn `shipping` vẫn có nút "Hủy đơn", có dùng nó làm thêm tình huống cho AI-04-05 không? |
+
+## Commit
+
+Mỗi IA một commit (WORKFLOW mục 4.2). Nếu chưa commit bản IA-01 thì commit nó trước. Nhớ nhờ phiên điều phối xuất prompt log trước khi commit.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/ai_raw/T1_draft_IA-02.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-02"
+git add checklist/ai_raw/T1_draft_IA-03.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-03"
+git add checklist/ai_raw/T1_draft_IA-04.md
+git commit -m "[T1][ai-draft] Add AI-generated checklist draft for IA-04"
+```
+
+Bạn review xong thì gửi quyết định cho CHD-05 đến CHD-16 và các mục muốn giữ, sửa, bỏ. Tôi sẽ gộp chúng với quyết định IA-01 ở lượt trước để soạn `02_checklist.md`.
+````
+
+---
+
+### C57 | 15:13 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Người điều phối đọc nguyên văn để mọi phiên giống nhau. 
+-> Phải ghi âm để nộp à hay nói với người test để họ nắm được tình hình?
+
+QĐ-I1. Không thể là mình gửi tin nhắn nói trước với họ, nếu họ nhắn đồng ý thì mình chụp màn hình lại lưu trữ được sao?
+
+Nếu họ ít think-aloud thì sao? Hoặc nếu họ rành công nghệ nhanh gọn thì sao? Không ghi âm thì mình sẽ ghi lại phần think-aloud của họ sao?
+
+B7. Phần bạn đề xuất giữ.
+
+QĐ-I3. Người điều phối chắc sẽ hỏi và ghi lại đáp án của họ và scale.md nguyên văn.
+
+Chọn SUS.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\.gitignore
+- Write: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Grep: —|·
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã viết xong bản review [usability/03_instruments.md](Homeworks/HW03/usability/03_instruments.md). Bản AI trong `ai_raw/` giữ nguyên.
+
+**Đã đưa vào bản review:**
+- **Đọc nguyên văn:** Đầu mục I2 giải thích rõ đây là văn bản đọc cho người tham gia nghe. Không cần ghi âm riêng đoạn này để nộp.
+- **QĐ-I1 (tin nhắn):**
+  - Mục I2.1 mới có mẫu tin nhắn xin đồng ý 3 ý, gửi trước ngày phiên.
+  - Ảnh chụp câu trả lời lưu ngoài `Homeworks/HW03/`, không commit, không đưa vào AI. Trong `participants.md` ghi ngày nhắn, kênh và đồng ý từng ý.
+  - Đầu phiên (I2.2) chỉ hỏi lại "Bạn vẫn đồng ý chứ?".
+- **Mục I2.4 mới (khi think-aloud không đủ):**
+  - **Người nói ít:** Nhắc bằng câu mức 0 sau khoảng 20 giây im lặng (ngưỡng kiểm ở pilot), rồi hỏi lại những đoạn đó ở I6.3.
+  - **Người rành công nghệ, làm nhanh:** Không ép, phần "vì sao" lấy qua C2 đến C7.
+  - **Không ghi âm:** Ghi tay câu nói ngay lúc nghe kèm mốc video và đánh dấu "(ghi tay)". Phiếu I4.1 có thêm dòng "Video có âm thanh".
+- **QĐ5:** Chọn SUS. Phần UEQ-S bỏ khỏi bản review, vẫn còn trong bản AI.
+- **QĐ-I3:** Bạn đọc từng câu SUS cho mọi phiên và chép nguyên văn vào `scale.md`. Tôi thêm hai điểm:
+  - Đưa người tham gia xem bảng 10 câu để họ không phải nhớ thang 1 đến 5.
+  - Ghi một hạn chế vào báo cáo: Trả lời trực tiếp trước mặt người điều phối có thể làm điểm cao hơn so với tự điền.
+- **B7:** Giữ.
+
+Bảng "Thay đổi so với bản AI" có 13 dòng.
+
+**Còn một quyết định chưa chốt, QĐ-I2:** Có cho người tham gia tập think-aloud 1 phút trước nhiệm vụ không. Bạn hỏi "nếu họ ít think-aloud thì sao", và việc tập này chính là cách chủ động nhất cho tình huống đó, nhưng làm phiên dài thêm khoảng 1 phút và phải dùng một trang khác ngoài EShop. Bạn chọn **có** hay **không**?
+
+**Ngoài ra:** Test plan mục 8.2 và mục 11 vẫn ghi QĐ5 là "⏳". QĐ1, QĐ2, QĐ4 cũng vậy. Nếu muốn các file khớp nhau, tôi có thể cập nhật cả hai mục.
+
+**Commit (2) bản review** (bạn tự commit sau khi chốt QĐ-I2; nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/03_instruments.md
+git commit -m "[T2][instruments] Review usability instruments"
+```
+````
+
+---
+
+### C58 | 15:21 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Còn một quyết định chưa chốt, QĐ-I2: Có cho người tham gia tập think-aloud 1 phút trước nhiệm vụ không. Bạn hỏi "nếu họ ít think-aloud thì sao", và việc tập này chính là cách chủ động nhất cho tình huống đó, nhưng làm phiên dài thêm khoảng 1 phút và phải dùng một trang khác ngoài EShop. Bạn chọn có hay không? -> Không cần.
+Ghi một hạn chế vào báo cáo: Trả lời trực tiếp trước mặt người điều phối có thể làm điểm cao hơn so với tự điền. -> Vậy thì cho tất cả điền google form sau khi làm xong, như vậy chúng ta chỉ cần tổng hợp google form mà cũng không ảnh hưởng tới điểm.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Grep: —|·|⏳
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi cập nhật `03_instruments.md`: QĐ-I2 chốt là không tập. QĐ-I3 đổi sang cho người tham gia tự điền Google Form sau khi làm xong.
+
+Đã cập nhật xong cả ba file.
+
+**[03_instruments.md](Homeworks/HW03/usability/03_instruments.md):**
+- **QĐ-I2:** Không tập think-aloud. Người nói ít thì xử lý theo I2.4.
+- **QĐ-I3:** Mọi người tự điền Google Form sau khi nói "Tôi làm xong rồi" (T4). Bạn không đọc câu hỏi và không nhìn màn hình lúc họ điền. Câu ghi hạn chế "điểm có thể cao hơn khi trả lời trước mặt người điều phối" đã bỏ, vì giờ người tham gia tự điền.
+- **Thiết lập Google Form ở mục I5:**
+  - Câu đầu là mã P<n>, bạn điền sẵn bằng link điền sẵn (pre-filled link) cho từng phiên.
+  - 10 câu dạng thang 1 đến 5, đều bắt buộc trả lời, không trộn thứ tự.
+  - Không hỏi tên, số điện thoại, email. Tắt thu email, không bắt đăng nhập, tắt "Xem tóm tắt câu trả lời".
+  - Người pilot cũng điền form với mã `PL`, khi tổng hợp thì loại dòng này ra.
+- **Cách đưa form:**
+  - **Phiên trực tiếp:** Đưa máy cho người tham gia rồi lùi ra; bạn tranh thủ lúc này điền I4.7.
+  - **Phiên từ xa:** Gửi link qua tin nhắn.
+  - **Sau phiên:** Chép nguyên văn dòng của mã P<n> (cả dấu thời gian) vào `scale.md`.
+- **I1:** Thêm việc kiểm link form trước mỗi phiên.
+- **Mục 8:** Thêm việc kiểm form ở pilot.
+- Bảng "Thay đổi so với bản AI" đã ghi đủ các thay đổi trên.
+
+**[01_test_plan.md](Homeworks/HW03/usability/01_test_plan.md):**
+- QĐ1, QĐ2, QĐ4, QĐ5 chuyển thành "Đã chốt", dẫn tới chỗ chốt trong `02_scenario.md` và `03_instruments.md`. Các chỗ đã sửa là mục 3.2 (QĐ1), mục 7 (QĐ4), mục 8.2 (QĐ5) và mục 11.
+- Bảng thay đổi có thêm 1 dòng cho lần cập nhật này.
+- Chỉ còn QĐ6 (thang severity) để mở, chốt ở bước `analysis`.
+
+**[02_scenario.md](Homeworks/HW03/usability/02_scenario.md):** Câu hỏi "Làm sao bạn biết..." trước đây ghi là để bước `instruments` chốt. Giờ dẫn tới câu C7, vì `instruments` đã đưa câu này vào nhóm câu bắt buộc.
+
+**Bước tiếp theo:** Hai bước sau của Task 2 là `participants` và `pilot`, đều do bạn làm.
+- Tạo Google Form theo mục I5.
+- Gửi tin nhắn xin đồng ý theo I2.1.
+- Chạy phiên pilot với `PL`.
+- Bảng `participants.md` thì bạn tự điền và không đưa cho AI.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước). Commit đầu thuộc bước `instruments`. Hai file kia thuộc bước đã commit trước đó nên giữ tag của bước đó:
+
+```
+cd Homeworks/HW03
+git add usability/03_instruments.md
+git commit -m "[T2][instruments] Review usability instruments"
+git add usability/01_test_plan.md
+git commit -m "[T2][plan] Sync decision status with scenario and instruments"
+git add usability/02_scenario.md
+git commit -m "[T2][scenario] Link self-check probe to instruments"
+```
+````
+
+---
+
+### C59 | 15:26 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1: Xong 3 bản nháp của IA, tôi đang xem và review.
+- Task 2: Đã xong 03_instruments.md.
+
+Phiền bạn kiểm tra, xuất log và đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status, recent commits, new files and separator counts
+- Bash: Show diffs to test plan and scenario
+- Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Bash: Compare oracle IA mapping with draft trace tables and recruitment criteria
+- Bash: Find WCAG criteria reused across IA drafts and IA-04 preconditions
+- Bash: Export prompt log and update tracker statuses and estimates
+
+**Output AI (nguyên văn):**
+
+````text
+Ba bản nháp IA và bộ công cụ Task 2 đã đọc xong, không có vấn đề chặn commit. Giờ xuất log và cập nhật tracker.
 ````
 
 

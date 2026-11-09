@@ -217,7 +217,7 @@ SV chốt phương án B: **Không thêm M4, chỉ quan sát.** Kịch bản kh�
 
 Lý do: Giữ hành vi tự nhiên của người bán khi dùng Admin; kịch bản ngắn hơn. Hạn chế được chấp nhận: Nếu ít người tự kiểm thì chỉ biết họ có kiểm được hay không qua lời kể.
 
-⏳ Để bước `instruments` chốt: Có đưa câu hỏi mở "Làm sao bạn biết sản phẩm đã vào đúng danh mục?" vào bộ câu hỏi sau phiên hay không, và đặt ở đâu.
+Câu hỏi mở "Làm sao bạn biết sản phẩm đã vào đúng danh mục Loa Bluetooth?" đã được đưa vào nhóm câu bắt buộc ở bước `instruments` (câu C7, `03_instruments.md` mục I6.1).
 
 ---
 
@@ -239,7 +239,7 @@ Lý do: Giữ hành vi tự nhiên của người bán khi dùng Admin; kịch b
 
 | Mã | Quyết định | Trạng thái |
 |---|---|---|
-| QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" không | Đã chốt: B, chỉ quan sát. Câu hỏi mở liên quan: ⏳ `instruments` |
+| QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" không | Đã chốt: B, chỉ quan sát. Câu hỏi mở liên quan: C7 trong `03_instruments.md` |
 | QĐ2a | Dùng từ "danh mục" hay "nhóm hàng" | Đã chốt: A, "danh mục" |
 | QĐ2b | Cách ghi giá trên phiếu | Đã chốt: `2990000` |
 | QĐ2c | Đưa phiếu dữ liệu bằng giấy hay file | Đã chốt: B, toàn bộ trong file văn bản mở sẵn (trực tiếp); gửi qua tin nhắn (từ xa) |
