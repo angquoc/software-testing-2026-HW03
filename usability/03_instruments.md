@@ -48,7 +48,7 @@ Lấy từ `01_test_plan.md` mục 6, 7 và `02_scenario.md` mục 3. Đánh d�
 | 9 | Phiên từ xa: Ứng dụng gọi video đã cấp quyền điều khiển máy, đã thử với người tham gia | ☐ |
 | 10 | Phần mềm quay màn hình có thu micro (nếu người tham gia đồng ý ghi âm), đã thử ghi vài giây và nghe lại | ☐ |
 | 11 | Có sẵn I2 đến I7 (bản in hoặc file) và đồng hồ hiển thị giờ để đối chiếu mốc video | ☐ |
-| 12 | Link Google Form SUS (I5) mở được, đang nhận câu trả lời, đã điền sẵn mã P<n> của phiên này; tin nhắn chứa link soạn sẵn để gửi ngay sau T4 | ☐ |
+| 12 | Link Google Form SUS (I5) mở được, đang nhận câu trả lời; tin nhắn chứa link soạn sẵn để gửi ngay sau T4; nhớ mã P<n> của phiên này để đọc cho người tham gia | ☐ |
 | 13 | Ghi môi trường vào I4: Trình duyệt và phiên bản, OS, độ phân giải, hình thức phiên | ☐ |
 
 ---
@@ -246,7 +246,7 @@ Cách làm Google Form (SV tạo; nội dung lấy đúng bảng dưới):
 
 | Mục | Thiết lập |
 |---|---|
-| Câu đầu | "Mã người tham gia" (câu trả lời ngắn). Người điều phối điền sẵn mã P<n> bằng link điền sẵn (pre-filled link) của từng phiên, để người tham gia không phải nhập |
+| Câu đầu | "Mã người tham gia" (câu trả lời ngắn, bắt buộc). Người điều phối đọc mã P<n> cho người tham gia tự gõ. Sau khi người tham gia gửi, người điều phối mở tab câu trả lời kiểm dòng mới nhất có đúng mã không; gõ sai thì ghi lại trong `notes.md` và sửa mã khi chép sang `scale.md`, dựa vào dấu thời gian |
 | 10 câu SUS | Mỗi câu một thang tuyến tính 1 đến 5, nhãn hai đầu "Rất không đồng ý" (1) và "Rất đồng ý" (5); đúng thứ tự và câu chữ như bảng dưới; **bắt buộc trả lời** |
 | Thông tin cá nhân | Không có câu hỏi tên, số điện thoại, email. Tắt "Thu thập địa chỉ email"; không bắt đăng nhập (WORKFLOW mục 1.5) |
 | Hiển thị | Không trộn thứ tự câu; tắt "Xem tóm tắt câu trả lời" để người tham gia không thấy câu trả lời của người khác |
@@ -256,7 +256,7 @@ Cách đưa form:
 
 | Hình thức phiên | Cách đưa |
 |---|---|
-| Trực tiếp | Gửi link điền sẵn mã qua tin nhắn (kênh đã dùng khi xin đồng ý); người tham gia điền trên **điện thoại của mình**. Máy của người điều phối được giải phóng: Trong lúc người tham gia điền, người điều phối làm I4.6 (kiểm D6), ghi I4.7, rồi reset DB cho phiên sau, không để người tham gia nhìn thấy trang Admin trong lúc kiểm |
+| Trực tiếp | Gửi link form qua tin nhắn (kênh đã dùng khi xin đồng ý) và đọc mã P<n> cho người tham gia; người tham gia điền trên **điện thoại của mình**. Máy của người điều phối được giải phóng: Trong lúc người tham gia điền, người điều phối làm I4.6 (kiểm D6), ghi I4.7, rồi reset DB cho phiên sau, không để người tham gia nhìn thấy trang Admin trong lúc kiểm |
 | Từ xa | Gửi link form qua tin nhắn; người tham gia điền trên thiết bị của mình (có thể dừng điều khiển máy từ xa trong lúc điền) |
 
 Sau phiên: Mở bảng câu trả lời của form, chép **nguyên văn** dòng của mã P<n> (dấu thời gian và 10 câu trả lời) vào `sessions/P<n>/scale.md`. `04_scores.md` tính điểm từ các file `scale.md` (hoặc từ file xuất của form), ghi rõ cách tính.
@@ -267,7 +267,7 @@ Sau phiên: Mở bảng câu trả lời của form, chép **nguyên văn** dòn
 
 Lời người điều phối nói khi đưa form:
 
-> Bây giờ mình nhờ bạn điền một phiếu ngắn 10 câu về trang bạn vừa dùng. Mình vừa gửi link qua tin nhắn, bạn mở trên điện thoại nhé. Bạn cứ điền theo cảm nhận của mình, mình không xem trong lúc bạn điền.
+> Bây giờ mình nhờ bạn điền một phiếu ngắn 10 câu về trang bạn vừa dùng. Mình vừa gửi link qua tin nhắn, bạn mở trên điện thoại nhé. Ô đầu tiên bạn ghi mã **P<n>** [đọc mã của phiên]. Bạn cứ điền theo cảm nhận của mình, mình không xem trong lúc bạn điền.
 
 | # | Câu | 1 | 2 | 3 | 4 | 5 |
 |---|---|---|---|---|---|---|
@@ -367,7 +367,7 @@ Với mỗi điểm ở I4.7 chưa được hỏi qua I6.1, I6.2, và mỗi đo�
 | Tin nhắn I2.1 có rõ không, người pilot trả lời được từng ý không | QĐ-I1 |
 | Ngưỡng khoảng 20 giây im lặng trước khi nhắc think-aloud có hợp lý không | I2.4 |
 | Thời lượng I2.2 đến I3, I5, I6 so với test plan mục 5 (3 đến 5, 2 đến 3, 2 đến 3, 5 đến 10 phút) | Nếu quá dài thì rút câu ở I6.1 |
-| Google Form: Link điền sẵn mã hoạt động; form không thu email; câu trả lời của `PL` hiện đúng trong bảng câu trả lời | QĐ-I3 |
+| Google Form: Người pilot gõ mã `PL` đúng; form không thu email; câu trả lời của `PL` hiện đúng trong bảng câu trả lời | QĐ-I3 |
 | Người điều phối kịp ghi I4.4 trong lúc quan sát không | Nếu không kịp thì chỉ ghi mốc và mã, điền mô tả khi xem lại video |
 | Câu C4 khi người tham gia không gặp lỗi có quá giả định không | Có thể bỏ phần hỏi thêm |
 | Trong lúc người pilot điền form trên điện thoại, người điều phối có kịp kiểm D6 và reset DB không | I5, I4.6 |
@@ -405,4 +405,5 @@ Với mỗi điểm ở I4.7 chưa được hỏi qua I6.1, I6.2, và mỗi đo�
 | Mục I6.3 | Thêm việc hỏi lại các đoạn im lặng lâu để bù think-aloud ít | Thiếu | Giới hạn model: Như dòng I2.4 | I2.4 |
 | Mục I1 | Dòng 1 mới (đã có tin nhắn đồng ý); dòng 10: Thu micro chỉ khi người tham gia đồng ý ghi âm | Thiếu | Prompt: Khi AI viết, chưa có QĐ-I1 | QĐ-I1 |
 | Mục 8 | Bỏ dòng về UEQ-S; thêm kiểm tin nhắn đồng ý, ngưỡng nhắc think-aloud, Google Form | Quyết định của SV | | QĐ5, QĐ-I1, QĐ-I3, I2.4 |
+| Mục I5, I1 dòng 12, mục 8 | Bỏ link điền sẵn mã; người điều phối đọc mã P<n> cho người tham gia tự gõ, kiểm lại mã trong tab câu trả lời sau khi gửi | Quyết định của SV | | SV chọn cách đơn giản hơn; không phải tạo 8 link riêng |
 | Mục I5, I4.6, I7, I1 dòng 12, mục 8, 9 | Phiên trực tiếp: Gửi link form qua tin nhắn, người tham gia điền trên điện thoại của mình (thay cho đưa máy của người điều phối); trong lúc đó người điều phối kiểm D6, ghi I4.7, reset DB | Quyết định của SV | | Máy của người điều phối không bị chiếm, nên phần kiểm và reset chạy song song với việc điền form, rút ngắn thời gian giữa hai phiên |

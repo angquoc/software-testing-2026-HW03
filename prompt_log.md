@@ -5080,6 +5080,267 @@ Có nên để câu hỏi mở điền form luôn không?
 
 ````text
 Now applying the edits.
+
+Tôi đã sửa `03_instruments.md` theo cách bạn chọn. Về câu hỏi mở, tôi khuyên **không** chuyển sang form.
+
+## Đã sửa trong `03_instruments.md`
+
+| Chỗ | Nội dung mới |
+|---|---|
+| I5, cách đưa form | Phiên trực tiếp: Gửi link điền sẵn mã qua tin nhắn, người tham gia điền trên điện thoại của mình. Trong lúc đó bạn kiểm D6, ghi I4.7 rồi reset DB, không để người tham gia nhìn thấy trang Admin |
+| I5, lời nói khi đưa form | Thêm "Mình vừa gửi link qua tin nhắn, bạn mở trên điện thoại nhé" |
+| I4.6 | Phiên trực tiếp kiểm D6 trong lúc người tham gia điền form; phiên từ xa vẫn kiểm sau khi kết thúc cuộc gọi |
+| I7 | Ghi chú cuối sửa theo hai trường hợp trên |
+| I1, dòng 12 | Thêm việc soạn sẵn tin nhắn chứa link để gửi ngay sau T4 |
+| Mục 8 | Thêm điểm kiểm ở pilot: Có kịp kiểm D6 và reset trong lúc PL điền form không |
+| Mục 9, QĐ-I3 | Ghi rõ phiên trực tiếp điền trên điện thoại |
+| Bảng thay đổi | Thêm 1 dòng, Loại "Quyết định của SV" |
+
+Phiên Task 2 chưa biết về lần sửa này. Nếu sau pilot bạn nhờ phiên đó sửa tiếp, nó sẽ đọc lại file nên không bị lệch.
+
+## Câu hỏi mở có nên điền form luôn không: Không nên
+
+1. **Không tiết kiệm được thời gian của bạn.** SUS chạy song song được vì lúc đó bạn có việc khác để làm (kiểm D6, reset). Câu hỏi mở là bước cuối của phiên: Người tham gia gõ trả lời thì bạn vẫn phải chờ họ xong mới bắt đầu phiên sau được.
+2. **Mất phần quan trọng nhất.** Đề yêu cầu hỏi xoáy vào chỗ khó đã quan sát được. Bộ công cụ của bạn dựa trên việc hỏi lại theo lúc đó: Câu hỏi theo tình huống ở I6.2 chỉ hỏi khi thấy mã `La`, `Lc`, `Ld`..., còn I6.3 hỏi lại đúng đoạn người tham gia dừng lâu. Form không làm được việc này, vì nó không biết phiên đó xảy ra chuyện gì.
+3. **Gõ trên điện thoại thì câu trả lời ngắn.** Thường chỉ được "ổn", "dễ dùng". Khi nói, người tham gia kể chi tiết hơn, và bạn được hỏi thêm ngay ("Bạn dựa vào đâu để biết...").
+
+Nếu muốn rút ngắn, cách hợp lý hơn là **sau pilot** xem câu nào trong C1 đến C9 trùng ý hoặc ít thông tin thì bỏ (mục 8 đã có điểm kiểm này).
+
+## Lệnh commit
+
+Hai commit Task 1 (`add`) và Task 3 (`setup`) bạn đã đẩy lên. Commit lần sửa này:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/03_instruments.md prompt_log.md
+git commit -m "[T2][instruments] Let in-person participants fill SUS form on their own phone"
+git push
+```
+
+`participants.md` vẫn đang có thay đổi. Tôi không động vào và không đưa vào lệnh trên.
+
+⏱ Còn khoảng **30,25 giờ** làm việc | Còn **20 giờ 53 phút** tới mốc 22:00 10/11 | **35 giờ 53 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C84 | 01:11 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã có thay đổi, đọc lại file thông tin để biết (CẤM ĐỌC particcipants.md). Tiện thể bạn có thể google form cho tôi không? Nếu không thì có thể cho tôi các trường sẵn để tôi copy cho lẹ không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: List recently changed HW03 files, excluding forbidden ones
+- Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+
+**Output AI (nguyên văn):**
+
+````text
+`03_instruments.md` vừa được sửa (01:07). Tôi đọc lại file này. Tôi không mở `participants.md`.
+
+Tôi đã đọc lại `03_instruments.md`. Thay đổi chính: Ở phiên trực tiếp, người tham gia điền form trên **điện thoại của họ** qua link gửi bằng tin nhắn. Trong lúc đó bạn kiểm D6, ghi I4.7 và reset DB. Cách này hợp lý và giúp rút ngắn thời gian giữa hai phiên.
+
+Có một chỗ còn thiếu: I4.6 cho phép kiểm danh mục qua "trang chi tiết trên web bán hàng". Cách này cần web bán hàng (`localhost:5173`) đang chạy, nhưng dòng 4 của I1 chỉ có backend và Admin. Nếu bạn định kiểm D6 bằng web bán hàng thì thêm `localhost:5173` vào dòng đó. Nếu kiểm bằng form "Sửa" trong Admin thì không cần.
+
+## Google Form
+
+Tôi không tạo Google Form trực tiếp được. Các công cụ Google tôi đang có chỉ làm việc với Drive, Docs và Sheets, không tạo được Forms. Dưới đây là đủ các trường để bạn copy vào form theo thứ tự.
+
+**Tiêu đề form:**
+```
+Phiếu đánh giá trang quản trị
+```
+
+**Mô tả form:**
+```
+Bạn đánh giá trang quản trị bạn vừa dùng. Với mỗi câu, chọn mức đồng ý từ 1 (Rất không đồng ý) đến 5 (Rất đồng ý). Trả lời theo cảm nhận đầu tiên, không cần suy nghĩ lâu. Câu nào bạn thấy không trả lời được thì chọn 3.
+```
+
+**Câu 0:** Loại "Trả lời ngắn" (Short answer), bật "Bắt buộc".
+```
+Mã người tham gia
+```
+
+**Câu 1 đến 10:** Loại "Phạm vi tuyến tính" (Linear scale), từ **1** đến **5**, bật "Bắt buộc".
+- Nhãn mốc 1: `Rất không đồng ý`
+- Nhãn mốc 5: `Rất đồng ý`
+
+Làm xong câu 1 thì bấm "Nhân bản" (Duplicate) rồi chỉ sửa câu chữ, sẽ nhanh hơn tạo từng câu.
+
+```
+Tôi nghĩ tôi sẽ muốn dùng trang quản trị này thường xuyên (nếu tôi bán hàng trên cửa hàng này).
+```
+```
+Tôi thấy trang quản trị này phức tạp một cách không cần thiết.
+```
+```
+Tôi thấy trang quản trị này dễ dùng.
+```
+```
+Tôi nghĩ tôi sẽ cần người rành kỹ thuật giúp thì mới dùng được trang quản trị này.
+```
+```
+Tôi thấy các chức năng của trang quản trị này được kết nối với nhau tốt.
+```
+```
+Tôi thấy trang quản trị này có quá nhiều chỗ không nhất quán.
+```
+```
+Tôi nghĩ hầu hết mọi người sẽ học dùng trang quản trị này rất nhanh.
+```
+```
+Tôi thấy trang quản trị này rất rườm rà, khó thao tác.
+```
+```
+Tôi cảm thấy rất tự tin khi dùng trang quản trị này.
+```
+```
+Tôi phải học nhiều thứ trước khi có thể bắt đầu dùng trang quản trị này.
+```
+
+**Cài đặt form**, theo mục I5. Tên nút trong giao diện tiếng Việt có thể hơi khác với tên tôi ghi:
+
+| Chỗ | Thiết lập |
+|---|---|
+| Cài đặt (Settings), mục Câu trả lời (Responses): Thu thập địa chỉ email | **Không thu thập** |
+| Cài đặt, mục Câu trả lời: Giới hạn ở 1 câu trả lời | **Tắt**. Bật thì người tham gia bị bắt đăng nhập Google |
+| Cài đặt, mục Trình bày (Presentation): Xem tóm tắt kết quả (See results summary) | **Tắt** |
+| Cài đặt, mục Trình bày: Xáo trộn thứ tự câu hỏi (Shuffle question order) | **Tắt** |
+
+**Tạo link điền sẵn mã cho từng phiên:**
+1. Bấm menu ⋮, chọn "Tạo đường liên kết điền sẵn" (Get pre-filled link).
+2. Nhập `P1` vào câu 0, bấm "Nhận đường liên kết" (Get link), rồi sao chép link.
+3. Lặp lại với P2 đến P7 và `PL`, được 8 link.
+4. Lưu 8 link ở chỗ của riêng bạn để gửi ngay sau T4 (dòng 12 của I1).
+
+**Thử trước khi dùng:** Mở link của `PL`, điền thử một lần rồi xem tab "Câu trả lời" (Responses). Kiểm hai điểm: Mã đã có sẵn, và không có cột email. Sau đó xoá câu trả lời thử, hoặc để lại dòng đó cho phiên pilot thật.
+
+**Lưu ý:** Nếu bạn sửa `03_instruments.md` (ví dụ thêm `localhost:5173` vào I1), commit với tag `[T2][instruments]`, vì đây là sửa lại bước đã commit.
+````
+
+---
+
+### C85 | 01:18 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là link google form: https://forms.gle/14TmvEQ3QxbGPpo16
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- ToolSearch
+- WebFetch
+- WebFetch
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã mở form theo link và đối chiếu với mục I5 của `03_instruments.md`. **Form khớp hoàn toàn:**
+
+| Mục kiểm | Kết quả |
+|---|---|
+| Tiêu đề và mô tả | Đúng nguyên văn |
+| Câu 0 "Mã người tham gia" | Loại trả lời ngắn, bắt buộc |
+| Câu 1 đến 10 | Đúng câu chữ và thứ tự của bản SUS. Đều là thang tuyến tính 1 đến 5, nhãn hai đầu "Rất không đồng ý" và "Rất đồng ý", bắt buộc |
+| Email và đăng nhập | Không có ô email, không bắt đăng nhập để gửi |
+
+**Tôi không kiểm được từ link xem form:** Hai thiết lập "Xem tóm tắt kết quả" và "Xáo trộn thứ tự câu hỏi" chỉ thấy được trong phần cài đặt của người tạo form. Lần tôi mở, các câu hiện đúng thứ tự, nhưng một lần mở chưa đủ để chắc là đã tắt xáo trộn. Bạn tự xem lại hai mục này trong Cài đặt.
+
+**Lưu ý về link:**
+- Không nên ghi link vào `03_instruments.md` hay file nào khác trong repo trước khi chạy xong 7 phiên. Ai có link đều gửi được câu trả lời. Nếu có người lạ điền thì bảng câu trả lời sẽ có dòng rác, dù khi tổng hợp bạn chỉ lấy các dòng có mã P1 đến P7.
+- Nếu muốn ghi link làm bằng chứng thì ghi sau khi đã chạy xong 7 phiên. Lúc đó trong Google Forms, tắt "Chấp nhận câu trả lời" (Accepting responses).
+
+Bước tiếp theo là tạo 8 link điền sẵn mã (P1 đến P7 và `PL`), rồi điền thử bằng link `PL` để kiểm như tôi đã hướng dẫn ở lượt trước.
+````
+
+---
+
+### C86 | 01:21 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Không cần đâu, tôi sẽ đọc mã cho người tham gia khi họ điền. Tôi đã set thiết lập xem tóm tắt kết quả và xáo trộn thứ tự câu hỏi như bạn chỉ rồi. Bây giờ chỉ để cho pilot làm sau đó tới P1 -> P7 đúng không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn đổi cách nhập mã: Bạn đọc mã cho người tham gia tự gõ, không dùng link điền sẵn. Tôi cập nhật `03_instruments.md` để file khớp với cách làm thật.
+
+Đúng, thứ tự là pilot trước rồi mới tới P1 đến P7. Nhưng giữa pilot và P1 có một bước bắt buộc: **sửa lại theo kết quả pilot, rồi mới chạy P1**.
+
+`03_instruments.md` đã cập nhật theo cách bạn đọc mã: Lời bạn nói khi đưa form giờ có đọc mã P<n>. Sau khi người tham gia gửi form, bạn mở tab câu trả lời kiểm dòng mới nhất có đúng mã không. Nếu gõ sai thì ghi lại trong `notes.md` và sửa mã khi chép sang `scale.md`, dựa vào dấu thời gian.
+
+**Các bước tiếp theo:**
+
+| # | Bước | Đầu ra | Commit |
+|---|---|---|---|
+| 0 | Gửi tin nhắn xin đồng ý (I2.1) cho người pilot và 7 người, điền `participants.md` | `participants.md` | `[T2][participants]` |
+| 1 | Chạy pilot với `PL`, theo đúng trình tự của một phiên thật (I1 đến I7) | `pilot/notes.md`, `pilot/scale.md`, `pilot/probe.md` | `[T2][pilot]` |
+| 2 | Sửa sau pilot: Điền cột "Sau pilot" ở `02_scenario.md` mục 4.4, sửa kịch bản hoặc công cụ nếu pilot lộ vấn đề. Ghi lại các điểm đã sửa trong `pilot/` | `pilot/`, `02_scenario.md`, `03_instruments.md` | `[T2][pilot]` |
+| 3 | Chạy P1 đến P7, **mỗi phiên một commit** (đề §12) | `sessions/P<n>/notes.md`, `scale.md`, `probe.md`, ảnh `P<n>_<số>_<nội dung>.png` | `[T2][P1]` đến `[T2][P7]` |
+| 4 | Tính điểm SUS và số liệu hiệu suất | `04_scores.md` | `[T2][score]` |
+| 5 | Phân tích, chốt QĐ6 (thang severity) | `05_findings.md` | `[T2][analysis]` |
+| 6 | Báo bug thật lên Issues | `bugs/bug_report.md` | `[T2][bugs]` |
+
+**Ở pilot, nhớ kiểm các điểm sau** (danh sách đầy đủ ở `02_scenario.md` mục 9 và `03_instruments.md` mục 8):
+- Reset DB có xoá danh mục và sản phẩm vừa tạo không (giả định G4).
+- Thời gian chuẩn ×5 có hợp lý với người mới không.
+- Ngưỡng 3 phút "bế tắc hẳn" và ngưỡng 20 giây nhắc think-aloud có hợp lý không.
+- Câu chữ của bản dịch SUS có câu nào người pilot hỏi lại hay hiểu sai không.
+- Bạn có kịp kiểm D6 và reset DB trong lúc người pilot điền form không.
+- **Cách kiểm D6:** Nếu kiểm danh mục qua web bán hàng thì cần chạy `localhost:5173`. Dòng 4 của I1 hiện chưa có web bán hàng.
+
+**Nhắc lại:**
+- Video không commit, đã được `.gitignore` chặn.
+- Ảnh chụp từ video phải cắt bỏ khuôn mặt và thông tin cá nhân trước khi lưu vào repo.
+- Ở các bước 4 và 5, tôi hỗ trợ được với dữ liệu đã ẩn danh (chỉ dùng mã P1 đến P7).
+
+**Commit thay đổi vừa rồi:**
+
+```
+cd Homeworks/HW03
+git add usability/03_instruments.md
+git commit -m "[T2][instruments] Read participant code aloud instead of pre-filled links"
+```
+````
+
+---
+
+### C87 | 01:23 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi vừa nhờ task 2 đọc lại và sửa 1 vài thứ, bạn kiểm tra, xuất log và đưa commit message.
+
+Tiện hãy cho tôi biết các phần của task 1, task 2, task 3 đang tới đâu rồi và bước tiếp theo là gì.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status and diffs excluding participants file
+- Bash: Find leftover prefilled-link mentions and export log
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
