@@ -4864,11 +4864,222 @@ Nếu bạn chưa commit bước `review` thì phần review và phần add đan
 - Read: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
 - Bash: Check screenshot naming rules and group README note
 - Bash: Export prompt log, update tracker, audit note and estimates
+- Bash: Correct total estimate in tracker
 
 **Output AI (nguyên văn):**
 
 ````text
 Đang đối chiếu `01_setup.md` với WORKFLOW và README nhóm. Có một điểm cần khai báo ở phần Audit, tôi ghi vào tracker rồi xuất log.
+
+Task 1 (`add`) và Task 3 (`setup`) đều commit được. Log đã xuất lại: 80 lượt từ 4 phiên. Có một điểm cần khai ở Audit, và **ước tính thời gian giờ đã vượt mốc 22:00 hôm nay**. Chi tiết ở cuối.
+
+## Task 1: Bước `add`
+
+- **4 mục mới:** CL-109 (màn hình 360 px), CL-110 (khoảng trắng ở hai đầu số điện thoại), CL-111 (nút hiện / ẩn mật khẩu), CL-112 (chống gửi trùng). Tổng còn **112 mục**.
+- **Số đếm khớp:** Bảng 7.1 khớp với từng dòng. IA-01 có 36, IA-02 có 31, IA-04 có 26. Cột Nguồn: 58 `AI`, 49 `AI, SV sửa`, 5 `SV thêm`.
+- **Cột "Vì sao AI bỏ sót":**
+  - CL-109 và CL-110 là Loại "Thiếu", lý do "Giới hạn model".
+  - CL-111 và CL-112 là mục AI đã xét rồi loại, nên ghi "Không áp dụng" và xếp Loại "Quyết định của SV". Cách ghi này đúng.
+- **Dark mode và RTL** không thêm mục, có ghi lý do. Không có dấu bị cấm.
+
+## Task 3: `01_setup.md`
+
+Cả 3 nền tảng đáp ứng yêu cầu của đề: Chrome, Firefox, và Android Chrome thay cho Safari. N1 chính là lần chạy exec của Task 1, nên quy định ảnh có chữ đè ngay từ đầu đã ghi ở mục 7.1. Tên ảnh khớp WORKFLOW §5.
+
+Một điểm sửa không bắt buộc: Dòng 230, 231, 233 của bảng thay đổi vẫn ghi "Notepad". Dòng 247 (D-15) đã đổi sang Sticky Notes, nên người đọc dễ bị lẫn. Nên sửa thành "Sticky Notes (D-15)".
+
+**Rủi ro N2:** Trial BrowserStack Live được ghi là khoảng 30 phút, mà 112 mục thì gần như không chạy kịp trong 30 phút. File đã có cách xử lý: Ghi rõ các mục chưa chạy. Bạn cũng có thể để LambdaTest làm phương án dự phòng, vì trial LambdaTest còn nguyên. Việc này để bạn quyết khi chạy N2.
+
+**Cần khai Audit (tôi đã ghi vào tracker):** Dòng 18 của `01_setup.md` trích câu "frontend gọi API bằng `localhost:3000` ghi cố định" từ README nhóm. Câu đó do phiên này viết, dựa trên lần đọc mã ngày 05/11. Phiên Task 3 được phép đọc README nhóm, và câu này không làm đổi lựa chọn nền tảng. Dù vậy vẫn nên khai cho minh bạch.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/02_checklist.md
+git commit -m "[T1][add] Add student items missed by AI (CL-109 to CL-112)"
+git add cross_platform/01_setup.md prompt_log.md
+git commit -m "[T3][setup] Review setup with Chrome, Firefox cloud and Android Chrome"
+git push
+```
+
+`participants.md` tôi không mở. Ảnh tin nhắn đồng ý để ngoài repo là đúng.
+
+## Pilot sáng mai: Đúng như bạn nghĩ
+
+Đây là phiên trực tiếp, chạy trên máy bạn, theo `02_scenario.md` mục 3 và `03_instruments.md` mục I1:
+
+- **Trước khi PL tới:**
+  - Báo tôi để bật server và reset DB. Hiện **server đang tắt**, vì các tiến trình của phiên trước đã dừng.
+  - Mở trình duyệt bằng hồ sơ riêng hoặc chế độ khách (không có mật khẩu đã lưu), vào `localhost:5174`, trang Admin Login.
+  - Mở file kịch bản và phiếu dữ liệu ở **cửa sổ riêng** cạnh trình duyệt.
+  - Chuẩn bị link Google Form điền sẵn mã `PL`.
+- **Bật quay màn hình** sau lời dặn I2.2 và trước khi PL đọc kịch bản. Thu micro nếu PL đồng ý ghi âm. Không quay mặt.
+- **Sau T4:** PL điền Google Form, rồi bạn hỏi câu hỏi mở C1 đến C9.
+- **Sau khi PL về:** Kiểm D6 theo mục I4.6, **trước khi** reset DB.
+- **Ghi chép:** Ghi vào `usability/pilot/` và chỉ dùng mã `PL`. Đưa ghi chú (đã ẩn danh) cho phiên Task 2 để sửa scenario và instruments, đồng thời điền cột "Sau pilot" của thời gian chuẩn.
+
+## ⚠ Thời gian
+
+Ước tính còn **34,25 giờ** làm việc, trong khi chỉ còn **21 giờ** tới 22:00 hôm nay. Vậy **mốc 22:00 10/11 không còn khả thi**, kể cả nếu không ngủ. Tới deadline 13:00 11/11 còn 36 giờ, cũng rất sát.
+
+Phần nặng nhất là 7 phiên usability (khoảng 9 giờ cả ghi hồ sơ) và chạy checklist trên 3 nền tảng (khoảng 6,5 giờ). Đây là việc bạn phải tự làm, AI không làm thay được.
+
+Gợi ý để kịp deadline:
+1. **Chuyển mục tiêu sang deadline 13:00 11/11.**
+2. **Mở thêm một phiên cho Agent Skill ngay sáng nay.** Phần này chủ yếu do AI viết, nên chạy song song được trong lúc bạn chạy phiên usability.
+3. **Ghi `notes.md` ngay trong lúc chạy phiên**, đừng để xem lại cả video sau. Cách này bớt được khoảng 1 đến 1,5 giờ.
+4. **Báo cáo chính:** Nhờ AI dựng khung từ các file đã có trong lúc bạn chạy phiên.
+
+Nếu bạn đồng ý, tôi sẽ sắp lại lịch theo deadline 13:00 11/11 và theo lịch hẹn của 7 người. Bạn chỉ cần cho tôi các khung giờ đã hẹn, không cần tên người tham gia.
+
+⏱ Còn khoảng **34,25 giờ** làm việc | Còn **21 giờ** tới mốc 22:00 10/11 | **36 giờ** tới deadline 13:00 11/11
+````
+
+---
+
+### C81 | 01:02 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+7 phiên usability là 7 người đúng không? Sao lại khoảng 9 giờ nhiều vậy. Trong khi tôi chạy thử cái đó có quá 5 phút đâu. Người test cũng sẽ chỉ trong tầm đó chứ mấy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read session durations from test plan and update estimate
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng, 7 phiên là 7 người. Bạn nói đúng là tôi ước tính dư. Tôi đã tính lại: Phần phiên usability còn khoảng **6,75 giờ** thay vì 9 giờ, và tổng còn khoảng **32 giờ**.
+
+## Vì sao một phiên dài hơn 5 phút
+
+5 phút chỉ là phần **làm nhiệm vụ**, mà bạn lại là người đã biết giao diện (bạn tự làm hết 46 giây). Một phiên usability còn nhiều phần khác. Theo `01_test_plan.md` mục 5, bạn đã duyệt:
+
+| Phần | Thời lượng |
+|---|---|
+| Lời dặn mở đầu, think-aloud, xác nhận đồng ý | 3 đến 5 phút |
+| Phiếu thông tin trước phiên (A1 đến B7) | 2 đến 3 phút |
+| Làm nhiệm vụ | Thời gian chuẩn là 3 phút 51 giây (gấp 5 lần thời gian của bạn); người mới, vừa làm vừa nói, thực tế khoảng 4 đến 10 phút |
+| Điền Google Form SUS | 2 đến 3 phút |
+| Câu hỏi mở C1 đến C9 và câu hỏi theo tình huống | 5 đến 10 phút |
+| Cảm ơn, dừng quay | 1 phút |
+| **Một phiên** | **Khoảng 25 đến 35 phút** |
+
+Giữa hai phiên còn khoảng 10 phút: Kiểm D6, reset DB, mở lại trình duyệt và file kịch bản. Phiên từ xa còn phải thử điều khiển máy trước.
+
+## Ước tính mới cho Task 2
+
+| Việc | Cũ | Mới |
+|---|---|---|
+| 7 phiên | 7 giờ (tính dư cho trễ hẹn, phiên từ xa) | 7 × 45 phút = **5,25 giờ** |
+| Ghi hồ sơ phiên | 2 giờ | **1,5 giờ** (ghi `notes.md` ngay trong phiên; sau phiên chỉ xem video để lấy mốc T0 đến T4, khoảng 10 đến 15 phút mỗi phiên) |
+| Các phần còn lại (participants, pilot, score, analysis, bugs, báo cáo) | 6 giờ | 6 giờ |
+| **Tổng Task 2** | **15 giờ** | **12,75 giờ** |
+
+Muốn rút thêm thì chỗ có thể cắt là phần câu hỏi mở (5 đến 10 phút mỗi phiên). Nên chờ pilot sáng mai rồi mới quyết: Nếu pilot thấy phần này dài hoặc có câu trùng ý, bạn bớt câu ở I6.1 (`03_instruments.md` mục 8 đã ghi điểm cần kiểm này).
+
+Kể cả với ước tính mới, 32 giờ vẫn vượt 21 giờ còn lại tới 22:00 hôm nay. Vì vậy gợi ý chuyển mục tiêu sang deadline 13:00 11/11 vẫn giữ nguyên. Tracker đã cập nhật số mới.
+
+⏱ Còn khoảng **32 giờ** làm việc | Còn **20 giờ 58 phút** tới mốc 22:00 10/11 | **35 giờ 58 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C82 | 01:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Lời dặn mở đầu, think-aloud, xác nhận đồng ý -> Không phải đã chốt là nhắn tin sao, chỉ ở đầu hỏi lại xem thử vẫn còn đồng ý không.
+Điền Google Form SUS -> Người này điền thì người khác vẫn có thể test, vì họ điền mà, đâu phải chờ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Update Task 2 estimate in tracker
+- Bash: Fix timestamps in tracker estimate rows
+
+**Output AI (nguyên văn):**
+
+````text
+Cả hai ý đều đúng. Tính lại thì mỗi phiên còn khoảng **30 phút** kể cả chuẩn bị, 7 phiên khoảng **3,5 giờ** (trước đó tôi tính 5,25 giờ).
+
+## 1. Mở đầu ngắn hơn
+
+Đồng ý đã xin qua tin nhắn (QĐ-I1). Đầu phiên chỉ còn:
+- Đọc lời dặn ngắn và hỏi lại xem người tham gia còn đồng ý không (I2.2).
+- Giới thiệu think-aloud (I2.3).
+
+Hai đoạn này đọc khoảng **1 đến 2 phút**, không phải 3 đến 5 phút như ở test plan mục 5. Con số trong test plan được viết trước khi chốt cách xin đồng ý qua tin nhắn.
+
+## 2. SUS chạy song song được, với một điều kiện
+
+Hiện `03_instruments.md` mục I5 ghi rằng ở phiên trực tiếp, bạn **đưa máy của bạn** cho người tham gia điền form. Khi đó máy bị chiếm, nên không làm song song được.
+
+Muốn song song thì người tham gia **điền trên điện thoại của họ**: Bạn gửi link điền sẵn mã, hoặc cho quét mã QR. Trong 2 đến 3 phút họ điền, bạn kiểm D6 (I4.6), reset DB và mở lại trang Admin Login cho phiên sau. Phần chuẩn bị 10 phút giữa hai phiên gần như được làm trong lúc chờ, nên mất thêm khoảng 5 phút thay vì 10.
+
+Thời gian một phiên:
+
+| Phần | Thời lượng |
+|---|---|
+| Lời dặn và xác nhận đồng ý, think-aloud | 1 đến 2 phút |
+| Phiếu thông tin trước phiên | 2 đến 3 phút |
+| Làm nhiệm vụ | 4 đến 10 phút |
+| SUS trên điện thoại, song song với kiểm D6 và reset | 2 đến 3 phút |
+| Câu hỏi mở | 5 đến 10 phút |
+| Chuẩn bị phần còn lại cho phiên sau | Khoảng 5 phút |
+| **Tổng** | **Khoảng 20 đến 30 phút** |
+
+Điều kiện là phải sửa `03_instruments.md` **trước pilot**, để pilot thử luôn cách này. Hai chỗ cần sửa:
+- **I5:** Ở phiên trực tiếp, form điền trên điện thoại của người tham gia.
+- **I4.6:** Kiểm D6 trong lúc người tham gia điền form, không chờ họ về. Trong lúc đó không để người tham gia nhìn thấy trang Admin.
+
+Phần sửa này nhờ phiên Task 2 làm, rồi ghi vào bảng thay đổi là "Quyết định của SV".
+
+## Ước tính mới
+
+- **Task 2:** Còn **11 giờ**. 7 phiên còn 3,5 giờ (trước đó 5,25 giờ), các phần khác giữ nguyên.
+- **Tổng:** Còn khoảng **30,25 giờ**. Tracker đã cập nhật.
+
+Con số vẫn lớn hơn 21 giờ còn lại tới 22:00 hôm nay. Phần lớn là việc bạn phải tự làm: Chạy checklist trên 3 nền tảng khoảng 6,5 giờ, ghi hồ sơ phiên và phân tích khoảng 4 giờ, báo cáo và đóng gói khoảng 6 giờ.
+
+⏱ Còn khoảng **30,25 giờ** làm việc | Còn **20 giờ 56 phút** tới mốc 22:00 10/11 | **35 giờ 56 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C83 | 01:06 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Hiện 03_instruments.md mục I5 ghi rằng ở phiên trực tiếp, bạn đưa máy của bạn cho người tham gia điền form. Khi đó máy bị chiếm, nên không làm song song được. -> Sửa lại giúp tôi, tôi sẽ đưa link cho họ điền.
+Có nên để câu hỏi mở điền form luôn không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: Trực tiếp \| Mở link|Làm sau khi người tham gia ra về|Dừng quay. Làm I4.6|Link Google Form SUS|^\| Mục 8 \| Bỏ dòng về UEQ-S|người điều phối lùi ra
+- Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Bash: Fix change-row position, check separators and diff
+- Bash: Export prompt log and show latest commits
+
+**Output AI (nguyên văn):**
+
+````text
+Now applying the edits.
 ````
 
 
