@@ -5336,6 +5336,152 @@ Tiện hãy cho tôi biết các phần của task 1, task 2, task 3 đang 
 
 - Bash: Show status and diffs excluding participants file
 - Bash: Find leftover prefilled-link mentions and export log
+- Bash: Fix contradictory row and review tracker statuses
+- Bash: Update tracker statuses for Task 2 and Task 3
+
+**Output AI (nguyên văn):**
+
+````text
+Line 259 (my earlier edit) still says "link điền sẵn mã", which now contradicts the new approach; fixing it.
+
+Phiên Task 2 sửa đúng và nhất quán. Còn sót một chỗ mâu thuẫn do chính tôi sửa lần trước, tôi đã sửa luôn. Log đã xuất lại: 87 lượt từ 4 phiên.
+
+## Kiểm tra lần sửa của phiên Task 2
+
+- **Đổi cách nhập mã:** Bỏ link điền sẵn. Bạn đọc mã P<n> cho người tham gia tự gõ, rồi kiểm lại dòng mới nhất trong tab câu trả lời. Các chỗ liên quan đã sửa theo:
+  - Câu đầu của form là bắt buộc.
+  - Lời nói khi đưa form có thêm câu đọc mã.
+  - I1 dòng 12 và điểm kiểm pilot ở mục 8 đã sửa.
+  - Bảng thay đổi có thêm 1 dòng.
+- **Tôi sửa thêm dòng 259 (I5, phiên trực tiếp):** Dòng này do tôi viết lần trước, vẫn ghi "Gửi link điền sẵn mã". Nay đổi thành "Gửi link form qua tin nhắn và đọc mã P<n> cho người tham gia". Các dòng cũ trong bảng thay đổi có nhắc "mã điền sẵn" là lịch sử, nên giữ nguyên.
+- **Riêng tư:** Không có dấu bị cấm. `participants.md` tôi không mở.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/03_instruments.md prompt_log.md
+git commit -m "[T2][instruments] Have participants type their code in the SUS form"
+git push
+```
+
+## Tình hình 3 task (01:23 10/11)
+
+### Task 1: GUI Checklist (phiên `f2487351`)
+**Đã xong:** Survey, oracle, 4 bản nháp AI, review, add. Checklist có **112 mục**.
+
+**Bước tiếp:**
+1. **`excel`** (phiên Task 1 làm): Xuất 112 mục ra Excel, có **3 cột kết quả** `chrome`, `firefox`, `android-chrome` vì Task 3 dùng chung file. Bước này làm được ngay sáng nay, song song với pilot.
+2. **`exec` trên N1 Chrome** (bạn làm, khoảng 3,5 giờ, cần DB riêng):
+   - Trước khi chạy: Báo tôi bật server, reset DB và chạy `seed_orders.py`. Ghim Sticky Notes và thử ảnh S-05.
+   - Ảnh mục Failed lưu `checklist/screenshots/CL-xx_chrome.png`.
+   - Thêm 3 ảnh tổng quan và `overview_env.png` vào `cross_platform/screenshots/chrome/`.
+3. **`bugs`:** Báo lên Issues của repo nhóm, kèm `bug_report.md`.
+
+### Task 2: Usability (phiên `de8fb2a8`)
+**Đã xong:** Plan, scenario, instruments, Google Form SUS. Tin nhắn xin đồng ý đã gửi.
+
+**Đang làm:** Bạn điền `participants.md`.
+
+**Bước tiếp:**
+1. Điền xong `participants.md` rồi tự commit.
+2. **Pilot sáng nay:** Báo tôi trước khoảng 10 phút để bật server và reset DB. Chạy theo I1, ghi vào `usability/pilot/` với mã `PL`.
+3. Sau pilot: Đưa ghi chú (đã ẩn danh) cho phiên Task 2 để sửa scenario và instruments, điền cột "Sau pilot" của thời gian chuẩn, rồi commit `[T2][pilot]`.
+4. **P1 đến P7:** Mỗi phiên khoảng 30 phút, mỗi phiên một commit `[T2][P<n>]`.
+5. **`score`, `analysis`, `bugs`:** Phiên Task 2 hỗ trợ, chỉ dùng dữ liệu đã ẩn danh.
+
+### Task 3: Cross-platform (phiên `99fcf7b9`)
+**Đã xong:** Setup. Đã chốt N1 Chrome (chính là lần exec của Task 1), N2 Firefox trên BrowserStack, N3 Android Chrome trên điện thoại thật.
+
+**Bước tiếp:**
+1. Chuẩn bị, làm lúc rảnh:
+   - Cài `adb`.
+   - Thử S-03 (`adb reverse` trên điện thoại).
+   - Tạo sẵn ghi chú chữ đè trên máy tính và điện thoại.
+   - **Chưa đăng ký BrowserStack** để giữ phút trial.
+2. N2 và N3 chạy được **sau khi Task 1 có Excel**. Reset và seed lại trước mỗi nền tảng.
+3. **`compare`, `bugs`:** Phiên Task 3 hỗ trợ.
+
+### Phần chưa bắt đầu
+- Agent Skill và video.
+- Báo cáo chính, AI Critique, Audit, forms AI-02/03/05, README, PDF, đóng gói zip.
+
+Tracker đã cập nhật: SUS, câu hỏi mở và checklist chuẩn bị phiên ✅; Task 3 đã chốt nền tảng.
+
+⏱ Còn khoảng **30,25 giờ** làm việc | Còn **20 giờ 37 phút** tới mốc 22:00 10/11 | **35 giờ 37 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C88 | 01:25 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã commit xong. Giờ bạn hãy đến bước xuất excel cho tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: Excel|excel|xlsx
+- Grep: (?i)excel|xlsx|checklist
+- Bash: Read assignment Task 1 and deliverable text, Task 3 workflow
+- AskUserQuestion
+- Skill
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\build_xlsx.py
+- Bash: Build checklist workbook and recalculate formulas
+- Bash: Fix fill copy, rebuild workbook, recalculate
+- Bash: Recalculate workbook formulas with LibreOffice
+- Bash: Check whether LibreOffice is installed
+- PowerShell: Recalculate workbook in Excel and count formula errors
+- Bash: Read back computed summary values
+
+**Output AI (nguyên văn):**
+
+````text
+Lần này file đã lưu, chỉ lỗi ở lệnh in tên sheet có dấu. Tôi chạy tiếp bước tính lại công thức.
+
+Tôi đã xuất xong file Excel: [checklist/HW03_T1_GUI_Checklist.xlsx](Homeworks/HW03/checklist/HW03_T1_GUI_Checklist.xlsx). File làm theo định dạng tự thiết kế bạn đã chọn, có 112 mục từ CL-01 đến CL-112. Nội dung lấy nguyên từ [02_checklist.md](Homeworks/HW03/checklist/02_checklist.md), chỉ bỏ ký hiệu markdown (dấu `` ` `` và `**`).
+
+| Sheet | Nội dung |
+|---|---|
+| Checklist | 9 cột lấy từ file .md (Mã, Nội dung kiểm, IA, Màn hình, Oracle, Cách kiểm, Kết quả mong đợi, Nguồn, Vì sao AI bỏ sót). Mỗi nền tảng (NT1, NT2, NT3) có 3 cột: **Kết quả** (chọn từ danh sách Passed / Failed / N/A / Không chạy được, tự tô màu), **Notes**, **Ảnh**. Hai cột đầu và hai hàng tiêu đề được cố định khi cuộn; có bộ lọc; khi in tự co theo khổ ngang |
+| Hướng dẫn | Ô nào cần điền, ý nghĩa 4 giá trị kết quả, một ví dụ cách ghi (có ghi rõ không phải kết quả thật), quy ước và điều kiện chuẩn bị chép từ mục 1 và mục 2 của file .md |
+| Môi trường | Ô điền cho NT1 đến NT3: Tên ngắn, trình duyệt, OS, thiết bị, độ phân giải, zoom, scale, ngày giờ, người chạy. Tên ngắn tự hiện ở tiêu đề cột của sheet Checklist |
+| Ma trận trạng thái | 5 trạng thái đơn, kèm nút "Hủy đơn" mong đợi. Mỗi nền tảng có 3 cột để ghi chữ, màu nền nhãn và nút quan sát được |
+| Tổng hợp | Tự đếm bằng công thức: Số mục theo IA (căn cứ SRS, khuyến nghị, theo nguồn); số Passed, Failed, N/A, Không chạy được và số mục chưa chạy của từng nền tảng; tỉ lệ Passed; Passed / Failed theo IA và nền tảng |
+
+- **Ô cần điền:** Ô nền vàng là ô bạn điền khi chạy. Các ô còn lại để nguyên.
+- **Ba cột nền tảng:** NT1 là lần chạy `exec` của Task 1. NT2 và NT3 dành cho Task 3, theo WORKFLOW mục 3.3: Mỗi nền tảng một cột kết quả.
+- **Đã kiểm tra:** Tôi mở file bằng Excel để tính lại cả 84 công thức, không có lỗi. Số liệu ở sheet Tổng hợp khớp mục 7.1 của file .md: 112 mục; 50 căn cứ SRS, 62 khuyến nghị; nguồn AI 58, AI và SV sửa 49, SV thêm 5. Các cột kết quả hiện đang trống, nên sheet Tổng hợp ghi 112 mục chưa chạy ở cả 3 nền tảng.
+- **Nếu sửa file .md sau này:** Tôi xuất lại Excel bằng script `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\build_xlsx.py`. Đừng sửa nội dung mục trực tiếp trong Excel, vì lần xuất lại sẽ mất các sửa đó.
+
+Commit bước `excel` (nhờ phiên điều phối xuất prompt log trước):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T1][excel] Export reviewed checklist to Excel"
+```
+
+Bước tiếp theo là `exec`, phần của bạn: Reset dữ liệu và chạy `tools/seed_orders.py`, điền sheet Môi trường cho NT1, rồi chạy checklist. Mục Failed cần ghi Notes và chụp ảnh.
+````
+
+---
+
+### C89 | 01:34 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1 đã xuất excel, xuất log và đưa commit message cho tôi.
+- Tôi có vấn đề muốn hỏi, việc con người chạy hết đống đó thì quá nặng. Liệu không thể dùng tool hỗ trợ hay viết script gì đó sao?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status and new files from excel step
+- Bash: Inspect Excel sheets, headers and validations
+- Bash: Check dropdown values and item IDs in Excel
+- Bash: Export log and update tracker for Excel step
 
 **Output AI (nguyên văn):**
 
