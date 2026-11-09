@@ -2275,11 +2275,236 @@ Tôi có một số thay đổi ở file 01_test_plan.md nên phiền bạn xu�
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - Bash: Re-export prompt log and check status
+- Bash: Show latest commits and sync state
 
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Đã xuất lại prompt log: 38 lượt từ 3 phiên, không có phiên lạ. File `01_test_plan.md` không có dấu "—" hay "·".
+
+3 commit đầu đã có trên máy (`1f290ab`, `c14ff6c`, `e8653e5`) nhưng chưa push: Nhánh đang đi trước GitHub 3 commit. Còn lại commit bản review:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/01_test_plan.md prompt_log.md
+git commit -m "[T2][plan] Review usability test plan against admin screenshots"
+git push
+```
+
+Lệnh `git push` cuối sẽ đẩy cả 4 commit lên GitHub.
+````
+
+---
+
+### C39 | 01:49 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã commit xong.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Vậy là xong bước `survey` của Task 1. Commit (1) đến (3) theo WORKFLOW đã có, cộng thêm commit kiểm tra lại của bạn. Tôi không kiểm tra lại các commit này, vì phiên thiết kế không được đọc lịch sử git.
+
+Bước tiếp theo là `oracle`. Tôi chưa bắt đầu, vì nên có một prompt riêng cho bước này: Prompt log khi đó sẽ cho thấy bạn dẫn AI qua từng bước, thay vì bước `oracle` chạy theo câu "Tôi đã commit xong". Bạn có thể gửi một câu như "Làm bước oracle của Task 1".
+
+Ở bước `oracle`, tôi sẽ làm theo WORKFLOW mục 3.1.2:
+- Trích **nguyên văn** các yêu cầu giao diện từ SRS: FR-21 đến FR-24, cùng các ý giao diện trong FR-01, FR-02, FR-04, FR-10, FR-11.
+- Gán mã `UI-R01`, `UI-R02`, ... và ghi IA cùng màn hình áp dụng (W-06, W-04, W-03) cho từng yêu cầu.
+- Yêu cầu không áp dụng cho 3 màn hình này vẫn liệt kê, ghi "Không áp dụng" kèm lý do.
+- Chỗ SRS chưa rõ thì ghi thành giả định hoặc câu hỏi mở để bạn chốt.
+- Đầu ra: `ai_raw/T1_oracle.md` (giữ nguyên) và `01_oracle.md` (bản để bạn review).
+````
+
+---
+
+### C40 | 01:49 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã commit xong.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Bước `[T2][plan]` đã xong: Đã commit bản AI, bộ ảnh khảo sát và bản review.
+
+Bước tiếp theo là `[T2][scenario]`. Cũng như bước `plan`, tôi viết bản AI vào `usability/ai_raw/T2_scenario.md` rồi dừng để bạn review. Bản AI sẽ gồm:
+- **Kịch bản dạng mục tiêu:** Chỉ nêu việc cần đạt, không đưa từng bước.
+- **Trạng thái ban đầu** của mỗi phiên.
+- **Dữ liệu đưa cho người tham gia:** Tên danh mục, tên, giá, mô tả và URL ảnh sản phẩm.
+- **Tiêu chí hoàn thành và thời gian chuẩn** cho từng chặng M1 đến M3 và cả luồng.
+- **Gợi ý cho các quyết định đang mở:** QĐ1 (có thêm chặng M4 "tự kiểm tra kết quả" không), QĐ2 (chính phần dữ liệu và thời gian chuẩn ở trên), QĐ4 (thế nào là "bế tắc hẳn" và câu can thiệp chuẩn). Tôi chỉ đưa phương án để bạn chọn, không chốt thay bạn.
+
+Bạn muốn tôi bắt đầu bước `scenario` ngay không?
+````
+
+---
+
+### C41 | 01:50 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Bắt đầu đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: d:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- PowerShell: Get current date and time
+- Write: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_scenario.md
+- Grep: —|·
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã viết xong bản AI cho bước `scenario` trong [usability/ai_raw/T2_scenario.md](Homeworks/HW03/usability/ai_raw/T2_scenario.md). Theo WORKFLOW, giờ tôi dừng để bạn review.
+
+**Nội dung chính:**
+- **Kịch bản (mục 2.1):** Người tham gia đóng vai người quản lý shop đồ công nghệ. Họ phải tạo danh mục **Loa Bluetooth** rồi đăng sản phẩm đầu tiên vào đúng danh mục đó. Khi thấy đã xong thì nói "Tôi làm xong rồi". Câu chữ cố ý không dùng chữ trên nút và menu, để không gợi ý đường đi.
+- **Phiếu dữ liệu (mục 2.2):** Gồm tài khoản admin, tên danh mục, sản phẩm "Loa Bluetooth JBL Flip 6", giá 2.990.000 ₫ và một câu mô tả ngắn.
+- **Trạng thái ban đầu (mục 3):** Có thêm một điểm tôi thấy trên flow_02: Trình duyệt của bạn đang lưu mật khẩu. Nếu trình duyệt tự điền mật khẩu admin thì chặng M1 mất ý nghĩa, nên các phiên cần dùng một hồ sơ trình duyệt riêng hoặc chế độ khách.
+- **Thành phần nhiệm vụ (mục 4):** Có tiêu chí hoàn thành cho từng chặng và cho toàn luồng, giới hạn 15 phút, và 5 mốc thời gian T0 đến T4. Khoảng từ T3 (bấm lưu sản phẩm) tới T4 (nói "xong rồi") cho biết người tham gia có tự kiểm tra kết quả hay không.
+- **Can thiệp (mục 5):** Có 4 mức, mức 0 là lời nhắc nói ra suy nghĩ nên không tính là can thiệp. Mỗi mức có câu nói chuẩn.
+- **Tình huống đặc biệt (mục 6):** 8 tình huống, ví dụ vào nhầm khối CSV, quên đổi danh mục "Điện thoại", bị khoá đăng nhập theo FR-02.
+- **Những điểm cần kiểm ở pilot (mục 9).**
+
+**Quyết định để mở (mục 10):** Mỗi quyết định có các phương án và gợi ý của AI. Bạn chốt khi review.
+
+| Mã | Quyết định | Gợi ý của AI |
+|---|---|---|
+| QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" không | Không thêm, chỉ quan sát rồi hỏi lại sau phiên |
+| QĐ2a | Kịch bản dùng từ "danh mục" hay "nhóm hàng" | "danh mục" |
+| QĐ2b | Phiếu ghi giá `2.990.000 ₫` hay `2990000` | `2.990.000 ₫`, rồi kiểm ở pilot xem ô giá xử lý dấu chấm thế nào |
+| QĐ2c | Đưa phiếu dữ liệu bằng giấy hay bằng file | Giấy, riêng URL ảnh để trong file cho dễ sao chép |
+| QĐ2d | Thời gian chuẩn | Bạn tự làm luồng và bấm giờ, nhân với một bội số, chỉnh lại sau pilot |
+| QĐ4 | Thế nào là "bế tắc hẳn" | Không tiến triển khoảng 3 phút ở cùng một chặng, hoặc hỏi cách làm từ lần thứ hai, hoặc nói muốn bỏ cuộc |
+
+**Bạn cần chuẩn bị thêm:**
+- **URL ảnh sản phẩm:** Tôi để chỗ trống `<URL ảnh do SV chọn>`. Tôi không tự đặt URL vì không kiểm được URL đó có tồn tại không. Bạn chọn một ảnh thật và kiểm là ảnh hiện được trong Admin.
+- **Bấm giờ để chốt QĐ2d:** Nếu muốn chốt thời gian chuẩn ngay ở bản review, bạn tự làm luồng một lần với đúng phiếu dữ liệu và bấm giờ từng chặng.
+
+Commit (1) bản AI (bạn tự commit, nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/ai_raw/T2_scenario.md
+git commit -m "[T2][scenario] Add task scenario (AI draft)"
+```
+
+Review xong, bạn gửi tôi các quyết định và điểm muốn sửa. Tôi sẽ viết `02_scenario.md` kèm bảng "Thay đổi so với bản AI".
+````
+
+---
+
+### C42 | 01:50 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+WORKFLOW có thay đổi một số thứ (mục 5), nhưng bạn có thể đọc lại hết nếu muốn. Sau đó làm bước oracle của Task 1.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: d:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Bash: Read SRS product, cart, checkout, admin and mobile sections
+- Bash: Get current time and list checklist folder
+- Write: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_oracle.md
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_oracle.md
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_oracle.md
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\ai_raw\T1_oracle.md
+- Bash: Verify code counts, dashes, and copy oracle to review file
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc lại toàn bộ WORKFLOW. Thay đổi ở mục 5 chỉ thêm ảnh khảo sát luồng usability và quy tắc hậu tố `_1`, `_2` khi có nhiều ảnh, không ảnh hưởng bước `oracle`. Bước `oracle` của Task 1 đã xong.
+
+**File đã tạo (giống hệt nhau, đã so bằng `cmp`):**
+- [checklist/ai_raw/T1_oracle.md](Homeworks/HW03/checklist/ai_raw/T1_oracle.md): Bản AI, giữ nguyên về sau.
+- [checklist/01_oracle.md](Homeworks/HW03/checklist/01_oracle.md): Bản để bạn review. Cuối file có bảng "Thay đổi so với bản AI" còn trống.
+
+**Nội dung:**
+- **50 mã từ `UI-R01` đến `UI-R50`.** Mỗi gạch đầu dòng của SRS là một mã, trích nguyên văn, kèm IA, màn hình và lý do. Lấy từ:
+  - Toàn bộ FR-21 đến FR-24.
+  - Toàn bộ FR-01, FR-02, FR-04, FR-11, và các ý của FR-10 về việc người dùng hủy đơn.
+  - Các ý giao diện ở FR-03, FR-05, FR-06, FR-07 dễ bị dùng nhầm làm oracle.
+  - SEC-04 và SEC-06.
+- **Kết quả xét áp dụng:**
+
+  | Áp dụng (kể cả một phần) | Bạn quyết định | Không áp dụng |
+  |---|---|---|
+  | 27 | 8 | 15 |
+
+- **Bảng tổng hợp theo IA và màn hình** ở mục 3, là đầu vào cho bước `ai-draft`. Có ghi 5 cặp yêu cầu trùng ý, mỗi cặp chỉ nên thành một mục checklist.
+- **Mục 5 liệt kê 9 điểm thấy trên giao diện mà SRS không có yêu cầu**, ví dụ định dạng ngày, thứ tự sắp xếp đơn, hành vi `/profile` khi chưa đăng nhập. Nếu muốn kiểm các điểm này ở `ai-draft` thì phải dùng nguồn ngoài SRS và ghi là khuyến nghị.
+- File chỉ trích yêu cầu, không đánh giá giao diện hiện tại đạt hay không đạt.
+
+**10 câu hỏi mở bạn cần chốt (mục 4.1, mỗi câu có sẵn các phương án):**
+
+| Mã | Nội dung | Ghi chú |
+|---|---|---|
+| CH-01 | Ở W-06, trường nào là trường bắt buộc (để kiểm dấu `*`) | |
+| CH-02 | Mỗi nút thuộc nhóm "tích cực" (xanh dương) hay "nguy hiểm/hủy bỏ" (đỏ) | Đặc biệt là nút đăng xuất |
+| CH-03 | Từ tiếng Anh nào được tính là "thuật ngữ kỹ thuật chuẩn" | |
+| CH-04 | Dấu phân cách hàng nghìn là chấm hay phẩy | Ví dụ trong SRS viết `300,000 ₫` |
+| CH-05 | Có đưa các ý nghiệp vụ, phân quyền, bảo mật vào checklist GUI không | Gồm nút "Hủy đơn" theo FR-10, FR-11 ý 1, SEC-04, SEC-06 |
+| CH-06 | Tiêu chí kiểm tên tiếng Việt và màu của từng trạng thái đơn | |
+| CH-07 | Có kiểm trạng thái loading ở W-06 không | |
+| CH-08 | Ô Email bị khóa ở W-06 có phải dùng `type="email"` không | |
+| CH-09 | Kiểm highlight navbar ở `/profile` thế nào | Navbar không có mục cho trang hồ sơ |
+| CH-10 | Nút "Hủy đơn" có cần dialog xác nhận không | |
+
+Mục 4.2 có 4 giả định của AI để bạn xem lại.
+
+**Bạn cần quyết định một điểm định dạng:** 5 câu trích từ SRS có sẵn dấu "—". Tôi giữ nguyên vì WORKFLOW yêu cầu trích nguyên văn, dù mục 7 cấm dấu này. Nếu bạn muốn thay dấu đó trong bản review thì ghi vào bảng thay đổi.
+
+**Commit bản AI** (nhờ phiên điều phối xuất prompt log trước):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/ai_raw/T1_oracle.md checklist/01_oracle.md
+git commit -m "[T1][oracle] Add UI requirement extract (AI draft)"
+```
+
+Sau đó bạn review `01_oracle.md`: Chốt các câu hỏi mở, sửa mã, IA hoặc màn hình nếu cần, rồi ghi mọi thay đổi về nội dung vào bảng "Thay đổi so với bản AI". Xong thì commit `[T1][oracle] Review UI requirement extract`.
+````
+
+---
+
+### C43 | 09:23 09/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1 và 2 đã xong bản AI tạo, hãy xuất log và đưa tôi message commit trong lúc tôi review file.
+- Tôi nghĩ bạn nên thêm 1 phần cho bạn về ước tính thời gian, mỗi lần tôi nhắn với bạn, hãy kèm số thời gian ước tính cần làm xong và số thời gian còn lại ở cuối tin nhắn. Bạn có thể ước tính sai cũng không sao vì nó chỉ là ước tính, nhưng những thời gian người làm thì tốn nhiều thời gian hơn, còn AI làm thì ít thời gian hơn. Bạn cũng có thể xem số giờ ở các tin nhắn như 1 cơ sở mở để ước lượng.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check time, status, WORKFLOW diff and new files
+- Bash: Compare oracle copies, export log, check sessions
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm tra trạng thái repo (WORKFLOW vừa bị sửa, nên xem ai sửa gì), giờ hiện tại, và các file mới của hai phiên.
 ````
 
 
