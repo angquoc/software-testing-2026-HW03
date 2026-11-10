@@ -15019,6 +15019,218 @@ Tôi đã xong 7 phiên và commit, trong khi đó có tìm ra lỗi nên 
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Show time, repo status, recent commits, export prompt log
+- Bash: Inspect new tools folder and uncommitted diffs
+- Bash: Check script logs, black-box use, screenshots, and run timestamps
+- Bash: Match run timestamps in logs and P4 notes; view capture script header
+- Bash: Check P3 to P7 records and current product and category data
+- Bash: Read P7 outcome and SUS note
+
+**Output AI (nguyên văn):**
+
+````text
+Đang kiểm các thay đổi chưa commit (bug report, ảnh flow 14 đến 18, thư mục `usability/tools/` mới) và hồ sơ P3 đến P7.
+
+Hồ sơ của 7 phiên không có lỗi gì về hình thức. Phần bug mới (B-T2-02) dùng được, nhưng có 3 việc cần xử lý: DB đang bẩn do script, ảnh chụp tự động bạn cần tự xem trước khi commit, và một ghi chú của P4 nên trỏ rõ file log. Log đã xuất lại: 229 lượt.
+
+## Kết quả kiểm
+
+**Phiên P1 đến P7:**
+- Mỗi phiên đã có commit riêng, giờ commit rải từ 22:50 đến 00:53.
+- Thứ tự chạy là P3, P6, P5, P7, P4. Thứ tự này không ảnh hưởng gì vì mỗi phiên dùng một mã riêng.
+- P1 đến P6 có dấu thời gian Google Form và đủ 10 câu SUS. Kết quả toàn luồng:
+
+| Kết quả | Phiên |
+|---|---|
+| Tự hoàn thành | P2, P3, P6 |
+| Không hoàn thành | P1, P4, P5, P7 |
+
+- **P7 không có điểm SUS.** P7 không đăng nhập được nên phiên dừng ở M1 và P7 không điền form. Bảng điểm `04_scores.md` vì vậy chỉ có 6 người. ⏳ Cách trình bày (n = 6, và có tính P7 vào tỉ lệ hoàn thành hay không) để phiên Task 2 đề xuất, bạn chốt.
+
+**Bug B-T2-02** (sửa sản phẩm lần hai trên trang chưa tải lại thì dữ liệu bị ghi đè):
+- Bug report có bước tái hiện A và B, có trích dẫn P4, có Related #9. Ảnh `flow_14` đến `flow_18` khớp với tên ảnh trong bug report. Issue chưa tạo (⏳); tôi hiểu đây là phần phiên Task 2 đang kiểm.
+- Script `edit_product_check.js` tìm nút và ô theo chữ hiện trên trang, không gọi API, không đọc mã nguồn. Script vẫn đúng hộp đen.
+- **Ghi chú của P4 nên trỏ rõ file log.** Ghi chú P4 nhắc tới lần chạy 01:14:01, nằm trong `edit_check_log_run1.txt`. Bug report lại dẫn lần chạy 01:24:21 trong `edit_check_log.txt`. Hai mốc đều có thật, nhưng nên nhờ phiên Task 2 ghi thêm tên file `edit_check_log_run1.txt` vào ghi chú P4 để người đọc tìm được. Vì vậy giữ cả hai file log khi commit.
+
+## Cần làm trước khi commit hoặc chạy tiếp
+
+1. **DB đang bẩn do script.** Hiện có 6 sản phẩm: 2 dòng cùng tên "iPhone 15 Pro Max", và 2 sản phẩm thử là "HW03 E2", "HW03 E6". Danh mục vẫn sạch. Phải reset trước N2 và trước lần kiểm định dạng ngày và số. Tôi chưa reset vì phiên Task 2 có thể còn đang tái hiện bug. Khi phiên đó xong, chạy:
+   ```powershell
+   cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+   ```
+2. **52 ảnh trong `usability/tools/edit_check_shots/` do script tự chụp toàn màn hình.** Script đã phóng to Chrome để che các cửa sổ khác. Tôi không mở ảnh, nên bạn lướt qua thumbnail một lượt, xem có lọt cửa sổ nào chứa thông tin người tham gia không, rồi mới commit. Thư mục này nặng 8,2 MB.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/bug_report.md usability/screenshots/flow_14_product_edit_list_wrong_names.png usability/screenshots/flow_15_product_edit_other_renamed.png usability/screenshots/flow_16_product_edit_first_change.png usability/screenshots/flow_17_product_edit_reopen_old_values.png usability/screenshots/flow_18_product_edit_change_lost.png usability/tools usability/sessions/P4/notes.md
+git commit -m "[T2][bugs] Draft B-T2-02 product edit overwrite bug with repro script"
+git add usability/sessions/.gitkeep prompt_log.md
+git commit -m "[setup] Remove sessions placeholder and update prompt log"
+git push
+```
+
+- Nếu phiên Task 2 sửa thêm ghi chú P4 hoặc tạo issue sau đó, commit tiếp với message `[T2][bugs] Report B-T2-02 as issue #<số>`.
+- `bugs/image_links.txt` vẫn để ngoài, không commit.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | 7 phiên xong; đang kiểm B-T2-02 | Tạo issue; score (n = 6, ⏳); analysis | ~2,5 giờ |
+| Task 3 | N1, N3 xong; danh sách N2 đã chốt | Reset DB; kiểm định dạng ngày và số; N2 trên cloud; compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **8 giờ** làm việc | Còn **11 giờ 30 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C230 | 01:30 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Đồng ý với quyết định của bạn.
+2. Tạo issue luôn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Create GitHub issue for B-T2-02
+- Bash: Record issue #67 in bug report
+
+**Output AI (nguyên văn):**
+
+````text
+Đã tạo issue **[#67](https://github.com/angquoc/software-testing-2026-HW03-group/issues/67)** ở mức Critical, gắn đủ nhãn: `bug`, `severity: critical`, `platform: admin`, `task: T2 usability`, `ia: IA-02`, `ia: IA-04`. Issue đã gán cho bạn.
+
+Trong [bug_report.md](bugs/bug_report.md), dòng B-T2-02 đã có link #67 và mức `critical`. Phần Task 2 không còn chỗ nào để ⏳.
+
+**Bước gắn ảnh** (giống lần #66):
+1. Mở issue #67, kéo 5 ảnh dưới đây vào ô comment. Không bấm "Comment".
+2. Copy 5 thẻ `<img ...>` hiện ra rồi gửi tôi. Tôi sẽ dán vào mục "Ảnh chụp", xếp theo thứ tự và ghi chú từng ảnh.
+
+| Thứ tự | File trong `usability/screenshots/` | Nội dung |
+|---|---|---|
+| 1 | `flow_14_product_edit_list_wrong_names.png` | Ngay sau khi lưu: mọi dòng mang tên sản phẩm vừa sửa |
+| 2 | `flow_15_product_edit_other_renamed.png` | Trường hợp A: sau khi tải lại, sản phẩm thứ hai bị đổi tên |
+| 3 | `flow_16_product_edit_first_change.png` | Trường hợp B: lần sửa thứ nhất (đổi URL ảnh và danh mục) |
+| 4 | `flow_17_product_edit_reopen_old_values.png` | Trường hợp B: mở lại form, thấy giá trị cũ |
+| 5 | `flow_18_product_edit_change_lost.png` | Trường hợp B: sau khi tải lại, thay đổi lần 1 đã mất |
+
+Bạn kéo đúng thứ tự trong bảng thì tôi dễ khớp hơn. Nếu lệch thứ tự cũng không sao, tôi sẽ so md5 như lần #66 để xếp lại.
+
+Sau khi đã gắn ảnh, lệnh commit là:
+```
+cd Homeworks/HW03
+git add bugs/bug_report.md usability/screenshots/flow_14_product_edit_list_wrong_names.png usability/screenshots/flow_15_product_edit_other_renamed.png usability/screenshots/flow_16_product_edit_first_change.png usability/screenshots/flow_17_product_edit_reopen_old_values.png usability/screenshots/flow_18_product_edit_change_lost.png usability/tools/edit_product_check.js usability/tools/capture_screen_max.ps1 usability/tools/edit_check_log.txt usability/tools/edit_check_log_run1.txt usability/sessions/P4/notes.md
+git commit -m "[T2][bugs] Report product edit form overwriting data (found in P4), add repro script"
+```
+Thư mục `usability/tools/edit_check_shots/` có 52 ảnh gốc. Tôi không đưa thư mục này vào lệnh trên vì 5 ảnh bằng chứng đã nằm trong `usability/screenshots/`. Nếu bạn muốn nộp kèm ảnh gốc thì thêm thư mục đó vào `git add`.
+
+Nhớ reset DB sau lần chạy script.
+
+Status:
+- T2 P1 đến P7: Xong.
+- T2 bug B-T2-01 (#66): Xong.
+- T2 bug B-T2-02 (#67): Đã tạo issue, chờ 5 link ảnh.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4 giờ làm việc: gắn ảnh khoảng 5 phút, phân tích 3 đến 4 giờ. Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C231 | 01:37 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Link ảnh đây: 
+
+
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/184cadbb-4b59-4a11-88e9-17706179873d" />
+
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/69055d24-6207-4295-86b2-ccaadf6e2d16" />
+
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/0b0ec4d5-3bfa-4198-8d78-96a10fdcf1f6" />
+
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/4a8a2fab-d61b-4eee-9971-b07182c957e1" />
+
+<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/d9a39ade-7f10-4038-92ef-7a92ab1853ba" />
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Download attachments and match by md5
+- Bash: Insert screenshots into issue #67 body
+
+**Output AI (nguyên văn):**
+
+````text
+All 5 match in order. Updating the issue body.
+
+Issue [#67](https://github.com/angquoc/software-testing-2026-HW03-group/issues/67) đã có đủ 5 ảnh trong mục "Ảnh chụp". Mỗi ảnh có một dòng chú thích nói ảnh đó cho thấy gì. Tôi đã tải 5 ảnh từ GitHub về so md5 với các file `flow_14` đến `flow_18`: Cả 5 đều trùng và bạn đã dán đúng thứ tự.
+
+Ô comment trên #67 vẫn còn các ảnh bạn kéo vào. Bạn xóa nội dung đó đi, đừng bấm "Comment".
+
+Bạn nhớ reset DB, vì lần chạy script đã sửa dữ liệu mẫu. Sau đó commit:
+```
+cd Homeworks/HW03
+git add bugs/bug_report.md usability/screenshots/flow_14_product_edit_list_wrong_names.png usability/screenshots/flow_15_product_edit_other_renamed.png usability/screenshots/flow_16_product_edit_first_change.png usability/screenshots/flow_17_product_edit_reopen_old_values.png usability/screenshots/flow_18_product_edit_change_lost.png usability/tools/edit_product_check.js usability/tools/capture_screen_max.ps1 usability/tools/edit_check_log.txt usability/tools/edit_check_log_run1.txt usability/sessions/P4/notes.md
+git commit -m "[T2][bugs] Report product edit form overwriting data (found in P4), add repro script"
+```
+
+Bước tiếp theo là phân tích: Tính điểm ở `04_scores.md` (SUS, D1 đến D7), rồi viết phát hiện ở `05_findings.md` (xếp hạng theo criticality, ghi hạn chế). Bạn muốn làm thì nói tôi, tôi sẽ bắt đầu từ `04_scores.md`.
+
+Status:
+- T2 P1 đến P7: Xong.
+- T2 bug B-T2-01 (#66), B-T2-02 (#67): Xong.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+- T2 ảnh danh sách issue: Chưa chụp, làm sau khi báo xong mọi bug của Task 2.
+
+Còn khoảng 3 đến 4 giờ làm việc (phân tích). Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C232 | 01:41 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Bây giờ bạn hãy tính điểm đi, và viết các phát hiện dựa trên các P đã chạy và các thảo luận tôi đã nói với bạn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find WORKFLOW requirements for scores and findings
+- Bash: Read analysis plan section and usability skill
+- Bash: Read skill guidance for score and analysis steps
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C233 | 01:41 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra trạng thái các task, xuất log, viết commit message.
+
+Trong lúc task 2 đang phân tích thì tôi có thể làm gì? (Đã reset db)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show time, repo status, recent commits, export prompt log
 
 **Output AI (nguyên văn):**
 
