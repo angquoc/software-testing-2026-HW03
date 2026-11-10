@@ -185,7 +185,7 @@ QĐ4 (đã chốt ở `02_scenario.md` mục 5): "Bế tắc hẳn" là không t
 | D3 | Số lỗi theo loại: (a) Bấm sai chỗ khi tìm đường, kể cả vào nhầm khối "Import sản phẩm từ CSV"; (b) Hệ thống báo lỗi nhập liệu; (c) Lưu sản phẩm với danh mục mặc định "Điện thoại" hoặc danh mục khác không phải danh mục mới; (d) Nhập giá thừa hoặc thiếu chữ số 0; (e) Phải làm lại một thao tác | Video, phiếu ghi chú | O2, O4 |
 | D4 | Số lần can thiệp | Phiếu ghi chú | O1 |
 | D5 | Số lần do dự rõ (dừng lâu, nói không biết làm gì) | Video, think-aloud | O2 |
-| D6 | Kết quả cuối trong hệ thống: Danh mục mới tồn tại; sản phẩm tồn tại với đúng tên, giá và đúng danh mục mới | Người điều phối kiểm sau phiên. Bảng sản phẩm của Admin không có cột Danh mục (flow_11), nên kiểm danh mục bằng trang chi tiết sản phẩm trên web bán hàng (FR-06 yêu cầu hiển thị Danh mục) hoặc form "Sửa" của sản phẩm trong Admin (chưa có ảnh form "Sửa") | O1, Q7 |
+| D6 | Kết quả cuối trong hệ thống: Danh mục mới tồn tại; sản phẩm tồn tại với đúng tên, giá và đúng danh mục mới | Người điều phối kiểm sau phiên. Bảng sản phẩm của Admin không có cột Danh mục (flow_11), nên kiểm danh mục bằng form "Sửa" của sản phẩm trong Admin (chốt ở pilot; cách dự phòng là trang chi tiết sản phẩm trên web bán hàng, FR-06) | O1, Q7 |
 | D7 | Người tham gia có tự kiểm tra kết quả sau khi lưu không, và kiểm bằng cách nào | Quan sát | Q2, Q7 |
 
 ### 8.2 Số liệu ý kiến (preference data, chủ quan)
@@ -249,7 +249,7 @@ Báo cáo usability (phần Task 2 trong báo cáo chính, dựa trên `04_score
 | G1 | Web Admin có khu vực riêng để quản lý danh mục và khu vực riêng để quản lý sản phẩm | Đúng. Sidebar có "Danh mục" (trang "Quản lý Danh mục") và "Sản phẩm" (trang "Quản lý Sản phẩm"). Thêm danh mục bằng một ô nhập và nút "Thêm mới" ngay trên bảng, không có form riêng | flow_02, flow_03, flow_06 |
 | G2 | Form thêm sản phẩm có trường chọn danh mục từ danh sách, và danh mục vừa tạo có trong danh sách đó | Đúng. Danh mục mới có ngay trong danh sách, không cần tải lại trang (SV xác nhận). Ô mặc định chọn "Điện thoại", không có lựa chọn trống | flow_08, flow_09 |
 | G3 | Form thêm sản phẩm có trường ảnh nhập bằng URL | Đúng. Ô "URL Ảnh" dạng ô nhập chữ | flow_07 |
-| G4 | Reset DB xoá danh mục và sản phẩm người tham gia trước đã tạo | Đúng một phần. Bảng danh mục ban đầu chỉ có 3 danh mục mẫu. Kiểm lại ở pilot: Reset sau khi đã tạo dữ liệu rồi xem danh mục, sản phẩm mới đã mất chưa | flow_03 |
+| G4 | Reset DB xoá danh mục và sản phẩm người tham gia trước đã tạo | Đúng. Bảng danh mục ban đầu chỉ có 3 danh mục mẫu; ở pilot, reset sau khi đã tạo dữ liệu thì danh mục và sản phẩm mới đều mất | flow_03; `pilot/notes.md` mục 8.1 |
 
 ### 10.2 Rủi ro
 
@@ -293,6 +293,8 @@ Báo cáo usability (phần Task 2 trong báo cáo chính, dựa trên `04_score
 | Mục 10.2 | Bỏ rủi ro "danh mục mới không hiện trong form sản phẩm" | Thừa | | Đã kiểm là không xảy ra (flow_08, SV xác nhận) |
 | Mục 10.2 | Thêm rủi ro sản phẩm nằm sai danh mục mà không ai nhận ra | Thiếu | Đặc thù giao diện: Danh mục mặc định cộng với việc không có thông báo và không có cột Danh mục | flow_07, flow_10, flow_11 |
 | Mục 5, 6, 8.4, 9, 10.2, 11 (QĐ3) | Chốt địa điểm: Tùy từng người tham gia; ghi hình thức trong hồ sơ phiên; đánh dấu riêng phiên từ xa khi tổng hợp thời gian; thêm vào hạn chế của nghiên cứu | Quyết định của SV | | SV chọn phương án "Tùy từng người" |
+| Mục 8.1, D6 | Cách kiểm danh mục chốt là form "Sửa" trong Admin; trang chi tiết trên web bán hàng thành cách dự phòng | Quyết định của SV | | Pilot (`pilot/notes.md` mục 6, 8.1) |
+| Mục 10.1, G4 | Đổi "Đúng một phần" thành "Đúng" | Quyết định của SV | | Pilot: Reset DB xoá danh mục và sản phẩm vừa tạo (`pilot/notes.md` mục 8.1) |
 | Mục 7 (QĐ4), mục 11 (QĐ2, QĐ4) | Cập nhật theo kết quả sau pilot: Thời gian chuẩn ×3 (toàn luồng 02:18.75), ngưỡng "bế tắc hẳn" 2 phút | Quyết định của SV | | Pilot; `02_scenario.md` mục 4.4, 5 |
 | Mục 5, trình tự phiên | Chỉnh thời lượng: Mở đầu 2 đến 3 phút, phiếu thông tin 1 đến 2 phút, làm nhiệm vụ 2 đến 5 phút (tối đa 15 phút); tổng 15 đến 25 phút (trước đó 25 đến 40 phút); thêm số đo pilot | Quyết định của SV | | Pilot: Cả phiên 16 phút, làm nhiệm vụ khoảng 1,5 phút (`pilot/notes.md` mục 2, 8.2) |
 | Mục 3.2, 7, 8.2, 11 (QĐ1, QĐ2, QĐ4, QĐ5) | Cập nhật trạng thái từ "⏳" thành "Đã chốt", dẫn tới chỗ chốt trong `02_scenario.md` và `03_instruments.md` | Quyết định của SV | | SV chốt các quyết định này ở bước `scenario` và `instruments` |

@@ -225,7 +225,7 @@ Phiên trực tiếp: Làm trong lúc người tham gia điền Google Form SUS 
 | Có sản phẩm "Loa Bluetooth JBL Flip 6" | ☐ Đạt ☐ Không | Bảng sản phẩm |
 | Giá hiện `2990000 ₫` | ☐ Đạt ☐ Không (giá thấy: ____) | Bảng sản phẩm |
 | Ảnh hiện được | ☐ Đạt ☐ Không | Bảng sản phẩm |
-| Sản phẩm thuộc danh mục "Loa Bluetooth" | ☐ Đạt ☐ Không (danh mục thấy: ____) | ☐ Trang chi tiết trên web bán hàng ☐ Form "Sửa" trong Admin |
+| Sản phẩm thuộc danh mục "Loa Bluetooth" | ☐ Đạt ☐ Không (danh mục thấy: ____) | Form "Sửa" của sản phẩm trong Admin (chốt ở pilot) |
 
 ### I4.7 Ghi chú cuối phiên
 
@@ -408,6 +408,7 @@ Pilot đã chạy ngày 2026-11-10; kết quả từng điểm ở `pilot/notes.
 | Mục I6.3 | Thêm việc hỏi lại các đoạn im lặng lâu để bù think-aloud ít | Thiếu | Giới hạn model: Như dòng I2.4 | I2.4 |
 | Mục I1 | Dòng 1 mới (đã có tin nhắn đồng ý); dòng 10: Thu micro chỉ khi người tham gia đồng ý ghi âm | Thiếu | Prompt: Khi AI viết, chưa có QĐ-I1 | QĐ-I1 |
 | Mục 8 | Bỏ dòng về UEQ-S; thêm kiểm tin nhắn đồng ý, ngưỡng nhắc think-aloud, Google Form | Quyết định của SV | | QĐ5, QĐ-I1, QĐ-I3, I2.4 |
+| Mục I4.6 | Cách kiểm danh mục chốt là form "Sửa" trong Admin; bỏ lựa chọn trang chi tiết trên web bán hàng | Quyết định của SV | | Pilot: Kiểm bằng form "Sửa" được, không cần chạy web bán hàng (`pilot/notes.md` mục 6, 8.1) |
 | Mục I4.3 | Thời gian chuẩn đổi từ ×5 sang ×3: M1 00:21.09, M2 00:48.57, M3 01:00.84, toàn luồng 02:18.75 | Quyết định của SV | | Pilot: SV giảm bội số sau khi người pilot làm toàn luồng 01:24 (`02_scenario.md` mục 4.4; `pilot/notes.md` mục 4) |
 | Mục I1 dòng 14 | Thêm việc đặt bộ gõ tiếng Việt về chế độ tiếng Anh trước phiên | Quyết định của SV | | Pilot: Bộ gõ đang bật làm người pilot gõ sai email ở M1 (`pilot/notes.md` mục 5, 8.1) |
 | Mục I2.1 | Thời lượng buổi thử trong tin nhắn đổi từ "30 đến 40 phút" thành "15 đến 30 phút" | Quyết định của SV | | Pilot: Cả phiên 16 phút (`pilot/notes.md` mục 2, 8.2); test plan mục 5 đổi thành 15 đến 25 phút, cộng thời gian chuẩn bị và trò chuyện |
