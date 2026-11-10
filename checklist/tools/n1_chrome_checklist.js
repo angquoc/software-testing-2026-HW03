@@ -15,6 +15,9 @@
  *   npm install            (lần đầu; chỉ cài playwright-core và axe-core, không tải trình duyệt)
  *   node n1_chrome_checklist.js
  *   Đổi địa chỉ frontend: đặt biến môi trường ESHOP_URL.
+ *   Chạy thử để gỡ lỗi script: node n1_chrome_checklist.js --dry-run
+ *     (gặp Failed chỉ ghi lại rồi chạy tiếp, không dừng chờ Enter; bỏ qua 2 bước chuẩn bị giỏ hàng; không hỏi xác nhận).
+ *   Chỉ chạy một số nhóm: --only=A,B (nhóm A đến G, xem hàm main).
  *
  * Script KHÔNG: Bật server, reset DB, chạy seed, có cấu hình webServer / globalSetup.
  * Script CÓ đổi dữ liệu (vì checklist yêu cầu thao tác thật): Tạo vài tài khoản hw03.n1.*@eshop.com,
@@ -30,6 +33,10 @@ const readline = require('readline');
 const { chromium } = require('playwright-core');
 
 // ---------------------------------------------------------------- cấu hình
+const DRY = process.argv.includes('--dry-run');
+const ONLY = ((process.argv.find((a) => a.startsWith('--only=')) || '').split('=')[1] || '').toUpperCase().split(',').filter(Boolean);
+const T0 = Date.now();
+const stamp = () => `${((Date.now() - T0) / 1000).toFixed(0)}s`;
 const BASE = (process.env.ESHOP_URL || 'http://localhost:5173').replace(/\/+$/, '');
 const ORIGIN = new URL(BASE).origin;
 const VIEWPORT = { width: 1366, height: 768 }; // cửa sổ cố định; trùng kích thước của CL-32
@@ -40,6 +47,11 @@ const ACC = {
   newuser: { email: 'newuser@eshop.com', pw: 'NewUser123!' },
 };
 const WRONG_PW = 'Sai12345!';
+// Số điện thoại mà trang hồ sơ chấp nhận khi chạy thử (9 chữ số, không có số 0 đầu; khác quy tắc UI-R14).
+// Chỉ dùng cho các mục cần một lần gửi thành công mà checklist không quy định số (CL-96, CL-105, CL-108, CL-112 ở W-06).
+const APP_OK_PHONE = '912345678';
+const ERR_RE = /lỗi|không hợp lệ|sai|thất bại|vui lòng|phải|yếu|cannot|error|failed/i;
+const OK_RE = /thành công|đã cập nhật|đã lưu|đã hủy|success/i;
 const VALID_PW = 'Abcdef1!';
 // Chữ trạng thái nhìn thấy ở 00_survey.md mục 3.4 (dùng để biết dòng nào là đơn pending, confirmed...)
 const STATUS_TEXT = { pending: 'Chờ xác nhận', confirmed: 'Đã xác nhận', shipping: 'Đang giao', delivered: 'Đã giao', canceled: 'Đã hủy' };
@@ -324,13 +336,16 @@ async function check(code, scr, res, why, page) {
   if (!R.has(code)) R.set(code, []);
   R.get(code).push({ scr, res, why });
   console.log(`${color[res] || '\x1b[33m'}${code} [${scr}] ${res}: ${why}\x1b[0m`);
-  if (res === 'Failed' && page) {
+  if (res === 'Failed' && page && !DRY) {
     try { await page.bringToFront(); } catch (e) { /* trang đã đóng */ }
     await ask(`\n>>> ${code} FAILED (${scr}): ${why}\n    Màn hình đang giữ nguyên để chụp. Chụp xong bấm Enter để chạy tiếp... `);
   }
 }
 async function T(code, scr, page, fn) {
-  try { await fn(); } catch (e) { await check(code, scr, 'Lỗi script', String(e.message || e).split('\n')[0]); }
+  try { await fn(); } catch (e) {
+    const at = DRY ? ` @ ${(String(e.stack || '').split('\n').find((l) => /n1_chrome_checklist/.test(l)) || '').trim()}` : '';
+    await check(code, scr, 'Lỗi script', String(e.message || e).split('\n')[0] + at);
+  }
 }
 const skip = (code, scr, why) => check(code, scr, 'Không chạy được', why);
 
@@ -423,6 +438,9 @@ async function observe(page, action, ms = WAIT + 1500) {
   return { msgs, texts: msgs.map((m) => m.t), dialogs, path: pathOf(page), invalid, reqs };
 }
 const anyMsg = (o) => o.msgs.length > 0 || o.dialogs.some((d) => d.type === 'alert');
+const allText = (o) => [...o.texts, ...o.dialogs.map((d) => d.msg)];
+const hasErr = (o) => o.invalid.length > 0 || allText(o).some((t) => ERR_RE.test(t));
+const hasOk = (o) => allText(o).some((t) => OK_RE.test(t));
 const msgText = (o) => [...o.texts, ...o.dialogs.map((d) => `(hộp) ${d.msg}`)].join(' | ').slice(0, 160) || '(không có)';
 
 async function isLoggedIn(page) { return !!(await navH(page, RE.logout)) || !!(await navH(page, RE.greeting)); }
@@ -570,21 +588,23 @@ async function tabChecks(page, scr, sl, opts = {}) {
   await ev(page, () => window.__hw.markBase());
   const navCount = (await ev(page, () => window.__hw.navItems())).length;
   const seq = [];
+  const seenKeys = new Set();
   for (let i = 0; i < 45; i++) {
     await page.keyboard.press('Tab');
     const a = await ev(page, () => window.__hw.active());
     if (a.body) break;
-    if (seq.length && a.inNav && !seq[seq.length - 1].inNav) break; // quay vòng lại navbar
+    const key = `${a.tag}|${a.text}|${Math.round(a.x)}|${Math.round(a.y)}`;
+    if (seenKeys.has(key)) break; // đã đi hết một vòng
+    seenKeys.add(key);
     seq.push(a);
   }
   const show = (s) => s.map((a) => `"${a.text.slice(0, 18)}"`).join(' > ');
-  const firstContent = seq.findIndex((a) => !a.inNav);
-  const navSeq = firstContent < 0 ? seq : seq.slice(0, firstContent);
-  const content = firstContent < 0 ? [] : seq.slice(firstContent);
+  const content = seq.filter((a) => !a.inNav);
   await T('CL-15', sl, page, async () => {
-    const inc = navSeq.every((a, i) => i === 0 || a.x > navSeq[i - 1].x);
-    const ok = navSeq.length > 0 && navSeq.length === navCount && inc && !content.some((a) => a.inNav);
-    await check('CL-15', sl, ok ? 'Passed' : 'Failed', `navbar có ${navCount} mục; thứ tự focus: ${show(navSeq)}; rồi vào nội dung: "${content[0] ? content[0].text.slice(0, 18) : '(không có)'}"`, page);
+    const head = seq.slice(0, navCount);
+    const ok = navCount > 0 && head.length === navCount && head.every((a) => a.inNav)
+      && head.every((a, i) => i === 0 || a.x > head[i - 1].x) && (!seq[navCount] || !seq[navCount].inNav);
+    await check('CL-15', sl, ok ? 'Passed' : 'Failed', `navbar có ${navCount} mục; ${navCount + 1} lần Tab đầu: ${show(seq.slice(0, navCount + 1))}`, page);
   });
   let formPart = content;
   if (scr === 'W-06') { const k = content.findIndex((a) => RE.submitProfile.test(a.text)); formPart = k >= 0 ? content.slice(0, k + 1) : content; }
@@ -722,12 +742,14 @@ async function offlineCheck(page, ctx, sl, action) {
     await ctx.setOffline(true);
     const o = await observe(page, action, 3500);
     await ctx.setOffline(false);
-    await check('CL-105', sl, anyMsg(o) ? 'Passed' : 'Failed', `Mất kết nối, bấm gửi: thông báo ${msgText(o)}`, page);
+    const net = allText(o).some((t) => /kết nối|mạng|network|offline|thử lại sau|máy chủ|server/i.test(t));
+    await check('CL-105', sl, net ? 'Passed' : (anyMsg(o) ? 'Chạy tay' : 'Failed'),
+      `Mất kết nối, bấm gửi: thông báo ${msgText(o)}${!net && anyMsg(o) ? ' (có thông báo nhưng không nói về kết nối)' : ''}`, page);
   });
 }
 async function liveCheck(page, sl, o) {
   await T('CL-106', sl, page, async () => {
-    if (!o.msgs.length) return skip('CL-106', sl, 'Không có thông báo của trang để kiểm');
+    if (!o.msgs.length) return skip('CL-106', sl, o.dialogs.length ? 'Thông báo là hộp thoại của trình duyệt (alert), không phải phần tử của trang' : 'Không có thông báo của trang để kiểm');
     const live = o.msgs.filter((m) => m.live);
     await check('CL-106', sl, live.length ? 'Passed' : 'Failed', `${live.length}/${o.msgs.length} thông báo nằm trong role="alert" / "status" / aria-live: ${o.texts.join(' | ').slice(0, 120)}`, page);
   });
@@ -744,10 +766,11 @@ async function aboveSubmit(page, sl, o, btnRe) {
 }
 async function namesField(page, sl, o, f, word) {
   await T('CL-55', sl, page, async () => {
-    if (!o.msgs.length) return skip('CL-55', sl, `Không có thông báo của trang (dữ liệu sai cho ô ${word})`);
+    if (!anyMsg(o)) return skip('CL-55', sl, `Không có thông báo (dữ liệu sai cho ô ${word})`);
     const r = await ev(page, (e) => window.__hw.rectOf(e), f);
-    const ok = o.msgs.some((m) => m.t.toLowerCase().includes(word) || (m.top >= r.bottom - 2 && m.top - r.bottom < 60 && m.right > r.left && m.left < r.right));
-    await check('CL-55', sl, ok ? 'Passed' : 'Failed', `Ô ${word}: thông báo ${o.texts.join(' | ').slice(0, 120)}`, page);
+    const ok = allText(o).some((t) => t.toLowerCase().includes(word))
+      || o.msgs.some((m) => m.top >= r.bottom - 2 && m.top - r.bottom < 60 && m.right > r.left && m.left < r.right);
+    await check('CL-55', sl, ok ? 'Passed' : 'Failed', `Ô ${word}: thông báo ${msgText(o)}`, page);
   });
 }
 async function focusOnError(page, sl, f, word) {
@@ -900,6 +923,15 @@ async function eyeCheck(page, sl, F) {
 async function phaseForms(ctx, page) {
   console.log('\n=== B. Thông báo lỗi và phản hồi của form (chưa đăng nhập) ===');
   const sl4 = 'W-04'; const sl3 = 'W-03';
+  const weakOnly = (o) => o.texts.length > 0 && o.texts.every((t) => /quá yếu/i.test(t));
+  // Thử một lần đăng ký với dữ liệu hợp lệ: Trang có chặn mật khẩu hợp lệ không?
+  await fillRegister(page, { name: 'HW03 Test', email: newEmail('probe'), pw: VALID_PW });
+  const o0 = await observe(page, () => clickBtn(page, RE.submitRegister));
+  const BLOCK = o0.path === '/register' && weakOnly(o0);
+  const BLOCK_WHY = `Trang Đăng ký từ chối mật khẩu hợp lệ theo UI-R03 ("${VALID_PW}") với thông báo "${o0.texts[0] || ''}", nên form không gửi đi được`;
+  if (BLOCK) console.log(`  (${BLOCK_WHY})`);
+  else if (o0.path === '/login') console.log('  (Lần thử đăng ký hợp lệ đã thành công; tạo thêm 1 tài khoản hw03.n1.probe)');
+
   await T('CL-38', sl4, page, async () => {
     await go(page, '/register');
     if (!(await fieldH(page, RE.confirm))) return skip('CL-38', sl4, 'Không có ô Xác nhận mật khẩu (CL-37)');
@@ -908,37 +940,44 @@ async function phaseForms(ctx, page) {
     await check('CL-38', sl4, (anyMsg(o) || o.invalid.length) && o.path === '/register' ? 'Passed' : 'Failed', `Thông báo: ${msgText(o)}; ${o.invalid.join(' ')}; trang ${o.path}`, page);
   });
   await T('CL-39', sl4, page, async () => {
-    const bad = []; let o41 = null;
+    let bad = 0; let blocked = 0;
     for (const v of ['abc', 'abc@', '@domain.com']) {
       await fillRegister(page, { name: 'HW03 Test', email: v, pw: VALID_PW });
       const o = await observe(page, () => clickBtn(page, RE.submitRegister));
+      if (BLOCK && weakOnly(o) && !o.invalid.length) { blocked++; continue; }
       const ok = (anyMsg(o) || o.invalid.length) && o.path === '/register';
-      if (!ok) { bad.push(v); await check('CL-39', `${sl4} "${v}"`, 'Failed', `Không có thông báo hoặc rời trang (${o.path})`, page); }
-      if (!o41 && o.msgs.length) o41 = o;
+      if (!ok) { bad++; await check('CL-39', `${sl4} "${v}"`, 'Failed', `Không có thông báo hoặc rời trang (${o.path})`, page); }
+      if (o.msgs.length && !weakOnly(o)) await namesField(page, `${sl4} "${v}"`, o, await fieldH(page, RE.email), 'email');
     }
-    if (!bad.length) await check('CL-39', sl4, 'Passed', 'Cả 3 giá trị đều bị báo lỗi, vẫn ở /register');
-    const f = await fieldH(page, RE.email);
-    if (o41 && f) await namesField(page, sl4, o41, f, 'email');
-    else await skip('CL-55', `${sl4} email`, 'Chỉ có bong bóng của trình duyệt, không có thông báo của trang');
+    if (blocked) await skip('CL-39', sl4, `${blocked}/3 giá trị chỉ nhận thông báo mật khẩu yếu. ${BLOCK_WHY}; chưa kiểm được thông báo về email`);
+    else if (!bad) await check('CL-39', sl4, 'Passed', 'Cả 3 giá trị đều bị báo lỗi, vẫn ở /register');
+    if (blocked) await skip('CL-55', `${sl4} email`, 'Không có thông báo về email (mật khẩu bị chặn trước)');
   });
-  // Email trùng: dùng cho CL-40, 47, 57, 58, 106
   await T('CL-40', sl4, page, async () => {
     await fillRegister(page, { name: 'HW03 Test', email: ACC.test.email, pw: VALID_PW });
     const o = await observe(page, () => clickBtn(page, RE.submitRegister));
+    if (BLOCK && weakOnly(o)) return skip('CL-40', sl4, `${BLOCK_WHY}; chưa tới bước kiểm email trùng`);
     await check('CL-40', sl4, o.msgs.length && o.path === '/register' ? 'Passed' : 'Failed', `Thông báo: ${msgText(o)}; trang ${o.path}`, page);
     const ef = await fieldH(page, RE.email); const nf = await fieldH(page, RE.name);
-    await aboveSubmit(page, sl4, o, RE.submitRegister);
-    if (ef && o.msgs.length) await focusOnError(page, sl4, ef, 'Email'); else await skip('CL-57', sl4, 'Không có thông báo lỗi của trang');
-    if (ef && nf && o.msgs.length) await highlightError(page, sl4, ef, nf, 'Email'); else await skip('CL-58', sl4, 'Không có thông báo lỗi của trang');
-    await liveCheck(page, sl4, o);
+    await aboveSubmit(page, `${sl4} email trùng`, o, RE.submitRegister);
+    if (ef && o.msgs.length) await focusOnError(page, `${sl4} email trùng`, ef, 'Email'); else await skip('CL-57', sl4, 'Không có thông báo lỗi của trang');
+    if (ef && nf && o.msgs.length) await highlightError(page, `${sl4} email trùng`, ef, nf, 'Email'); else await skip('CL-58', sl4, 'Không có thông báo lỗi của trang');
+    await liveCheck(page, `${sl4} email trùng`, o);
   });
   await T('CL-41', sl4, page, async () => {
     const em = newEmail('weak');
     await fillRegister(page, { name: 'HW03 Test', email: em, pw: 'abcdefgh' });
     const o = await observe(page, () => clickBtn(page, RE.submitRegister));
     await check('CL-41', sl4, (anyMsg(o) || o.invalid.length) && o.path === '/register' ? 'Passed' : 'Failed', `Thông báo: ${msgText(o)}; ${o.invalid.join(' ')}; trang ${o.path}`, page);
-    const pf = await fieldH(page, RE.password);
-    if (o.msgs.length && pf) await namesField(page, sl4, o, pf, 'mật khẩu'); else await skip('CL-55', `${sl4} mật khẩu`, 'Không có thông báo của trang');
+    const pf = await fieldH(page, RE.password); const nf = await fieldH(page, RE.name);
+    if (pf) await namesField(page, `${sl4} mật khẩu`, o, pf, 'mật khẩu');
+    if (BLOCK && o.msgs.length && pf) {
+      // Không tạo được lỗi email trùng: dùng lỗi mật khẩu yếu để kiểm vị trí, focus, làm nổi bật, đọc tự động
+      await aboveSubmit(page, `${sl4} mật khẩu yếu`, o, RE.submitRegister);
+      await focusOnError(page, `${sl4} mật khẩu yếu (thay email trùng)`, pf, 'Mật khẩu');
+      if (nf) await highlightError(page, `${sl4} mật khẩu yếu (thay email trùng)`, pf, nf, 'Mật khẩu');
+      await liveCheck(page, `${sl4} mật khẩu yếu`, o);
+    }
     await T('CL-59', sl4, page, async () => {
       const n = await val(await fieldH(page, RE.name)); const e = await val(await fieldH(page, RE.email));
       await check('CL-59', sl4, n === 'HW03 Test' && e === em ? 'Passed' : 'Failed', `Sau khi báo lỗi: Họ Tên "${n}", Email "${e}"`, page);
@@ -947,6 +986,7 @@ async function phaseForms(ctx, page) {
   await T('CL-60', sl4, page, async () => {
     await fillRegister(page, { name: '   ', email: newEmail('space'), pw: VALID_PW });
     const o = await observe(page, () => clickBtn(page, RE.submitRegister));
+    if (BLOCK && weakOnly(o)) return skip('CL-60', sl4, `${BLOCK_WHY}; chưa tới bước kiểm Họ Tên`);
     await check('CL-60', sl4, (anyMsg(o) || o.invalid.length) && o.path === '/register' ? 'Passed' : 'Failed', `Thông báo: ${msgText(o)}; ${o.invalid.join(' ')}; trang ${o.path}`, page);
   });
   await T('CL-61', sl4, page, async () => {
@@ -956,20 +996,25 @@ async function phaseForms(ctx, page) {
     const resp = anyMsg(o) || o.invalid.length || o.path !== '/register';
     await check('CL-61', sl4, resp ? 'Passed' : (o.reqs.length ? 'Chạy tay' : 'Failed'), `Enter trong ô Mật khẩu: ${resp ? `phản hồi ${msgText(o)}` : `không thấy phản hồi (${o.reqs.length} request)`}`, page);
   });
-  await fillRegister(page, { name: 'HW03 Test', email: ACC.test.email, pw: VALID_PW });
-  await waitingCheck(page, sl4, RE.submitRegister);
-  await fillRegister(page, { name: 'HW03 Test', email: newEmail('offline'), pw: VALID_PW });
-  await offlineCheck(page, ctx, sl4, () => clickBtn(page, RE.submitRegister));
-  await fillRegister(page, { name: 'HW03 Multi', email: newEmail('multi'), pw: VALID_PW });
-  await multiClickCheck(page, sl4, RE.submitRegister);
-  await T('CL-65', sl4, page, async () => {
-    await fillRegister(page, { name: 'HW03 New', email: newEmail('ok'), pw: VALID_PW });
-    const o = await observe(page, () => clickBtn(page, RE.submitRegister), 4500);
-    const form = !!(await buttonH(page, RE.submitLogin));
-    await check('CL-65', sl4, o.path === '/login' && form ? 'Passed' : 'Failed', `Sau khi đăng ký: trang ${o.path}, form đăng nhập ${form ? 'có' : 'KHÔNG'}`, page);
-    const okMsg = o.texts.some((t) => /thành công/i.test(t)) || o.dialogs.some((d) => /thành công/i.test(d.msg));
-    await check('CL-104', sl4, okMsg ? 'Passed' : 'Failed', `Thông báo bắt được: ${msgText(o)}`, page);
-  });
+  if (BLOCK) {
+    for (const c of ['CL-96', 'CL-105', 'CL-112']) await skip(c, sl4, `${BLOCK_WHY}; không có lần gửi nào để kiểm`);
+    await skip('CL-65', sl4, `${BLOCK_WHY}; không đăng ký thành công được`);
+    await skip('CL-104', sl4, `${BLOCK_WHY}; không đăng ký thành công được`);
+  } else {
+    await fillRegister(page, { name: 'HW03 Test', email: ACC.test.email, pw: VALID_PW });
+    await waitingCheck(page, sl4, RE.submitRegister);
+    await fillRegister(page, { name: 'HW03 Test', email: newEmail('offline'), pw: VALID_PW });
+    await offlineCheck(page, ctx, sl4, () => clickBtn(page, RE.submitRegister));
+    await fillRegister(page, { name: 'HW03 Multi', email: newEmail('multi'), pw: VALID_PW });
+    await multiClickCheck(page, sl4, RE.submitRegister);
+    await T('CL-65', sl4, page, async () => {
+      await fillRegister(page, { name: 'HW03 New', email: newEmail('ok'), pw: VALID_PW });
+      const o = await observe(page, () => clickBtn(page, RE.submitRegister), 4500);
+      const form = !!(await buttonH(page, RE.submitLogin));
+      await check('CL-65', sl4, o.path === '/login' && form ? 'Passed' : 'Failed', `Sau khi đăng ký: trang ${o.path}, form đăng nhập ${form ? 'có' : 'KHÔNG'}`, page);
+      await check('CL-104', sl4, hasOk(o) ? 'Passed' : 'Failed', `Thông báo bắt được: ${msgText(o)}`, page);
+    });
+  }
 
   // W-03: một lần đăng nhập sai dùng cho CL-103, 47, 59, 106 (chỉ 1 lần để không chạm ngưỡng khóa)
   await T('CL-103', sl3, page, async () => {
@@ -997,7 +1042,7 @@ async function phaseForms(ctx, page) {
   await fillF(page, RE.loginEmail, ACC.test.email);
   await fillF(page, RE.password, ACC.test.pw);
   await waitingCheck(page, sl3, RE.submitLogin);
-  await logout(page);
+  if (await isLoggedIn(page)) await logout(page);
   await go(page, '/login');
   await fillF(page, RE.loginEmail, ACC.test.email);
   await fillF(page, RE.password, ACC.test.pw);
@@ -1059,6 +1104,11 @@ async function phaseLoggedIn(ctx, page) {
 
   // Giỏ hàng (CL-68, CL-69): sinh viên tự chuẩn bị trong cửa sổ này
   for (const [code, dk, prompt] of [['CL-68', 'ĐK-04', '2 sản phẩm KHÁC NHAU, mỗi sản phẩm số lượng 1'], ['CL-69', 'ĐK-05', 'ĐÚNG 1 sản phẩm, số lượng 2 (xóa giỏ cũ trước)']]) {
+    if (DRY) {
+      const scs = code === 'CL-69' ? ['W-06 (đăng nhập)'] : ['W-06 (đăng nhập)', 'W-04 (đăng nhập)', 'W-03 (đăng nhập)'];
+      for (const sc of scs) await skip(code, sc, `Chạy thử: bỏ qua bước chuẩn bị giỏ hàng (${dk})`);
+      continue;
+    }
     await page.bringToFront();
     await ask(`\n>>> ${code} (${dk}): Trong cửa sổ Chrome này, đang đăng nhập test@eshop.com, hãy chuẩn bị giỏ hàng có ${prompt}. Xong bấm Enter... `);
     const screens = code === 'CL-69' ? [['W-06', '/profile']] : [['W-06', '/profile'], ['W-04', '/register'], ['W-03', '/login']];
@@ -1165,9 +1215,9 @@ async function phaseLoggedIn(ctx, page) {
     const o = await observe(page, () => clickBtn(page, RE.submitProfile));
     await check('CL-50', sl6, (anyMsg(o) || o.invalid.length) && o.path === '/profile' ? 'Passed' : 'Failed', `Thông báo: ${msgText(o)}; ${o.invalid.join(' ')}`, page);
     await aboveSubmit(page, sl6, o, RE.submitProfile);
-    if (o.msgs.length) await namesField(page, sl6, o, pf, 'số điện thoại'); else await skip('CL-55', sl6, 'Không có thông báo của trang');
-    if (o.msgs.length) await focusOnError(page, sl6, pf, 'Số điện thoại'); else await skip('CL-57', sl6, 'Không có thông báo lỗi của trang');
-    if (o.msgs.length) await highlightError(page, sl6, pf, nf, 'Số điện thoại'); else await skip('CL-58', sl6, 'Không có thông báo lỗi của trang');
+    await namesField(page, sl6, o, pf, 'số điện thoại');
+    if (anyMsg(o)) await focusOnError(page, sl6, pf, 'Số điện thoại'); else await skip('CL-57', sl6, 'Không có thông báo lỗi');
+    if (anyMsg(o)) await highlightError(page, sl6, pf, nf, 'Số điện thoại'); else await skip('CL-58', sl6, 'Không có thông báo lỗi');
     const n1 = await val(nf); const a1 = await val(await fieldH(page, RE.address));
     await check('CL-59', sl6, n1 === 'HW03 Tam' && a1 === addr0 ? 'Passed' : 'Failed', `Sau khi báo lỗi: Họ Tên "${n1}", Địa chỉ ${a1 === addr0 ? 'giữ nguyên' : `đổi thành "${a1}"`}`, page);
     await liveCheck(page, sl6, o);
@@ -1185,7 +1235,7 @@ async function phaseLoggedIn(ctx, page) {
     await fillF(page, RE.name, name0);
     await fillF(page, RE.phone, ' 0912345678 ');
     const o = await observe(page, () => clickBtn(page, RE.submitProfile));
-    const err = o.invalid.length || o.texts.some((t) => /lỗi|không hợp lệ|sai|phải|bắt đầu|chữ số/i.test(t));
+    const err = hasErr(o);
     await check('CL-110', sl6, err ? 'Failed' : 'Passed', `Số " 0912345678 ": ${msgText(o)} ${o.invalid.join(' ')}`, page);
   });
   await T('CL-101', sl6, page, async () => {
@@ -1193,8 +1243,8 @@ async function phaseLoggedIn(ctx, page) {
     await fillF(page, RE.name, name0);
     await fillF(page, RE.phone, '0912345678');
     const o = await observe(page, () => clickBtn(page, RE.submitProfile));
-    const ok = anyMsg(o) && !o.texts.some((t) => /lỗi|không hợp lệ/i.test(t));
-    await check('CL-101', sl6, ok ? 'Passed' : 'Failed', `Cập nhật hợp lệ: thông báo ${msgText(o)}`, page);
+    const ok = hasOk(o) && !hasErr(o);
+    await check('CL-101', sl6, ok ? 'Passed' : 'Failed', `Cập nhật với Số điện thoại 0912345678: thông báo ${msgText(o)}`, page);
     await liveCheck(page, `${sl6} (thành công)`, o);
   });
   await T('CL-52', sl6, page, async () => {
@@ -1202,30 +1252,42 @@ async function phaseLoggedIn(ctx, page) {
     await fillF(page, RE.name, name0);
     await fillF(page, RE.phone, '0912345678');
     await fillF(page, RE.address, '227 Nguyễn Văn Cừ');
-    await clickBtn(page, RE.submitProfile); await sleep(WAIT);
+    const o = await observe(page, () => clickBtn(page, RE.submitProfile));
     await go(page, '/profile');
     const v = { e: await val(await fieldH(page, RE.email)), n: await val(await fieldH(page, RE.name)), p: await val(await fieldH(page, RE.phone)), a: await val(await fieldH(page, RE.address)) };
     const ok = v.e === ACC.test.email && v.n === name0 && v.p === '0912345678' && v.a === '227 Nguyễn Văn Cừ';
-    await check('CL-52', sl6, ok ? 'Passed' : 'Failed', `Sau khi tải lại: Email "${v.e}", Họ Tên "${v.n}", SĐT "${v.p}", Địa chỉ "${v.a}"`, page);
+    await check('CL-52', sl6, ok ? 'Passed' : 'Failed', `Sau khi tải lại: Email "${v.e}", Họ Tên "${v.n}", SĐT "${v.p}", Địa chỉ "${v.a}"; lúc bấm Cập nhật: ${msgText(o)}`, page);
   });
   await T('CL-102', sl6, page, async () => {
+    const greet = async () => { let t = ''; for (let i = 0; i < 16; i++) { const g = await navH(page, RE.greeting); t = g ? await ev(page, (e) => window.__hw.norm(e.textContent), g) : ''; if (/Test User Moi/.test(t)) break; await sleep(250); } return t; };
     await go(page, '/profile');
     await fillF(page, RE.name, 'Test User Moi');
-    await clickBtn(page, RE.submitProfile);
-    let t = '';
-    for (let i = 0; i < 16; i++) { const g = await navH(page, RE.greeting); t = g ? await ev(page, (e) => window.__hw.norm(e.textContent), g) : ''; if (/Test User Moi/.test(t)) break; await sleep(250); }
-    await check('CL-102', sl6, /Test User Moi/.test(t) ? 'Passed' : 'Failed', `Lời chào sau khi cập nhật (không tải lại): "${t}"`, page);
+    const o = await observe(page, () => clickBtn(page, RE.submitProfile));
+    const t = await greet();
+    let extra = '';
+    if (!/Test User Moi/.test(t) && hasErr(o)) {
+      // Thử thêm để biết lời chào có tự cập nhật khi lưu thành công không (số điện thoại app chấp nhận)
+      await go(page, '/profile');
+      await fillF(page, RE.name, 'Test User Moi');
+      await fillF(page, RE.phone, APP_OK_PHONE);
+      const o2 = await observe(page, () => clickBtn(page, RE.submitProfile));
+      extra = `. Thử thêm với SĐT ${APP_OK_PHONE} (app chấp nhận): ${msgText(o2)}; lời chào "${await greet()}"`;
+    }
+    await check('CL-102', sl6, /Test User Moi/.test(t) ? 'Passed' : 'Failed', `Lời chào sau khi cập nhật (không tải lại): "${t}"; lúc bấm Cập nhật: ${msgText(o)}${extra}`, page);
     await go(page, '/profile');
     await fillF(page, RE.name, name0);
+    await fillF(page, RE.phone, APP_OK_PHONE);
     await clickBtn(page, RE.submitProfile); await sleep(WAIT);
     console.log(`  (Đã trả Họ Tên về "${name0}")`);
   });
-  await go(page, '/profile');
-  await waitingCheck(page, sl6, RE.submitProfile);
-  await go(page, '/profile');
-  await multiClickCheck(page, sl6, RE.submitProfile);
-  await go(page, '/profile');
-  await offlineCheck(page, ctx, sl6, () => clickBtn(page, RE.submitProfile));
+  // Các mục chỉ cần một lần gửi thành công: dùng số điện thoại mà app chấp nhận (xem APP_OK_PHONE)
+  const okForm = async () => { await go(page, '/profile'); await fillF(page, RE.phone, APP_OK_PHONE); };
+  await okForm();
+  await waitingCheck(page, `${sl6} (SĐT ${APP_OK_PHONE})`, RE.submitProfile);
+  await okForm();
+  await multiClickCheck(page, `${sl6} (SĐT ${APP_OK_PHONE})`, RE.submitProfile);
+  await okForm();
+  await offlineCheck(page, ctx, `${sl6} (SĐT ${APP_OK_PHONE})`, () => clickBtn(page, RE.submitProfile));
 
   // CL-94, CL-95: tải lịch sử đơn khi mạng chậm
   await T('CL-94', sl6, page, async () => {
@@ -1265,10 +1327,12 @@ async function phaseLoggedIn(ctx, page) {
     await login(page, ACC.test);
     await go(page, '/profile');
     const s = await getCdp(page);
+    await fillF(page, RE.phone, APP_OK_PHONE);
     await s.send('Storage.clearDataForOrigin', { origin: ORIGIN, storageTypes: 'all' });
     const o = await observe(page, () => clickBtn(page, RE.submitProfile), 3500);
-    const relog = o.path === '/login' || o.texts.some((t) => /đăng nhập|phiên|hết hạn|session|token/i.test(t)) || o.dialogs.some((d) => /đăng nhập|phiên|hết hạn/i.test(d.msg));
-    await check('CL-108', sl6, relog ? 'Passed' : (anyMsg(o) ? 'Chạy tay' : 'Failed'), `Sau Clear site data, bấm Cập nhật: trang ${o.path}; thông báo ${msgText(o)}`, page);
+    const relog = o.path === '/login' || allText(o).some((t) => /đăng nhập|phiên|hết hạn|session|token|unauthori|401/i.test(t));
+    const res = relog ? 'Passed' : (hasOk(o) ? 'Failed' : (anyMsg(o) ? 'Chạy tay' : 'Failed'));
+    await check('CL-108', `${sl6} (SĐT ${APP_OK_PHONE})`, res, `Sau Clear site data, bấm Cập nhật: trang ${o.path}; thông báo ${msgText(o)}`, page);
   });
 
 }
@@ -1410,9 +1474,12 @@ async function phaseLockout(page) {
   const lock = attempts.find((a) => a.o.texts.some((t) => /khóa|thử lại|tạm/i.test(t)) || a.o.dialogs.some((d) => /khóa|thử lại|tạm/i.test(d.msg)));
   const last = attempts[attempts.length - 1];
   const sum = attempts.map((a) => `lần ${a.i}: ${msgText(a.o).slice(0, 60)}${a.logged ? ' (ĐĂNG NHẬP ĐƯỢC)' : ''}`).join(' || ');
-  await check('CL-89', 'W-03', lock && lock.i <= 4 && !last.logged ? 'Passed' : 'Failed', lock ? `Thông báo khóa ở lần ${lock.i}. ${sum}` : `Không thấy thông báo khóa. ${sum}`, page);
-  if (!lock) return skip('CL-90', 'W-03', 'Không có thông báo khóa (CL-89)');
-  const t = msgText(lock.o);
+  const blocked4 = !lock && attempts.length === 4 && !last.logged;
+  await check('CL-89', 'W-03', lock && lock.i <= 4 && !last.logged ? 'Passed' : 'Failed',
+    lock ? `Thông báo khóa ở lần ${lock.i}. ${sum}` : (blocked4 ? `Lần 4 (mật khẩu đúng) vẫn bị từ chối, tức tài khoản đã bị chặn, nhưng thông báo không nói bị khóa / thử lại sau. ${sum}` : `Không thấy thông báo khóa. ${sum}`), page);
+  const lockMsg = lock || (blocked4 ? last : null);
+  if (!lockMsg) return skip('CL-90', 'W-03', 'Không có thông báo khi bị khóa (CL-89)');
+  const t = msgText(lockMsg.o);
   const leak = /\d+\s*lần|lần thứ|còn \d+|sai mật khẩu|mật khẩu (sai|không đúng)|email (không tồn tại|sai|không đúng)/i.test(t);
   await check('CL-90', 'W-03', leak ? 'Failed' : 'Passed', `Thông báo khóa: "${t}"`, page);
   if (last.logged) await logout(page);
@@ -1479,7 +1546,8 @@ async function main() {
     'Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n1.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.',
     'Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng (CL-68, CL-69).',
   ].join('\n'));
-  const okRun = await ask('Đã làm đủ BƯỚC 0? Gõ "co" rồi Enter để bắt đầu (Enter trống để thoát): ');
+  if (DRY) console.log('*** CHẠY THỬ (--dry-run): Kết quả chỉ để gỡ lỗi script, không ghi vào Excel ***');
+  const okRun = DRY ? 'co' : await ask('Đã làm đủ BƯỚC 0? Gõ "co" rồi Enter để bắt đầu (Enter trống để thoát): ');
   if (!/^c[oó]$/i.test(okRun.trim())) { console.log('Dừng: Chưa chuẩn bị dữ liệu.'); rl.close(); return; }
 
   const browser = await chromium.launch({ channel: 'chrome', headless: false, args: ['--window-position=0,0'] });
@@ -1497,13 +1565,16 @@ async function main() {
     ['G', () => crossPage(page)],
   ];
   for (const [name, fn] of phases) {
+    if (ONLY.length && !ONLY.includes(name)) continue;
+    console.log(`\n[${stamp()}] Bắt đầu nhóm ${name}`);
     try { await fn(); } catch (e) {
-      console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.message || e).split('\n')[0]}`);
-      await ask('Bấm Enter để chạy nhóm tiếp theo... ');
+      console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.stack || e).split('\n').slice(0, 3).join(' / ')}`);
+      if (!DRY) await ask('Bấm Enter để chạy nhóm tiếp theo... ');
     }
   }
   printFinal();
-  await ask('\nBấm Enter để đóng Chrome và kết thúc... ');
+  console.log(`Tổng thời gian: ${stamp()}`);
+  if (!DRY) await ask('\nBấm Enter để đóng Chrome và kết thúc... ');
   await browser.close();
   rl.close();
 }
