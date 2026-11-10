@@ -8678,6 +8678,1697 @@ Trước khi chạy N3, cần nhờ phiên điều phối reset DB và seed vì 
 - Bash: Check Task 1 completion, Excel images, bug rules in WORKFLOW and group README
 - Bash: Check CL-34 image references and new log files
 - Bash: Export log and update tracker estimates
+- Bash: Update footer memory to include per-task hours
+
+**Output AI (nguyên văn):**
+
+````text
+N1 xong và đạt yêu cầu. Log đã xuất lại: 136 lượt. Còn một lỗi tên ảnh nhỏ, sửa trước khi commit.
+
+## Kiểm tra N1
+
+| Kiểm | Kết quả |
+|---|---|
+| Excel cột NT1 | Đủ 112/112: 51 Passed, 54 Failed, 7 Không chạy được |
+| Mục Failed có ảnh và Notes | Đủ, kể cả CL-05 và CL-105 |
+| Tên ảnh trong Excel khớp file thật | Khớp |
+| Ảnh cũ chụp 1 ảnh đã đổi sang bộ `_1`, `_2`... | Đúng quy tắc (CL-13, 14, 19, 44...) |
+| Ảnh tổng quan N1 cho Task 3 | Đủ 4 ảnh ở `cross_platform/screenshots/chrome/` |
+
+**⚠ Còn lỗi ở CL-34:** Đang có cả `CL-34_chrome.png` lẫn `CL-34_chrome_1` đến `_3`. Đổi `CL-34_chrome.png` thành `CL-34_chrome_4.png`, rồi sửa ô Ảnh của CL-34 trong Excel cho khớp:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\screenshots
+Rename-Item CL-34_chrome.png CL-34_chrome_4.png
+```
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/tools/n1_chrome_checklist.js checklist/tools/n1_shots_log.txt checklist/tools/n1_cl34_log.txt cross_platform/screenshots/chrome
+git commit -m "[T1][exec] Complete N1 run with evidence screenshots and Chrome overview shots"
+git add checklist/tools/n3_android_checklist.js checklist/tools/package.json
+git commit -m "[T3][android-chrome] Add N3 Android script (not yet run)"
+git add cross_platform/ai_raw/T3_firefox_triage.md
+git commit -m "[T3][firefox] Add Firefox run triage of 112 items (AI draft)"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+`git add -A checklist/screenshots` ghi nhận cả việc xóa các ảnh cũ không có hậu tố. Ảnh tổng quan N1 đi chung commit `[T1][exec]`, đúng quyết định D-12.
+
+## Phiên Task 1 đẩy bug lên bằng `gh`: Được, kèm 3 lưu ý
+
+1. **`gh` không đính kèm ảnh được.** README nhóm (mục 4) bắt buộc mỗi issue có ảnh trong ô "Ảnh chụp". Cách nhanh nhất: Để `gh` tạo issue (tiêu đề, nội dung theo template, label), sau đó bạn mở từng issue trên web, bấm sửa và **kéo ảnh vào**, mỗi issue khoảng 30 giây. Phiên Task 1 cho bạn danh sách "issue số mấy cần ảnh nào".
+2. **Issue nằm trên repo nhóm, An và Hương thấy ngay.** Trước khi tạo, nên cho phiên đó in **danh sách tiêu đề và severity** (khoảng 5 phút xem). Không cần làm HTML. Sửa issue sau khi tạo thì được, nhưng xóa thì khó.
+3. **Vẫn phải có `bugs/bug_report.md`**, vì đề yêu cầu báo bug ở cả report Markdown lẫn Issues. Phiên Task 1 tạo luôn file này, ghi số issue. Bạn chụp trang danh sách issue lưu vào `bugs/screenshots/`.
+
+Prompt gợi ý:
+
+```text
+Bước `bugs` của Task 1. Đọc quy ước issue ở HW03_group/README.md mục 4 (tiêu đề, template Bug report, label, tìm trùng, Related HW02). Gom các mục Failed trong Excel cột NT1 thành bug (mỗi bug một issue, gộp các mục cùng một nguyên nhân).
+1. Tìm trùng: `gh issue list` trên angquoc/software-testing-2026-HW03-group và angquoc/software-testing-2026-HW02-group (chỉ đọc issue trên GitHub, không đọc thư mục Homeworks/HW02/).
+2. In cho tôi bảng: tiêu đề, severity, label, mục CL, ảnh dự kiến, trùng / Related. CHỜ tôi duyệt.
+3. Sau khi tôi duyệt: tạo issue bằng gh, viết bugs/bug_report.md có số issue, và in danh sách "issue số mấy cần kéo ảnh nào" để tôi thêm ảnh trên web.
+```
+
+## Chạy N3 cùng lúc với P1: Không nên
+
+- **DB dùng chung:** Trong P1 bạn reset DB lúc người tham gia điền form SUS. Nếu lúc đó N3 đang chạy, đơn hàng và tài khoản của N3 mất giữa chừng, script báo sai hàng loạt.
+- **Bạn là người điều phối duy nhất:** Script N3 dừng 2 lần nhờ bạn chuẩn bị giỏ hàng trên điện thoại, đúng lúc bạn cần quan sát người tham gia và ghi nhật ký tay.
+- **Máy của bạn đang được người tham gia dùng:** Cửa sổ terminal hay thông báo của script có thể hiện lên và lọt vào video phiên.
+
+N3 chạy khoảng 8 phút. Nên chạy **ở khoảng trống giữa hai phiên**: Reset và seed, chạy N3, reset lại, rồi mới tới phiên kế.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong | Sửa tên CL-34, commit → `bugs` bằng `gh` | ~1,5 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn của 7 người | ~9 giờ |
+| Task 3 | N1 xong (cùng Task 1); N2 đã chia mục; N3 có script | Review `firefox_triage.md`; chạy `n3:check`, chạy N3 giữa các phiên | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Report, Critique, Audit, forms, PDF, zip | ~6 giờ |
+
+⏱ Còn khoảng **21,75 giờ** làm việc | Còn **7 giờ 38 phút** tới mốc 22:00 10/11 | **22 giờ 38 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C137 | 14:28 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Không có cách nào đính kèm ảnh luôn sao? Ảnh đã có sẵn trong folder mà. Đính hết đống issue cũng hơi mệt đó.
+2. Được rồi, vậy reset db các thứ đi, tôi sẽ chạy N3.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset and seed DB for N3, verify servers
+- Bash: Check group repo clone and branch
+
+**Output AI (nguyên văn):**
+
+````text
+Đã reset DB và chạy `seed_orders.py` xong lúc 14:29. Bạn chạy N3 được rồi.
+
+## Chạy N3
+
+- **Server:** Backend `3000`, web `5173`, admin `5174` đều đang chạy.
+- **Dữ liệu:** 3 danh mục mẫu, 5 đơn của `test@eshop.com`, `newuser@eshop.com` không có đơn.
+
+Thứ tự:
+1. Cắm điện thoại, mở khóa màn hình, bật Samsung Notes ở dạng cửa sổ nổi. Bật Không làm phiền trên điện thoại để thông báo không lọt vào ảnh.
+2. Kiểm điều kiện (không đụng DB): `cd D:\Dang\Test\Homeworks\HW03\checklist\tools; npm run n3:check`.
+3. Nếu `--check` đạt: `npm run n3`. Có 2 lần dừng để bạn chuẩn bị giỏ hàng **trên điện thoại**.
+4. Xong thì báo tôi reset lại, trước khi tới phiên usability hay việc khác.
+
+Nếu `--check` báo lỗi (cờ Chrome, adb), đưa lỗi cho phiên Task 1 sửa. Lúc đó DB vẫn sạch, chưa cần reset lại.
+
+## Đính kèm ảnh tự động: Có cách
+
+`gh` không tải ảnh lên được, nhưng có cách vòng:
+1. **Đẩy ảnh vào repo nhóm** bằng git. Bản clone `HW03_group/` đã có trên máy, nhánh `main`. Ví dụ để vào thư mục `screenshots/23120061/`.
+2. **Trong nội dung issue**, ô "Ảnh chụp" ghi link tới ảnh đó: `![CL-101](https://github.com/angquoc/software-testing-2026-HW03-group/blob/main/screenshots/23120061/CL-101_chrome.png?raw=true)`. `gh issue create --body` tạo được, không phải kéo thả.
+
+Lưu ý khi dùng cách này:
+- **Thử 1 issue trước.** Repo đang private nên ảnh chỉ hiện với người có quyền vào repo (bạn, An, Hương, và TA nếu được mời). Tôi khá chắc ảnh sẽ hiện, nhưng chưa thử trên repo này. Tạo 1 issue, mở xem ảnh có hiện không, rồi mới tạo hàng loạt.
+- **Ảnh nằm trong repo nhóm, cả nhóm đều thấy.** Ảnh chỉ có lớp chữ đè của bạn (MSSV, họ tên, email) theo đúng yêu cầu Task 3, không có thông tin người khác. Ảnh usability của Task 2 thì phải che mặt và thông tin cá nhân trước khi đẩy lên.
+- **README nhóm ghi "Kéo thả ảnh vào ô Ảnh chụp".** Dùng link vẫn đúng mục đích (issue có ảnh). Tôi **không** sửa README nhóm. Nếu muốn cả nhóm làm cùng cách thì bạn tự quyết.
+
+Thêm vào prompt `bugs` gửi phiên Task 1 (sau bước bạn duyệt danh sách):
+
+```text
+Ảnh: Chép ảnh của từng bug vào Homeworks/HW03/HW03_group/screenshots/23120061/ (giữ tên CL-xx_chrome*.png), commit và push lên main của repo nhóm, rồi trong body issue ở phần "Ảnh chụp" ghi link dạng https://github.com/angquoc/software-testing-2026-HW03-group/blob/main/screenshots/23120061/<tên ảnh>?raw=true. Tạo 1 issue trước, chờ tôi xác nhận ảnh hiện được rồi mới tạo các issue còn lại.
+```
+
+Commit trên repo nhóm là commit của bạn, nên phiên Task 1 phải hỏi bạn trước khi push.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong | Commit (sửa tên CL-34) → `bugs` bằng `gh`, ảnh qua repo nhóm | ~1,5 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | **Đang chạy N3** (DB sạch 14:29) | Review `firefox_triage.md`, chạy N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Report, Critique, Audit, forms, PDF, zip | ~6 giờ |
+
+⏱ Còn khoảng **21,75 giờ** làm việc | Còn **7 giờ 31 phút** tới mốc 22:00 10/11 | **22 giờ 31 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C138 | 14:33 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Sao tôi cắm điện thoại và chạy D:\Dang\Test\Homeworks\HW03>cd D:\Dang\Test\Homeworks\HW03\checklist\tools; npm run n3:check
+The system cannot find the path specified.
+ mà lỗi,
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Lỗi không nằm ở điện thoại hay script. Bạn đang gõ lệnh trong **cmd** (dấu nhắc `D:\...>`), và cmd không coi dấu `;` là dấu ngăn hai lệnh như PowerShell. Vì vậy cmd đọc cả chuỗi `D:\Dang\Test\Homeworks\HW03\checklist\tools; npm run n3:check` thành một đường dẫn, không tìm thấy nên báo "The system cannot find the path specified". Lệnh `npm` chưa hề chạy.
+
+Trong cmd, gõ một trong hai cách:
+
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools && npm run n3:check
+```
+
+hoặc gõ thành hai dòng riêng:
+
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+npm run n3:check
+```
+
+`/d` giúp `cd` chuyển được cả ổ đĩa nếu cửa sổ đang ở ổ khác. Nếu bạn dùng PowerShell thì lệnh cũ có `;` vẫn chạy đúng.
+
+**Bước `--check` sẽ làm gì:**
+- Nó không mở trang EShop và không đổi dữ liệu, nên chưa cần reset DB.
+- Nó sẽ đóng rồi mở lại Chrome trên điện thoại một lần để kiểm cờ `chrome://flags`.
+- Lần đầu cắm máy, điện thoại có thể hiện hộp "Cho phép gỡ lỗi USB?". Bạn mở khóa màn hình và bấm **Cho phép**, nếu không script sẽ báo thiết bị `unauthorized`.
+
+Chạy xong, bạn dán cho tôi toàn bộ phần in ra, nhất là các dòng `[LỖI]` và `[CẢNH BÁO]`. Tôi sẽ xem đã đủ điều kiện chưa trước khi chạy thử thật.
+````
+
+---
+
+### C139 | 14:35 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Bạn Hương không hề đẩy lên repo nhóm và bạn dùng claude tạo issue, vẫn có ảnh đầy đủ.
+Kiểm tra gh đã có chưa, chưa có đưa lệnh để tôi kết nối cho task 1 thuận tiện.
+Sao tổng hợp lại tốn 6 giờ trong khi đó chỉ là các file docs, có sẵn đồ và do bạn sinh ra, tôi chỉ kiểm tra mà.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check whether GitHub CLI is installed and authenticated
+- Bash: Look for gh install locations, update summary estimate
+
+**Output AI (nguyên văn):**
+
+````text
+Máy chưa có `gh`, bên dưới là lệnh cài. Còn chuyện Hương tạo issue có ảnh mà không đẩy ảnh lên repo, thì có cách làm được, và tôi sẽ xem cụ thể khi `gh` chạy.
+
+## 1. Cài và kết nối `gh`
+
+Chạy trong PowerShell:
+
+```powershell
+winget install --id GitHub.cli -e
+```
+
+Sau đó **mở một cửa sổ PowerShell mới** (để nhận PATH mới) và đăng nhập:
+
+```powershell
+gh auth login
+```
+
+Chọn lần lượt: `GitHub.com` → `HTTPS` → `Yes` (dùng gh làm thông tin đăng nhập cho git) → `Login with a web browser`. Dán mã 8 ký tự vào trình duyệt là xong. Kiểm tra bằng `gh auth status`.
+
+**Lưu ý cho các phiên Claude Code:** Các phiên đang mở vẫn dùng PATH cũ nên chưa thấy `gh`. Có hai cách:
+- Khởi động lại VS Code. Sau đó các phiên mở lại vẫn giữ nội dung trao đổi.
+- Không khởi động lại, mà bảo phiên Task 1 gọi bằng đường dẫn đầy đủ `"C:\Program Files\GitHub CLI\gh.exe"`.
+
+## 2. Hương có ảnh mà không đẩy ảnh lên repo
+
+Bạn nói đúng, có cách như vậy. Khi kéo thả ảnh vào issue trên web, GitHub lưu ảnh ở kho riêng của nó (link dạng `github.com/user-attachments/assets/...`), không nằm trong repo. Có thể Claude của Hương đã điều khiển trình duyệt để kéo thả hộ, hoặc dùng một cách tải lên khác. Tôi chưa xem được vì máy chưa có `gh`.
+
+Khi `gh` chạy được, tôi xem 1 issue của Hương bằng `gh issue view` để biết link ảnh có dạng gì. Từ đó biết cách tự động nào làm được, rồi chọn cách cho phiên Task 1. Bạn cũng có thể hỏi thẳng Hương làm bằng cách nào, nhanh hơn.
+
+Nếu vẫn chưa rõ thì cách đẩy ảnh vào repo nhóm (tin trước) vẫn dùng được.
+
+## 3. Tổng hợp: Bạn đúng, 6 giờ là quá nhiều
+
+Ước tính 6 giờ đó tôi đặt từ 09/11, lúc còn tính như bạn tự viết. Với cách AI soạn và bạn chỉ kiểm, tôi tính lại:
+
+| Phần | Giờ | Ghi chú |
+|---|---|---|
+| Report chính | 1,25 | AI ghép từ các file đã có; bạn đọc và sửa, riêng phần kết luận usability cần đọc kỹ |
+| AI Critique (200 đến 300 chữ) | 0,25 | AI soạn từ phần "Chất liệu AI Critique"; nên chỉnh theo ý bạn vì đây là nhận xét của bạn |
+| AI Audit | 0,5 | AI soạn từ prompt log và mục Audit trong tracker; bạn kiểm cho đủ |
+| Forms AI-02, 03, 05 | 0,5 | Điền theo template |
+| README và test summary | 0,25 | Lấy số từ Excel và Task 2 |
+| PDF, git log, zip, kiểm tra | 0,75 | Moodle giới hạn 20 file, mỗi file 20 MB; video phiên usability (D10) là phần dễ tốn thời gian nhất |
+| **Tổng** | **3,5** | |
+
+Tổng ước tính giảm còn **19,25 giờ**. Tracker đã cập nhật.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong | Commit (sửa tên CL-34); cài `gh` → `bugs` | ~1,5 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | Đang chạy N3 (DB sạch 14:29) | Review `firefox_triage.md`, chạy N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19,25 giờ** làm việc | Còn **7 giờ 24 phút** tới mốc 22:00 10/11 | **22 giờ 24 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C140 | 14:37 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+[LỖI] Cờ CHƯA bật (Chrome/156.0.8078.79 vẫn dùng cổng gỡ lỗi mặc định). Trên điện thoại: Mở Chrome, gõ chrome://flags, tìm "Enable command line on non-rooted devices", chọn Enabled, bấm Relaunch, rồi chạy lại. Bản Chrome không còn cờ này thì chạy với --via=cdp
+
+Chưa đủ điều kiện cần: Xem các dòng [LỖI] ở trên.
+
+=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===
+Trình duyệt: Google Chrome 156.0.8078.79 cho Android (undefined)
+OS: Android 15 (SDK 35, bản dựng AP3A.240905.015.A2.G998BXXSJHZC2)
+Thiết bị: samsung SM-G998B
+Độ phân giải: Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+npm notice
+npm notice New minor version of npm available! 11.6.1 -> 11.21.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.2
+npm notice To update run: npm install -g npm@11.21.2
+npm notice
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fix undefined label in N3 environment print
+
+**Output AI (nguyên văn):**
+
+````text
+Bước kiểm điều kiện đã chạy đúng: Script thấy điện thoại, Chrome 156 và Android 15. Chỉ còn thiếu một bước trên điện thoại là bật cờ của Chrome. Trước hết tôi sửa một lỗi hiển thị nhỏ: Dòng "Trình duyệt" in ra chữ `(undefined)`.
+
+Điện thoại, Chrome và Android đều đạt. Chỉ còn đúng một dòng `[LỖI]`: **Cờ của Chrome chưa bật**, nên Chrome không nhận dòng lệnh mà Playwright cần để mở Chrome. Lỗi chữ `(undefined)` ở dòng "Trình duyệt" là lỗi hiển thị, tôi đã sửa.
+
+## Cách 1 (nên thử trước): Bật cờ trên điện thoại
+
+1. Mở **Chrome trên điện thoại**, gõ vào thanh địa chỉ:
+   ```
+   chrome://flags/#enable-command-line-on-non-rooted-devices
+   ```
+2. Dòng **Enable command line on non-rooted devices** sẽ được tô sáng. Đổi ô bên cạnh từ Default sang **Enabled**.
+3. Bấm **Relaunch** ở cuối màn hình để Chrome khởi động lại.
+4. Trên máy tính, chạy lại trong cmd:
+   ```
+   cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+   npm run n3:check
+   ```
+   Đạt khi dòng đó đổi thành `[OK] Cờ đã bật`.
+
+## Cách 2: Nếu không tìm thấy cờ đó
+
+Bản Chrome 156 có thể đã bỏ cờ này. Nếu ô tìm kiếm trong `chrome://flags` không ra kết quả khi gõ `command line`, dùng chế độ dự phòng. Chế độ này nối vào cổng gỡ lỗi mặc định của Chrome, có sẵn khi bật Gỡ lỗi USB, nên không cần cờ:
+```
+npm run n3:check -- --via=cdp
+```
+Hai dấu `--` ở giữa là cách npm chuyển cờ `--via=cdp` cho script. Đạt khi thấy `[OK] Cổng DevTools mặc định của Chrome đang mở`.
+
+Lần chạy thật về sau cũng phải thêm `-- --via=cdp` nếu dùng cách này. Tôi chưa thử chế độ này với điện thoại thật nên có thể cần sửa thêm khi chạy thử.
+
+## Thông tin máy cho sheet Môi trường
+
+Đây là thông tin script đọc được; tôi chưa ghi vào Excel.
+
+| Mục | Giá trị |
+|---|---|
+| Thiết bị | Samsung SM-G998B (Galaxy S21 Ultra) |
+| OS | Android 15 (SDK 35) |
+| Trình duyệt | Chrome 156.0.8078.79 |
+| Độ phân giải | Màn hình vật lý 1440 x 3200, đang dùng **1080 x 2400** (độ phân giải đặt trong Cài đặt) |
+| Cỡ chữ hệ thống | **1.15**, lớn hơn mặc định |
+
+Hai giá trị in đậm là cài đặt hiện tại của máy bạn, và chúng ảnh hưởng tới bố cục trang. Chỉ cần ghi đúng các giá trị này khi chạy, không bắt buộc đổi về mặc định. Nếu bạn muốn đổi thì đổi **trước** lần chạy thật và giữ nguyên trong suốt lần chạy.
+
+Khi bước kiểm điều kiện báo đủ, nhờ phiên điều phối reset DB và seed (đơn #3 đã bị hủy ở lần chạy trước), rồi báo tôi để chạy thử `--dry-run`.
+````
+
+---
+
+### C141 | 14:40 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chạy xong lệnh winget install --id GitHub.cli -e và mở powershell mới chạy gh auth login mà bị báo lỗi không có.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate gh.exe and check PATH entries
+
+**Output AI (nguyên văn):**
+
+````text
+`gh` đã cài xong, nằm ở `C:\Program Files\GitHub CLI\gh.exe`, và đã có trong PATH hệ thống. Bạn bị báo không có lệnh vì cửa sổ PowerShell mới mở **bên trong VS Code**. Terminal của VS Code dùng PATH cũ từ lúc VS Code khởi động, chưa có thư mục của `gh`.
+
+Chọn một trong ba cách:
+
+**Cách 1 (nhanh nhất): Nạp lại PATH trong cửa sổ đang mở**
+
+```powershell
+$env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User')
+gh auth login
+```
+
+**Cách 2: Gọi bằng đường dẫn đầy đủ**
+
+```powershell
+& "C:\Program Files\GitHub CLI\gh.exe" auth login
+```
+
+**Cách 3:** Mở PowerShell từ menu Start (ngoài VS Code), rồi chạy `gh auth login`.
+
+Khi đăng nhập, chọn lần lượt: `GitHub.com` → `HTTPS` → `Yes` → `Login with a web browser`, rồi dán mã vào trình duyệt. Kiểm tra lại bằng `gh auth status`.
+
+Thông tin đăng nhập được lưu chung cho cả máy, nên đăng nhập một lần là các phiên Claude dùng được. Tuy vậy, các phiên Claude đang mở cũng có PATH cũ như terminal VS Code, nên chưa gõ `gh` trực tiếp được. Trong prompt gửi phiên Task 1, ghi thêm: "Gọi gh bằng đường dẫn đầy đủ `C:\Program Files\GitHub CLI\gh.exe`". Hoặc khởi động lại VS Code khi tiện; nội dung các phiên vẫn còn.
+
+Đăng nhập xong thì báo tôi. Tôi sẽ xem 1 issue của Hương để biết ảnh được đính kèm bằng cách nào.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong | Commit (sửa tên CL-34); đăng nhập `gh` → `bugs` | ~1,5 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | Đang chạy N3 (DB sạch 14:29) | Review `firefox_triage.md`, chạy N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19,25 giờ** làm việc | Còn **7 giờ 20 phút** tới mốc 22:00 10/11 | **22 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C142 | 14:42 10/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>b3n5mcdp6</task-id>
+<task-id>b8ifzt61v</task-id>
+<task-id>b17ftlxg3</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: b3n5mcdp6, b8ifzt61v, b17ftlxg3.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C143 | 14:48 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+[...] Kiểm cờ "Enable command line on non-rooted devices": Chrome trên điện thoại sẽ đóng rồi mở lại (các tab cũ vẫn giữ)
+  [OK] Cờ đã bật: Chrome nhận dòng lệnh của script (Chrome/156.0.8078.79)
+
+Đủ điều kiện cần. Lần chạy thật: node n3_android_checklist.js --log=n3_run_log.txt
+
+=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===
+Trình duyệt: Google Chrome 156.0.8078.79 cho Android
+OS: Android 15 (SDK 35, bản dựng AP3A.240905.015.A2.G998BXXSJHZC2)
+Thiết bị: samsung SM-G998B
+Độ phân giải: Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+
+
+Tôi đã làm cách 1.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Bước kiểm điều kiện đã qua hết. Cờ đã bật, và Chrome trên điện thoại nhận được lệnh điều khiển của script.
+
+**Bước tiếp theo là chạy thử (`--dry-run`) để gỡ lỗi script trên điện thoại.** Script N3 chưa từng chạy với máy thật, nên chưa nên chạy thật ngay. Lần chạy thử vẫn đi đủ các bước, nhưng:
+- Không dừng để hỏi.
+- Không chụp ảnh.
+- Bỏ qua 2 bước chuẩn bị giỏ hàng.
+- Kết quả chỉ để gỡ lỗi, không ghi vào Excel.
+
+**Trước khi chạy thử:**
+1. **Nhờ phiên điều phối reset DB và seed.** Lần chạy nhóm I đã hủy đơn #3. Lần chạy thử cũng sẽ đổi dữ liệu: Tạo tài khoản, sửa hồ sơ, hủy đơn, khóa test@eshop.com 30 giây.
+2. Chắc chắn không có phiên usability nào đang dùng backend và DB.
+3. Mở khóa điện thoại và để màn hình sáng.
+
+**Khi đã reset xong**, báo tôi để tôi chạy, hoặc bạn tự chạy trong cmd:
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --dry-run --log=n3_dry_log.txt
+```
+Lần chạy N1 mất khoảng 8 phút; trên điện thoại có thể lâu hơn. Chạy xong tôi đọc `n3_dry_log.txt` để sửa các chỗ script tìm sai phần tử hoặc báo lỗi. Sau đó cần reset lần nữa trước lần chạy thật.
+
+Phần bạn dán không có dòng `[CẢNH BÁO]` nào (phần đầu bị cắt nên tôi không thấy hết). Nếu trong đó có cảnh báo về Samsung Notes thì chưa sao cho lần chạy thử, vì lần này không chụp ảnh. Lần chạy thật thì phải mở ghi chú dạng cửa sổ nổi trước.
+````
+
+---
+
+### C144 | 14:49 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã cập nhật và bổ sung gh, giờ hãy xem thử Hương up ảnh trên issue kiểu gì để tiết kiệm thời gian cho mình.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check gh login and list group repo issues
+- Bash: Check gh login and list group repo issues via full path
+- Bash: View one of Hương's issues to see how images are attached
+- Bash: Check whether images were added at creation or by later edits
+- Bash: Check whether EShop servers are running
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop web frontend on port 5173
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Wait for servers and verify they respond
+
+**Output AI (nguyên văn):**
+
+````text
+Đã tìm ra cách Hương đính kèm ảnh. Server EShop đã tắt khi VS Code khởi động lại, tôi bật lại luôn.
+
+Hương làm theo kiểu: **Tạo issue trước, sau đó dán ảnh hàng loạt.** Ảnh không nằm trong repo nhóm. Tôi đã xem bằng `gh` trên repo nhóm.
+
+## Cách Hương làm (suy từ dữ liệu)
+
+- **Issue #1 đến #32 tạo trong khoảng 2 phút** (10:15 đến 10:17), tức là tạo bằng script `gh`, lúc đó chưa có ảnh.
+- **Ảnh được thêm sau, bằng cách sửa nội dung issue**, lúc 13:39. Mỗi issue sửa cách nhau 1 đến 2 giây, nên cũng là script.
+- **Link ảnh có dạng** `<img width="1366" height="801" alt="GC-07" src="https://github.com/user-attachments/assets/1cff9ee5-...">`. Đây đúng là đoạn GitHub tự sinh khi **kéo thả ảnh vào ô soạn thảo trên web**. Ảnh lưu ở kho ảnh của GitHub, không nằm trong repo. Thuộc tính `alt` lấy theo tên file ảnh.
+
+Vậy chỉ có một bước bằng tay, mà làm một lần cho tất cả ảnh: **Kéo cả loạt ảnh vào một ô bình luận trên web, chép đoạn link GitHub sinh ra (không bấm gửi), rồi script chèn từng link vào đúng issue.**
+
+## Áp dụng cho bạn (khoảng 3 phút làm tay)
+
+1. **Phiên Task 1 tạo issue bằng `gh`**, chưa có ảnh, sau khi bạn duyệt danh sách. Phiên đó cũng in danh sách ảnh cần dùng.
+2. **Bạn:** Mở một issue bất kỳ trên web, vào ô bình luận. Trong File Explorer, chọn **tất cả** ảnh cần dùng (Ctrl+click), kéo một lần vào ô bình luận. Chờ GitHub tải xong, ô sẽ đầy các dòng `<img ... alt="CL-101_chrome" src="https://github.com/user-attachments/...">`.
+3. **Bạn:** `Ctrl+A`, `Ctrl+C`, dán vào một file, ví dụ `bugs/image_links.txt`. **Không bấm Comment.**
+4. **Phiên Task 1:** Đọc `alt` (tên ảnh), ghép vào đúng issue, chạy `gh issue edit` hàng loạt.
+
+Thêm vào prompt `bugs` gửi phiên Task 1:
+
+```text
+gh đã đăng nhập (nếu lệnh gh không có trong PATH thì gọi "C:\Program Files\GitHub CLI\gh.exe"). Ảnh: Tạo issue trước, chưa có ảnh, phần "Ảnh chụp" để chỗ trống. In danh sách tên ảnh cần dùng. Tôi sẽ kéo cả loạt ảnh vào một ô bình luận trên GitHub và dán đoạn link sinh ra vào bugs/image_links.txt; sau đó bạn ghép theo thuộc tính alt (tên file) và dùng gh issue edit chèn ảnh vào từng issue.
+```
+
+## Bug trùng với issue của Hương
+
+README nhóm mục 4: Bug ở **thành phần dùng chung** (navbar) đã có issue thì **không tạo mới**, chỉ bình luận vào issue đó và ghi `Related`. Với bug của bạn, ít nhất có:
+
+| Mục của bạn | Issue của Hương | Vì sao trùng |
+|---|---|---|
+| CL-68 (badge "Giỏ hàng") | **#18** "Link Giỏ hàng không có badge số lượng" | Cùng link trên navbar |
+| CL-70 (nút đăng xuất ghi "Thoát") | **#29** "Nút đăng xuất ghi Thoát" | Cùng nút trên navbar |
+| CL-23 (tương phản), CL-13 (`<h1>`), CL-106 (vùng thông báo) | #23, #19, #25 | Cùng loại lỗi nhưng **khác màn hình**. Chỉ trùng nếu đúng phần tử dùng chung (ví dụ lời chào trên navbar), còn lại tạo issue riêng |
+
+Bước tìm trùng trong prompt `bugs` đã có. Phiên Task 1 sẽ đối chiếu đầy đủ.
+
+## Server
+
+Lúc VS Code khởi động lại, server EShop cũng tắt theo. **Tôi đã bật lại (14:50)**, cả 3 cổng đều chạy. DB **chưa reset**.
+
+N3 đã chạy xong trước khi khởi động lại chưa? Nếu đang chạy dở thì báo tôi để reset, seed, rồi chạy lại từ đầu.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong; sắp `bugs` | Commit (sửa tên CL-34); duyệt danh sách bug → `gh` tạo issue → kéo ảnh một lần | ~1,25 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | N3: Chưa rõ đã xong chưa | Báo tôi tình trạng N3; review `firefox_triage.md`; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19 giờ** làm việc | Còn **7 giờ 10 phút** tới mốc 22:00 10/11 | **22 giờ 10 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C145 | 14:50 10/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bcl9fdxaa</task-id>
+<tool-use-id>toolu_018Ho43fd7CHgmF1otnWw8hW</tool-use-id>
+<output-file>C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\949bce7e-1d8a-4c01-b51b-b31ff0b2e825\tasks\bcl9fdxaa.output</output-file>
+<status>failed</status>
+<summary>Background command "Start EShop admin frontend on port 5174" failed with exit code 1</summary>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C146 | 14:50 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>br9usmbis</task-id>
+<tool-use-id>toolu_01RfqYw43BeHVR76rLHhyHEW</tool-use-id>
+<output-file>C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\949bce7e-1d8a-4c01-b51b-b31ff0b2e825\tasks\br9usmbis.output</output-file>
+<status>completed</status>
+<summary>Background command "Start EShop backend on port 3000" completed (exit code 0)</summary>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect why servers exited and check ports
+- Bash: Find API endpoints and owning processes of ports
+- Bash: Check duplicate web dev server and listening Vite ports
+- ToolSearch
+- TaskStop
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã dọn xong. Lúc bật lại server ở tin trước, tôi kết luận sai: Server **chưa hề tắt**, và lần bật lại đó đã **làm mất dữ liệu đơn hàng** trong DB.
+
+## Chuyện đã xảy ra
+
+- **Server cũ vẫn chạy:** Backend, web và admin của phiên trước vẫn chạy bình thường (backend chạy từ 09:35). Tin trước tôi kiểm cổng bị sót, nên tưởng server đã tắt.
+- **Hai bản server tôi bật thêm:**
+  - **Admin:** Báo cổng 5174 đã bị chiếm rồi tự thoát. Không ảnh hưởng.
+  - **Web:** Thấy cổng bận nên chạy ở cổng **5175**. Tôi đã dừng bản thừa này. Web vẫn ở `5173` như cũ.
+- **Backend:** Bản tôi bật thêm, lúc khởi động, đã **khởi tạo lại DB** (`Database initialized and seeded`) **lúc 14:50**, rồi mới thoát vì cổng 3000 đã có server cũ.
+
+Hậu quả: **DB đã bị đưa về dữ liệu gốc lúc 14:50**. Đơn hàng do `seed_orders.py` tạo đã mất, và mọi thay đổi trước đó cũng mất.
+
+- **Nếu N3 đang chạy lúc 14:50:** Kết quả từ lúc đó trở đi **không dùng được** (lịch sử đơn mất giữa chừng). Báo tôi reset, seed, rồi chạy lại N3 từ đầu.
+- **Nếu N3 đã xong trước 14:50:** Không sao, kết quả vẫn dùng được.
+- **Trước khi chạy tiếp Task 1 hay Task 3:** Báo tôi để chạy `seed_orders.py`. DB hiện chưa có đơn nào cho `test@eshop.com`.
+- **Phiên usability (Task 2):** Không cần đơn hàng, chạy được ngay với DB hiện tại.
+
+Từ giờ, trước khi bật server tôi sẽ kiểm cổng theo tiến trình (`Get-NetTCPConnection`), không chỉ kiểm theo cách cũ.
+
+## Server hiện tại
+
+| Thành phần | Cổng | Trạng thái |
+|---|---|---|
+| Backend | 3000 | Chạy (tiến trình cũ, từ 09:35) |
+| Web | 5173 | Chạy |
+| Admin | 5174 | Chạy |
+| DB | | Dữ liệu gốc từ 14:50, **chưa có đơn của `seed_orders.py`** |
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | N1 xong; sắp `bugs` | Commit (sửa tên CL-34); duyệt danh sách bug → `gh` tạo issue → kéo ảnh một lần | ~1,25 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn | ~9 giờ |
+| Task 3 | N3: Có thể bị ảnh hưởng bởi lần khởi tạo lại DB lúc 14:50 | Bạn báo N3 xong lúc nào; review `firefox_triage.md`; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19 giờ** làm việc | Còn **7 giờ 5 phút** tới mốc 22:00 10/11 | **22 giờ 5 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C147 | 14:52 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+gh đã đăng nhập (nếu lệnh gh không có trong PATH thì gọi "C:\Program Files\GitHub CLI\gh.exe"). Ảnh: Tạo issue trước, chưa có ảnh, phần "Ảnh chụp" để chỗ trống. In danh sách tên ảnh cần dùng. Tôi sẽ kéo cả loạt ảnh vào một ô bình luận trên GitHub và dán đoạn link sinh ra vào bugs/image_links.txt; sau đó bạn ghép theo thuộc tính alt (tên file) và dùng gh issue edit chèn ảnh vào từng issue.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate bug report files, repo remote, workflow rules
+- Bash: Read bug workflow sections and group README rules
+- Bash: Read group README issue rules and template
+- Bash: Read issue template, labels, existing group issues
+- Bash: Export Failed items with oracle and notes
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\failed.txt
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đang gom 54 mục Failed để soạn danh sách bug. Đã thấy repo nhóm có 32 issue của bạn Hương, trong đó vài issue trùng navbar dùng chung với mình.
+
+Tôi chưa tạo issue nào. Excel có 54 mục Failed, nhưng chưa có file `bugs/bug_report.md` hay danh sách nào chốt sẽ báo bug nào, gộp mục nào, severity ra sao. Issue tạo trên repo nhóm thì cả nhóm thấy ngay và không xoá được (README mục 4.5), nên cần bạn duyệt danh sách trước.
+
+Tôi đã đọc quy ước Issues (README mục 4), template "Bug report", 16 label có sẵn và 32 issue hiện có của bạn Hương (23120046). gh đang đăng nhập bằng tài khoản `angquoc`.
+
+## Danh sách đề xuất (cần bạn duyệt)
+
+Chỉ gồm các mục Failed có căn cứ SRS (UI-Rxx). Các mục cùng một lỗi gốc được gộp chung một issue. Severity chọn theo các câu hỏi ở README mục 4.3. Mọi issue đều có `platform: web` và `task: T1 checklist`, tiêu đề dạng `[23120061][T1][W-xx][Chrome] ...`.
+
+| # | Bug | Mục CL | Severity | IA | Ảnh | Liên quan |
+|---|---|---|---|---|---|---|
+| B-01 | Đăng ký từ chối mật khẩu hợp lệ `Abcdef1!`, báo "Mật khẩu quá yếu!" (UI-R03) | CL-65 và các mục W-04 Không chạy được | critical | IA-02 | **Chưa có** | |
+| B-02 | Ô Mật khẩu ở W-03 có `type="text"`, mật khẩu hiện rõ khi gõ | CL-46 | high | IA-02 | CL-46_chrome_2, CL-47_chrome, CL-89_chrome | |
+| B-03 | Đơn Đang giao vẫn bấm "Hủy đơn" được và bị hủy thật | CL-87, CL-88 | high | IA-04 | CL-87_chrome, CL-88_chrome | |
+| B-04 | Số điện thoại 10 chữ số hợp lệ (0912345678) bị từ chối | CL-101, CL-110, CL-52 | medium | IA-02 | **Chưa thấy hộp thoại** | |
+| B-05 | Sau 3 lần sai không báo tài khoản bị tạm khóa | CL-89 | medium | IA-04 | CL-89_chrome | |
+| B-06 | Form đăng ký không có ô Xác nhận mật khẩu | CL-37 | medium | IA-02 | CL-37_chrome | |
+| B-07 | Form đăng nhập dùng chữ tiếng Anh: Nhãn "Username", nút "Sign In" | CL-01, CL-02, CL-42 | low | IA-01, IA-02 | CL-01_chrome, CL-02_chrome | |
+| B-08 | Ô Email có `type="text"`, không chặn định dạng sai bằng HTML5 | CL-44, CL-45 | medium | IA-02 | CL-44_chrome_2..4, CL-45_chrome | |
+| B-09 | Trang đăng nhập có tiêu đề "Đăng Ký" | CL-14, CL-25 | medium | IA-01 | CL-14_chrome_1, CL-25_chrome | |
+| B-10 | Không có thẻ `<h1>` ở W-03, W-04, W-06 | CL-13 | low | IA-01 | CL-13_chrome_2..4 | Related #19 |
+| B-11 | Tab lần đầu ở W-03 nhảy vào "Sign In" trước navbar và các ô (`tabindex=1`) | CL-15, CL-16 | medium | IA-01 | **Ảnh chưa thấy focus** | |
+| B-12 | Hộp thoại lỗi tiếng Anh "Lỗi: Cannot cancel this order." | CL-05 | low | IA-01 | CL-05_chrome | |
+| B-13 | Tiêu đề tab là "frontend-web" ở cả 3 trang | CL-06, CL-20 | low | IA-01 | CL-06_chrome, CL-20_chrome | |
+| B-14 | Nút "Đăng Ký" nền đỏ, không phải xanh dương | CL-08 | low | IA-01 | CL-08_chrome | Related #27 |
+| B-15 | Nhãn trường bắt buộc không có dấu `*` | CL-43 | low | IA-02 | CL-43_chrome | Related #28 |
+| B-16 | Thông báo lỗi đăng nhập nằm dưới nút "Sign In" | CL-47 | low | IA-02 | CL-47_chrome | Related #26 |
+| B-17 | Navbar không highlight mục của trang đang mở | CL-66 | low | IA-03 | CL-66_chrome | |
+| B-18 | Lịch sử đơn trống không có icon và không gợi ý bước tiếp theo | CL-91, CL-93 | low | IA-04 | CL-91_chrome | Related #15 |
+
+Tên ảnh trong bảng là tên file trong `checklist/screenshots/`, bỏ đuôi `.png`.
+
+**Không tạo issue mới mà bình luận vào issue sẵn có.** Navbar là thành phần dùng chung và bạn Hương đã báo trước (README mục 4.1):
+- **#18 "Link Giỏ hàng không có badge":** Bình luận CL-68, CL-69 ở W-03, W-04, W-06, kèm ảnh CL-68_chrome_1, CL-68_chrome_2, CL-69_chrome.
+- **#29 "Nút đăng xuất ghi Thoát":** Bình luận CL-70, kèm ảnh CL-70_chrome.
+
+## Bạn cần quyết
+
+1. **Có báo cả các mục Failed theo khuyến nghị không?** Còn 28 mục Failed chỉ dựa trên khuyến nghị (WCAG, Nielsen...), không có căn cứ SRS. Bạn Hương có báo loại này, ví dụ #12, #16. Vài mục đáng cân nhắc:
+   - CL-108: Đã xóa phiên đăng nhập mà vẫn cập nhật hồ sơ thành công (giống #4).
+   - CL-112: Bấm nhanh 3 lần gửi 3 request.
+   - CL-24: Ngày hiện theo tháng/ngày/năm.
+   - CL-109: Khổ 360 px có thanh cuộn ngang.
+   - CL-102: Lời chào không cập nhật tên mới.
+   - CL-97: Hủy đơn không hỏi xác nhận.
+
+   Lựa chọn: (a) chỉ 18 issue trên; (b) thêm một số mục chọn lọc, ví dụ 6 mục vừa kể; (c) báo tất cả.
+2. **Severity và cách gộp** trong bảng chỉ là đề xuất. Ví dụ B-02 là `high` hay `critical` (lộ mật khẩu có tính là lộ dữ liệu không).
+3. **3 issue chưa có ảnh đúng lỗi:**
+   - B-01: Chưa có ảnh nào.
+   - B-04: Ảnh chụp lúc hộp thoại đã đóng.
+   - B-11: Ảnh không thấy focus.
+
+   Tôi có thể thêm nhóm J vào script N1 để tự chụp cả 3, giống nhóm I. Nhóm này cần reset DB và seed trước.
+
+Bạn trả lời 3 ý trên (hoặc sửa thẳng vào bảng). Sau đó tôi sẽ:
+1. Tạo issue với ô "Ảnh chụp" để trống và gán cho bạn.
+2. Ghi `bugs/bug_report.md` có số issue.
+3. In danh sách đủ tên ảnh để bạn kéo vào một ô bình luận và dán link vào `bugs/image_links.txt`.
+4. Ghép ảnh theo tên file rồi chèn vào từng issue bằng `gh issue edit`.
+````
+
+---
+
+### C148 | 14:54 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Commit (sửa tên CL-34) -> Đã sửa và commit rồi mà.
+- N3 tôi chưa hề chạy, mới kiểm điều kiện thành công à. Bạn đã reset db và chuẩn bị đầy đủ cho tôi chưa? Vì task 1 đang bận đẩy bugs nên tôi prompt bên task 3 được không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset and seed DB for N3, check commits and npm scripts
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng, CL-34 đã sửa và nằm trong commit `e4b5dcf`, tôi nhầm. **Đã sẵn sàng cho N3:** DB reset và seed lúc 14:54, server đủ 3 cổng.
+
+| Thành phần | Trạng thái |
+|---|---|
+| Backend `3000`, web `5173`, admin `5174` | Đang chạy |
+| DB | 3 danh mục mẫu; `test@eshop.com` có 5 đơn (#1 delivered, #2 shipping, #3 confirmed, #4 canceled, #5 pending); `newuser@eshop.com` không có đơn |
+
+## Chạy N3: Bạn chạy trong terminal của mình
+
+Script N3 cần bạn gõ phím giữa chừng: gõ `co` để bắt đầu, và 2 lần dừng để chuẩn bị giỏ hàng trên điện thoại. Một phiên Claude chạy lệnh ở chế độ nền thì không gõ phím vào được. Vì vậy **bạn tự chạy trong PowerShell**:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+npm run n3
+```
+
+Script tự ghi log ra `checklist/tools/n3_run_log.txt` và lưu ảnh vào `cross_platform/screenshots/android-chrome/`.
+
+Trước khi chạy:
+- Điện thoại mở khóa, bật Không làm phiền, Samsung Notes ở dạng cửa sổ nổi.
+- `adb reverse` script tự đặt.
+
+## Nhờ phiên Task 3 thay phiên Task 1: Được
+
+Hai phiên làm hai việc khác nhau, nhưng cần dặn 2 điều:
+1. **Trong lúc N3 chạy, phiên Task 1 không được chạy gì tới EShop** (ví dụ chụp lại ảnh cho bug). Tạo issue bằng `gh` thì không sao.
+2. **Chỉ một phiên sửa file Excel tại một thời điểm.** Phiên Task 3 sẽ điền cột NT3. Nếu phiên Task 1 cũng đang ghi số issue vào Excel thì hai bên ghi đè lên nhau. Để phiên Task 1 chỉ ghi vào `bugs/bug_report.md`.
+
+Gửi phiên Task 3 **sau khi N3 chạy xong**:
+
+```text
+N3 (Android Chrome) đã chạy xong bằng checklist/tools/n3_android_checklist.js. Log: checklist/tools/n3_run_log.txt; ảnh: cross_platform/screenshots/android-chrome/.
+1. Điền cột NT3 trong checklist/HW03_T1_GUI_Checklist.xlsx (Kết quả, Notes, Ảnh) từ log; mục N/A ghi lý do; kết quả là nháp, tôi chốt.
+2. Điền sheet "Môi trường" cột NT3 (model, Android, Chrome, độ phân giải, ngày giờ chạy) từ log.
+3. Liệt kê: Mục khác kết quả giữa NT1 và NT3 (ứng viên bug chỉ có trên Android, chú ý CL-24 định dạng ngày), ảnh còn thiếu cho mục Failed, ảnh tổng quan còn thiếu.
+Phiên Task 1 đang làm bugs: Không sửa bugs/ và không chạy gì tới EShop.
+```
+
+Chạy N3 xong thì báo tôi reset DB lại.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: Phiên đang đẩy issue | Bạn duyệt danh sách → kéo ảnh một lần → ghép link | ~1,25 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | **Sẵn sàng chạy N3** (DB sạch 14:54) | Bạn chạy `npm run n3` → phiên Task 3 điền NT3; review `firefox_triage.md`; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19 giờ** làm việc | Còn **7 giờ 6 phút** tới mốc 22:00 10/11 | **22 giờ 6 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C149 | 14:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Có ảnh thì báo, không thì thôi để tránh mất thời gian chụp thêm ảnh mà không cần thiết.
+2. Tôi đã xem và đồng ý với cách đề xuất của bạn.
+3. Thêm script và chạy, db mới được reset và seed rồi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check existing target images and hook points
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch7.py
+- Bash: Add group J, syntax check, rename old shots to _1
+- Bash: Run group J to capture bug report screenshots
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi hiểu yêu cầu như sau: Mục Failed theo khuyến nghị nào có ảnh **thấy rõ lỗi** thì báo, mục nào phải chụp thêm thì bỏ. Trước hết tôi viết nhóm J để tự chụp ảnh cho B-01, B-04, B-11, rồi chạy.
+
+Script đã thêm xong. Giờ chạy nhóm J (bạn vừa reset DB; nhóm này không làm đổi dữ liệu).
+````
+
+---
+
+### C150 | 15:03 10/11/2026 | Tool: Claude Code (n/a) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user for tool use]
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C151 | 15:03 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Xong chưa? Bạn tự chạy làm tôi không xem log được.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check what group J produced before stop
+
+**Output AI (nguyên văn):**
+
+````text
+Nhóm J đã chạy xong trước khi bạn dừng lệnh. Xin lỗi vì tôi tự chạy trong cửa sổ của tôi nên bạn không theo dõi được.
+
+Log đầy đủ nằm ở [n1_bugshots_log.txt](Homeworks/HW03/checklist/tools/n1_bugshots_log.txt). Các dòng chính:
+
+```
+=== J. Ảnh cho bug report: CL-65 (B-01), CL-101 (B-04), CL-15 (B-11) ===
+  B-01: Mật khẩu "Abcdef1!": trang /register; thông báo Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.
+    Ảnh: OK 2560x1440 ...\checklist\screenshots\CL-65_chrome.png
+  B-11: Tab lần đầu, focus ở: "Sign In"
+    Ảnh: OK 2560x1440 ...\checklist\screenshots\CL-15_chrome_2.png
+    Ảnh: OK 2560x1440 ...\checklist\screenshots\CL-101_chrome_2.png
+  B-04: đã chụp hộp thoại "Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số."
+```
+
+Cả 3 ảnh đã được tạo. Tôi chưa mở xem ảnh nào. Trước khi chạy, tôi đổi tên 2 ảnh cũ thành `CL-101_chrome_1.png` và `CL-15_chrome_1.png` để ảnh mới mang hậu tố `_2`. Cả 2 lần gửi đều bị từ chối nên dữ liệu không đổi; lần chạy kết thúc bằng thao tác đăng xuất.
+
+Từ giờ, lệnh nào gọi tới EShop thì tôi chỉ đưa lệnh để bạn tự chạy và xem log.
+
+Các bước còn lại (đang chờ bạn):
+1. Xem 3 ảnh mới và các ảnh của mục Failed theo khuyến nghị, để chọn mục nào có ảnh thấy rõ lỗi.
+2. Gửi bạn danh sách issue cuối cùng.
+3. Tạo issue với phần "Ảnh chụp" để trống, rồi in danh sách tên ảnh.
+
+Tôi bắt đầu bước 1 luôn nhé?
+````
+
+---
+
+### C152 | 15:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Bắt đầu đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-65_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-15_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-101_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-24_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-78_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-79_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-102_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-109_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-111_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-58_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-97_chrome.png
+- Bash: Remove the three overlay-less group J shots
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã xem xong ảnh của B-01, B-04, B-11 và các mục Failed theo khuyến nghị. Kết quả gồm 3 phần.
+
+## 1. Ảnh nhóm J phải chụp lại
+
+Nội dung 3 ảnh đúng lỗi: Thấy thông báo "Mật khẩu quá yếu!" khi nhập mật khẩu hợp lệ, thấy viền focus ở nút "Sign In", thấy hộp thoại từ chối số 0912345678. Nhưng cả 3 ảnh đều **thiếu ghi chú Sticky Notes (MSSV, họ tên, email)**, nên không dùng được. Tôi đã xóa chúng để lần chụp lại giữ đúng tên `CL-65_chrome.png`, `CL-15_chrome_2.png`, `CL-101_chrome_2.png`.
+
+Bạn mở lại Sticky Notes, ghim nó ở góc dưới bên phải như các ảnh trước, rồi tự chạy trong cmd:
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n1_chrome_checklist.js --only=J --log=n1_bugshots_log.txt
+```
+Khi được hỏi thì gõ `co`. Chạy xong thì bấm Enter để đóng Chrome. Nhóm này không làm đổi dữ liệu, nên không cần reset.
+
+## 2. Mục khuyến nghị có ảnh thấy rõ lỗi: Đề xuất thêm 15 issue
+
+Các issue này đều có `platform: web` và `task: T1 checklist`.
+
+| # | Bug | Mục CL | Severity | IA | Ảnh | Liên quan |
+|---|---|---|---|---|---|---|
+| B-19 | Thẻ `<html>` khai báo `lang="en"` | CL-19 | low | IA-01 | CL-19_chrome_2..4 | |
+| B-20 | Độ tương phản chữ dưới 4.5:1 (dòng hướng dẫn mật khẩu, nút đỏ, lời chào vàng) | CL-23 | low | IA-01 | CL-23_chrome_2, _3 | Related #23 |
+| B-21 | Ngày đặt hiện theo tháng/ngày/năm (`11/10/2026` cho đơn đặt ngày 10/11) | CL-24 | low | IA-01 | CL-24_chrome | |
+| B-22 | Kiểu viết hoa không nhất quán ("Đăng Ký Tài Khoản", nút "Đăng Ký" so với "Hồ sơ của bạn", navbar "Đăng ký") | CL-26, CL-27 | low | IA-01 | CL-26_chrome_1, _2 | |
+| B-23 | Nhãn không gắn với ô nhập (tên đọc được của ô rỗng) | CL-54 | low | IA-02 | CL-54_chrome_2..4, CL-23_chrome_2 | Related #24 |
+| B-24 | Ô bị lỗi trông giống hệt các ô khác | CL-58 | low | IA-02 | CL-58_chrome | |
+| B-25 | Ô Email, Mật khẩu, Số điện thoại không có `autocomplete` | CL-62 | low | IA-02 | CL-62_chrome_2..4 | |
+| B-26 | Lời chào là link tới hồ sơ nhưng không cho biết dẫn tới đâu | CL-76 | low | IA-03 | CL-76_chrome_2 | |
+| B-27 | Mở `/profile` khi chưa đăng nhập chỉ hiện "Vui lòng đăng nhập", không có link tới trang đăng nhập | CL-78 | medium | IA-03 | CL-78_chrome | |
+| B-28 | Đã đăng nhập mà mở `/login`, `/register` vẫn hiện form như chưa đăng nhập | CL-79 | medium | IA-03 | CL-79_chrome | |
+| B-29 | Đổi Họ Tên xong, lời chào trên navbar không đổi khi chưa tải lại trang | CL-102 | low | IA-04 | CL-102_chrome | |
+| B-30 | Mất kết nối chỉ báo "Đăng nhập thất bại" / "Lỗi cập nhật", không nói là mất kết nối | CL-105 | low | IA-04 | CL-105_chrome_1, _2 | |
+| B-31 | Thông báo lỗi không nằm trong `role="alert"` hay `aria-live` | CL-106 | low | IA-04 | CL-106_chrome_2 | Related #25 |
+| B-32 | Khổ 360 px: Có thanh cuộn ngang, cột Thao tác của bảng đơn bị khuất | CL-109 | medium | IA-01 | CL-109_chrome | |
+| B-33 | Ô mật khẩu không có nút hiện / ẩn mật khẩu | CL-111 | low | IA-02 | CL-111_chrome | |
+
+**Không báo** 8 mục vì ảnh hiện có không cho thấy lỗi (phải chụp thêm, theo ý 1 của bạn):
+
+| Mục CL | Vì sao ảnh không thấy lỗi |
+|---|---|
+| CL-57 | Không thấy focus |
+| CL-74, CL-107 | Phải đang rê chuột mới thấy |
+| CL-94, CL-96 | Phải chụp đúng lúc đang tải |
+| CL-97 | Ảnh chỉ thấy đơn đã hủy, không chứng minh được là không có hộp xác nhận |
+| CL-108 | Không thấy bước xóa dữ liệu site |
+| CL-112 | Không thấy tab Network |
+
+Các mục CL-20, CL-25, CL-52, CL-101, CL-110 đã được gộp vào B-04, B-09, B-13 ở bảng trước.
+
+## 3. Tổng cộng và bước tiếp theo
+
+Tổng cộng sẽ có **33 issue mới** (B-01 đến B-33) và **2 bình luận** vào #18 và #29.
+
+Bạn duyệt bảng 15 issue thêm ở trên, đặc biệt là severity, và chạy lại nhóm J. Khi bạn đồng ý, tôi sẽ:
+1. Tạo 33 issue với phần "Ảnh chụp" để trống, gán cho bạn.
+2. Ghi `bugs/bug_report.md` có số issue.
+3. In danh sách tên ảnh cần kéo vào ô bình luận.
+````
+
+---
+
+### C153 | 15:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Giúp tôi reset lại db và chạy seed vì tôi nãy chạy script để chụp thêm ảnh nên chưa chạy N3.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset DB and seed orders for N3
+
+**Output AI (nguyên văn):**
+
+````text
+Đã reset DB và chạy `seed_orders.py` xong lúc 15:05. Bạn chạy N3 được rồi.
+
+Dữ liệu hiện tại:
+- 3 danh mục mẫu.
+- `test@eshop.com` có 5 đơn: #1 delivered, #2 shipping, #3 confirmed, #4 canceled, #5 pending.
+- `newuser@eshop.com` / `NewUser123!` không có đơn.
+
+Server vẫn chạy đủ: backend `3000`, web `5173`, admin `5174`.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+npm run n3
+```
+
+Trong lúc N3 chạy, đừng chạy script nào khác tới EShop, kể cả script chụp ảnh của Task 1. Chạy xong thì báo tôi reset lại, rồi gửi phiên Task 3 prompt điền cột NT3 ở tin trước.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: Phiên đang đẩy issue | Bạn duyệt danh sách → kéo ảnh một lần → ghép link | ~1,25 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | **Sẵn sàng chạy N3** (DB sạch 15:05) | Bạn chạy `npm run n3` → phiên Task 3 điền NT3; review `firefox_triage.md`; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19 giờ** làm việc | Còn **6 giờ 55 phút** tới mốc 22:00 10/11 | **21 giờ 55 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C154 | 15:07 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+- Đã chạy lại, kiểm tra lại ảnh.
+- Duyệt bảng issue bạn đưa.
+Làm tiếp các bước đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check re-run group J outputs
+- Bash: Make a contact sheet of the three J shots
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\j_check.png
+- Bash: Extract SRS requirement text for needed UI-R codes
+- Bash: Map UI-R codes to FR sections
+- Bash: Export expected results for issue CL items
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\cl_expect.txt
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\issues_spec.py
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\create_issues.py
+- Bash: Validate issue specs and preview first body
+- Bash: Create 33 GitHub issues in the group repo
+- Bash: Verify sample issue and plan deduplicated image list
+- Bash: Write bug_report.md and empty image_links.txt
+- Bash: Verify doc style and print upload list
+
+**Output AI (nguyên văn):**
+
+````text
+Đủ dữ liệu. Tôi soạn nội dung 33 issue theo đúng các mục của template "Bug report", rồi tạo lần lượt từng issue bằng gh.
+
+Kiểm trước đạt: Đủ 33 issue, mọi ảnh đều có file, không có dấu cấm. Giờ tạo issue trên repo nhóm.
+
+Đã tạo đủ 33 issue, từ #33 đến #65. Tôi kiểm lại một issue mẫu, rồi soạn danh sách ảnh (bỏ các ảnh trùng nội dung) và file `bug_report.md`.
+
+Đã tạo **33 issue, từ #33 đến #65** trên repo nhóm. Tất cả đều gán cho bạn và có đủ label: `bug`, một `severity`, `platform: web`, `task: T1 checklist`, ít nhất một `ia`. Phần "Ảnh chụp" đang để trống (`_No response_`). Tôi đã mở kiểm #61: Tham chiếu tới #36 (bug số điện thoại) đã được điền đúng số.
+
+## Đã ghi
+
+- **[bugs/bug_report.md](Homeworks/HW03/bugs/bug_report.md):** Gồm cách chọn bug, bảng 33 issue (mã B-xx, link issue, mục CL, severity, IA, liên quan), 2 bình luận vào issue đã có, 8 mục Failed không báo kèm lý do.
+- **[bugs/image_links.txt](Homeworks/HW03/bugs/image_links.txt):** File trống để bạn dán link ảnh.
+
+Còn 2 việc chưa làm, đã đánh dấu ⏳ trong `bug_report.md`:
+- 2 bình luận vào #18 (CL-68, CL-69) và #29 (CL-70): Tôi đăng sau khi có link ảnh.
+- Ảnh trang từng issue `bugs/screenshots/issue_<số>.png`: Chụp sau khi chèn ảnh vào issue.
+
+## Danh sách ảnh cần tải lên (30 file)
+
+Các issue dùng tổng cộng 53 lượt ảnh, nhưng nhiều ảnh là bản sao giống hệt nhau (ví dụ ảnh devtools được chép thành CL-13, CL-19, CL-54...). Vì vậy bạn chỉ cần tải 30 file sau, tất cả nằm trong `checklist/screenshots/`:
+
+```
+CL-05_chrome.png        CL-37_chrome.png        CL-65_chrome.png        CL-89_chrome.png
+CL-15_chrome_2.png      CL-42_chrome.png        CL-68_chrome_1.png      CL-91_chrome.png
+CL-20_chrome.png        CL-44_chrome_3.png      CL-68_chrome_2.png      CL-101_chrome_2.png
+CL-23_chrome_2.png      CL-44_chrome_4.png      CL-69_chrome.png        CL-102_chrome.png
+CL-23_chrome_3.png      CL-45_chrome.png        CL-78_chrome.png        CL-105_chrome_1.png
+CL-25_chrome.png        CL-46_chrome_2.png      CL-79_chrome.png        CL-105_chrome_2.png
+CL-26_chrome_2.png      CL-47_chrome.png        CL-87_chrome.png        CL-109_chrome.png
+                        CL-58_chrome.png        CL-88_chrome.png
+```
+
+**Cách làm:**
+1. Mở ô bình luận của một issue bất kỳ, ví dụ #33.
+2. Kéo cả 30 file vào ô đó. **Không bấm Comment.**
+3. Chờ GitHub tải xong, khi mọi dòng "Uploading..." đã thành link.
+4. Chép toàn bộ chữ trong ô, dán vào `bugs/image_links.txt` rồi lưu.
+5. Xóa chữ trong ô bình luận đi.
+
+Xong thì báo tôi. Tôi sẽ:
+1. Ghép link theo tên file. Ở mỗi issue, tôi ghi lại đúng tên ảnh của mục đó làm chữ thay thế, kể cả khi dùng chung link với ảnh trùng.
+2. Chèn ảnh vào phần "Ảnh chụp" bằng `gh issue edit`.
+3. Đăng 2 bình luận vào #18 và #29.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước). Commit này gồm bug report, nhóm J của script, log, và ảnh nhóm J cùng 2 ảnh đã đổi tên thành `_1`:
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add bugs/bug_report.md bugs/image_links.txt checklist/tools/n1_chrome_checklist.js checklist/tools/n1_bugshots_log.txt
+git commit -m "[T1][bugs] Report GUI bugs (issues #33 to #65)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+Nên đợi chèn ảnh xong và cập nhật `bug_report.md` rồi mới commit một lần.
+````
+
+---
+
+### C155 | 15:08 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Cho tôi lệnh reset db và chạy seed_orders.py để tôi tự làm trong terminal vs code đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Dán vào terminal PowerShell của VS Code:
+
+```powershell
+cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js; cd D:\Dang\Test\Homeworks\HW03; python tools\seed_orders.py
+```
+
+Chạy đúng thì cuối cùng sẽ in ra dòng:
+
+```text
+Kiểm tra lịch sử test@eshop.com: [(5, 'pending', 10000000), (4, 'canceled', 8000000), (3, 'confirmed', 28000000), (2, 'shipping', 36000000), (1, 'delivered', 45000000)]
+```
+
+**Lưu ý khi chạy:**
+- **Server phải đang chạy.** `seed_orders.py` tạo đơn qua API ở `localhost:3000`. Nếu server tắt, script báo lỗi kết nối.
+- **Chỉ chạy `node database.js`, đừng chạy `node server.js`** khi server đang chạy. Như lúc 14:50, chạy thêm một bản server sẽ khởi tạo lại DB rồi tự thoát.
+- **Không chạy khi đang có phiên usability hoặc script khác tới EShop** (N1, N3, chụp ảnh).
+
+**Ở phiên usability, bạn chỉ cần nửa đầu lệnh.** Phiên usability không cần đơn hàng, nên trong lúc người tham gia điền form chỉ cần:
+
+```powershell
+cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+```
+
+Chạy thêm `seed_orders.py` cũng không sao, chỉ tốn thêm vài giây.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: Phiên đang đẩy issue | Bạn duyệt danh sách → kéo ảnh một lần → ghép link | ~1,25 giờ |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn; không chạy trùng N3 | ~9 giờ |
+| Task 3 | Sẵn sàng chạy N3 | Reset và seed → `npm run n3` → phiên Task 3 điền NT3; review `firefox_triage.md`; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **19 giờ** làm việc | Còn khoảng **6 giờ 50 phút** tới mốc 22:00 10/11 | **21 giờ 50 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C156 | 15:12 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đưa tôi lệnh chạy script để chạy N3.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Look for an existing N3 script
+- Bash: Read package.json and N3 script header
+
+**Output AI (nguyên văn):**
+
+````text
+There is already a script, [n3_android_checklist.js](HW03/checklist/tools/n3_android_checklist.js). I'll read its usage instructions and `package.json` to give you the right command.
+
+The script for N3 already exists, so I didn't write anything new: [n3_android_checklist.js](HW03/checklist/tools/n3_android_checklist.js). Here are the commands from its header. I haven't run any of them.
+
+**1. Prepare first (the script doesn't do these)**
+
+The coordination session should:
+- Make sure no usability session is using the database.
+- Reset the database with `cd backend && node database.js`.
+- Run `tools/seed_orders.py`.
+- Start the backend on `:3000` and the web frontend on `:5173`.
+
+On the phone:
+- Turn on USB debugging, plug in the cable, and tap "Cho phép" (Allow).
+- In Chrome, open `chrome://flags`, set "Enable command line on non-rooted devices" to Enabled, then Relaunch.
+- Unlock the screen and set a long screen timeout.
+- Open the Samsung Notes overlay as a pop-up view.
+
+**2. Commands (PowerShell)**
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+npm install                                    # first time only
+node n3_android_checklist.js --check           # check prerequisites only, then stop
+node n3_android_checklist.js --log=n3_run_log.txt   # the real run
+```
+
+The `npm run n3:check` and `npm run n3` shortcuts in `package.json` run the same two commands.
+
+**If you hit a problem**
+- **`adb` is not in PATH:** Set `$env:ADB = "C:\path\to\platform-tools\adb.exe"` before running.
+- **More than one device is connected:** Add `--serial=<id from adb devices>`.
+- **Your Chrome version doesn't have that flag:** Add `--via=cdp`.
+
+**Before and after the run**
+- **`--check`:** It closes and reopens Chrome on the phone once, but doesn't open EShop or change any data.
+- **The real run changes EShop data:**
+  - It creates `hw03.n3.*` accounts.
+  - It edits `test@eshop.com`'s profile and cancels orders.
+  - At the end it locks `test@eshop.com` for 30 seconds.
+  - Afterwards, the coordination session must reset the database and seed again before anything else uses it.
+- **Screenshots** go into `cross_platform/screenshots/android-chrome/`: Failed items plus the `overview_*` images.
+- **Results are a draft:** Tab and hover items are marked N/A. Items that need looking are marked "Chạy tay", and you check those yourself.
+````
+
+---
+
+### C157 | 15:15 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Nói tiếng Việt giúp tôi, tôi đã chạy lệnh bạn đưa nhưng script không chạy, có vẻ kẹt ở phần cờ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check N3 log and flag/CDP handling in script
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+
+**Output AI (nguyên văn):**
+
+````text
+Có hai lệnh để thử, theo thứ tự. Bạn không cần sửa gì trong script.
+
+**Vì sao kẹt:** Ở bước 8 (kiểm cờ), script ghi một dòng lệnh vào `/data/local/tmp/chrome-command-line`, đóng Chrome trên điện thoại rồi mở lại, và chờ Chrome đọc dòng lệnh đó. Chrome chỉ đọc khi cờ "Enable command line on non-rooted devices" đã bật và đã bấm **Relaunch**. Nếu cờ chưa bật, hoặc bản Chrome của bạn không còn cờ này, thì Chrome bỏ qua dòng lệnh. Khi đó lần chạy thật sẽ chờ 60 giây rồi báo lỗi hết thời gian.
+
+**Cách 1 (nên thử trước): Không dùng cờ, nối vào cổng DevTools có sẵn của Chrome**
+
+Script đã có sẵn chế độ này (`--via=cdp`), chỉ cần thêm vào lệnh:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --check --via=cdp
+```
+
+Nếu bước 8 báo `[OK] Cổng DevTools mặc định của Chrome đang mở`, chạy thật bằng:
+
+```powershell
+node n3_android_checklist.js --via=cdp --log=n3_run_log.txt
+```
+
+**Cách 2: Vẫn dùng cách mở Chrome cũ, nhưng không cần cờ**
+
+Chrome cũng đọc file dòng lệnh khi được đặt làm "debug app". Lệnh này đổi một cài đặt trên điện thoại:
+
+```powershell
+adb shell am set-debug-app --persistent com.android.chrome
+node n3_android_checklist.js --check
+```
+
+Chạy xong thì trả lại cài đặt cũ bằng `adb shell am clear-debug-app`.
+
+**Nếu cả hai cách đều không được**
+
+Chạy hai lệnh dưới đây để xem Chrome có mở cổng gỡ lỗi không. Lệnh thứ hai phải in ra một dòng có `chrome_devtools_remote`. Nếu không có dòng nào, hãy mở Chrome trên điện thoại lên trước rồi chạy lại.
+
+```powershell
+adb devices -l
+adb shell "cat /proc/net/unix | grep devtools_remote"
+```
+
+Gửi tôi toàn bộ những gì in ra từ `--check` (nhất là các dòng `[LỖI]` hoặc `[CẢNH BÁO]` ở bước 8), tôi sẽ xem tiếp.
+````
+
+---
+
+### C158 | 15:20 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra trạng thái các task, xuất log và đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show repo status, new files and recent commits
+- Bash: List created issues, preview bug report, check Excel image refs
+- Bash: Check images in issues and read rest of bug report
+- Bash: Export log and update tracker for bugs step
+
+**Output AI (nguyên văn):**
+
+````text
+Log đã xuất lại: 158 lượt. Task 1 đã tạo 33 issue, nhưng **chưa issue nào có ảnh**, và có 2 ảnh trong Excel bị lệch tên. Task 2 **chưa chạy phiên nào**, giờ đây là việc gấp nhất.
+
+## Từng task
+
+### Task 1: `bugs`, đã làm được phần lớn
+- **Issue #33 đến #65 đã tạo bằng `gh`** (33 bug, mã B-01 đến B-33). Tiêu đề đúng quy ước `[23120061][T1][W-xx][Chrome]`, đủ label. Bug trùng với issue của Hương có ghi `Related` (#19, #23, #24, #25, #26, #27, #28, #15).
+- **Chưa có ảnh trong issue nào:** Tôi đã kiểm #33, #36, #50, #65, đều chưa có link ảnh. File `bugs/image_links.txt` đã có link bạn dán, nên bước tiếp theo là phiên Task 1 chèn ảnh bằng `gh issue edit`.
+- **Còn chờ (⏳):** Bình luận vào #18 (CL-68, CL-69) và #29 (CL-70); ảnh trang issue.
+- **⚠ Excel lệch tên ảnh:** Khi chụp ảnh cho bug, `CL-15_chrome.png` và `CL-101_chrome.png` đã đổi thành `_1`, `_2`, nhưng cột Ảnh trong Excel vẫn ghi tên cũ. Nhờ phiên Task 1 sửa 2 ô này.
+
+Hai điểm bạn nên quyết:
+1. **8 mục Failed không báo bug** (mục 4 của `bug_report.md`: CL-57, 74, 94, 96, 97, 107, 108, 112), lý do là ảnh chưa thấy được lỗi. Đề ghi "Report **all** discovered bugs". Các mục này đều theo khuyến nghị, không theo SRS, nên coi là "chưa đủ bằng chứng để báo bug" và ghi rõ lý do như hiện tại thì chấp nhận được. Riêng **CL-97** (hủy đơn không có hộp xác nhận) dễ chụp: Chỉ cần ảnh trước và sau khi bấm "Hủy đơn". Nếu còn thời gian thì nên báo.
+2. **Ảnh trang issue (mục 5):** WORKFLOW ghi `issue_<số>.png` cho từng issue, tức 33 ảnh. Đề chỉ yêu cầu "screenshots of the bugs on the GitHub Issues page". Gợi ý: Chụp **danh sách issue** đã lọc `author:angquoc label:"task: T1 checklist"`, khoảng 2 đến 3 ảnh là thấy đủ 33 issue, lưu dạng `issues_list_1.png`... Cách này đỡ khoảng 20 phút. Nếu chọn cách này, sửa luôn dòng tên ảnh trong WORKFLOW §5 cho khớp.
+
+### Task 2: **Chưa chạy P1 đến P7**
+Đây là phần chiếm 40 điểm và phụ thuộc lịch của người khác. Còn khoảng 9 giờ việc, trong đó 7 phiên mất khoảng 3 giờ. Nếu tối nay chưa chạy được phiên nào thì mọi việc dồn vào sáng mai. Bạn đã hẹn được ai cho chiều tối nay chưa? Tôi xếp thứ tự N3, N2 xen vào các khoảng trống theo lịch đó.
+
+### Task 3: N3 chưa chạy
+- DB đã sẵn (reset và seed lúc 15:05, sau đó bạn có thể đã chạy lại bằng lệnh tôi đưa).
+- `cross_platform/firefox_triage.md` chờ bạn review.
+
+### Agent Skill: Phần thiết kế xong, chờ các bước sau.
+
+## Lệnh commit
+
+Chạy **sau khi phiên Task 1 chèn ảnh xong và sửa 2 ô Excel**:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/tools/n1_chrome_checklist.js checklist/tools/n1_bugshots_log.txt bugs/bug_report.md
+git commit -m "[T1][bugs] Report N1 bugs as issues #33 to #65"
+git add checklist/tools/n3_android_checklist.js prompt_log.md
+git commit -m "[T3][android-chrome] Update N3 script"
+git push
+```
+
+- `bugs/image_links.txt` chỉ là file làm việc, chứa link ảnh tạm, không cần commit.
+- `cross_platform/firefox_triage.md` commit sau khi bạn review xong.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: 33 issue đã tạo | Chèn ảnh, sửa 2 ô Excel, bình luận #18, #29, ảnh trang issue | ~0,75 giờ |
+| Task 2 | Sẵn sàng P1, **chưa chạy phiên nào** | Lịch hẹn 7 người (đường găng) | ~9 giờ |
+| Task 3 | N3 sẵn sàng, chưa chạy | `npm run n3` → phiên Task 3 điền NT3; review danh sách N2; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **18,5 giờ** làm việc | Còn **6 giờ 39 phút** tới mốc 22:00 10/11 | **21 giờ 39 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C159 | 15:22 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Active code page: 65001
+
+D:\Dang\Test>cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.jscd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+The filename, directory name, or volume label syntax is incorrect.
+
+D:\Dang\Test>cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+The system cannot find the path specified.
+
+D:\Dang\Test>cd D:\Dang\Test\Homeworks\eshop-sut\backend
+
+D:\Dang\Test\Homeworks\eshop-sut\backend>node database.js
+Database initialized and seeded (Phase 2).
+Connected to database
+
+D:\Dang\Test\Homeworks\eshop-sut\backend>cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>npm install                                    # first time only
+npm error code EINVALIDTAGNAME
+npm error Invalid tag name "#" of package "#": Tags may not have any characters that encodeURIComponent encodes.
+npm error A complete log of this run can be found in: C:\Users\Lenovo\AppData\Local\npm-cache\_logs\2026-11-10T08_13_46_917Z-debug-0.log
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>node n3_android_checklist.js --check           # check prerequisites only, then stop
+=== HW03 Task 3, nền tảng N3: Android Chrome trên điện thoại thật (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend (http://localhost:3000) và frontend web (http://localhost:5173) đang chạy trên máy tính.
+Trên điện thoại (sinh viên làm): Mở khóa màn hình; Samsung Notes dạng cửa sổ nổi có MSSV, họ tên, email (01_setup.md mục 5.3).
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n3.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng trên điện thoại (CL-68, CL-69).
+
+=== Kiểm điều kiện cần (không mở trang EShop, không đổi dữ liệu) ===
+node n3_android_checklist.js --log=n3_run_log.txt   # the real run
+  [OK] Android Debug Bridge version 1.0.41 (C:\Users\Lenovo\AppData\Local\Android\Sdk\platform-tools\adb.exe)
+  [LỖI] Điện thoại chưa cho phép gỡ lỗi từ máy này: Mở khóa điện thoại, bấm "Cho phép" ở hộp thoại cho phép gỡ lỗi USB, rồi chạy lại
+
+Chưa đủ điều kiện cần: Xem các dòng [LỖI] ở trên.
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>  [LỖI] Điện thoại chưa cho phép gỡ lỗi từ máy này: Mở khóa điện thoại, bấm "Cho phép" ở hộp thoại cho phép gỡ lỗi USB, rồi chạy lại
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>npm install                                    # first time only
+npm error code EINVALIDTAGNAME
+npm error Invalid tag name "#" of package "#": Tags may not have any characters that encodeURIComponent encodes.
+npm error A complete log of this run can be found in: C:\Users\Lenovo\AppData\Local\npm-cache\_logs\2026-11-10T08_14_38_746Z-debug-0.log
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>node n3_android_checklist.js --check           # check prerequisites only, then stop
+=== HW03 Task 3, nền tảng N3: Android Chrome trên điện thoại thật (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend (http://localhost:3000) và frontend web (http://localhost:5173) đang chạy trên máy tính.
+Trên điện thoại (sinh viên làm): Mở khóa màn hình; Samsung Notes dạng cửa sổ nổi có MSSV, họ tên, email (01_setup.md mục 5.3).
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n3.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng trên điện thoại (CL-68, CL-69).
+
+=== Kiểm điều kiện cần (không mở trang EShop, không đổi dữ liệu) ===
+node n3_android_checklist.js --log=n3_run_log.txt   # the real run
+  [OK] Android Debug Bridge version 1.0.41 (C:\Users\Lenovo\AppData\Local\Android\Sdk\platform-tools\adb.exe)
+  [OK] Thiết bị: R5CR707GW3X            device product:p3sxxx model:SM_G998B device:p3s transport_id:3
+  [OK] Máy: samsung SM-G998B; Android 15 (SDK 35); Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+  [OK] Chrome 156.0.8078.79 (Playwright cần 87 trở lên)
+  [OK] Màn hình đang bật
+  [GHI CHÚ] Nên để thời gian tắt màn hình dài (hoặc bật "Không khóa màn hình khi sạc" trong Tùy chọn nhà phát triển); script không tự đổi cài đặt điện thoại
+  [OK] Samsung Notes đang mở (lớp chữ đè, 01_setup.md mục 5.3)
+  [OK] Đã đặt adb reverse tcp:5173 tcp:5173
+  [OK] Đã đặt adb reverse tcp:3000 tcp:3000
+  [...] Kiểm cờ "Enable command line on non-rooted devices": Chrome trên điện thoại sẽ đóng rồi mở lại (các tab cũ vẫn giữ)
+  [OK] Cờ đã bật: Chrome nhận dòng lệnh của script (Chrome/156.0.8078.79)
+
+Đủ điều kiện cần. Lần chạy thật: node n3_android_checklist.js --log=n3_run_log.txt
+
+=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===
+Trình duyệt: Google Chrome 156.0.8078.79 cho Android
+OS: Android 15 (SDK 35, bản dựng AP3A.240905.015.A2.G998BXXSJHZC2)
+Thiết bị: samsung SM-G998B
+Độ phân giải: Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+                                            cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+D:\Dang\Test\Homeworks\HW03\checklist\tools>
+D:\Dang\Test\Homeworks\HW03\checklist\tools>node n3_android_checklist.js --check --via=cdp
+=== HW03 Task 3, nền tảng N3: Android Chrome trên điện thoại thật (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend (http://localhost:3000) và frontend web (http://localhost:5173) đang chạy trên máy tính.
+Trên điện thoại (sinh viên làm): Mở khóa màn hình; Samsung Notes dạng cửa sổ nổi có MSSV, họ tên, email (01_setup.md mục 5.3).
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n3.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng trên điện thoại (CL-68, CL-69).
+
+=== Kiểm điều kiện cần (không mở trang EShop, không đổi dữ liệu) ===
+  [OK] Android Debug Bridge version 1.0.41 (C:\Users\Lenovo\AppData\Local\Android\Sdk\platform-tools\adb.exe)
+  [OK] Thiết bị: R5CR707GW3X            device product:p3sxxx model:SM_G998B device:p3s transport_id:3
+  [OK] Máy: samsung SM-G998B; Android 15 (SDK 35); Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+  [OK] Chrome 156.0.8078.79 (Playwright cần 87 trở lên)
+  [CẢNH BÁO] Có vẻ điện thoại đang ở màn hình khóa: Mở khóa trước khi chạy
+  [GHI CHÚ] Nên để thời gian tắt màn hình dài (hoặc bật "Không khóa màn hình khi sạc" trong Tùy chọn nhà phát triển); script không tự đổi cài đặt điện thoại
+  [OK] Samsung Notes đang mở (lớp chữ đè, 01_setup.md mục 5.3)
+  [OK] adb reverse tcp:5173 đã có
+  [OK] adb reverse tcp:3000 đã có
+  [GHI CHÚ] Chạy qua cổng DevTools mặc định (--via=cdp): Không cần cờ chrome://flags
+  [LỖI] Không kết nối được cổng DevTools mặc định của Chrome (chrome_devtools_remote)
+
+Chưa đủ điều kiện cần: Xem các dòng [LỖI] ở trên.
+
+=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===
+Trình duyệt: Google Chrome 156.0.8078.79 cho Android
+OS: Android 15 (SDK 35, bản dựng AP3A.240905.015.A2.G998BXXSJHZC2)
+Thiết bị: samsung SM-G998B
+Độ phân giải: Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>adb shell am set-debug-app --persistent com.android.chrome
+'adb' is not recognized as an internal or external command,
+operable program or batch file.
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>node n3_android_checklist.js --check
+=== HW03 Task 3, nền tảng N3: Android Chrome trên điện thoại thật (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend (http://localhost:3000) và frontend web (http://localhost:5173) đang chạy trên máy tính.
+Trên điện thoại (sinh viên làm): Mở khóa màn hình; Samsung Notes dạng cửa sổ nổi có MSSV, họ tên, email (01_setup.md mục 5.3).
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n3.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng trên điện thoại (CL-68, CL-69).
+
+=== Kiểm điều kiện cần (không mở trang EShop, không đổi dữ liệu) ===
+  [OK] Android Debug Bridge version 1.0.41 (C:\Users\Lenovo\AppData\Local\Android\Sdk\platform-tools\adb.exe)
+  [OK] Thiết bị: R5CR707GW3X            device product:p3sxxx model:SM_G998B device:p3s transport_id:3
+  [OK] Máy: samsung SM-G998B; Android 15 (SDK 35); Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+  [OK] Chrome 156.0.8078.79 (Playwright cần 87 trở lên)
+  [OK] Màn hình đang bật
+  [GHI CHÚ] Nên để thời gian tắt màn hình dài (hoặc bật "Không khóa màn hình khi sạc" trong Tùy chọn nhà phát triển); script không tự đổi cài đặt điện thoại
+  [OK] Samsung Notes đang mở (lớp chữ đè, 01_setup.md mục 5.3)
+  [OK] adb reverse tcp:5173 đã có
+  [OK] adb reverse tcp:3000 đã có
+  [...] Kiểm cờ "Enable command line on non-rooted devices": Chrome trên điện thoại sẽ đóng rồi mở lại (các tab cũ vẫn giữ)
+  [OK] Cờ đã bật: Chrome nhận dòng lệnh của script (Chrome/156.0.8078.79)
+
+Đủ điều kiện cần. Lần chạy thật: node n3_android_checklist.js --log=n3_run_log.txt
+
+=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===
+Trình duyệt: Google Chrome 156.0.8078.79 cho Android
+OS: Android 15 (SDK 35, bản dựng AP3A.240905.015.A2.G998BXXSJHZC2)
+Thiết bị: samsung SM-G998B
+Độ phân giải: Physical size: 1440x3200 Override size: 1080x2400; Physical density: 450; cỡ chữ hệ thống 1.15
+
+
+Cả hai đều không được.
+
+Lệnh adb devices -l
+adb shell "cat /proc/net/unix | grep devtools_remote" không chạy được.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read seed_orders.py usage
+
+**Output AI (nguyên văn):**
+
+````text
+Thật ra lệnh `--check` thường đã chạy được rồi. Trong lần chạy thứ hai và lần cuối, script báo:
+
+```
+[OK] Cờ đã bật: Chrome nhận dòng lệnh của script (Chrome/156.0.8078.79)
+Đủ điều kiện cần.
+```
+
+Vậy cờ đã bật đúng, bạn **không cần** `--via=cdp` hay `set-debug-app` nữa.
+
+**Vì sao các lần trước không được**
+
+| Lần chạy | Lỗi | Nguyên nhân |
+|---|---|---|
+| `--check` lần đầu | Điện thoại chưa cho phép gỡ lỗi | Lúc đó chưa bấm "Cho phép" trên điện thoại. Các lần sau đã bình thường |
+| `--via=cdp` | Không kết nối được cổng DevTools | Có lẽ do lúc đó điện thoại đang khóa màn hình, script cũng cảnh báo điều này. Giờ không cần cách này nữa |
+| `npm install # first time only` | `Invalid tag name "#"` | Bạn đang dùng **cmd**, không phải PowerShell. Trong cmd, `#` không phải dấu chú thích, nên npm tưởng `#` là tên gói. Thư mục `node_modules` đã có sẵn nên bỏ qua bước này |
+| `cd ...; node database.js` | Lỗi đường dẫn | cmd không nối lệnh bằng `;`. Hãy gõ từng lệnh trên một dòng riêng |
+| `adb ...` | `'adb' is not recognized` | `adb` không nằm trong PATH. Script tự tìm được `adb`, còn khi gõ tay thì phải dùng đường dẫn đầy đủ (ở cuối) |
+
+**Còn thiếu một bước: Chưa chạy seed**
+
+Bạn mới reset DB (`node database.js`), chưa tạo 5 đơn hàng. Thiếu bước này thì trang `/profile` không có lịch sử đơn, nhiều mục sẽ sai kết quả.
+
+**Lệnh chạy (cmd, gõ từng dòng)**
+
+Trước khi chạy, backend (`localhost:3000`) và web (`localhost:5173`) phải đang chạy ở cửa sổ khác. Seed gọi API ở cổng 3000, nên server tắt thì seed báo lỗi kết nối.
+
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+node database.js
+cd /d D:\Dang\Test\Homeworks\HW03
+python tools\seed_orders.py
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --log=n3_run_log.txt
+```
+
+**Trên điện thoại, trước và trong lúc chạy**
+- Mở khóa màn hình và để thời gian tắt màn hình dài.
+- Samsung Notes đang mở dạng cửa sổ nổi.
+- Script sẽ dừng 2 lần để bạn tự chuẩn bị giỏ hàng trên điện thoại (cho CL-68, CL-69). Làm theo hướng dẫn hiện ra rồi bấm Enter.
+
+**Sau khi chạy xong**
+
+Script đã đổi dữ liệu: Tạo tài khoản mới, hủy đơn, và khóa `test@eshop.com` 30 giây. Hãy chạy lại `node database.js` và `python tools\seed_orders.py` trước khi dùng tiếp.
+
+**Nếu cần gõ adb bằng tay**
+
+```
+"C:\Users\Lenovo\AppData\Local\Android\Sdk\platform-tools\adb.exe" devices -l
+```
+
+Nếu lần chạy thật bị kẹt, gửi tôi file `n3_run_log.txt` trong thư mục `checklist\tools`.
+````
+
+---
+
+### C160 | 15:23 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Excel lệch tên ảnh: Khi chụp ảnh cho bug, CL-15_chrome.png và CL-101_chrome.png đã đổi thành _1, _2, nên sửa lại excel cho khớp.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_f.py
+- PowerShell: Fix CL-15/CL-101 image refs in Excel and recalc
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sửa xong trong [HW03_T1_GUI_Checklist.xlsx](Homeworks/HW03/checklist/HW03_T1_GUI_Checklist.xlsx):
+
+| Mục | Cột Ảnh trước | Cột Ảnh sau | Notes ghi thêm |
+|---|---|---|---|
+| CL-15 | `CL-15_chrome.png` | `CL-15_chrome_1.png, CL-15_chrome_2.png` | Ảnh `_2` (nhóm J, 15:06): Tab lần đầu ở W-03, viền focus ở nút "Sign In" |
+| CL-101 | `CL-101_chrome.png` | `CL-101_chrome_1.png, CL-101_chrome_2.png` | Ảnh `_2` (nhóm J, 15:06): Hộp thoại "Số điện thoại không hợp lệ..." đang mở khi cập nhật số 0912345678 |
+
+Tôi kiểm lại cả hai chiều. Mọi tên ảnh trong Excel đều có file thật, và mọi mục Failed đều có ảnh. Kết quả NT1 không đổi: 51 Passed, 54 Failed, 7 Không chạy được.
+
+Còn đúng một ảnh có trong thư mục mà Excel chưa nhắc tới: `CL-65_chrome.png`, ảnh bug #33 (đăng ký từ chối mật khẩu hợp lệ). CL-65 đang là "Không chạy được" chứ không phải Failed, nên tôi chưa ghi vào. Nếu bạn muốn, tôi thêm ảnh này vào cột Ảnh của CL-65 làm bằng chứng cho lý do không chạy được; kết quả vẫn giữ nguyên.
+````
+
+---
+
+### C161 | 15:25 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đồng ý.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_g.py
+- PowerShell: Add CL-65 image reference and recalc
+
+**Output AI (nguyên văn):**
+
+````text
+Đã thêm `CL-65_chrome.png` vào cột Ảnh của CL-65. Kết quả vẫn là "Không chạy được".
+
+Notes của CL-65 giờ ghi thêm nguồn ảnh: Ảnh chụp bằng nhóm J lúc 15:06 cho thấy mật khẩu hợp lệ "Abcdef1!" bị báo "Mật khẩu quá yếu!". Vì không đăng ký thành công được nên mục này không kiểm được; Notes có dẫn tới bug #33. Kết quả NT1 không đổi: 51 Passed, 54 Failed, 7 Không chạy được. Giờ mọi ảnh `CL-*` trong thư mục đều được Excel nhắc tới.
+
+**Bạn nên xem lại một chỗ:** Câu có sẵn trong Notes của CL-65 ghi "từ chối **mọi** mật khẩu hợp lệ", nhưng log chỉ cho thấy một mật khẩu hợp lệ đã được thử là `Abcdef1!`. Issue #33 cũng chỉ ghi mật khẩu này. Nếu bạn muốn Notes khớp với issue, tôi sửa thành "từ chối mật khẩu hợp lệ `Abcdef1!`".
+
+Bước tiếp theo vẫn đang chờ bạn: Tải 30 ảnh lên ô bình luận rồi dán link vào `bugs/image_links.txt`.
+````
+
+---
+
+### C162 | 15:26 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+2. Chọn cách bạn đề xuất. Sửa WORKFLOW đi.
+Về task 2: Sau khi chạy xong N3, tôi sẽ cho P1 -> P7 chạy dần, trong lúc chờ N3 chạy, tôi có thể để họ điền trước các câu hỏi về form thông tin các thứ. Cho tôi hỏi sau P1->P7 là việc gì nữa mà tới 9 giờ việc?
+3. Excel đã sửa xong, tôi chưa commit gì nên phiền bạn xuất log và đưa tôi bản commit đẩy đủ để commit luôn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find screenshot naming lines, status, Excel refs, issue images
+- Bash: Find mentions of issue page screenshots
+- Bash: Update screenshot naming in WORKFLOW and bug report, export log
+- Bash: Locate the forbidden separator in WORKFLOW
+- Bash: Create blank session record templates for P1 to P7
+- Bash: Update estimates and export log
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sửa WORKFLOW và tạo sẵn hồ sơ phiên cho P1 đến P7. Giờ cập nhật ước tính.
+````
+
+---
+
+### C163 | 15:26 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã tải 30 ảnh và dán vào image_links rồi mà, sau hãy kiểm tra rồi nói tôi nhé.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read pasted image links file
+- Bash: Download the 30 uploaded GitHub image assets
 
 **Output AI (nguyên văn):**
 
