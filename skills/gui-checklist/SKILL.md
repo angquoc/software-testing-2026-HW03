@@ -24,9 +24,9 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 1 trên 
 
 ## Bước 0: Xác định ngữ cảnh (đầu mỗi phiên)
 
-1. **Đọc quy trình của dự án.** Nếu dự án có `WORKFLOW.md` (hoặc tài liệu tương tự), đọc trước tiên. Quy tắc của dự án **ưu tiên hơn** mặc định của skill; chỗ nào dự án không nói thì dùng `references/rules.md`.
+1. **Đọc quy trình của dự án.** Nếu dự án có `WORKFLOW.md` (hoặc tài liệu tương tự), đọc trước tiên. Quy tắc của dự án **ưu tiên hơn** mặc định của skill, trừ các ngoại lệ ở mục "Ngoại lệ so với quy trình của dự án"; chỗ nào dự án không nói thì dùng `references/rules.md`.
 2. **Xác định**, hỏi người dùng nếu chưa rõ:
-   - **Thư mục làm việc.** Mặc định `checklist/`. Làm cho màn hình khác với lần trước (ví dụ để demo) thì dùng thư mục riêng do sinh viên chỉ định. **Không ghi đè** file của một lần làm khác; thấy thư mục đã có file thì hỏi.
+   - **Thư mục làm việc.** Mặc định `checklist/`. Làm cho màn hình khác với lần trước (ví dụ để demo) thì dùng thư mục riêng do sinh viên chỉ định (HW03: `demo/gui-checklist/`, xem `demo/README.md`), và không đọc thư mục của lần làm trước. **Không ghi đè** file của một lần làm khác; thấy thư mục đã có file thì hỏi.
    - Danh sách màn hình: Mã, tên, URL hoặc đường vào, vai trò (chính hay phụ), các trạng thái cần xét (chưa đăng nhập và đã đăng nhập, dữ liệu trống và có dữ liệu).
    - Nền tảng: Web, Web Admin hay Mobile.
    - Vị trí đặc tả (SRS) và cách ánh xạ IA sang mục của SRS (ví dụ EShop: IA-01 là FR-21, IA-02 là FR-22, IA-03 là FR-23, IA-04 là FR-24).
@@ -56,7 +56,7 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 
 - **Hộp đen.** Căn cứ là đặc tả, ảnh do sinh viên chụp và những gì sinh viên mô tả. Không đọc mã nguồn hệ thống, không tự mở giao diện, không tải HTML hay JS, không dùng DevTools ở các bước thiết kế (`survey` đến `excel`). DevTools chỉ dùng ở bước `exec`, để kiểm những gì **mục checklist yêu cầu**.
 - **Thiếu thông tin thì hỏi.** Cần ảnh, cần quan sát thêm, đặc tả không nói: Dừng và nói rõ cần gì. Không tự lấy bằng đường bị cấm, không đoán rồi viết tiếp.
-- **Mỗi lượt một bước**, xong thì dừng chờ sinh viên. Riêng `ai-draft`: Viết lần lượt 4 file IA trong cùng một lượt rồi dừng một lần (mục "Vòng lặp" bên dưới).
+- **Mỗi lượt một bước**, xong thì dừng chờ sinh viên. Riêng `ai-draft`: Viết lần lượt 4 file IA trong cùng một lượt rồi dừng một lần (mục "Ngoại lệ so với quy trình của dự án").
 - **Không bao giờ sửa hay ghi đè file trong `ai_raw/`** sau khi đã giao. AI làm lại thì lưu file mới `_v2`, `_v3`, đầu file ghi lần sửa, thời gian, lý do.
 - **Chỗ đặc tả không nói:** Ghi thành câu hỏi mở hoặc giả định có phương án đánh chữ cái. AI không tự chọn, không khẳng định quá căn cứ.
 - **Mục ngoài SRS** ghi rõ nguồn và ghi là **khuyến nghị**, không phải yêu cầu của SRS.
@@ -65,6 +65,16 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 - **Bản review** có bảng "Thay đổi so với bản AI" với cột Loại chỉ nhận 5 giá trị và cột "Vì sao AI bỏ sót" (chỉ với Loại "Thiếu"). Ghi rõ người phát hiện mỗi thay đổi; không đoán.
 - **AI không tự commit.** Chỉ đưa commit message và lệnh.
 - **Văn bản** tiếng Việt, giữ nguyên tên trường, nút, thông báo như trên giao diện; không dùng dấu "—" và "·"; chữ đầu sau dấu ":" viết hoa.
+
+## Ngoại lệ so với quy trình của dự án
+
+| Điểm | Skill làm | Quy trình của dự án có thể ghi | Lý do |
+|---|---|---|---|
+| Nhịp của `ai-draft` | Viết đủ 4 file IA (mỗi IA một file, lần lượt IA-01 đến IA-04) trong một lượt, rồi dừng **một lần** để sinh viên review cả 4 | Mỗi lượt một IA, dừng sau từng IA (ví dụ HW03 `WORKFLOW.md` mục 3.1) | Review cả 4 cùng lúc thì thấy được mục trùng giữa các IA và ý chung bị lặp (ở lần đầu, ý "thông báo bằng tiếng Việt" lặp ở 8 mục IA-04 và phải gom về IA-01), nên review có mạch hơn. Mỗi IA vẫn là một file và một commit riêng, nên vẫn tách bước như đề yêu cầu |
+
+Ngoại lệ này áp dụng cả khi quy trình của dự án ghi khác. Khi chạy, báo cho sinh viên một câu rằng skill đang theo ngoại lệ này. Sinh viên muốn dừng sau từng IA thì làm theo sinh viên.
+
+Ghi chú lịch sử: Lần làm đầu (HW03 Task 1) chạy `ai-draft` mỗi lượt một IA theo `WORKFLOW.md`. Ngoại lệ được đặt khi viết skill, rút từ lần làm đó; `WORKFLOW.md` của HW03 giữ nguyên vì ghi đúng cách bài đã làm.
 
 ## Vòng lặp cho mỗi bước
 

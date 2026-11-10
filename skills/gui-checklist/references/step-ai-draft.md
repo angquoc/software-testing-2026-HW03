@@ -7,7 +7,7 @@
 ## Cách chạy bước này
 
 - Viết **lần lượt** 4 file theo thứ tự IA-01, IA-02, IA-03, IA-04, mỗi file một IA, trong cùng một lượt. Viết xong mỗi file thì tự kiểm file đó rồi mới sang file sau.
-- Dừng **một lần** khi đã đủ 4 file, để sinh viên review cả 4 cùng lúc.
+- Dừng **một lần** khi đã đủ 4 file, để sinh viên review cả 4 cùng lúc. Đây là ngoại lệ so với quy trình của dự án nếu dự án ghi "mỗi lượt một IA" (xem mục "Ngoại lệ so với quy trình của dự án" trong `SKILL.md`); báo sinh viên một câu khi áp dụng.
 - Đánh số liên tục qua 4 file cho `CHD-nn` và `ĐK-nn`. Điều kiện đã định nghĩa ở file trước thì file sau dẫn mã, không định nghĩa lại.
 - Bỏ một câu hỏi CHD trước khi giao (vì đã tự trả lời được): Không dùng lại số đó; ghi lại cho bản review biết số nào bị bỏ.
 

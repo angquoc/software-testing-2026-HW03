@@ -25,7 +25,7 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
 
 1. **Đọc quy trình của dự án** (`WORKFLOW.md` hoặc tương tự) trước tiên. Quy tắc của dự án ưu tiên hơn mặc định của skill.
 2. **Xác định**, hỏi người dùng nếu chưa rõ:
-   - **Thư mục làm việc.** Mặc định `usability/`. Làm cho luồng khác với lần trước (ví dụ để demo) thì dùng thư mục riêng do sinh viên chỉ định. **Không ghi đè** file của lần làm khác.
+   - **Thư mục làm việc.** Mặc định `usability/`. Làm cho luồng khác với lần trước (ví dụ để demo) thì dùng thư mục riêng do sinh viên chỉ định (HW03: `demo/usability-evaluation/`, xem `demo/README.md`), và không đọc thư mục của lần làm trước. **Không ghi đè** file của lần làm khác.
    - Luồng: Mã, tên, các chặng, nền tảng, URL hoặc đường vào, vai trò đăng nhập.
    - Yêu cầu của đề: Số người tham gia, thang đo cho phép, khía cạnh câu hỏi mở tối thiểu, có pilot không.
    - Tiêu chí người tham gia mà dự án đã chốt (nếu có).
