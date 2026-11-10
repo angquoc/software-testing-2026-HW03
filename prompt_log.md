@@ -15209,11 +15209,59 @@ Bây giờ bạn hãy tính điểm đi, và viết các phát hiện d
 - Bash: Find WORKFLOW requirements for scores and findings
 - Bash: Read analysis plan section and usability skill
 - Bash: Read skill guidance for score and analysis steps
+- Write: D:\Dang\Test\Homeworks\HW03\usability\tools\score_t2.py
+- Bash: Run scoring script
+- Bash: Extract participant characteristics from notes
+- Bash: Extract participant characteristics with UTF-8
+- Bash: Extract participant characteristics
+- Bash: Check header and change-table format conventions
+- Write: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_score.md
+- Bash: Create 04_scores.md and run format/privacy checks
+- Bash: Use comma separators to avoid phone false positives
 
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Tôi đã làm xong bước `score`. Theo WORKFLOW mục 1.2, mỗi lượt chỉ làm một bước, nên lượt này tôi dừng ở đây để bạn review. Bước `analysis` (`05_findings.md`) tôi làm ở lượt sau.
+
+**File đã tạo**
+- [tools/score_t2.py](usability/tools/score_t2.py): Script tính SUS, thời gian và đếm mã sự kiện. Script đọc thẳng `scale.md` và `notes.md` của P1 đến P7, bỏ qua PL, không đọc `participants.md`. WORKFLOW mục 3.2.3 yêu cầu ghi rõ cách tính, và cách tính đã ghi ở đầu script.
+- [ai_raw/T2_score.md](usability/ai_raw/T2_score.md): Bản nháp của AI.
+- [04_scores.md](usability/04_scores.md): Bản review, nội dung giống bản nháp, bảng "Thay đổi so với bản AI" đang để trống. Đã chạy `check_usability.py` kiểm định dạng và riêng tư: 0 lỗi.
+
+**Số liệu chính**
+
+| Chỉ số | Kết quả |
+|---|---|
+| Tự hoàn thành toàn luồng | 3/7 (P2, P3, P6); không ai hoàn thành nhờ can thiệp |
+| Chặng thất bại nhiều nhất | M3: 3 trên 6 người tới M3 không hoàn thành (P1, P5 sai danh mục; P1 sai giá; P4 bỏ cuộc vì bug #67) |
+| Thời gian toàn luồng | Trung bình 01:50, chuẩn 02:18.75. Thời gian không phải vấn đề chính |
+| Lỗi | 17 lỗi, 5 người có lỗi. Lỗi thường gặp nhất: "Thêm mới" khi tên còn trống, lưu sai danh mục, làm lại thao tác (mỗi loại 3 người) |
+| Do dự | 13 lần, trong đó 11 lần là mở lại kịch bản đọc. Hay xảy ra nhất ở Dashboard (4 người) |
+| Kiểm danh mục sau khi lưu | Không ai chủ động kiểm, vì bảng sản phẩm không có cột danh mục |
+| SUS (n = 6) | Trung bình 61,25; trung vị 58,75; độ lệch chuẩn 14,73. Chỉ P2 đạt từ 68 trở lên |
+| SUS theo kết quả | Nhóm tự hoàn thành 71,7; nhóm không hoàn thành 50,8 |
+
+**Đính chính:** Điểm SUS của P5 là **52,5**. Lúc ghi phiên P5 tôi tính nhẩm và báo 55, con số đó sai. Tôi đã ghi đính chính này trong file.
+
+**Hai quyết định cần bạn chọn:**
+- **QĐ-S1, thời gian ghi trong báo cáo:**
+  - (a) Cách 1: Tính mọi người tới được mốc của chặng, kể cả người làm sai hoặc bỏ cuộc.
+  - (b) Cách 2: Chỉ tính 3 người tự hoàn thành.
+  - (c) Cả hai: Cách 1 là số chính, cách 2 là số phụ.
+- **QĐ-S2, điểm SUS của P1** (P1 đồng ý với cả câu khen lẫn câu chê):
+  - (a) Giữ trong trung bình, chỉ ghi chú.
+  - (b) Giữ, và báo thêm trung bình khi bỏ P1 (62,5) để so.
+  - (c) Bỏ P1 khỏi trung bình.
+
+Bạn xem [04_scores.md](usability/04_scores.md) rồi trả lời hai quyết định này. Chỗ nào bạn muốn sửa thì sửa thẳng vào file, tôi sẽ ghi vào bảng thay đổi. Sau đó tôi làm `05_findings.md` dựa trên dữ liệu các phiên và những gì bạn đã kể với tôi: Caps Lock, mật khẩu, chuột, "giao diện hơi AI", lỗi #66, #67…
+
+Status:
+- T2 P1 đến P7, bug #66, #67: Xong.
+- T2 `score`: Bản nháp xong, chờ bạn review và chọn QĐ-S1, QĐ-S2.
+- T2 `analysis` (`05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 2,5 đến 3,5 giờ làm việc: review score khoảng 20 phút, analysis 2 đến 3 giờ. Còn khoảng 11 giờ đến hạn 13:00 11/11.
 ````
 
 ---
@@ -15226,6 +15274,585 @@ Bây giờ bạn hãy tính điểm đi, và viết các phát hiện d
 Kiểm tra trạng thái các task, xuất log, viết commit message.
 
 Trong lúc task 2 đang phân tích thì tôi có thể làm gì? (Đã reset db)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show time, repo status, recent commits, export prompt log
+- Bash: Verify DB reset and check Task 3 N2 prep files
+
+**Output AI (nguyên văn):**
+
+````text
+Tất cả thay đổi trước đã được commit, ngoài `image_links.txt` vẫn để ngoài như cũ. DB đã reset đúng (5 sản phẩm, 3 danh mục). Log đã xuất lại: 233 lượt.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Trong lúc phiên Task 2 phân tích, bạn làm phần của Task 3
+
+Phân tích của Task 2 chỉ đọc hồ sơ, không đụng DB. Vì vậy bạn dùng DB song song được, miễn là phiên Task 2 không chạy lại script sửa sản phẩm. Nhắn phiên Task 2 một câu: "Không chạy script trên EShop cho tới khi tôi báo."
+
+**Bước 1: Chạy seed** (cần có đơn hàng cho N2 và cho bước 2, giống lúc chạy N1):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03; python tools\seed_orders.py
+```
+
+**Bước 2: Kiểm định dạng ngày và số (CL-24, CL-11), khoảng 5 phút.**
+1. Mở Chrome thường của bạn, đăng nhập `test@eshop.com` và vào `/profile`.
+2. Ghi lại 3 thứ: Ngày đặt hàng hiện dạng ngày/tháng/năm hay tháng/ngày/năm, số tiền dùng dấu chấm hay dấu phẩy, và ngôn ngữ Chrome đang đặt (`chrome://settings/languages`).
+3. Nếu Chrome tiếng Việt cho kết quả khác N1 (Chrome do Playwright mở), kết luận là trang định dạng theo ngôn ngữ trình duyệt. Khi đó:
+   - Gửi kết quả cho phiên Task 3 để ghi thành bug chỉ xuất hiện trên một số nền tảng.
+   - Gửi cho phiên Task 1 để sửa issue #53 và Notes của CL-11, CL-24.
+
+**Bước 3: Chạy N2, Firefox trên BrowserStack Live.** Đây là phần lớn nhất còn lại của Task 3.
+- Theo `firefox_triage.md`, N2 có 17 mục nhóm A (kiểm qua Console) và 44 mục nhóm B (chạy tay). 51 mục nhóm C không chạy lại.
+- Ghép tunnel theo `cross_platform/01_setup.md` mục 7.2.
+- Ghim Sticky Notes có MSSV, tên, email. Trong ảnh phải đọc được thanh địa chỉ `localhost:5173` của Firefox từ xa và thanh công cụ BrowserStack.
+- Ở N2, nhớ xem luôn định dạng ngày và số. Firefox từ xa thường chạy tiếng Anh, nên đây là thêm một bằng chứng cho bước 2.
+- Không đưa access key của BrowserStack vào file hay prompt.
+- Chạy xong N2 thì nhắn tôi, tôi sẽ đưa lệnh reset DB.
+
+Agent Skill và Tổng hợp vẫn phải chờ kết quả Task 2 và N2, nên giờ chưa có việc cho hai phiên này.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Đang phân tích; B-T2-02 đã có bản nháp | Tạo issue; score (n = 6, ⏳); analysis | ~2,5 giờ |
+| Task 3 | Sẵn sàng N2 (DB đã reset) | Chạy seed → kiểm ngày và số → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **8 giờ** làm việc | Còn **11 giờ 19 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C234 | 01:44 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Mã ĐH	Ngày đặt	Tổng tiền	Trạng thái	Thao tác
+#5	11/10/2026	10,000,000 ₫	Chờ xác nhận	Hủy đơn
+#4	11/10/2026	8,000,000 ₫	Đã hủy	
+#3	11/10/2026	28,000,000 ₫	Đã xác nhận	Hủy đơn
+#2	11/10/2026	36,000,000 ₫	Đang giao	Hủy đơn
+#1	11/10/2026	45,000,000 ₫	Đã giao
+
+
+	
+
+
+Websites in your languages
+Let websites know the languages you speak. They'll show content in those languages, when possible.
+1. Vietnamese
+This language is used when translating pages
+2. English (United States)
+3. English
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check how seed sets order dates and find Chrome path
+
+**Output AI (nguyên văn):**
+
+````text
+Kết quả này **chưa kết luận được**. Lý do: Trang Cài đặt của Chrome bạn đang hiện tiếng Anh, tức Chrome đang chạy giao diện tiếng Anh. Danh sách "Websites in your languages" có tiếng Việt đứng đầu không quyết định cách trang định dạng ngày và số. Khi trang định dạng mà không chỉ rõ ngôn ngữ, Chrome dùng ngôn ngữ giao diện của nó. Nên kết quả giống N1 là đúng như giả thuyết, nhưng chưa chứng minh được giả thuyết.
+
+## Đọc kết quả
+
+- **Ngày "11/10/2026" là tháng/ngày/năm.** Đơn vừa tạo lúc khoảng 01:45 ngày 11/11, nên số "10" chỉ có thể là ngày, đứng ở vị trí thứ hai. Kết quả giống N1.
+- **Số tiền "10,000,000" dùng dấu phẩy** theo kiểu Mỹ. Kết quả giống N1.
+- **Phát hiện thêm, cần kiểm:** Đơn đặt lúc 01:45 ngày 11/11 nhưng trang ghi ngày 10. Có thể trang hiển thị giờ UTC (chậm 7 tiếng), nên đơn đặt từ 00:00 đến 07:00 sáng bị lùi một ngày. Bạn ghi lại để quyết định sau (⏳): Báo thành bug riêng, gộp vào #53, hay bỏ qua.
+
+## Kiểm cho dứt điểm, khoảng 3 phút
+
+1. Đóng bớt Chrome nếu muốn, rồi mở một Chrome **giao diện tiếng Việt** bằng một hồ sơ tạm. Lệnh này không động tới hồ sơ Chrome chính của bạn:
+   ```powershell
+   & "C:\Program Files\Google\Chrome\Application\chrome.exe" --lang=vi --user-data-dir="$env:TEMP\chrome-vi" http://localhost:5173
+   ```
+2. Đăng nhập `test@eshop.com` và vào trang hồ sơ, xem lại bảng đơn hàng.
+3. Mở Console (F12) và chạy lệnh sau. Đây là bước kiểm khi chạy, không phải bước thiết kế, nên dùng DevTools được:
+   ```js
+   Intl.DateTimeFormat().resolvedOptions().locale
+   ```
+   Chạy lệnh này ở cả Chrome tạm và Chrome thường. Mong đợi: Chrome thường ra `en-US`, Chrome tạm ra `vi`.
+
+**Cách đọc kết quả:**
+- **Nếu Chrome tạm hiện `11/11/2026` hoặc `10/11/2026` kiểu ngày/tháng, và `10.000.000 ₫`:** Giả thuyết đúng. Trang định dạng theo ngôn ngữ của trình duyệt.
+  - Chụp ảnh hai cửa sổ (Chrome tạm và Chrome thường) có Sticky Notes và thanh địa chỉ, đặt tên `screenshots/CL-24_locale_1.png`, `CL-24_locale_2.png`.
+  - Gửi kết quả cho phiên Task 3 (bug chỉ có trên một số nền tảng) và phiên Task 1 (sửa #53, Notes của CL-11, CL-24).
+- **Nếu Chrome tạm vẫn hiện giống Chrome thường:** Trang dùng cố định kiểu Mỹ, và #53 giữ nguyên. Khi đó cần tìm vì sao N3 khác N1 (ví dụ Android tự đổi định dạng); hỏi phiên Task 3 sau khi chạy N2.
+
+Kiểm xong thì đóng Chrome tạm và chạy tiếp N2 như kế hoạch. DB không đổi vì chỉ xem.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Đang phân tích | Tạo issue B-T2-02; score (n = 6, ⏳); analysis | ~2,5 giờ |
+| Task 3 | Đã seed; đang kiểm ngày và số | Chrome tạm tiếng Việt → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **8 giờ** làm việc | Còn khoảng **11 giờ 15 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C235 | 01:49 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+QĐ-S1. a
+QĐ-S2. b
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List research questions and objectives from plan
+- Bash: Apply QĐ-S1 and QĐ-S2 to 04_scores.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\ai_raw\T2_analysis.md
+- Bash: Create 05_findings.md and run checks
+- Bash: Remove em dash from quote and recheck format
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi áp hai quyết định vào `04_scores.md`, rồi soạn tiếp phần phân tích.
+
+`04_scores.md` đã áp xong hai quyết định và không còn mục nào để mở. Bây giờ tôi viết bản nháp phân tích.
+
+`04_scores.md` đã áp xong hai quyết định của bạn. Tôi cũng đã soạn xong bản nháp `05_findings.md` để bạn review.
+
+**`04_scores.md` (bước score, đã xong)**
+- **QĐ-S1 = a:** Bỏ bảng thời gian riêng của nhóm tự hoàn thành. Thời gian chỉ tính cho mọi người tới được mốc cuối của chặng.
+- **QĐ-S2 = b:** Thêm dòng SUS khi bỏ P1: n = 5, trung bình 62,50. Trung bình chính khi giữ P1 là 61,25, chênh 1,25 điểm, nên kết luận không đổi.
+- **Bảng thay đổi:** 2 dòng, Loại "Quyết định của SV". Không còn ⏳.
+
+**`05_findings.md` (bước analysis, bản nháp chờ review)**
+
+Bản AI gốc lưu ở [ai_raw/T2_analysis.md](usability/ai_raw/T2_analysis.md), bản review là [05_findings.md](usability/05_findings.md). Có 9 phát hiện, xếp theo criticality = severity × (số người gặp / 7). Severity đang để theo thang Nielsen 0 đến 4, đây chỉ là đề xuất của tôi:
+
+| Mã | Phát hiện | Người gặp | Loại | Severity đề xuất | Criticality |
+|---|---|---|---|---|---|
+| F1 | Ô danh mục bị bỏ qua, sản phẩm vào "Điện thoại" mà không biết | P1, P4, P5 | Thiết kế | 4 | 1,71 |
+| F2 | Không biết bước tiếp theo hay khi nào là xong (11 lần mở lại kịch bản) | P2 đến P6 | Thiết kế, một phần do cách làm bài | 2 | 1,43 |
+| F3 | Đăng nhập: không xem được mật khẩu, không cảnh báo Caps Lock, lỗi chung chung | P5, P7 | Thiết kế | 3 | 0,86 |
+| F4 | "Thêm mới" tạo danh mục không tên | P1, P4 (P3 suýt) | Bug #66 | 2 | 0,57 |
+| F5 | Form "Sửa" hiện sai và ghi đè dữ liệu | P4 | Bug #67 | 4 | 0,57 |
+| F6 | Ô giá không có dấu phân cách, gõ tay thiếu chữ số 0 | P1 | Thiết kế | 3 | 0,43 |
+| F7 | Giao diện lỗi thời, "giống AI làm" | P2, P6 | Thẩm mỹ | 1 | 0,29 |
+| F8 | Khối CSV ở đầu trang gây khó hiểu | P6 | Thiết kế | 1 | 0,14 |
+| F9 | Nút "Xóa" xóa ngay, không hỏi xác nhận | P4 | Thiết kế | 1 | 0,14 |
+
+Mỗi phát hiện có đủ phần quan sát kèm mốc video, lời người tham gia, nguyên nhân trên giao diện, đối chiếu SRS (để tách bug với vấn đề thiết kế) và đề xuất sửa. Ngoài 9 phát hiện, file còn các mục:
+- Điểm tích cực: menu trái dễ tìm, tạo danh mục nhanh, người dùng thấy làm nhanh.
+- Trả lời Q1 đến Q10 của test plan.
+- Đề xuất cải tiến xếp theo thứ tự ưu tiên.
+- Hạn chế: những sai lệch quy trình của bạn ở P1, P3, P7; cách kiểm D6 bị bug #67 làm sai; kịch bản để ở file riêng.
+
+Kiểm bằng `check_usability.py`: định dạng, riêng tư và mã định nghĩa đều 0 lỗi.
+
+**Ba quyết định cần bạn chốt:**
+- **QĐ6, thang severity:** (a) Nielsen 0 đến 4 (tôi đề xuất); (b) dùng 4 mức của nhóm; (c) thang khác.
+- **QĐ-A1, severity từng phát hiện F1 đến F9:** Bạn sửa thẳng cột "Severity đề xuất" trong file, hoặc nhắn tôi sửa.
+- **QĐ-A2, thứ tự ưu tiên:** (a) Đưa F5 lên đầu vì làm mất dữ liệu (tôi đề xuất). Chỉ có P4 gặp F5 vì chỉ P4 dùng form "Sửa", tức là 1/1 người sửa đã gặp lỗi. (b) Xếp thuần theo criticality.
+
+Bạn có thể commit trước phần score:
+```
+cd Homeworks/HW03
+git add usability/tools/score_t2.py usability/ai_raw/T2_score.md usability/04_scores.md usability/ai_raw/T2_analysis.md
+git commit -m "[T2][score] Compute SUS and performance data for P1 to P7"
+```
+Còn `05_findings.md` thì commit sau khi bạn review xong.
+
+Status:
+- T2 P1 đến P7, bug #66, #67, `score`: Xong.
+- T2 `analysis`: Bản nháp xong, chờ bạn chốt QĐ6, QĐ-A1, QĐ-A2.
+- T2 ảnh danh sách issue: Chưa chụp. Bạn chụp ảnh trang Issues lọc theo `author:angquoc label:"task: T2 usability"`, lưu thành `bugs/screenshots/issues_list_T2_1.png`.
+
+Còn khoảng 1 đến 1,5 giờ làm việc: review analysis khoảng 30 đến 45 phút, ảnh danh sách issue khoảng 5 phút, viết phần Task 2 trong báo cáo khoảng 30 phút. Còn khoảng 11 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C236 | 01:49 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Chạy & "C:\Program Files\Google\Chrome\Application\chrome.exe" --lang=vi --user-data-dir="$env:TEMP\chrome-vi" http://localhost:5173 ở đâu?
+
+Tasl 2 đã tạo issues rồi mà sao bạn vẫn để chờ vậy? Đang ở bước phân tích rồi mà.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Confirm the Task 2 issue exists and check repo status
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi nhầm, xin lỗi. B-T2-02 đã có issue [#67](https://github.com/angquoc/software-testing-2026-HW03-group/issues/67) trong bug report và đã nằm trong commit `a3fcf13`. Lần trước tôi kiểm ở bản chưa cập nhật nên mới ghi "chờ tạo issue". Bảng trạng thái dưới đây đã sửa. Phiên Task 2 đang ở bước score: Đã có `04_scores.md`, `ai_raw/T2_score.md` và `tools/score_t2.py`, chưa commit.
+
+## Chạy lệnh mở Chrome tiếng Việt ở đâu
+
+Chạy trong **PowerShell**, ở thư mục nào cũng được. Lệnh có cú pháp `&` và `$env:TEMP` nên không chạy được trong cmd hay Git Bash. Cách dễ nhất:
+
+1. Trong VS Code, mở một terminal mới (`` Ctrl+` ``) và kiểm ô chọn shell góc phải là "powershell". Hoặc mở **Windows PowerShell** từ menu Start.
+2. Dán lệnh vào và Enter:
+   ```powershell
+   & "C:\Program Files\Google\Chrome\Application\chrome.exe" --lang=vi --user-data-dir="$env:TEMP\chrome-vi" http://localhost:5173
+   ```
+3. Một cửa sổ Chrome mới mở ra, giao diện tiếng Việt, chưa đăng nhập tài khoản nào. Chrome thường của bạn không bị ảnh hưởng. Nếu Chrome hỏi thiết lập ban đầu thì bỏ qua.
+
+Các bước sau giống tin trước: Đăng nhập `test@eshop.com`, xem bảng đơn hàng, chạy `Intl.DateTimeFormat().resolvedOptions().locale` trong Console ở cả hai cửa sổ.
+
+## Commit cho bước score (khi bạn đã review xong)
+
+Bước score theo quy trình AI-first: File trong `ai_raw/` giữ nguyên văn bản AI, file review có bảng "Thay đổi so với bản AI". Vì vậy chỉ commit sau khi bạn đã review `04_scores.md`:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/04_scores.md usability/ai_raw/T2_score.md usability/tools/score_t2.py
+git commit -m "[T2][score] Compute SUS and task metrics for P1 to P7"
+```
+
+Log tôi sẽ xuất ở lượt sau, khi có thêm thay đổi; commit `[setup]` gần nhất (`d91f92d`) đã có log mới.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Issue #67 đã tạo; đang ở bước score | Bạn review score → analysis | ~2 giờ |
+| Task 3 | Đã seed; đang kiểm ngày và số | Chrome tiếng Việt → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **7,5 giờ** làm việc | Còn **11 giờ 10 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C237 | 01:52 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Lịch sử đơn hàng
+Mã ĐH	Ngày đặt	Tổng tiền	Trạng thái	Thao tác
+#5	10/11/2026	10.000.000 ₫	Chờ xác nhận	Hủy đơn
+#4	10/11/2026	8.000.000 ₫	Đã hủy	
+#3	10/11/2026	28.000.000 ₫	Đã xác nhận	Hủy đơn
+#2	10/11/2026	36.000.000 ₫	Đang giao	Hủy đơn
+#1	10/11/2026	45.000.000 ₫	Đã giao	
+
+Kết quả khi chạy cửa sổ khác của window nè.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Giả thuyết đã được xác nhận: **Trang định dạng ngày và số theo ngôn ngữ giao diện của trình duyệt**, không cố định theo tiếng Việt. Cùng một máy, cùng dữ liệu, chỉ khác ngôn ngữ Chrome:
+
+| | Chrome thường (giao diện tiếng Anh) | Chrome `--lang=vi` |
+|---|---|---|
+| Ngày đặt | `11/10/2026` (tháng/ngày) | `10/11/2026` (ngày/tháng) |
+| Tổng tiền | `10,000,000 ₫` | `10.000.000 ₫` |
+
+Đây đúng là loại bug chỉ xuất hiện trên một số nền tảng mà Task 3 cần. Nó cũng giải thích vì sao N1 và N3 cho kết quả ngược nhau ở CL-11, CL-24.
+
+**Phát hiện phụ cũng đã rõ:** Cả hai cửa sổ đều hiện ngày **10**/11, trong khi đơn được tạo lúc khoảng 01:45 ngày **11**/11. Nghĩa là ngày đặt bị lùi một ngày với đơn đặt từ 00:00 đến 07:00 sáng. ⏳ Báo thành bug riêng hay không là quyết định của bạn.
+
+## Chụp bằng chứng trước khi đóng Chrome tạm
+
+1. Ghim Sticky Notes (MSSV, tên, email).
+2. Chụp **từng cửa sổ** ở trang đơn hàng, thấy rõ thanh địa chỉ `localhost:5173`:
+   - `cross_platform/screenshots/CL-24_locale_1.png`: Chrome thường.
+   - `cross_platform/screenshots/CL-24_locale_2.png`: Chrome tiếng Việt.
+3. Nên làm thêm (để chứng minh nguyên nhân): Trong Console của mỗi cửa sổ, chạy `Intl.DateTimeFormat().resolvedOptions().locale`, rồi chụp kèm kết quả vào cùng ảnh hoặc thêm ảnh `_3`, `_4`.
+
+Chụp xong thì đóng Chrome tạm và chạy N2.
+
+## Tin nhắn gửi phiên Task 3
+
+```
+Kết quả kiểm định dạng ngày và số (11/11/2026, khoảng 01:50), cùng máy Windows, cùng dữ liệu seed, trang lịch sử đơn hàng của test@eshop.com:
+- Chrome giao diện tiếng Anh: Ngày "11/10/2026" (tháng/ngày/năm), tiền "10,000,000 ₫".
+- Chrome mở bằng --lang=vi (hồ sơ tạm): Ngày "10/11/2026" (ngày/tháng/năm), tiền "10.000.000 ₫".
+Kết luận: Định dạng ngày và số đổi theo ngôn ngữ giao diện trình duyệt, không cố định tiếng Việt. Điều này giải thích CL-11 và CL-24 khác nhau giữa N1 và N3.
+Ảnh: cross_platform/screenshots/CL-24_locale_1.png (tiếng Anh), CL-24_locale_2.png (tiếng Việt).
+Phụ: Đơn tạo lúc khoảng 01:45 ngày 11/11 nhưng cả hai cửa sổ hiện ngày 10/11 (lùi một ngày). Tôi chưa quyết có báo riêng không.
+Hãy đề xuất cách ghi phát hiện này vào phần so sánh và bug của Task 3, và có cần kiểm thêm ở N2 (Firefox từ xa) không. Chưa sửa file nào khi tôi chưa chốt.
+```
+
+## Tin nhắn gửi phiên Task 1
+
+```
+Kiểm thêm ngày 11/11/2026: Định dạng ngày và số ở trang lịch sử đơn hàng đổi theo ngôn ngữ giao diện trình duyệt. Chrome tiếng Anh hiện "11/10/2026" và "10,000,000 ₫"; Chrome mở bằng --lang=vi hiện "10/11/2026" và "10.000.000 ₫". N1 chạy bằng Chrome giao diện tiếng Anh.
+Vậy issue #53 ("Ngày đặt hàng hiển thị theo tháng/ngày/năm") mô tả đúng hiện tượng trên N1 nhưng chưa đúng gốc lỗi. CL-11 (Passed ở N1) cũng phụ thuộc ngôn ngữ trình duyệt.
+Hãy đề xuất cách sửa issue #53 (tiêu đề, mô tả, có thêm ảnh không) và Notes của CL-11, CL-24 trong Excel. Đưa bản đề xuất, chưa chạy gh issue edit và chưa sửa Excel khi tôi chưa chốt.
+```
+
+Nếu bạn quyết báo lỗi lùi một ngày, thêm một dòng vào tin cho phiên Task 1, vì lỗi này thuộc màn hình đã kiểm ở Task 1.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Issue #67 xong; bước score | Bạn review score → analysis | ~2 giờ |
+| Task 3 | Đã xác nhận lỗi định dạng theo ngôn ngữ | Chụp ảnh → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **7,5 giờ** làm việc | Còn khoảng **11 giờ** tới deadline 13:00 11/11
+````
+
+---
+
+### C238 | 01:55 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Đặt 4 file ảnh này đúng folder và đặt đúng tên giúp tôi luôn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check screenshot naming in cross_platform and the 4 source images
+- Bash: Check naming pattern inside platform screenshot folders
+- Bash: Copy the 4 locale screenshots into the Chrome screenshot folder
+
+**Output AI (nguyên văn):**
+
+````text
+Đã chép 4 ảnh vào [cross_platform/screenshots/chrome/](cross_platform/screenshots/chrome/). Thư mục này đang chứa ảnh N1 của Task 3 và đặt tên theo mã mục, nên tôi đặt ảnh vào đây thay vì ngay dưới `screenshots/` như đã nói ở tin trước.
+
+| File | Nội dung |
+|---|---|
+| `CL-24_locale_1.png` | Chrome giao diện tiếng Anh: `11/10/2026`, `10,000,000 ₫` |
+| `CL-24_locale_2.png` | Chrome `--lang=vi`: `10/11/2026`, `10.000.000 ₫` |
+| `CL-24_locale_3.png` | Chrome tiếng Anh và Console: Locale là `'en-US'` |
+| `CL-24_locale_4.png` | Chrome tiếng Việt và Console: Locale là `'vi'` |
+
+Cả 4 ảnh đều có Sticky Notes và thanh địa chỉ `localhost:5173/profile`. Ảnh 3 và 4 chứng minh nguyên nhân: Trang định dạng theo ngôn ngữ của trình duyệt. Phát hiện về lùi ngày cũng rõ trong ảnh: Đồng hồ ở thanh taskbar là 11/11/2026, còn bảng ghi ngày 10.
+
+**Khi gửi hai tin nhắn ở lượt trước, sửa đường dẫn ảnh** thành `cross_platform/screenshots/chrome/CL-24_locale_1.png` đến `_4.png`, ghi đủ 4 ảnh như bảng trên.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add cross_platform/screenshots/chrome/CL-24_locale_1.png cross_platform/screenshots/chrome/CL-24_locale_2.png cross_platform/screenshots/chrome/CL-24_locale_3.png cross_platform/screenshots/chrome/CL-24_locale_4.png
+git commit -m "[T3][chrome] Add locale evidence for date and number format"
+```
+
+Phiên Task 2 đã sang bước analysis: Có thêm `05_findings.md` và `ai_raw/T2_analysis.md`. Khi bạn đã review xong cả score lẫn analysis, commit thành 2 lần:
+
+```powershell
+git add usability/04_scores.md usability/ai_raw/T2_score.md usability/tools/score_t2.py
+git commit -m "[T2][score] Compute SUS and task metrics for P1 to P7"
+git add usability/05_findings.md usability/ai_raw/T2_analysis.md
+git commit -m "[T2][analysis] Analyse findings from P1 to P7"
+git push
+```
+
+Tiếp theo: Gửi hai tin nhắn cho phiên Task 3 và Task 1 (đã sửa đường dẫn ảnh), đóng Chrome tạm, rồi chạy N2.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Score và analysis đã có bản nháp | Bạn review 2 bước → Skill và Tổng hợp dùng kết quả | ~1,5 giờ |
+| Task 3 | Bằng chứng ngôn ngữ trình duyệt đã có | Gửi tin cho Task 3 → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | Bước `03_results.md` đã có | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **7 giờ** làm việc | Còn khoảng **11 giờ** tới deadline 13:00 11/11
+````
+
+---
+
+### C239 | 02:03 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+QDD6. Dùng 4 mức của nhóm, nhóm ở đây là quy định trong repo nhóm hả?
+QĐ-A1. Đồng ý với đề xuất, bỏ phần (⏳ SV chốt) đi vì đã chốt rồi.
+QĐ-A2. a
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Apply group severity scale and decisions to findings
+- Bash: Remove hourglass from change table text
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng, "4 mức của nhóm" là quy định trong repo nhóm, ở [README.md mục 4.3](HW03_group/README.md) (critical, high, medium, low, kèm cây 4 câu hỏi). Issue #66 và #67 cũng chấm theo thang này.
+
+Có một điểm phải nói rõ: Mức bạn vừa đồng ý ở QĐ-A1 là mức tôi đề xuất theo Nielsen 0 đến 4. Khi đổi sang thang của nhóm, tôi phải chấm lại từng phát hiện theo cây 4 câu hỏi, và vài mức sẽ khác. Tôi áp vào file, rồi liệt kê để bạn xem lại.
+
+Tôi đã áp ba quyết định vào [05_findings.md](usability/05_findings.md). File không còn mục nào để ⏳, bảng thay đổi có thêm 4 dòng ghi "Quyết định của SV", và đã qua kiểm định dạng.
+
+**Mức chấm lại theo cây câu hỏi của nhóm.** Bạn xem lại vì có 3 dòng thay đổi:
+
+| Mã | Đề xuất cũ (Nielsen) | Mức theo thang của nhóm | Lý do theo cây câu hỏi | Criticality |
+|---|---|---|---|---|
+| F5 (bug #67) | 4 | `critical` | Câu 1: Mất dữ liệu đã lưu | 0,57 (đứng đầu theo QĐ-A2) |
+| F2 | 2 | `medium` | Câu 3: Gây khó dùng, đi vòng được | 1,43 |
+| F1 | 4 | **`medium`** | Không mất dữ liệu, chọn lại được, nên dừng ở câu 3 | 0,86 |
+| F3 | 3 | **`medium`** | Luồng không bị chặn hẳn (tắt Caps Lock, chờ hết khoá là vào được) | 0,57 |
+| F4 (bug #66) | 2 | `medium` | Giống mức của issue #66 | 0,57 |
+| F6 | 3 | **`medium`** | Gây khó dùng, đi vòng được | 0,29 |
+| F8 | 1 | `medium` | Gây khó dùng (P6 phải rời trang), đi vòng được | 0,29 |
+| F7 | 1 | `low` | Câu 4: Chỉ là thẩm mỹ | 0,29 |
+| F9 | 1 | `low` | Ảnh hưởng nhỏ, không ai xoá nhầm | 0,14 |
+
+Trong file tôi ghi mức nào cũng kèm lý do. Cách quy đổi để tính criticality là `critical` = 4, `high` = 3, `medium` = 2, `low` = 1.
+
+**Điểm cần lưu ý:** Cây câu hỏi của nhóm được dựng để chấm bug, nên hầu hết vấn đề thiết kế sẽ rơi vào `medium`. Hệ quả là F1 tụt xuống dưới F2. Thật ra F1 là nguyên nhân chính làm M3 thất bại (P1 và P5 không hoàn thành), còn F2 không làm ai thất bại. Tôi đã ghi điều này trong phần ghi chú xếp hạng. Nếu bạn muốn đưa F1 lên trên F2, giống cách đã làm với F5, thì báo tôi. Nếu không, thứ tự giữ nguyên: F5, F2, F1, F3, F4, F6, F8, F7, F9.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/tools/score_t2.py usability/ai_raw/T2_score.md usability/04_scores.md usability/ai_raw/T2_analysis.md usability/05_findings.md
+git commit -m "[T2][score][analysis] Compute scores and write findings for P1 to P7"
+```
+
+Status:
+- T2 P1 đến P7, bug #66, #67, `score`: Xong.
+- T2 `analysis`: Xong, chờ bạn xem lại 3 mức đã đổi (F1, F3, F6) và thứ tự F1, F2.
+- T2 ảnh danh sách issue: Chưa chụp. Lưu thành `bugs/screenshots/issues_list_T2_1.png`, lọc theo `author:angquoc label:"task: T2 usability"`.
+- Phần Task 2 trong báo cáo: Chưa viết.
+
+Còn khoảng 1 giờ làm việc: ảnh danh sách issue khoảng 5 phút, phần Task 2 trong báo cáo khoảng 30 đến 45 phút. Còn khoảng 11 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C240 | 02:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đổi them mức mà nhóm quy ước đi.
+ảnh issue đã bổ sung.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find T2 issue list screenshot and Task 1 section format
+- Read: D:\Dang\Test\Homeworks\HW03\bugs\screenshots\issues_list_T2.png
+- Bash: Add T2 issue list screenshot section to bug report
+- Bash: Move issue list section to end of bug report
+
+**Output AI (nguyên văn):**
+
+````text
+Mức của các phát hiện đã đổi sang thang của nhóm ở lượt trước, nên tôi giữ nguyên, kể cả thứ tự. Giờ tôi kiểm ảnh danh sách issue.
+
+Mức severity vẫn theo thang 4 mức của nhóm như đã áp ở lượt trước, thứ tự giữ theo criticality (F5, F2, F1, F3, F4, F6, F8, F7, F9). [05_findings.md](usability/05_findings.md) không phải sửa thêm gì.
+
+**Ảnh danh sách issue:** [issues_list_T2.png](bugs/screenshots/issues_list_T2.png) đạt yêu cầu. Bộ lọc là `author:angquoc label:"task: T2 usability"` và hiện đủ #66 (`severity: medium`) và #67 (`severity: critical`), mỗi issue có đủ nhãn. WORKFLOW mục 5 quy định chỉ có một ảnh thì không thêm hậu tố, nên tên `issues_list_T2.png` là đúng. Lượt trước tôi bảo đặt tên có `_1`, chỗ đó tôi nói sai.
+
+Tôi đã thêm mục "7. Ảnh danh sách issue (Task 2)" vào cuối [bug_report.md](bugs/bug_report.md) để trỏ tới ảnh này.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/tools/score_t2.py usability/ai_raw/T2_score.md usability/04_scores.md usability/ai_raw/T2_analysis.md usability/05_findings.md bugs/bug_report.md bugs/screenshots/issues_list_T2.png
+git commit -m "[T2][score][analysis] Compute scores, write findings, add T2 issue list screenshot"
+```
+
+Status:
+- T2 P1 đến P7, bug #66 và #67, `score`, `analysis`, ảnh danh sách issue: Xong.
+- Phần Task 2 trong báo cáo chính (`report.md`): Chưa viết. Test plan mục 9 đã có dàn ý 11 phần, phần lớn số liệu lấy được từ `04_scores.md` và `05_findings.md`.
+
+Còn khoảng 30 đến 45 phút làm việc (phần Task 2 trong báo cáo). Còn khoảng 11 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C241 | 02:15 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Kết quả kiểm định dạng ngày và số (11/11/2026, khoảng 01:50), cùng máy Windows, cùng dữ liệu seed, trang lịch sử đơn hàng của test@eshop.com:
+- Chrome giao diện tiếng Anh: Ngày "11/10/2026" (tháng/ngày/năm), tiền "10,000,000 ₫".
+- Chrome mở bằng --lang=vi (hồ sơ tạm): Ngày "10/11/2026" (ngày/tháng/năm), tiền "10.000.000 ₫".
+Kết luận: Định dạng ngày và số đổi theo ngôn ngữ giao diện trình duyệt, không cố định tiếng Việt. Điều này giải thích CL-11 và CL-24 khác nhau giữa N1 và N3.
+Ảnh: cross_platform/screenshots/CL-24_locale_1.png (tiếng Anh), CL-24_locale_2.png (tiếng Việt).
+Phụ: Đơn tạo lúc khoảng 01:45 ngày 11/11 nhưng cả hai cửa sổ hiện ngày 10/11 (lùi một ngày). Không báo riêng.
+Hãy đề xuất cách ghi phát hiện này vào phần so sánh và bug của Task 3, và có cần kiểm thêm ở N2 (Firefox từ xa) không. Chưa sửa file nào khi tôi chưa chốt.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: List HW03 and cross_platform folders
+- Grep: (?i)(cross|compare|02_compare|Task 3|T3|bugs/)
+- PowerShell: List bugs folder contents
+- Bash: Read Task 3 workflow section and search bug report
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\peek_locale.py
+- Grep: CL-11 |CL-24 |CL-11\b|CL-24\b|locale|ngôn ngữ
+- Bash: Print CL-11, CL-24 rows and environment sheet
+- Bash: Find oracle for CL-11 and bug report structure
+
+**Output AI (nguyên văn):**
+
+````text
+Đang đối chiếu phát hiện của bạn với kỳ vọng của CL-11, CL-24 và bug #53 đã có, sau đó sẽ đưa đề xuất.
+````
+
+---
+
+### C242 | 02:16 11/11/2026 | Tool: Claude Code (n/a) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm thêm ngày 11/11/2026: Định dạng ngày và số ở trang lịch sử đơn hàng đổi theo ngôn ngữ giao diện trình duyệt. Chrome tiếng Anh hiện "11/10/2026" và "10,000,000 ₫"; Chrome mở bằng --lang=vi hiện "10/11/2026" và "10.000.000 ₫". N1 chạy bằng Chrome giao diện tiếng Anh.
+Vậy issue #53 ("Ngày đặt hàng hiển thị theo tháng/ngày/năm") mô tả đúng hiện tượng trên N1 nhưng chưa đúng gốc lỗi. CL-11 (Passed ở N1) cũng phụ thuộc ngôn ngữ trình duyệt.
+Hãy đề xuất cách sửa issue #53 (tiêu đề, mô tả, có thêm ảnh không) và Notes của CL-11, CL-24 trong Excel. Đưa bản đề xuất, chưa chạy gh issue edit và chưa sửa Excel khi tôi chưa chốt.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C243 | 02:16 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra trạng thái các task và báo lại tôi, xem thử có cần gì cần xuất và commit nữa không.
 ````
 
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
