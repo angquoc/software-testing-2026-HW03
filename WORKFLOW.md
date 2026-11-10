@@ -99,7 +99,7 @@ HW03/
 │   └── screenshots/<nền tảng>/
 ├── bugs/
 │   ├── bug_report.md           Danh sách bug và số issue
-│   └── screenshots/            Ảnh trang issue
+│   └── screenshots/            Ảnh danh sách issue trên GitHub
 ├── skills/                     Agent Skill
 └── demo/                       Kết quả chạy skill trên màn hình / luồng khác, dùng cho video demo
 ```
@@ -297,7 +297,7 @@ Sửa lại một bước đã commit thì giữ nguyên tag của bước đó.
 | Mục Failed (nền tảng thứ nhất) | `checklist/screenshots/` | `<mã mục>_<nền tảng>.png`, ví dụ `CL-23_chrome.png` |
 | Cross-platform | `cross_platform/screenshots/<nền tảng>/` | `<mã mục>.png` hoặc `overview_<màn hình>.png` |
 | Phiên usability | `usability/sessions/P<n>/` | `P<n>_<số>_<nội dung>.png` |
-| Trang issue | `bugs/screenshots/` | `issue_<số issue>.png` |
+| Danh sách issue | `bugs/screenshots/` | `issues_list_<task>_<số>.png`: Trang Issues đã lọc theo người báo và task (ví dụ `author:angquoc label:"task: T1 checklist"`), chụp đủ mọi issue của task, ví dụ `issues_list_T1_1.png` |
 
 Nhiều ảnh cho cùng một nội dung (ví dụ trang dài phải cuộn, một mục Failed cần nhiều ảnh): Mọi ảnh đều có hậu tố chung đánh số từ `_1`, ví dụ `flow_06_product_list_1.png`, `flow_06_product_list_2.png`. Chỉ có một ảnh thì không thêm hậu tố.
 
@@ -310,7 +310,7 @@ Repo của nhóm: https://github.com/angquoc/software-testing-2026-HW03-group. Q
 - Tiêu đề: `[MSSV][T1|T2|T3][<Mã màn hình hoặc mã luồng>][<Nền tảng>] Mô tả ngắn: Hành vi sai so với đặc tả`
 - Dùng template "Bug report", bắt buộc có ảnh chụp.
 - Gắn đủ: Một `severity`, một `platform`, một `task`, ít nhất một `ia` (T2 gắn `ia` nếu xác định được).
-- Tìm issue trùng trước khi tạo. Mỗi bug một issue. Ghi số issue vào `bugs/bug_report.md` và chụp trang issue.
+- Tìm issue trùng trước khi tạo. Mỗi bug một issue. Ghi số issue vào `bugs/bug_report.md` và chụp danh sách issue đã lọc (mục 5).
 
 ---
 
