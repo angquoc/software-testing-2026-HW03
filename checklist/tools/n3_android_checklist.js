@@ -30,6 +30,18 @@
  *   Cờ chrome://flags không bật được (bản Chrome không còn cờ này): --via=cdp, script nối vào cổng DevTools mặc định
  *   của Chrome (chrome_devtools_remote, có sẵn khi bật Gỡ lỗi USB) thay cho _android.launchBrowser.
  *
+ *   Chạy lại một phần (--only=...): Mục CL đã có ảnh và ảnh tổng quan đã có thì không chụp lại; --reshoot để vẫn chụp
+ *   thêm (ảnh mới có hậu tố mã lần chạy, ảnh cũ không bị ghi đè).
+ *
+ * Sửa sau lần chạy 1 (10/11/2026, nhóm C, F dừng vì "elementHandle.click: Timeout 30000ms"):
+ *   - Mạng chậm (CL-96, CL-112, CL-94) và mất kết nối (CL-105) luôn được tắt trong finally, sau mỗi mục và đầu mỗi
+ *     nhóm. Trước đây CL-96 lỗi khi bấm nên dòng tắt mạng chậm không chạy, các nhóm sau chạy trong mạng chậm.
+ *   - Trước khi bấm nút: Bỏ focus khỏi ô nhập để ẩn bàn phím ảo, cuộn nút vào vùng nhìn; bấm có hạn 15 giây.
+ *   - Đăng xuất ở bước chuẩn bị: Nếu bấm nút xong trang vẫn đăng nhập thì xóa dữ liệu trang EShop (CL-81, CL-82 vẫn
+ *     chỉ bấm nút). Đăng nhập ở bước chuẩn bị: Bấm không được thì gửi bằng Enter; trang báo khóa thì chờ 35 giây.
+ *   - Nhóm F bắt đầu bằng một lần đăng nhập đúng để bộ đếm sai về 0.
+ *   - Lỗi ghi đủ "Call log" của Playwright để biết chính xác bị kẹt ở bước nào.
+ *
  * Script KHÔNG: Bật server, reset DB, chạy seed, cài ứng dụng lên điện thoại (omitDriverInstall), đổi cài đặt điện thoại.
  * Script dùng hồ sơ Chrome thật của điện thoại; chỉ xóa dữ liệu của 2 origin EShop (localhost:5173, localhost:3000),
  *   không đụng tới trang web khác. Script đóng rồi mở lại Chrome (các tab cũ vẫn giữ) và mở thêm một tab mới.
@@ -39,8 +51,9 @@
  *
  * Ảnh: Ở màn hình Failed ĐẦU TIÊN của mỗi mục CL, script chụp màn hình ĐIỆN THOẠI bằng adb exec-out screencap -p
  *   (thấy thanh địa chỉ Chrome và cửa sổ nổi Samsung Notes), lưu vào cross_platform/screenshots/android-chrome/CL-xx.png
- *   (01_setup.md mục 6.3). Ảnh đã có thì không ghi đè: Lưu thêm hậu tố mã lần chạy. Hộp thoại alert đã tự đóng nên
- *   không có trong ảnh. Ngoài ra script chụp ảnh tổng quan: overview_env (chrome://version), overview_login,
+ *   (01_setup.md mục 6.3). Ảnh đã có thì không ghi đè: Lưu thêm hậu tố mã lần chạy. Mục thuộc bảng lịch sử đơn: Cuộn
+ *   tới bảng rồi mới chụp. Mục có hộp thoại của trình duyệt (alert / confirm): CL-xx_1.png chụp lúc hộp thoại còn hiện,
+ *   CL-xx_2.png là màn hình sau khi đóng hộp thoại. Ngoài ra script chụp ảnh tổng quan: overview_env (chrome://version), overview_login,
  *   overview_register, overview_profile (trang dài thì _1, _2...). Tắt ảnh tổng quan: --no-overview. Tắt mọi ảnh: --no-shots.
  * Mục về phím Tab và rê chuột: N/A kèm lý do (điện thoại không có phím Tab, không có con trỏ chuột).
  * Mục cần nhìn (ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa...) được ghi "Chạy tay".
@@ -72,6 +85,9 @@ if (LOG_WS) {
   logw(`\n===== Lần chạy ${new Date().toLocaleString('vi-VN')} | ${process.argv.slice(2).join(' ')} =====`);
 }
 const ONLY = ((process.argv.find((a) => a.startsWith('--only=')) || '').split('=')[1] || '').toUpperCase().split(',').filter(Boolean);
+// Chạy lại một phần (--only): Không chụp lại mục CL đã có ảnh và ảnh tổng quan đã có (ảnh cũ không bao giờ bị ghi đè;
+// --reshoot để vẫn chụp thêm, khi đó ảnh mới có hậu tố mã lần chạy)
+const PARTIAL = ONLY.length > 0 && !process.argv.includes('--reshoot');
 const T0 = Date.now();
 const stamp = () => `${((Date.now() - T0) / 1000).toFixed(0)}s`;
 const BASE = (process.env.ESHOP_URL || 'http://localhost:5173').replace(/\/+$/, '');
@@ -386,23 +402,57 @@ async function check(code, scr, res, why, page) {
   }
 }
 const SHOTS = new Map(); // mã CL -> { scr: màn hình đã chụp, file }
+// Mục có bằng chứng nằm trong bảng "Lịch sử đơn hàng" (dưới form hồ sơ, ngoài màn hình đầu tiên): Cuộn tới bảng rồi mới chụp
+const TABLE_ITEMS = new Set(['CL-07', 'CL-10', 'CL-11', 'CL-12', 'CL-18', 'CL-24', 'CL-84', 'CL-85', 'CL-86', 'CL-87', 'CL-88',
+  'CL-94', 'CL-95', 'CL-97', 'CL-98', 'CL-99', 'CL-100']);
+async function scrollForShot(page, code) {
+  if (!TABLE_ITEMS.has(code)) return false;
+  return ev(page, () => {
+    const t = Array.from(document.querySelectorAll('table')).find((x) => /tổng tiền/i.test(x.textContent));
+    if (!t) return false;
+    t.scrollIntoView({ block: 'start' }); window.scrollBy(0, -150); // chừa chỗ cho tiêu đề "Lịch sử đơn hàng"
+    return true;
+  }).catch(() => false);
+}
+// Ảnh mục Failed. Nếu hành động của mục vừa làm hiện hộp thoại của trình duyệt (alert / confirm), script đã chụp màn hình
+// lúc hộp thoại còn hiện (LAST_DLG): Lưu ảnh đó là CL-xx_1.png và ảnh màn hình hiện tại là CL-xx_2.png.
 async function capture(page, code) {
   try { await page.bringToFront(); } catch (e) { /* trang đã đóng */ }
-  await sleep(600);
-  return snap(code);
+  const dlg = LAST_DLG;
+  const moved = await scrollForShot(page, code);
+  await sleep(moved ? 900 : 600);
+  let first = null;
+  if (dlg) {
+    first = saveShot(`${code}_1`, dlg.buf);
+    if (first) console.log(`    (Ảnh _1 chụp lúc hộp thoại "${dlg.msg.slice(0, 60)}" đang hiện)`);
+  }
+  const live = await snap(first ? `${code}_2` : code);
+  if (moved) await ev(page, () => window.scrollTo(0, 0)).catch(() => {});
+  return first || live;
 }
-// Chụp màn hình điện thoại (adb exec-out screencap -p), lưu PNG nguyên bản, không chỉnh sửa
-async function snap(name) {
+const isPng = (buf) => !!buf && buf.length >= 8 && buf.readUInt32BE(0) === 0x89504e47;
+async function screencap() {
+  const buf = await adb(['exec-out', 'screencap', '-p'], { buffer: true });
+  if (!isPng(buf)) throw new Error(`dữ liệu nhận về không phải PNG (${buf ? buf.length : 0} byte)`);
+  return buf;
+}
+// Ghi PNG nguyên bản (không chỉnh sửa); file đã có thì không ghi đè mà thêm hậu tố mã lần chạy
+function saveShot(name, buf) {
   let out = path.join(SHOT_DIR, `${name}.png`);
   if (fs.existsSync(out)) out = path.join(SHOT_DIR, `${name}_${RUN_ID}.png`);
   try {
-    const buf = await adb(['exec-out', 'screencap', '-p'], { buffer: true });
-    if (!buf || buf.length < 8 || buf.readUInt32BE(0) !== 0x89504e47) throw new Error(`dữ liệu nhận về không phải PNG (${buf ? buf.length : 0} byte)`);
     fs.mkdirSync(SHOT_DIR, { recursive: true });
     fs.writeFileSync(out, buf);
     console.log(`    Ảnh: ${out}`);
     return out;
   } catch (e) {
+    console.log(`    (Không lưu được ${name}: ${String(e.message).split('\n')[0]})`);
+    return null;
+  }
+}
+// Chụp màn hình điện thoại (adb exec-out screencap -p)
+async function snap(name) {
+  try { return saveShot(name, await screencap()); } catch (e) {
     console.log(`    (Không chụp được ${name}: ${String(e.message).split('\n')[0]})`);
     return null;
   }
@@ -410,6 +460,10 @@ async function snap(name) {
 // Ảnh tổng quan một màn hình (01_setup.md mục 6.3); trang dài thì cuộn bằng script (thanh địa chỉ không bị ẩn) và đánh số _1, _2
 async function overview(page, name) {
   if (!OVERVIEW_ON) return;
+  if (PARTIAL && ['', '_1'].some((s) => fs.existsSync(path.join(SHOT_DIR, `overview_${name}${s}.png`)))) {
+    console.log(`  (Ảnh tổng quan ${name} đã có từ lần chạy trước: Không chụp lại)`);
+    return;
+  }
   try {
     await page.bringToFront().catch(() => {});
     await ev(page, () => window.scrollTo(0, 0)); await sleep(800);
@@ -424,11 +478,18 @@ async function overview(page, name) {
     await ev(page, () => window.scrollTo(0, 0));
   } catch (e) { console.log(`  (Không chụp được ảnh tổng quan ${name}: ${String(e.message).split('\n')[0]})`); }
 }
+// Toàn bộ "Call log" của Playwright (cho biết click kẹt ở bước nào: chờ ổn định, bị phần tử khác che, chờ điều hướng...)
+const callLog = (e) => String(e && e.message || e).split('\n').map((l) => l.trim()).filter(Boolean).slice(1, 16).join(' / ');
 async function T(code, scr, page, fn) {
+  LAST_DLG = null;
   try { await fn(); } catch (e) {
     const at = DRY ? ` @ ${(String(e.stack || '').split('\n').find((l) => /n3_android_checklist/.test(l)) || '').trim()}` : '';
     await check(code, scr, 'Lỗi script', String(e.message || e).split('\n')[0] + at);
+    const cl = callLog(e);
+    if (cl) console.log(`    Chi tiết lỗi ${code}: ${cl}`);
   }
+  // Mục lỗi giữa chừng không được để lại mạng chậm / mất kết nối cho các mục sau
+  await resetNet(page);
 }
 const skip = (code, scr, why) => check(code, scr, 'Không chạy được', why);
 const na = (code, scr, why) => check(code, scr, 'N/A', why);
@@ -448,6 +509,8 @@ function finalOf(parts) {
 // ---------------------------------------------------------------- tiện ích phía Node
 const DIALOGS = [];
 let dialogMode = 'accept';
+// Ảnh chụp lúc hộp thoại gần nhất còn hiện; xóa khi bắt đầu mục mới (T), hành động mới (observe) hoặc mở trang mới (go)
+let LAST_DLG = null;
 const CDP = new WeakMap();
 const pathOf = (page) => { try { return new URL(page.url()).pathname.replace(/\/+$/, '') || '/'; } catch (e) { return ''; } };
 
@@ -455,11 +518,16 @@ function setupPage(page) {
   page.on('dialog', async (d) => {
     DIALOGS.push({ type: d.type(), msg: d.message() });
     NOTES.messages.add(`(hộp ${d.type()}) ${d.message()}`);
+    // Chụp màn hình lúc hộp thoại còn hiện (dùng làm ảnh _1 nếu mục đang kiểm Failed), rồi mới đóng hộp thoại
+    if (SHOTS_ON) {
+      try { await sleep(500); LAST_DLG = { buf: await screencap(), msg: d.message(), t: Date.now() }; } catch (e) { /* không chụp được thì bỏ qua */ }
+    }
     try { if (dialogMode === 'dismiss' && d.type() === 'confirm') await d.dismiss(); else await d.accept(); } catch (e) { /* bỏ qua */ }
   });
   return page;
 }
 async function go(page, p) {
+  LAST_DLG = null;
   await page.goto(BASE + p, { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
   await sleep(500);
@@ -496,10 +564,22 @@ async function fillF(page, re, v) {
   await f.fill(v);
   return f;
 }
-async function clickBtn(page, re) {
+// Ẩn bàn phím ảo trước khi bấm nút: fill() đưa focus vào ô nên bàn phím ảo của điện thoại hiện lên và có thể
+// che nút gửi; người dùng thật cũng chạm ra ngoài ô (ô mất focus) trước khi bấm nút.
+async function hideKb(page) {
+  await ev(page, () => { const a = document.activeElement; if (a && a !== document.body && typeof a.blur === 'function') a.blur(); }).catch(() => {});
+  await sleep(400);
+}
+async function prepClick(page, b) {
+  await hideKb(page);
+  await b.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
+  await sleep(200);
+}
+async function clickBtn(page, re, o = {}) {
   const b = await buttonH(page, re);
   if (!b) throw new Error(`Không tìm thấy nút ${re}`);
-  await b.click();
+  await prepClick(page, b);
+  await b.click({ timeout: o.timeout || 15000 });
   return b;
 }
 async function getCdp(page) {
@@ -512,7 +592,14 @@ async function slow(page, on) { // gần với preset "Slow 4G" của DevTools
     ? { offline: false, latency: 563, downloadThroughput: Math.round((1.44 * 1024 * 1024) / 8), uploadThroughput: Math.round((675 * 1024) / 8) }
     : { offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1 });
 }
+// Trả mạng về bình thường (tắt mạng chậm và chế độ mất kết nối). Gọi sau mỗi mục và đầu mỗi nhóm.
+async function resetNet(page) {
+  if (!page) return;
+  await slow(page, false).catch(() => {});
+  await page.context().setOffline(false).catch(() => {});
+}
 async function observe(page, action, ms = WAIT + 1500) {
+  LAST_DLG = null;
   const before = new Set((await ev(page, () => window.__hw.snapshot())).map((s) => s.t));
   const nd = DIALOGS.length;
   const reqs = [];
@@ -542,17 +629,45 @@ const hasOk = (o) => allText(o).some((t) => OK_RE.test(t));
 const msgText = (o) => [...o.texts, ...o.dialogs.map((d) => `(hộp) ${d.msg}`)].join(' | ').slice(0, 160) || '(không có)';
 
 async function isLoggedIn(page) { return !!(await navH(page, RE.logout)) || !!(await navH(page, RE.greeting)); }
-async function logout(page) {
+// strict = true: Chỉ bấm nút đăng xuất (dùng cho CL-81, CL-82, nơi chính việc đăng xuất là thứ đang kiểm).
+// Mặc định (bước chuẩn bị của mục khác): Bấm nút đăng xuất, nếu trang vẫn ở trạng thái đã đăng nhập thì xóa dữ liệu
+// của 2 origin EShop (token đăng nhập) để chắc chắn về trạng thái chưa đăng nhập, và ghi lại vào log.
+async function logout(page, strict = false) {
   const b = await navH(page, RE.logout);
-  if (b) { await b.click(); await sleep(WAIT); }
+  if (b) { await b.click({ timeout: 15000 }).catch((e) => console.log(`    (Bấm nút đăng xuất không được: ${String(e.message).split('\n')[0]})`)); await sleep(WAIT); }
+  if (strict) return;
+  await go(page, pathOf(page) || '/login');
+  if (await isLoggedIn(page)) {
+    console.log('    (Sau khi bấm đăng xuất trang vẫn ở trạng thái đã đăng nhập: Xóa dữ liệu trang EShop để về trạng thái chưa đăng nhập)');
+    await clearSite(page);
+    await go(page, '/login');
+  }
 }
+const LOCK_RE = /khóa|thử lại|tạm/i;
+// Bước chuẩn bị đăng nhập (không phải mục đang kiểm). Bấm nút "Sign In"; nếu bấm không được thì gửi form bằng
+// phím Enter trong ô Mật khẩu (CL-61 đã cho thấy Enter gửi được form). Nếu trang báo tài khoản đang bị khóa tạm
+// (FR-02: 30 giây) thì chờ 35 giây rồi thử lại một lần.
 async function login(page, acc) {
-  await go(page, '/login');
-  if (await isLoggedIn(page)) { await logout(page); await go(page, '/login'); }
-  await fillF(page, RE.loginEmail, acc.email);
-  await fillF(page, RE.password, acc.pw);
-  await clickBtn(page, RE.submitLogin);
-  for (let i = 0; i < 20; i++) { if (await navH(page, RE.greeting)) return true; await sleep(250); }
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    await go(page, '/login');
+    if (await isLoggedIn(page)) { await logout(page); await go(page, '/login'); }
+    await fillF(page, RE.loginEmail, acc.email);
+    const pw = await fillF(page, RE.password, acc.pw);
+    const o = await observe(page, async () => {
+      try { await clickBtn(page, RE.submitLogin); } catch (e) {
+        console.log(`    (Đăng nhập ${acc.email}: Bấm "Sign In" không được, gửi form bằng Enter. Chi tiết: ${String(e.message).split('\n')[0]} / ${callLog(e)})`);
+        await pw.focus(); await page.keyboard.press('Enter');
+      }
+    }, 2500);
+    for (let i = 0; i < 20; i++) { if (await navH(page, RE.greeting)) return true; await sleep(250); }
+    if (attempt === 1 && allText(o).some((t) => LOCK_RE.test(t))) {
+      console.log(`    (Đăng nhập ${acc.email}: Trang báo tài khoản đang bị khóa tạm (${msgText(o)}); chờ 35 giây rồi thử lại)`);
+      await sleep(35000);
+      continue;
+    }
+    console.log(`    (Đăng nhập ${acc.email} không thành công: trang ${o.path}, thông báo ${msgText(o)})`);
+    return false;
+  }
   return false;
 }
 async function formOf(page, scr) {
@@ -730,16 +845,20 @@ async function waitingCheck(page, sl, btnRe) {
     const b = await buttonH(page, btnRe);
     if (!b) return check('CL-96', sl, 'Chạy tay', 'Không tìm thấy nút gửi');
     const s0 = await ev(page, (e) => window.__hw.btnState(e), b);
+    await prepClick(page, b);
+    let seen = null;
     await slow(page, true);
-    await b.click({ noWaitAfter: true });
-    let seen = null; const t0 = Date.now();
-    while (Date.now() - t0 < 4000) {
-      const s = await ev(page, (e) => window.__hw.btnState(e), b).catch(() => null);
-      if (!s) break;
-      if (s.disabled || s.text !== s0.text || s.spinner > s0.spinner) { seen = s; break; }
-      await sleep(60);
-    }
-    await sleep(3000); await slow(page, false);
+    try {
+      await b.click({ noWaitAfter: true, timeout: 15000 });
+      const t0 = Date.now();
+      while (Date.now() - t0 < 4000) {
+        const s = await ev(page, (e) => window.__hw.btnState(e), b).catch(() => null);
+        if (!s) break;
+        if (s.disabled || s.text !== s0.text || s.spinner > s0.spinner) { seen = s; break; }
+        await sleep(60);
+      }
+      await sleep(3000);
+    } finally { await slow(page, false); }
     await check('CL-96', sl, seen ? 'Passed' : 'Failed', seen ? `Trong lúc chờ: nút ${seen.disabled ? 'bị khóa' : ''} ${seen.text !== s0.text ? `đổi chữ "${seen.text}"` : ''} ${seen.spinner > s0.spinner ? 'có vòng xoay' : ''}` : 'Không thấy nút bị khóa, đổi chữ hay vòng xoay trong 4 giây đầu (mạng chậm)', page);
   });
 }
@@ -749,22 +868,23 @@ async function multiClickCheck(page, sl, btnRe) {
     if (!b) return check('CL-112', sl, 'Chạy tay', 'Không tìm thấy nút gửi');
     const reqs = [];
     const onReq = (r) => { if (!['GET', 'HEAD', 'OPTIONS'].includes(r.method())) reqs.push(`${r.method()} ${new URL(r.url()).pathname}`); };
+    await prepClick(page, b);
     await slow(page, true);
     page.on('request', onReq);
-    await b.click({ noWaitAfter: true });
-    await b.click({ force: true, noWaitAfter: true, timeout: 1500 }).catch(() => {});
-    await b.click({ force: true, noWaitAfter: true, timeout: 1500 }).catch(() => {});
-    await sleep(6000);
-    page.off('request', onReq);
-    await slow(page, false);
+    try {
+      await b.click({ noWaitAfter: true, timeout: 15000 });
+      await b.click({ force: true, noWaitAfter: true, timeout: 1500 }).catch(() => {});
+      await b.click({ force: true, noWaitAfter: true, timeout: 1500 }).catch(() => {});
+      await sleep(6000);
+    } finally { page.off('request', onReq); await slow(page, false); }
     await check('CL-112', sl, reqs.length === 1 ? 'Passed' : 'Failed', `Bấm nhanh 3 lần: ${reqs.length} request gửi form (${reqs.join(', ') || 'không có'})`, page);
   });
 }
 async function offlineCheck(page, ctx, sl, action) {
   await T('CL-105', sl, page, async () => {
     await ctx.setOffline(true);
-    const o = await observe(page, action, 3500);
-    await ctx.setOffline(false);
+    let o;
+    try { o = await observe(page, action, 3500); } finally { await ctx.setOffline(false); }
     const net = allText(o).some((t) => /kết nối|mạng|network|offline|thử lại sau|máy chủ|server/i.test(t));
     await check('CL-105', sl, net ? 'Passed' : (anyMsg(o) ? 'Chạy tay' : 'Failed'),
       `Mất kết nối, bấm gửi: thông báo ${msgText(o)}${!net && anyMsg(o) ? ' (có thông báo nhưng không nói về kết nối)' : ''}`, page);
@@ -1333,14 +1453,16 @@ async function phaseLoggedIn(ctx, page) {
   await T('CL-94', sl6, page, async () => {
     await go(page, '/profile');
     await slow(page, true);
-    await page.reload({ waitUntil: 'commit' });
-    let loadingSeen = false; let emptySeen = false; let table = false; const t0 = Date.now();
-    while (Date.now() - t0 < 60000) {
-      const s = await ev(page, () => (window.__hw ? window.__hw.loading() : null)).catch(() => null);
-      if (s) { if (s.table) { table = true; break; } if (s.any) loadingSeen = true; if (s.empty) emptySeen = true; }
-      await sleep(50);
-    }
-    await slow(page, false);
+    let loadingSeen = false; let emptySeen = false; let table = false;
+    try {
+      await page.reload({ waitUntil: 'commit' });
+      const t0 = Date.now();
+      while (Date.now() - t0 < 60000) {
+        const s = await ev(page, () => (window.__hw ? window.__hw.loading() : null)).catch(() => null);
+        if (s) { if (s.table) { table = true; break; } if (s.any) loadingSeen = true; if (s.empty) emptySeen = true; }
+        await sleep(50);
+      }
+    } finally { await slow(page, false); }
     if (!table) { await check('CL-94', sl6, 'Chạy tay', 'Bảng lịch sử đơn không hiện trong 60 giây'); return check('CL-95', sl6, 'Chạy tay', 'Bảng lịch sử đơn không hiện trong 60 giây'); }
     await check('CL-94', sl6, loadingSeen ? 'Passed' : 'Failed', loadingSeen ? 'Có dấu hiệu đang tải trước khi bảng hiện' : 'Không thấy dấu hiệu đang tải trước khi bảng hiện (mạng chậm)', page);
     await check('CL-95', sl6, emptySeen ? 'Failed' : 'Passed', emptySeen ? 'Có lúc hiện "Bạn chưa có đơn hàng nào." trước khi bảng hiện' : 'Không hiện nhầm thông báo chưa có đơn', page);
@@ -1352,7 +1474,7 @@ async function phaseLoggedIn(ctx, page) {
   // CL-81, CL-82: đăng xuất ở trang hồ sơ
   await T('CL-81', sl6, page, async () => {
     await go(page, '/profile');
-    await logout(page); await sleep(WAIT);
+    await logout(page, true); await sleep(WAIT);
     const r = await ev(page, (em) => ({ name: !!window.__hw.field(/^họ (và )?tên/i), table: !!window.__hw.history(),
       email: Array.from(document.body.querySelectorAll('*')).some((e) => window.__hw.vis(e) && !window.__hw.inNav(e) && window.__hw.ownText(e).includes(em))
         || Array.from(document.querySelectorAll('input')).some((i) => i.value === em && window.__hw.vis(i)) }), ACC.test.email);
@@ -1486,18 +1608,25 @@ async function phaseNewUser(page) {
 // ---------------------------------------------------------------- F. Khóa tài khoản (chạy sau cùng)
 async function phaseLockout(page) {
   console.log('\n=== F. Khóa tài khoản sau 3 lần sai (test@eshop.com sẽ bị khóa 30 giây) ===');
-  await go(page, '/login');
-  if (await isLoggedIn(page)) { await logout(page); }
+  // Bắt đầu từ bộ đếm sai = 0 và tài khoản không bị khóa: Đăng nhập đúng một lần (login() tự chờ nếu đang bị khóa
+  // từ lần chạy trước), rồi đăng xuất. Như vậy 3 lần sai ở dưới đúng là 3 lần sai liên tiếp (FR-02).
+  if (!(await login(page, ACC.test))) throw new Error('Không đăng nhập đúng được test@eshop.com trước khi kiểm khóa tài khoản; dừng nhóm F');
+  await logout(page);
   const attempts = [];
   for (let i = 1; i <= 4; i++) {
     await go(page, '/login');
     await fillF(page, RE.loginEmail, ACC.test.email);
-    await fillF(page, RE.password, i <= 3 ? WRONG_PW : ACC.test.pw);
-    const o = await observe(page, () => clickBtn(page, RE.submitLogin));
+    const pw = await fillF(page, RE.password, i <= 3 ? WRONG_PW : ACC.test.pw);
+    const o = await observe(page, async () => {
+      try { await clickBtn(page, RE.submitLogin); } catch (e) {
+        console.log(`    (CL-89 lần ${i}: Bấm "Sign In" không được, gửi form bằng Enter. Chi tiết: ${String(e.message).split('\n')[0]} / ${callLog(e)})`);
+        await pw.focus(); await page.keyboard.press('Enter');
+      }
+    });
     attempts.push({ i, o, logged: await isLoggedIn(page) });
     if (attempts[i - 1].logged) break;
   }
-  const lock = attempts.find((a) => a.o.texts.some((t) => /khóa|thử lại|tạm/i.test(t)) || a.o.dialogs.some((d) => /khóa|thử lại|tạm/i.test(d.msg)));
+  const lock = attempts.find((a) => a.o.texts.some((t) => LOCK_RE.test(t)) || a.o.dialogs.some((d) => LOCK_RE.test(d.msg)));
   const last = attempts[attempts.length - 1];
   const sum = attempts.map((a) => `lần ${a.i}: ${msgText(a.o).slice(0, 60)}${a.logged ? ' (ĐĂNG NHẬP ĐƯỢC)' : ''}`).join(' || ');
   const blocked4 = !lock && attempts.length === 4 && !last.logged;
@@ -1801,7 +1930,17 @@ async function main() {
   const VP = await ev(page, () => ({ w: innerWidth, h: innerHeight, dpr: devicePixelRatio, ua: navigator.userAgent }));
   console.log(`  Vùng trang: ${VP.w} x ${VP.h} px CSS, devicePixelRatio ${VP.dpr}`);
   if (SHOTS_ON) await ask('\n>>> Xem điện thoại: Chrome đang ở trang đăng nhập; đặt cửa sổ nổi Samsung Notes ở góc không che thanh địa chỉ và form. Xong bấm Enter... ');
-  if (OVERVIEW_ON) {
+  if (PARTIAL && SHOTS_ON && fs.existsSync(SHOT_DIR)) {
+    const had = [];
+    for (const f of fs.readdirSync(SHOT_DIR)) {
+      const m = f.match(/^(CL-\d+)\.png$/);
+      if (m) { SHOTS.set(m[1], { scr: 'lần chạy trước', file: path.join(SHOT_DIR, f) }); had.push(m[1]); }
+    }
+    if (had.length) console.log(`  Chạy lại một phần: ${had.length} mục đã có ảnh từ lần chạy trước, không chụp lại (${had.join(', ')})`);
+  }
+  if (OVERVIEW_ON && PARTIAL && fs.existsSync(path.join(SHOT_DIR, 'overview_env.png'))) {
+    console.log('  (overview_env.png đã có từ lần chạy trước: Không chụp lại)');
+  } else if (OVERVIEW_ON) {
     try { await page.goto('chrome://version'); await sleep(1500); await snap('overview_env'); } catch (e) {
       console.log(`  (Không mở được chrome://version bằng script: ${String(e.message).split('\n')[0]}; chụp tay overview_env.png)`);
     }
@@ -1818,8 +1957,14 @@ async function main() {
   for (const [name, fn] of phases) {
     if (ONLY.length && !ONLY.includes(name)) continue;
     console.log(`\n[${stamp()}] Bắt đầu nhóm ${name}`);
+    await resetNet(page);
+    await hideKb(page);
     try { await fn(); } catch (e) {
-      console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.stack || e).split('\n').slice(0, 3).join(' / ')}`);
+      console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.message || e).split('\n')[0]}`);
+      const cl = callLog(e);
+      if (cl) console.error(`    Chi tiết: ${cl}`);
+      console.error(`    Vị trí: ${String(e.stack || '').split('\n').filter((l) => /n3_android_checklist/.test(l)).slice(0, 3).map((l) => l.trim()).join(' / ')}`);
+      await resetNet(page);
       if (!DRY) await ask('Bấm Enter để chạy nhóm tiếp theo... ');
     }
   }
