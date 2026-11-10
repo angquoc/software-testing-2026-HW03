@@ -26,14 +26,24 @@
  *   Vì vậy sau lần chạy, phiên điều phối cần reset DB và seed lại trước khi dùng tiếp.
  *
  * Phần tử được tìm theo chữ nhìn thấy trên trang (00_survey.md), không dựa vào mã nguồn EShop.
- * Gặp mục Failed: Script dừng, in mã CL và lý do, giữ nguyên màn hình; bấm Enter để chạy tiếp.
+ * Gặp mục Failed: Ở màn hình Failed ĐẦU TIÊN của mỗi mục CL, script đưa Chrome lên trước và tự chụp TOÀN MÀN HÌNH
+ *   Windows (capture_screen.ps1: thấy thanh địa chỉ, tab, taskbar), lưu vào checklist/screenshots/<mã mục>_chrome.png
+ *   (WORKFLOW mục 5), rồi chạy tiếp, không dừng. Ảnh đã có thì không ghi đè: Lưu thêm hậu tố mã lần chạy.
+ *   Các màn hình Failed sau của cùng mục chỉ ghi vào bảng cuối. Hộp thoại alert đã tự đóng nên không có trong ảnh.
+ *   Tắt chụp: --no-shots. Chế độ --dry-run không chụp.
  * Mục cần nhìn (ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa...) được ghi "Chạy tay".
  */
 const readline = require('readline');
+const path = require('path');
+const fs = require('fs');
+const { execFile } = require('child_process');
 const { chromium } = require('playwright-core');
 
 // ---------------------------------------------------------------- cấu hình
 const DRY = process.argv.includes('--dry-run');
+const SHOTS_ON = !DRY && !process.argv.includes('--no-shots');
+const SHOT_DIR = path.resolve(__dirname, '..', 'screenshots');
+let LAUNCH_MS = 0;
 const ONLY = ((process.argv.find((a) => a.startsWith('--only=')) || '').split('=')[1] || '').toUpperCase().split(',').filter(Boolean);
 const T0 = Date.now();
 const stamp = () => `${((Date.now() - T0) / 1000).toFixed(0)}s`;
@@ -336,10 +346,27 @@ async function check(code, scr, res, why, page) {
   if (!R.has(code)) R.set(code, []);
   R.get(code).push({ scr, res, why });
   console.log(`${color[res] || '\x1b[33m'}${code} [${scr}] ${res}: ${why}\x1b[0m`);
-  if (res === 'Failed' && page && !DRY) {
-    try { await page.bringToFront(); } catch (e) { /* trang đã đóng */ }
-    await ask(`\n>>> ${code} FAILED (${scr}): ${why}\n    Màn hình đang giữ nguyên để chụp. Chụp xong bấm Enter để chạy tiếp... `);
+  // Chỉ chụp ở màn hình Failed đầu tiên của mỗi mục CL; các màn hình Failed sau vẫn ghi vào bảng cuối
+  if (res === 'Failed' && page && SHOTS_ON) {
+    if (SHOTS.has(code)) { console.log(`    (${code} đã chụp ở màn hình ${SHOTS.get(code).scr}; không chụp lại)`); return; }
+    SHOTS.set(code, { scr, file: null });
+    SHOTS.get(code).file = await capture(page, code);
   }
+}
+const SHOTS = new Map(); // mã CL -> { scr: màn hình đã chụp, file }
+async function capture(page, code) {
+  try { await page.bringToFront(); } catch (e) { /* trang đã đóng */ }
+  await sleep(400);
+  let out = path.join(SHOT_DIR, `${code}_chrome.png`);
+  if (fs.existsSync(out)) out = path.join(SHOT_DIR, `${code}_chrome_${RUN_ID}.png`);
+  return new Promise((resolve) => {
+    execFile('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(__dirname, 'capture_screen.ps1'),
+      '-Out', out, '-SinceMs', String(LAUNCH_MS)], { windowsHide: true, timeout: 30000 }, (err, stdout) => {
+      if (err) { console.log(`    (Không chụp được ${code}: ${String(err.message).split('\n')[0]})`); resolve(null); return; }
+      console.log(`    Ảnh: ${String(stdout).trim()}`);
+      resolve(out);
+    });
+  });
 }
 async function T(code, scr, page, fn) {
   try { await fn(); } catch (e) {
@@ -1523,14 +1550,16 @@ function printFinal() {
   for (let i = 1; i <= 112; i++) {
     const code = `CL-${String(i).padStart(2, '0')}`;
     const parts = R.get(code);
-    if (!parts) { rows.push({ 'Mã CL': code, 'Kết quả nháp': 'Chưa chạy', 'Lý do': 'Script dừng hoặc bỏ qua trước khi tới mục này' }); continue; }
+    if (!parts) { rows.push({ 'Mã CL': code, 'Kết quả nháp': 'Chưa chạy', 'Ảnh': '', 'Lý do': 'Script dừng hoặc bỏ qua trước khi tới mục này' }); continue; }
     const fin = finalOf(parts);
     const show = fin === 'Passed' ? parts : parts.filter((p) => p.res !== 'Passed');
-    rows.push({ 'Mã CL': code, 'Kết quả nháp': fin, 'Lý do': show.map((p) => `[${p.scr}] ${p.why}`).join(' || ').slice(0, 220) });
+    const shot = SHOTS.get(code);
+    rows.push({ 'Mã CL': code, 'Kết quả nháp': fin, 'Ảnh': shot && shot.file ? path.basename(shot.file) : '', 'Lý do': show.map((p) => `[${p.scr}] ${p.why}`).join(' || ').slice(0, 220) });
   }
   console.log('\n=== KẾT QUẢ NHÁP N1 (Chrome trên Windows). Sinh viên chốt trong Excel; mục Failed cần ảnh ===');
   console.table(rows);
   const count = (r) => rows.filter((x) => x['Kết quả nháp'].startsWith(r)).length;
+  if (SHOTS.size) console.log(`Ảnh mục Failed lưu ở ${SHOT_DIR} (${[...SHOTS.values()].filter((x) => x.file).length} ảnh). Xem lại từng ảnh; ảnh chụp lúc chưa đúng màn hình thì chụp bổ sung bằng tay.`);
   console.log(`Passed ${count('Passed')} | Failed ${count('Failed')} | Không chạy được ${count('Không chạy được')} | Chạy tay ${count('Chạy tay')} | Chưa chạy ${count('Chưa chạy')}`);
 }
 
@@ -1550,6 +1579,7 @@ async function main() {
   const okRun = DRY ? 'co' : await ask('Đã làm đủ BƯỚC 0? Gõ "co" rồi Enter để bắt đầu (Enter trống để thoát): ');
   if (!/^c[oó]$/i.test(okRun.trim())) { console.log('Dừng: Chưa chuẩn bị dữ liệu.'); rl.close(); return; }
 
+  LAUNCH_MS = Date.now() - 3000;
   const browser = await chromium.launch({ channel: 'chrome', headless: false, args: ['--window-position=0,0'] });
   const ctx = await browser.newContext({ viewport: VIEWPORT });
   await ctx.addInitScript(pageLib);
