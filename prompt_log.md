@@ -6615,6 +6615,470 @@ Agent Skill: 1b. Thật ra khi làm tôi nhận thấy review từng phầ
 **Output AI (nguyên văn):**
 
 ````text
+Đã reset DB và chạy `seed_orders.py`. Phiên Task 1 chạy thử được ngay. Tôi cũng đã tạo thư mục `demo/` cho Agent Skill. Log đã xuất lại: 104 lượt.
+
+## Dữ liệu cho Task 1
+
+- **Danh mục:** Sau reset chỉ còn 3 danh mục mẫu. "Loa Bluetooth" (id 5) của PL đã bị xóa.
+- **Đơn hàng:** `test@eshop.com` có 5 đơn: #1 delivered, #2 shipping, #3 confirmed, #4 canceled, #5 pending.
+- **Tài khoản:** `newuser@eshop.com` / `NewUser123!` không có đơn.
+
+**Kết quả cho G4:** Lần reset này chạy **khi server đang bật**, và danh mục của PL biến mất ngay. Vậy giả định G4 đúng: Reset giữa hai phiên không cần tắt server. Bạn ghi vào mục 8.1 của `pilot/notes.md`.
+
+## Task 1: Chạy thử để gỡ lỗi, chưa chụp
+
+Được, và nên chia làm hai lần:
+
+| Lần | Mục đích | Dừng ở mục Failed? | Ai ngồi máy |
+|---|---|---|---|
+| **Chạy thử (bây giờ)** | Soát cú pháp, kiểm script có tìm đúng phần tử và đi hết 112 mục không | **Không.** Chỉ ghi lại rồi chạy tiếp | Phiên Task 1 tự chạy, bạn không cần chụp |
+| **Chạy thật (sau)** | Lấy kết quả nháp, chụp ảnh Failed có Sticky Notes | Có, chờ bạn bấm Enter | Bạn |
+
+Prompt gửi phiên Task 1:
+
+```text
+Cho phép chạy THỬ để gỡ lỗi, không phải lần chạy thật. Phiên điều phối đã reset DB và chạy seed_orders.py lúc 10:27.
+1. Chạy `node --check` trước.
+2. Thêm chế độ chạy thử (ví dụ cờ --dry-run): Gặp Failed thì chỉ ghi lại rồi chạy tiếp, không dừng chờ Enter, không cần tôi chụp ảnh.
+3. Chạy thử, sửa lỗi script (selector, thời gian chờ, thứ tự bước). Script làm bẩn dữ liệu (đăng ký, hủy đơn, khóa tài khoản), nên trước mỗi lần chạy lại thì nhắn tôi để nhờ phiên điều phối reset và seed, đừng tự reset.
+4. Không sửa 02_checklist.md hay file Excel. Kết quả chạy thử chỉ để gỡ lỗi, không ghi vào Excel.
+5. Giới hạn khoảng 1,5 giờ. Xong thì báo: Script đã chạy hết chưa, những mục nào script không làm được (chuyển sang chạy tay).
+```
+
+Script chạy thử dùng Chrome và cửa sổ Chrome sẽ hiện trên màn hình. Nếu bạn đang gõ trong cửa sổ khác thì không sao. Đừng bấm vào cửa sổ Chrome của script.
+
+**Mỗi lần phiên Task 1 cần chạy lại**, bạn nhắn tôi "reset" là đủ. Trước lần chạy thật, tôi cũng reset và seed lại.
+
+## Agent Skill
+
+**1b:** Bạn gửi phiên skill câu sau:
+
+```text
+Chọn (b): Ghi ngoại lệ vào SKILL.md. Skill mặc định viết đủ 4 IA rồi dừng một lần để review có mạch; HW03 đã làm từng IA một lượt theo WORKFLOW (lịch sử), không sửa WORKFLOW. Thư mục kết quả demo: Homeworks/HW03/demo/gui-checklist/ và demo/usability-evaluation/ (xem demo/README.md).
+```
+
+**Thư mục demo:** Trước đây chưa có, tôi vừa tạo:
+- `demo/README.md` có 2 thư mục con: `gui-checklist/` và `usability-evaluation/`. Màn hình và luồng cho demo ghi ⏳, chốt khi quay video.
+- Thư mục nằm ở cấp cao nhất, **không** đặt trong `skills/`. Lý do: Khi cài skill, cả thư mục `skills/<tên>` được chép sang `.claude/skills/`, nên nếu đặt trong đó, `demo` sẽ bị coi là một skill.
+- Đã thêm `demo/` vào cây thư mục của `WORKFLOW.md` và bảng cấu trúc trong `README.md`.
+
+## Lệnh commit (thêm vào các lệnh lần trước nếu chưa chạy)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/README.md WORKFLOW.md README.md prompt_log.md
+git commit -m "[skill] Add demo folder for skill runs on other screens"
+git push
+```
+
+⏱ Còn khoảng **28 giờ** làm việc | Còn **11 giờ 32 phút** tới mốc 22:00 10/11 | **26 giờ 32 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C105 | 10:30 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Cho phép chạy THỬ để gỡ lỗi, không phải lần chạy thật. Phiên điều phối đã reset DB và chạy seed_orders.py lúc 10:27.
+1. Chạy `node --check` trước.
+2. Thêm chế độ chạy thử (ví dụ cờ --dry-run): Gặp Failed thì chỉ ghi lại rồi chạy tiếp, không dừng chờ Enter, không cần tôi chụp ảnh.
+3. Chạy thử, sửa lỗi script (selector, thời gian chờ, thứ tự bước). Script làm bẩn dữ liệu (đăng ký, hủy đơn, khóa tài khoản), nên trước mỗi lần chạy lại thì nhắn tôi để nhờ phiên điều phối reset và seed, đừng tự reset.
+4. Không sửa 02_checklist.md hay file Excel. Kết quả chạy thử chỉ để gỡ lỗi, không ghi vào Excel.
+5. Giới hạn khoảng 1,5 giờ. Xong thì báo: Script đã chạy hết chưa, những mục nào script không làm được (chuyển sang chạy tay).
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Syntax-check the Playwright script
+- Bash: Add --dry-run and --only flags, re-check syntax
+- Grep: bringToFront\(\);\s*$
+- Bash: Inspect exact characters around the cart prompt
+- Bash: Print exact characters as ASCII escapes
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch_dry.py
+- Bash: Apply dry-run patch and re-check syntax
+- Bash: Run first dry-run of the N1 Playwright script
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu: Soát cú pháp, rồi thêm cờ `--dry-run`.
+
+Có ký tự bị shell xử lý lệch khi truyền qua heredoc. Tôi chuyển đoạn sửa sang file Python riêng để chạy.
+
+Cú pháp hợp lệ. Bắt đầu lần chạy thử thứ nhất, toàn bộ nhóm A đến G, trên dữ liệu phiên điều phối đã reset và seed lúc 10:27.
+
+Lần chạy thử thứ nhất đang chạy nền, Chrome sẽ hiện trên màn hình. Tôi chờ nó xong rồi đọc log để sửa lỗi.
+````
+
+---
+
+### C106 | 10:31 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+b. Ghi ngoại lệ vào SKILL.md. Skill mặc định viết đủ 4 IA rồi dừng một lần để review có mạch; HW03 đã làm từng IA một lượt theo WORKFLOW (lịch sử), không sửa WORKFLOW. Thư mục kết quả demo: Homeworks/HW03/demo/gui-checklist/ và demo/usability-evaluation/ (xem demo/README.md).
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read demo folder README
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-ai-draft.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Bash: Check formatting of edited skill files
+
+**Output AI (nguyên văn):**
+
+````text
+Mình đã ghi ngoại lệ vào skill và thêm thư mục demo. `WORKFLOW.md` giữ nguyên. Kiểm định dạng các file đã sửa không có lỗi.
+
+**Ngoại lệ về `ai-draft`:**
+- Trong [gui-checklist/SKILL.md](Homeworks/HW03/skills/gui-checklist/SKILL.md) có mục mới "Ngoại lệ so với quy trình của dự án":
+  - Mặc định skill viết đủ 4 file IA rồi dừng một lần để bạn review. Mỗi IA vẫn là một file và một commit riêng.
+  - Lý do ghi trong skill: Review cả 4 file cùng lúc dễ thấy ý bị lặp giữa các IA. Ví dụ ở lần làm thật, ý "thông báo bằng tiếng Việt" lặp ở 8 mục IA-04, sau phải gom về một mục IA-01.
+  - Ngoại lệ này áp dụng cả khi WORKFLOW ghi khác. Khi chạy, skill báo bạn một câu là đang theo ngoại lệ này. Nếu bạn muốn dừng sau từng IA thì skill làm theo bạn.
+  - Có ghi chú lịch sử: HW03 Task 1 đã làm mỗi lượt một IA theo WORKFLOW, nên WORKFLOW giữ nguyên.
+- Bước 0 và phần quy tắc cứng giờ dẫn tới mục ngoại lệ này. [step-ai-draft.md](Homeworks/HW03/skills/gui-checklist/references/step-ai-draft.md) cũng nhắc lại.
+
+**Thư mục demo:** Bước 0 của mỗi skill ghi thư mục làm việc khi chạy demo, dẫn tới [demo/README.md](Homeworks/HW03/demo/README.md). Skill cũng ghi rõ không đọc thư mục của lần làm trước.
+- [gui-checklist](Homeworks/HW03/skills/gui-checklist/SKILL.md): `demo/gui-checklist/`
+- [usability-evaluation](Homeworks/HW03/skills/usability-evaluation/SKILL.md): `demo/usability-evaluation/`
+
+Commit khi bạn sẵn sàng. Lệnh dưới chạy từ `Homeworks/HW03`, chưa tính `demo/README.md`.
+
+```
+git add skills/gui-checklist
+git commit -m "[skill] Add GUI checklist skill"
+git add skills/usability-evaluation
+git commit -m "[skill] Add usability evaluation skill"
+```
+
+Nếu đã commit hai skill ở lượt trước thì dùng một commit cho phần sửa này:
+
+```
+git add skills
+git commit -m "[skill] Add ai-draft exception and demo folders to skills"
+```
+````
+
+---
+
+### C107 | 10:36 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bsk71scnw</task-id>
+<tool-use-id>toolu_016GBsiiYTVjAJrkKVtRS4aC</tool-use-id>
+<output-file>C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\tasks\bsk71scnw.output</output-file>
+<status>completed</status>
+<summary>Background command "Run first dry-run of the N1 Playwright script" completed (exit code 0)</summary>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show run summary and phase markers from the log
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\dry1.txt
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\probe1.js
+- Bash: Run debug probe for focus, password and phone acceptance
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\probe2.js
+- Bash: Run second debug probe for password and phone
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Bash: Locate functions and blocks to patch
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch2.py
+- Bash: Apply second patch and re-check syntax
+- Bash: Search first log for script errors
+- Bash: Check current time
+
+**Output AI (nguyên văn):**
+
+````text
+Cú pháp vẫn hợp lệ. Tôi kiểm tra trong log lần 1 xem còn mục nào bị "Lỗi script" hoặc "Chưa chạy" không.
+
+Lần chạy thử 1 chạy hết 7 nhóm (A đến G) trong khoảng 5 phút, không có mục nào bị "Lỗi script". Tôi đã sửa script theo những gì log cho thấy; cú pháp vẫn hợp lệ. Lần chạy 1 và 2 script dò đã làm bẩn dữ liệu (chi tiết ở cuối), nên **cần phiên điều phối reset DB và chạy `seed_orders.py` trước lần chạy thử 2.**
+
+**Hai hành vi của EShop chặn nhiều mục khác.** Tôi xác nhận bằng 2 script dò nhỏ, không thuộc checklist:
+- **Trang Đăng ký từ chối mọi mật khẩu.** Tôi đã thử 12 mật khẩu đúng UI-R03, kể cả `Test1234!`; trang luôn báo "Mật khẩu quá yếu!". Vì vậy không đăng ký được qua giao diện.
+- **Trang hồ sơ chỉ chấp nhận `912345678`** (9 chữ số, không có số 0 đầu). Trang từ chối `0912345678`, số 11 chữ số và ô trống, bằng hộp thoại "Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.".
+
+**Đã sửa trong script:**
+
+| Vấn đề ở lần chạy 1 | Cách sửa |
+|---|---|
+| Các mục W-04 (CL-39, 40, 60, 96, 105, 112, 65, 104) bị đánh giá dựa trên thông báo "mật khẩu yếu", nên kết quả sai | Đầu nhóm B, script thử đăng ký một lần với dữ liệu hợp lệ. Nếu bị chặn, các mục này ghi "Không chạy được" kèm lý do. CL-57, 58, 106 ở W-04 kiểm bằng lỗi mật khẩu yếu thay cho lỗi email trùng, có ghi chú |
+| CL-101 và CL-110 ghi Passed, dù hộp thoại báo lỗi | Khi xét lỗi và thành công, script đọc cả nội dung hộp thoại |
+| CL-96, 105, 108, 112 ở W-06 không gửi được, vì số điện thoại trống bị chặn | Dùng số `912345678` mà app chấp nhận; checklist không quy định số cho các mục này. Phần màn hình được ghi rõ "(SĐT 912345678)" |
+| CL-102, CL-52 Failed mà không nêu lý do | Ghi kèm thông báo lúc bấm Cập nhật. Riêng CL-102, script thử thêm với số app chấp nhận để xem lời chào có tự đổi không |
+| Thứ tự Tab ở W-03 chỉ ghi được một phần tử | Vòng Tab dừng khi gặp lại phần tử đã focus. Nút "Sign In" có `tabindex=1` thật, nên CL-15 và CL-16 ở W-03 sẽ Failed với thứ tự đầy đủ |
+| CL-89: Lần 4 (mật khẩu đúng) vẫn bị từ chối nhưng script chỉ ghi "không thấy thông báo khóa" | Coi đó là bằng chứng tài khoản đã bị khóa. CL-89 Failed vì thông báo không nói bị khóa; CL-90 vẫn kiểm được nội dung thông báo |
+| CL-105 ở W-03 ghi Passed dù thông báo chỉ là "Đăng nhập thất bại" | Chỉ Passed khi thông báo nói về kết nối. Có thông báo nhưng không nói về kết nối thì ghi "Chạy tay" |
+
+**Dữ liệu đã bị làm bẩn:**
+- Đơn #5 (pending), đơn có trạng thái confirmed và đơn Đang giao đã bị hủy.
+- Có thêm vài tài khoản `hw03.probe.*`. Thực ra trang chặn mật khẩu nên có thể không tài khoản nào được tạo.
+- Số điện thoại của `test@eshop.com` đang là `912345678`.
+- `test@eshop.com` đã bị khóa tạm lúc khoảng 10:36.
+
+Bạn nhờ phiên điều phối reset và seed rồi báo tôi; tôi sẽ chạy thử lần 2 với `--dry-run`. Thời gian đã dùng khoảng 15 phút trong 1,5 giờ.
+````
+
+---
+
+### C108 | 10:52 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Reset db cho task 1.
+- Tôi đang điền thông tin cho pilot, có vài thông tin tôi không hiểu điền gì lắm (ngoại trừ phần câu hỏi bắt buộc đang điền), nên phần nào trống trong phiếu chưa điền, bạn có thể giải thích ngắn gọn, nêu ví dụ cho tôi không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset DB and seed orders for Task 1
+- Read: D:\Dang\Test\Homeworks\HW03\usability\pilot\notes.md
+
+**Output AI (nguyên văn):**
+
+````text
+Đã reset DB và chạy lại `seed_orders.py` (10:52). Dữ liệu đúng như lần trước: 3 danh mục mẫu, 5 đơn của `test@eshop.com`, `newuser@eshop.com` không có đơn. Phiên Task 1 chạy thử được.
+
+Tôi đã đọc `pilot/notes.md` (file chỉ dùng mã `PL`). Ngoài các ô còn trống, có **3 chỗ đang điền sai**. Nên sửa những chỗ này trước.
+
+## Chỗ điền sai, cần sửa
+
+**1. Mốc thời gian (mục 3): T1 sớm hơn T0.** Bạn đang ghi T0 = 00:22 nhưng T1 = 00:16. Mọi mốc phải lấy trên **cùng một video** và tăng dần: T0 ≤ T1 ≤ T2 ≤ T3 ≤ T4. T0 là lúc PL bắt đầu thao tác sau khi đọc xong kịch bản. Nếu video bắt đầu quay khi PL đã đọc xong thì T0 có thể là khoảng 00:00 đến 00:05. Xem lại video để lấy đúng.
+
+**2. "Vượt chuẩn" (mục 4): Đang tick cả 4 dòng, nhưng PL làm nhanh hơn chuẩn.** "Vượt chuẩn" nghĩa là **chậm hơn** thời gian chuẩn. Cột "Thời gian" là phép trừ hai mốc. Ví dụ, nếu T1 = 00:05 và T2 = 00:40:
+- M2 = T2 − T1 = 00:35, nhỏ hơn chuẩn 01:20.95, nên **không** tick.
+- Toàn luồng = T4 − T0, cỡ 01:25, nhỏ hơn chuẩn 03:51.25, nên không tick.
+
+**3. Kết quả M3 và kết quả toàn luồng: Phải là "Không hoàn thành".** Ở mục 6 bạn ghi giá thấy được là `299900 ₫`, thiếu một chữ số 0. Theo `02_scenario.md` mục 4.1 và 4.3, tiêu chí M3 là cột Giá hiện `2990000 ₫`. Giá sai mà PL không tự sửa trước khi nói "Tôi làm xong rồi" thì tính là "Không hoàn thành". Cần sửa 3 chỗ:
+- Mục 4, dòng M3: Tick "Không HT".
+- Mục 2: Kết quả toàn luồng chọn "Không hoàn thành".
+- Mục 7: Thêm điểm 2 "PL nhập giá thiếu một số 0 mà không nhận ra; lúc tự kiểm chỉ xem danh mục và ảnh". Đây là phát hiện đáng giá nhất của phiên.
+
+## Ô còn trống hoặc chưa đúng chỗ
+
+| Chỗ | Nghĩa | Ví dụ |
+|---|---|---|
+| Mục 2, "Quay màn hình ☐" | PL đồng ý quay màn hình | Đổi thành ☑ |
+| Mục 2, "Thời lượng cả phiên" (đang ghi 01:30) | Cả phiên, từ lời chào tới lời cảm ơn (gồm phiếu thông tin, nhiệm vụ, form, câu hỏi mở). 01:30 chỉ là thời gian làm nhiệm vụ | `10:09 đến 10:35, khoảng 26 phút` |
+| Mục 4, cột "Thời gian" | Kết quả phép trừ hai mốc | `T3 − T2 = 00:40` |
+| Mục 4, dòng "Tự kiểm tra" | Cột Thời gian là T4 − T3; nhận xét của bạn hiện nằm ở cột Kết quả, giữ cũng được | `T4 − T3 = 00:10` |
+| Mục 5, nhật ký sự kiện | Mỗi dòng một sự việc: Mốc video, chặng, mã, mô tả, lời nói (ghi tay) | `00:25 \| M2 \| La \| Bấm "Thêm mới" ở Quản lý Danh mục, tưởng mở form, thực ra tạo ngay một dòng trống \| "Ủa sao nó ra luôn vậy" (ghi tay)` |
+| | | `01:05 \| M3 \| Ld \| Nhập giá 299900, thiếu một số 0, không nhận ra` |
+| | | `01:22 \| M3 \| TK \| Xem bảng sản phẩm: Kiểm danh mục và ảnh, không xem giá` |
+| | Nếu PL phải sửa dòng trống vừa tạo thì thêm một dòng mã `Le` | |
+| Mục 6, dòng cuối | Danh mục thấy trong form "Sửa" | `danh mục thấy: Loa Bluetooth` |
+| Mục 8.2, "Thời lượng I2.2 đến I3, I5, I6" | Mỗi phần mất bao lâu, so với test plan mục 5 | `Mở đầu và phiếu thông tin: 4 phút; form SUS: 2 phút; câu hỏi mở: 8 phút. Tổng phiên 26 phút, nằm trong 25 đến 40 phút` |
+| Mục 8.2, "Câu C4" | Khi PL nói không làm sai gì, câu hỏi thêm ("Nếu bạn lỡ nhập sai giá...") có làm PL lúng túng hay thấy kỳ không | `PL trả lời được, không thấy lạ; giữ câu hỏi thêm`. Lưu ý: PL **có** nhập sai giá nhưng không biết, nên câu hỏi thêm vô tình hỏi đúng chỗ. Ghi lại PL đã trả lời gì |
+| Mục 8.1, cột "Cần sửa" của dòng thời gian | PL nhanh gấp đôi so với dự tính. Có thể đề xuất xét lại bội số ×5, hoặc giữ nguyên vì mới có 1 người | `Đề xuất: Giữ ×5 tới khi có số liệu P1 đến P7` hoặc `Đề xuất: Giảm bội số`. Bạn quyết, rồi phiên Task 2 điền cột "Sau pilot" |
+
+Hai lỗi nhỏ:
+- B4 đang ghi `x 10 đến 50`, đổi thành `☑`.
+- Mục 7 dòng 1 ghi "Doanh mục", sửa thành "Danh mục".
+
+Về điểm vướng ở mục 7 dòng 1 ("Thêm mới" tạo ngay dữ liệu trống): Đây có thể là bug hoặc vấn đề thiết kế. Phân loại để bước `analysis` quyết, nhưng giờ nên ghi rõ mô tả để lúc đó dùng lại được.
+
+⏱ Còn khoảng **28 giờ** làm việc | Còn **11 giờ 8 phút** tới mốc 22:00 10/11 | **26 giờ 8 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C109 | 10:54 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã reset db.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read-only check that seed orders exist
+- Bash: Run second dry-run of the N1 script
+
+**Output AI (nguyên văn):**
+
+````text
+Trước khi chạy, tôi kiểm tra nhanh xem dữ liệu seed đã có chưa, vì bạn chỉ nhắc reset DB. Cách kiểm: Đăng nhập `test@eshop.com` và đọc bảng lịch sử đơn, không sửa gì.
+
+Dữ liệu đã đúng trạng thái sau seed: 5 đơn ở 5 trạng thái, số điện thoại trống. Bắt đầu lần chạy thử 2.
+
+Lần chạy thử 2 đang chạy nền, mất khoảng 5 phút. Chạy xong tôi sẽ đọc log và báo lại.
+````
+
+---
+
+### C110 | 10:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Mốc thời gian (mục 3): T1 sớm hơn T0. Bạn đang ghi T0 = 00:22 nhưng T1 = 00:16. Mọi mốc phải lấy trên cùng một video và tăng dần: T0 ≤ T1 ≤ T2 ≤ T3 ≤ T4. T0 là lúc PL bắt đầu thao tác sau khi đọc xong kịch bản. Nếu video bắt đầu quay khi PL đã đọc xong thì T0 có thể là khoảng 00:00 đến 00:05. Xem lại video để lấy đúng.
+-> PL đăng nhập rồi mới đọc kịch bản nên bị ngược vậy đó. 
+2. Tưởng vượt chuẩn là vượt thời gian sớm hơn quy định, sửa lại giúp tôi tick cho đúng vì mọi bước đều nhanh hơn.
+3. Sửa giúp tôi.
+Mục 2, "Quay màn hình ☐"	PL đồng ý quay màn hình	Đổi thành ☑
+Mục 2, "Thời lượng cả phiên" 10:09 đến 10:25 -> Điền giúp tôi.
+Mấy chỗ sai lặt vặt cho tôi điền thì sửa lại đi. Tôi quyết nên giảm bội số vì nhanh hơn kha khá.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Apply corrections to pilot notes
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sửa trong [notes.md](usability/pilot/notes.md):
+
+| Chỗ | Sửa thành |
+|---|---|
+| B4 | ☑ 10 đến 50 |
+| Mục 2, đồng ý | Quay màn hình ☑ |
+| Mục 2, thời lượng cả phiên | 16 phút (10:09 đến 10:25) |
+| Mục 2, kết quả toàn luồng | ☑ Không hoàn thành (giá lưu sai `299900 ₫`, PL không nhận ra trước T4) |
+| Mục 3 | Thêm ghi chú: PL đăng nhập trước khi đọc kịch bản, nên T1 nhỏ hơn T0 |
+| Mục 4, thời gian | M1 = 00:16, M2 = 00:18, M3 = 00:40, toàn luồng = 01:24, tự kiểm = 00:10 |
+| Mục 4, vượt chuẩn | Bỏ tick cả 4 dòng (đều nhanh hơn chuẩn) |
+| Mục 4, kết quả | M3 và toàn luồng: Không HT (giá sai) |
+| Mục 6 | Danh mục thấy: Loa Bluetooth |
+| Mục 7 | Sửa "Doanh mục"; thêm điểm 2 về giá thiếu số 0 mà PL không nhận ra |
+| Mục 8.1, thời gian | Ghi số đo và tỉ lệ so với thời gian bạn tự làm; cột "Cần sửa": **SV quyết giảm bội số ×5**, giá trị mới ⏳ |
+| Mục 8.1, dòng mới | Phát sinh: PL đăng nhập trước khi đọc kịch bản. Cần sửa: Dặn người tham gia chỉ chạm chuột sau khi đọc to xong kịch bản |
+| Mục 8.2, thời lượng | Cả phiên 16 phút, ngắn hơn mức 25 đến 40 phút của test plan |
+
+**Cách tính khi T1 nhỏ hơn T0:** M1 tôi tính từ đầu video. Toàn luồng tôi trừ 6 giây PL đọc kịch bản (00:16 đến 00:22). Cách này **giả định video bắt đầu quay đúng lúc PL bắt đầu đăng nhập**. Nếu video quay sớm hơn thế, bạn sửa mốc bắt đầu của M1 trong ghi chú ở mục 3.
+
+**Về bội số:** PL nhanh hơn bạn khoảng ×1,1 đến ×2,3 lần ở từng chặng, và ×1,8 lần cho toàn luồng. Giá trị mới (ví dụ ×3) để phiên Task 2 đề xuất và bạn chốt khi điền cột "Sau pilot".
+
+## Bạn còn điền
+
+- **Mục 5, nhật ký sự kiện:** Theo ví dụ ở tin trước. Ít nhất có dòng `La` (nút "Thêm mới"), dòng `Ld` (giá thiếu số 0), dòng `TK` (tự kiểm nhưng bỏ qua giá).
+- **Mục 8.2:** Thời lượng từng phần (mở đầu và phiếu thông tin, form SUS, câu hỏi mở), và dòng câu C4.
+- **`probe.md`:** Đang điền.
+
+Điền xong thì gửi phiên Task 2:
+
+```text
+Pilot đã xong, hồ sơ ở usability/pilot/ (chỉ dùng mã PL). Đọc pilot/notes.md mục 8 và sửa theo cột "Cần sửa":
+- 02_scenario.md: Điền cột "Sau pilot" ở mục 4.4 (tôi quyết giảm bội số ×5, đề xuất giá trị mới để tôi chọn); xét ngưỡng "bế tắc hẳn" 3 phút xuống 2 phút; mục 7 thêm dặn người tham gia chỉ chạm chuột sau khi đọc xong kịch bản.
+- 03_instruments.md và 01_test_plan.md mục 5: Chỉnh thời lượng phiên theo số đo ở pilot nếu cần.
+Mỗi thay đổi ghi vào bảng "Thay đổi so với bản AI" (Loại "Quyết định của SV", căn cứ: pilot). Không đọc participants.md.
+```
+
+⏱ Còn khoảng **28 giờ** làm việc | Còn **11 giờ 2 phút** tới mốc 22:00 10/11 | **26 giờ 2 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C111 | 10:59 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bvt1qq3pe</task-id>
+<tool-use-id>toolu_01TmSBhianZt4M2wozcxNrkQ</tool-use-id>
+<output-file>C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\tasks\bvt1qq3pe.output</output-file>
+<status>completed</status>
+<summary>Background command "Run second dry-run of the N1 script" completed (exit code 0)</summary>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show phase markers and groups B and C from second log
+- Bash: Show tab results and groups D to F from second log
+- Bash: Count failure pauses and list non-automatic items
+
+**Output AI (nguyên văn):**
+
+````text
+Script đã chạy hết cả 7 nhóm (A đến G) trong lần chạy thử 2: Khoảng 4 phút 47 giây, không có mục nào "Lỗi script" hay "Chưa chạy". Các chỗ sửa sau lần 1 đều chạy đúng. Thời gian đã dùng khoảng 35 phút trong 1,5 giờ.
+
+Kết quả chạy thử chỉ để gỡ lỗi; tôi không ghi vào Excel, không sửa `02_checklist.md`.
+
+**Các mục script không làm được, cần chạy tay:**
+
+| Nhóm | Mục | Lý do |
+|---|---|---|
+| Cần nhìn (đã định từ đầu) | CL-01 đến 09, 25, 26, 27, 31, 33, 34, 35, 56, 66, 67, 84, 92 | Ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa, zoom bằng bàn phím. Script kèm thông tin đo được để bạn đối chiếu |
+| Có thông báo nhưng cần người xét | CL-105 ở W-03 và W-06 | Khi mất mạng, trang báo "Đăng nhập thất bại..." và "Lỗi cập nhật", không nói về kết nối. Bạn xét có đạt mong đợi không |
+| | CL-58 phần W-03 | Đăng nhập sai không xác định được ô nào bị lỗi |
+| Không chạy được do EShop | CL-39, 40, 60, 65, 104; CL-96, 105, 112 phần W-04; CL-55 phần email | Trang Đăng ký từ chối mọi mật khẩu hợp lệ (đã thử 12 mật khẩu, kể cả `Test1234!`), nên form không bao giờ được gửi đi |
+| | CL-38 | Không có ô Xác nhận mật khẩu (CL-37 Failed) |
+| | CL-98 | Không có hộp xác nhận khi hủy đơn (CL-97 Failed) |
+| | CL-47, CL-106 phần W-06 | Lỗi số điện thoại hiện bằng hộp thoại của trình duyệt, không phải phần tử trên trang |
+| Chỉ bỏ qua khi chạy thử | CL-68, CL-69 | Lần chạy thật, script dừng để bạn tự chuẩn bị giỏ hàng rồi mới kiểm badge |
+
+**Bạn nên biết trước khi chạy thật:**
+- **Số điện thoại:** Trang hồ sơ chỉ chấp nhận `912345678`. Vì vậy CL-101, CL-52, CL-110, CL-102 Failed khi dùng dữ liệu của checklist, và lý do Failed có ghi nguyên văn thông báo. Riêng CL-96, 105, 108, 112 ở W-06, script dùng số `912345678` để có một lần gửi thành công; phần màn hình được ghi "(SĐT 912345678)".
+- **CL-102:** Script thử thêm với số app chấp nhận. Lần đó cập nhật thành công nhưng lời chào trên navbar vẫn không đổi.
+- **Số lần dừng:** Lần chạy thật sẽ dừng khoảng 69 lần, mỗi màn hình Failed một lần, nên sẽ mất nhiều thời gian chụp. Nếu muốn, tôi có thể sửa thành chỉ dừng ở màn hình Failed đầu tiên của mỗi mục CL. Đây là đề xuất, tôi chưa sửa.
+- **Dữ liệu đã bẩn lại:** Lần chạy thử 2 đã hủy đơn, khóa tạm `test@eshop.com` và đổi số điện thoại. Trước lần chạy thật cần phiên điều phối reset DB và chạy `seed_orders.py` lại.
+- **Script dò:** Các script dò chỉ nằm trong scratchpad, không vào repo.
+
+**Chạy thật:**
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n1_chrome_checklist.js
+```
+
+Commit các file trong `tools/` (nhờ phiên điều phối xuất prompt log trước):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n1_chrome_checklist.js checklist/tools/package.json checklist/tools/package-lock.json checklist/tools/.gitignore
+git commit -m "[T1][exec] Add Playwright script for N1 draft run"
+```
+````
+
+---
+
+### C112 | 11:17 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Nhật ký sự kiện tôi ghi cho bạn điền nhé, các phần còn lại thì sẽ tôi điền như mốc video các thứ.
+
+- Đăng nhập gõ dấu éhop nhưng không tắt được nên gõ lại eshop làm hơi khựng thao tác. "Ủa cái máy này tắt tiếng Việt ở đâu vậy" (này do thao tác chưa quen máy, không biết cần điền không)
+- Bấm Thêm mới ở Quản lý Danh mục "Ủa, cái này là bấm tạo à, à à, để xóa."
+- Lúc điền mô tả và link ảnh, có chút khựng lại để hỏi tôi "cái này copy được không, tự điền hơi dài"
+
+Với cái phần nhập giá là tự điền nên nhìn lướt mà không nhận ra.
+
+Kiểm ảnh tên mà không kiểm doanh mục và xem giá (doanh mục tôi kiểm sau khi đã quay xong pilot)
+
+Về mục 8.2 Mở đầu và phiếu thông tin: 3 phút; form SUS: 2 phút; câu hỏi mở: 5 phút.
+
+probe câu hỏi bắt buộc đang điền.
+
+Tiện thể task 1 đã xong, kiểm tra, xuất log và commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill pilot event log and pilot findings; show repo status
+- Bash: Read latest Task 1 and skill session outputs and risky commands
+- Bash: Reset DB and seed for Task 1 real run, export log
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
