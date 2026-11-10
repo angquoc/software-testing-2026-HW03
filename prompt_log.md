@@ -5965,6 +5965,550 @@ Exec cần DB riêng khoảng 3,5 giờ. Nếu sáng nay chạy pilot, nên làm
 
 ````text
 Server đã chạy, DB sạch (chỉ có 3 danh mục mẫu). Giờ cập nhật tracker và xuất log.
+
+Server đã chạy và DB đã reset, sẵn sàng cho pilot. Tôi cũng xuất lại log (95 lượt) và đưa lệnh commit cho `participants.md` bên dưới.
+
+## Server cho pilot
+
+| Thành phần | Địa chỉ | Trạng thái |
+|---|---|---|
+| Backend | `localhost:3000` | ✅ |
+| Admin (pilot dùng) | `http://localhost:5174` | ✅ |
+| Web bán hàng (để kiểm D6 nếu cần) | `http://localhost:5173` | ✅ |
+| DB | Chỉ có 3 danh mục mẫu "Điện thoại", "Laptop", "Phụ kiện" | ✅ Đã reset lúc 09:35 |
+
+Trước khi PL bắt đầu, đi nhanh qua I1 (`03_instruments.md`):
+- Trình duyệt dùng **hồ sơ riêng hoặc chế độ khách**, không có mật khẩu đã lưu, tắt dịch tự động. Một tab, zoom 100%, mở trang Admin Login.
+- File kịch bản và phiếu dữ liệu mở ở cửa sổ riêng. Mở thử URL ảnh JBL xem còn hiện không.
+- Bật quay màn hình và thử thu tiếng vài giây. Soạn sẵn tin nhắn chứa link Google Form để gửi ngay sau T4.
+
+**Reset giữa các phiên:** Trong lúc người tham gia điền form, bạn tự chạy lệnh dưới đây (sau khi đã kiểm D6). Không cần chờ tôi:
+
+```powershell
+cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+```
+
+Server vẫn để chạy. Ở pilot, kiểm luôn giả định G4: Sau reset, danh mục "Loa Bluetooth" có biến mất khỏi Admin không (bấm F5).
+
+## Commit `participants.md`
+
+Tôi không mở file này. Trước khi commit, bạn tự kiểm lại: **Mọi số điện thoại và Zalo đã che 4 số giữa** (ví dụ `091****678`), và không có email đầy đủ của người tham gia nếu không cần.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/participants.md prompt_log.md
+git commit -m "[T2][participants] Fill participant table"
+git push
+```
+
+## ⚠ Thời gian
+
+Ước tính còn khoảng **29 giờ** làm việc, mà chỉ còn khoảng **27,5 giờ** tới deadline. Theo ước tính, ngay cả deadline thật cũng không còn dư.
+
+Sau pilot, tôi đề xuất kế hoạch cắt giảm cụ thể để bạn chọn. Ví dụ: Chạy N2 trên BrowserStack trong giới hạn phút trial và ghi rõ mục chưa chạy; làm Agent Skill ở mức tối thiểu; dùng script cho các mục DevTools ở cả 3 nền tảng.
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 24 phút** tới mốc 22:00 10/11 | **27 giờ 24 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C96 | 09:42 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tiện thể tôi muốn hỏi không thể viết script cho từng task sao? Để có thể nhìn thấy lỗi để cap màn hình. Còn script nào lỗi thì tôi tự chạy tay để tiết kiệm thời gian.
+- Phần AI tôi thấy vẫn còn nhiều câu ngỏ vì quy trình ở task 1 và task 2 chưa xong, tôi có nên xong rồi làm skill cho hoàn thiện không>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+## 1. Script cho từng mục để lộ lỗi rồi chụp màn hình
+
+Làm được, nhưng **chỉ cho N1** (Chrome trên máy bạn). Cách làm:
+- Script mở **Chrome thật có giao diện**, đi qua từng mục và kiểm kết quả.
+- Gặp mục Failed thì script **dừng lại**, giữ màn hình ở đúng trạng thái lỗi. Bạn bấm `Win+PrtSc` (Sticky Notes vẫn hiện), rồi bấm Enter để script chạy tiếp.
+- Mục script không làm được thì bạn chạy tay.
+
+**Mục script làm được:** Khoảng 50 đến 60 mục có kết quả khách quan:
+- Form báo lỗi, chuyển trang, nút Back, link, phím Enter.
+- Thứ tự Tab, badge giỏ hàng.
+- Hủy đơn và dialog, khóa sau 3 lần sai.
+- Mạng chậm hoặc mất mạng, gửi trùng.
+- Cộng 17 mục DevTools đã có script.
+
+**Mục vẫn phải nhìn:** Khoảng 35 đến 40 mục: Chữ có phải tiếng Việt, đúng chính tả, màu có phải xanh dương hay đỏ, highlight, căn lề, kiểu viết hoa.
+
+**N2, N3 không dùng được:** BrowserStack Live không cho script điều khiển. Android chỉ được hỗ trợ ở mức thử nghiệm.
+
+Con số tiết kiệm phụ thuộc vào việc ai gỡ lỗi script:
+- **Phiên Task 1 tự chạy script trên localhost để gỡ lỗi:** Bạn gần như không mất thời gian ở bước này, vì AI làm trong lúc bạn chạy usability. Lúc chạy thật, bạn chỉ chụp ảnh mục Failed và làm các mục cần nhìn. Thời gian của bạn ở N1 giảm từ khoảng 3,5 giờ xuống khoảng 2 giờ.
+- **Bạn phải chạy thử và báo lỗi cho AI:** Không lợi, như tôi đã tính lần trước.
+
+Ràng buộc nếu làm:
+- **DB dùng chung.** Script đăng ký tài khoản, hủy đơn, khóa tài khoản, nên chỉ được chạy **ngoài giờ phiên usability**. Nếu không, lần reset giữa hai phiên sẽ làm script lỗi, hoặc script làm bẩn dữ liệu của người tham gia. Mỗi lần chạy script phải bắt đầu bằng reset DB và chạy `seed_orders.py`.
+- **Giới hạn thời gian 1,5 giờ.** Quá thời gian đó mà script chưa chạy ổn thì bỏ, chạy tay. Đừng để script ăn mất thời gian.
+- **Khai báo:** Ghi trong Audit là AI viết và chạy script, bạn xác nhận từng mục Failed và tự chụp ảnh. Trên ảnh sẽ có dòng "Chrome is being controlled by automated test software", không sao.
+- ⏳ **Bạn quyết:** Có cho phiên Task 1 tự mở trình duyệt ở bước exec không. WORKFLOW hiện ghi "SV" chạy exec, nên đây là thay đổi cách làm, do bạn chốt.
+
+## 2. Agent Skill: Chờ xong hết hay làm bây giờ
+
+Nên làm **từng phần**, không chờ xong hết:
+- **Phần đã ổn định thì viết hoàn chỉnh ngay:** Thiết kế GUI checklist (survey → oracle → ai-draft → review → add → excel) và thiết kế usability (plan → scenario → instruments). Các bước này đã chốt và có file thật làm ví dụ.
+- **Phần chưa xong thì để khung:** Exec (chờ quyết định script ở trên), pilot, các phiên usability, score, analysis. Ghi rõ "bổ sung sau khi làm xong" và điền khi bạn làm xong các bước đó.
+- **Video demo làm cuối cùng,** khi skill đã đủ.
+
+Lý do: Nếu chờ xong hết mới bắt đầu, toàn bộ skill (viết, review, video) dồn vào cuối, đúng lúc ít thời gian nhất. Với các câu hỏi phiên skill đang hỏi: Câu nào liên quan tới phần đã xong thì trả lời ngay; câu nào liên quan tới exec hay phân tích thì bảo phiên đó **để mở (⏳)**.
+
+Câu có thể gửi phiên skill:
+
+```text
+Chỉ viết hoàn chỉnh các bước thiết kế đã xong (Task 1: survey đến excel; Task 2: plan, scenario, instruments). Các bước exec, pilot, phiên, score, analysis: chỉ để khung và ghi "bổ sung sau", không đoán nội dung. Câu hỏi nào liên quan tới các bước chưa xong thì để dạng quyết định mở.
+```
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 20 phút** tới mốc 22:00 10/11 | **27 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C97 | 09:47 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+Chỉ viết hoàn chỉnh các bước thiết kế đã xong (Task 1: survey đến excel; Task 2: plan, scenario, instruments). Các bước exec, pilot, phiên, score, analysis: chỉ để khung và ghi "bổ sung sau", không đoán nội dung. Câu hỏi nào liên quan tới các bước chưa xong thì để dạng quyết định mở.
+1. A
+2a. Dừng khi đã có 4 file IA để review 1 lần cho tiện.
+2d. ii
+3. B/C được không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read reference rules, lessons and templates
+- Bash: Read step S0 guide and check script head
+- Bash: Inspect Excel checklist structure
+- Bash: Inspect rest of Excel sheets and styles
+- Bash: List section headings of AI drafts
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\scripts\build_checklist_xlsx.py
+- Bash: Build Excel from real checklist and compare with existing file
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\scripts\check_checklist.py
+- Bash: Run checklist check script on real files
+- Bash: Verify check script catches seeded errors
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\scripts\check_usability.py
+- Bash: Run usability check script on real and seeded files
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-survey.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-oracle.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-ai-draft.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-review-add.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-excel.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-later.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\sources.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\lessons.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\lessons.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Grep: AI-02-22 \|
+- Bash: Show original AI-02-22 row
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\ai_raw_header.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\survey.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\oracle.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\draft_ia.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\checklist.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\changes_table.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\rules.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-plan.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-scenario.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-plan.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-later.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\lessons.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\example-fl05.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\ai_raw_header.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\plan.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\scenario.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\instruments.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\changes_table.md
+- Bash: Run format and privacy checks on skill files
+
+**Output AI (nguyên văn):**
+
+````text
+Mình sẽ viết hai skill theo các lựa chọn của bạn. Trước khi viết, mình đọc kỹ các file tham chiếu của `domain-testing-design` và cấu trúc file Excel đã làm, để bước `excel` khớp với cách đã làm thật.
+
+Giờ xem file Excel đã làm và cấu trúc các bản AI gốc của usability, để mẫu trong skill khớp với thực tế.
+
+Script Excel dựng lại sheet Checklist khớp từng ô với file thật (0 khác biệt). Giờ viết script kiểm tra và chạy thử trên các file thật.
+
+Mọi file thật qua kiểm tra và số đếm khớp với tài liệu (50 mã oracle, 109 mục AI, 112 mục CL). Thử thêm một file cố tình sai để chắc script bắt được lỗi.
+
+Đang viết phần ví dụ của skill `gui-checklist`; mình sửa lại dòng AI-02-22 cho đúng nguyên văn bản AI, rồi viết các file mẫu.
+
+Skill `gui-checklist` đã xong phần nội dung. Giờ viết skill `usability-evaluation`.
+
+Đã viết xong cả hai skill. Chạy kiểm định dạng (dấu "—", "·") và riêng tư trên toàn bộ file của skill.
+
+Mình đã viết xong hai skill trong `Homeworks/HW03/skills/`, chưa cài vào `.claude/skills/`. Một quy tắc của skill đang ngược với WORKFLOW (xem mục cuối), cần bạn chọn.
+
+## Đã viết
+
+Cấu trúc theo mẫu `domain-testing-design`.
+
+| | [gui-checklist/](Homeworks/HW03/skills/gui-checklist/SKILL.md) | [usability-evaluation/](Homeworks/HW03/skills/usability-evaluation/SKILL.md) |
+|---|---|---|
+| Bước viết đầy đủ | `survey`, `oracle`, `ai-draft`, `review`, `add`, `excel` | `plan` (có pha 0: chụp ảnh luồng trước khi viết), `scenario`, `instruments` |
+| Bước chỉ có khung | `exec`, `bugs` | `participants`, `pilot`, các phiên, `score`, `analysis`, `bugs` |
+| `references/` | Quy tắc, bài học, hướng dẫn từng bước, nguồn ngoài SRS, ví dụ W-06 | Quy tắc (có phần riêng tư), bài học, hướng dẫn từng bước, ví dụ FL-05 |
+| `scripts/` | `check_checklist.py`, `build_checklist_xlsx.py` | `check_usability.py` (kiểm cả số điện thoại chưa che, email lạ) |
+
+Các lựa chọn của bạn đã vào skill như sau:
+
+- **2a:** Ở `ai-draft`, AI viết lần lượt 4 file IA trong một lượt rồi dừng một lần. Mã CHD và ĐK đánh số liên tục qua 4 file.
+- **2d (ii):** Sau pha 1 của `survey`, skill hỏi bạn tự điền bảng quan sát hay để AI điền từ ảnh rồi bạn kiểm.
+- **Các bước chưa xong:** Chỉ có tiêu đề, các ràng buộc đã chốt, và danh sách quyết định để mở ⏳, như [step-later.md](Homeworks/HW03/skills/gui-checklist/references/step-later.md). Không có nội dung đoán.
+- **Bài học:** Rút từ các bảng "Thay đổi so với bản AI" thật, mỗi mục ghi lỗi đã gặp. Ví dụ: Lời chào trên navbar là link mà ảnh tĩnh không cho thấy; plan viết khi chưa có ảnh nên 10/15 thay đổi là "Thiếu"; ô giá tự đổi khi gõ dấu chấm.
+
+## Đã kiểm
+
+- **Script Excel:** Chạy trên `02_checklist.md` thật, sheet Checklist khớp từng ô với `HW03_T1_GUI_Checklist.xlsx` (112 mục, 0 khác biệt).
+- **Script kiểm checklist:** Các file thật đều qua, số đếm khớp tài liệu (50 mã oracle, 109 mục AI, 112 mục CL). Thử với một file cố tình sai thì script bắt đủ: mã trùng, cột Nguồn sai, mã oracle không tồn tại, dấu "—", Loại "Thiếu" thiếu lý do.
+- **Script kiểm usability:** Ba file usability thật đều qua. File thử có số điện thoại chưa che và email lạ thì bị báo đúng.
+- **Toàn bộ file của skill:** Không có dấu "—", "·" ngoài chỗ trích dẫn.
+
+## Về B/C cho video demo
+
+Cả hai đều dùng được, kèm vài lưu ý:
+
+- **B (Admin Quản lý Danh mục) cho checklist:**
+  - Đây là màn hình khác W-06, W-04, W-03 nên vẫn đúng ý "dùng lại trên màn hình khác".
+  - FR-14 có ít ý giao diện, nhưng FR-21 đến FR-24 vẫn áp dụng, nên checklist không quá ngắn. Demo cũng không cần trên 40 mục.
+  - Ảnh `flow_03` đến `flow_05` có thể dùng lại nếu khớp danh sách ảnh skill đưa ra. Nhưng nên để skill tự liệt kê ảnh cần chụp, vì nó sẽ hỏi thêm trạng thái Sửa và Xóa, và video cần cho thấy bước đó.
+- **C (Đăng ký → Cập nhật hồ sơ) cho usability:**
+  - Theo bảng phân công, chưa ai nhận luồng này. Người dùng mục tiêu (khách mua hàng) khác FL-05, nên thể hiện được skill dùng rộng.
+  - Ảnh `survey_*` của Task 1 không có trạng thái sau khi lưu, nên vẫn phải chụp bộ `flow_*` mới.
+  - Phiên demo không nên đọc `checklist/`, vì kết quả Task 1 trên chính các màn hình này sẽ làm lệch bản AI.
+- **Cần chốt trước khi quay ⏳:** Thư mục cho kết quả demo. Skill không ghi đè `checklist/` hay `usability/`, nên cần một thư mục riêng.
+
+## Cần bạn quyết định ⏳
+
+WORKFLOW mục 3.1 ghi `ai-draft` là "mỗi lượt một IA", còn skill theo lựa chọn 2a là dừng sau 4 file. Skill lại có quy tắc "WORKFLOW của dự án ưu tiên hơn", nên khi chạy trong HW03 nó sẽ theo WORKFLOW và dừng sau từng IA. Có ba cách:
+
+- (a) Sửa câu đó trong WORKFLOW cho khớp 2a.
+- (b) Ghi ngoại lệ này vào SKILL.md.
+- (c) Giữ như hiện tại.
+
+## Commit
+
+```
+git add skills/gui-checklist
+git commit -m "[skill] Add GUI checklist skill"
+git add skills/usability-evaluation
+git commit -m "[skill] Add usability evaluation skill"
+```
+````
+
+---
+
+### C98 | 09:48 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi sẽ cho pilot làm, trong lúc đó cho task 1 chỉ viết script được không? Sau khi viết xong thì cho chạy như vậy có giẫm nhau không? Tôi sợ trong lúc viết script thì task 1 mở để test thử.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Được. Chỉ cần dặn rõ phiên Task 1 **chỉ viết, không chạy**. Sau khi viết xong, cho chạy **sau** pilot thì không giẫm nhau.
+
+## Vì sao chạy cùng lúc sẽ giẫm nhau
+
+Pilot dùng Admin (`5174`), script dùng Web (`5173`), nhưng cả hai đi qua **cùng một backend `3000` và cùng một DB**:
+- Script reset DB lúc PL đang làm, nên danh mục "Loa Bluetooth" PL vừa tạo biến mất.
+- Script tạo tài khoản, hủy đơn, khóa `test@eshop.com` 30 giây, nên dữ liệu khi bạn kiểm D6 không còn sạch.
+
+Chạy **lần lượt** thì không sao: Pilot xong, kiểm D6, rồi mới chạy script. Bước đầu của script là reset và seed, nên dữ liệu của script cũng sạch.
+
+## Prompt gửi phiên Task 1
+
+```text
+Bước `exec` (chuẩn bị): CHỈ VIẾT script Playwright cho N1 (Chrome trên Windows), CHƯA ĐƯỢC CHẠY.
+Trong lượt này KHÔNG được: Mở trình duyệt; chạy script, npx playwright test, node, curl hay bất kỳ lệnh nào gọi tới localhost:3000, 5173, 5174; reset DB; chạy tools/seed_orders.py. Đang có phiên usability dùng chung backend và DB.
+Được phép: Cài Playwright (npm install trong checklist/tools/), viết file.
+Yêu cầu script:
+- Dùng Chrome thật có giao diện (channel "chrome", headless false), cửa sổ cố định, không có cấu hình webServer hay globalSetup tự bật server hoặc reset DB.
+- Chỉ làm các mục có kết quả khách quan trong 02_checklist.md; mục cần nhìn (ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa) thì in "Chạy tay".
+- Gặp mục Failed: Dừng, in mã CL và lý do, giữ nguyên màn hình để tôi chụp, chờ tôi bấm Enter rồi chạy tiếp.
+- Cuối cùng in bảng: Mã CL, kết quả nháp, lý do. Kết quả chỉ là nháp, tôi chốt.
+- Bước đầu của script ghi rõ cần reset DB và seed (phiên điều phối làm), script không tự làm.
+Tìm phần tử theo chữ nhìn thấy trên trang như 00_survey.md, không đọc mã nguồn EShop. Viết xong thì dừng và báo tôi, chờ tôi cho phép mới chạy thử.
+```
+
+## Sau pilot
+
+1. Bạn báo tôi khi pilot xong và đã kiểm D6.
+2. Tôi kiểm transcript của phiên Task 1 xem trong lúc pilot nó có gọi `localhost`, chạy `npx playwright` hay reset DB không.
+3. Tôi reset DB và chạy `seed_orders.py`.
+4. Bạn cho phiên Task 1 chạy thử và gỡ lỗi, giới hạn 1,5 giờ.
+5. Trước phiên usability tiếp theo, tôi reset DB lại một lần nữa, vì script để lại tài khoản mới, đơn đã hủy và tài khoản bị khóa.
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 17 phút** tới mốc 22:00 10/11 | **27 giờ 17 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C99 | 09:49 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Bước `exec` (chuẩn bị): CHỈ VIẾT script Playwright cho N1 (Chrome trên Windows), CHƯA ĐƯỢC CHẠY.
+Trong lượt này KHÔNG được: Mở trình duyệt; chạy script, npx playwright test, node, curl hay bất kỳ lệnh nào gọi tới localhost:3000, 5173, 5174; reset DB; chạy tools/seed_orders.py. Đang có phiên usability dùng chung backend và DB.
+Được phép: Cài Playwright (npm install trong checklist/tools/), viết file.
+Yêu cầu script:
+- Dùng Chrome thật có giao diện (channel "chrome", headless false), cửa sổ cố định, không có cấu hình webServer hay globalSetup tự bật server hoặc reset DB.
+- Chỉ làm các mục có kết quả khách quan trong 02_checklist.md; mục cần nhìn (ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa) thì in "Chạy tay".
+- Gặp mục Failed: Dừng, in mã CL và lý do, giữ nguyên màn hình để tôi chụp, chờ tôi bấm Enter rồi chạy tiếp.
+- Cuối cùng in bảng: Mã CL, kết quả nháp, lý do. Kết quả chỉ là nháp, tôi chốt.
+- Bước đầu của script ghi rõ cần reset DB và seed (phiên điều phối làm), script không tự làm.
+Tìm phần tử theo chữ nhìn thấy trên trang như 00_survey.md, không đọc mã nguồn EShop. Viết xong thì dừng và báo tôi, chờ tôi cho phép mới chạy thử.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect tools folder and npm version
+- Bash: Create package.json and install playwright-core and axe-core
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Bash: Check axe-core entry point and exports field
+- Bash: Patch logo fallback, focus guards, phone context close
+- Bash: Check line endings and git status of tools folder
+
+**Output AI (nguyên văn):**
+
+````text
+Ràng buộc lượt này là chỉ viết và cài đặt, không mở trình duyệt, không chạy script, không gọi tới localhost. Tôi cài `playwright-core` (thư viện điều khiển Chrome có sẵn trên máy, không tải trình duyệt) và `axe-core` (cho CL-23) vào `checklist/tools/`.
+
+Đã cài xong. Giờ tôi viết script chính.
+
+Script đã viết xong. Tôi soát lại vài điểm bằng cách đọc file (không chạy `node`). Trước hết kiểm tra cách nạp `axe-core`.
+
+`axe-core` không khai báo `exports`, nên đường dẫn `axe-core/axe.min.js` nạp được. Tôi sửa thêm 3 chỗ phát hiện khi đọc lại.
+
+Script Playwright cho N1 đã viết xong và đang chờ bạn cho phép chạy thử. Tôi chưa chạy nó, chưa mở trình duyệt, chưa gọi tới localhost. Tôi cũng chưa chạy `node --check` để soát cú pháp, vì lượt này không được dùng `node`. Lần chạy đầu có thể còn lỗi cú pháp hoặc lỗi logic.
+
+**File trong [checklist/tools/](Homeworks/HW03/checklist/tools/):**
+- [n1_chrome_checklist.js](Homeworks/HW03/checklist/tools/n1_chrome_checklist.js): Script chính.
+- `package.json` và `package-lock.json`: Ghi 2 gói đã cài là `playwright-core` 1.65.0 và `axe-core` 4.14.0. `playwright-core` dùng Chrome có sẵn trên máy, không tải trình duyệt. `axe-core` dùng cho CL-23 (độ tương phản).
+- `.gitignore`: Bỏ qua `node_modules/`.
+
+**Cách chạy theo yêu cầu của bạn:**
+- **Trình duyệt:** Chrome thật, có giao diện (`channel: 'chrome'`, `headless: false`). Vùng trang cố định 1366 x 768, đúng kích thước của CL-32.
+- **Không tự bật hay đổi môi trường:** Không có cấu hình webServer hay globalSetup; script không bật server, không reset DB, không chạy seed.
+- **Bước 0:** Script in yêu cầu phiên điều phối reset DB và chạy `tools/seed_orders.py`. Phải gõ `co` thì script mới bắt đầu.
+- **Gặp mục Failed:** Script dừng, in mã CL và lý do, giữ nguyên màn hình. Bạn chụp xong thì bấm Enter để chạy tiếp.
+- **Cuối lần chạy:** In bảng 112 dòng (Mã CL, Kết quả nháp, Lý do) và dòng đếm số mục theo từng kết quả.
+- **Tìm phần tử:** Theo chữ nhìn thấy trong `00_survey.md` ("Username", "Mật khẩu", "Sign In", "Cập nhật", "Hủy đơn", "Chào, ...", chữ trạng thái đơn...).
+
+**Phạm vi:**
+- **Tự kiểm 91 mục.** Mỗi mục kiểm trên từng màn hình rồi gộp lại: Có một màn hình Failed thì cả mục là Failed.
+- **21 mục ghi "Chạy tay":** CL-01 đến 09, 25, 26, 27, 31, 33, 34, 35, 56, 66, 67, 84, 92. Ở các dòng này script kèm thông tin đo được để bạn đối chiếu: tiêu đề tab, chữ trạng thái, màu đo được, các thông báo bắt được.
+- **Giỏ hàng:** Script dừng 2 lần để bạn tự chuẩn bị giỏ trong cửa sổ Chrome đó (CL-68 theo ĐK-04, CL-69 theo ĐK-05). Script không biết trang chủ có những nút nào, vì survey không có ảnh trang chủ.
+
+**Lần chạy sẽ đổi dữ liệu,** nên cần chạy lúc không có phiên usability nào đang dùng chung DB, và reset lại sau khi chạy:
+- Tạo vài tài khoản `hw03.n1.*@eshop.com`.
+- Sửa Số điện thoại và Địa chỉ của `test@eshop.com`. Họ Tên được đổi để kiểm CL-102 rồi đổi lại như cũ.
+- Hủy đơn `pending` và `confirmed`.
+- Cuối cùng khóa `test@eshop.com` 30 giây (CL-89, chạy sau cùng theo ĐK-09).
+- CL-63 ghi `Test1234!` vào clipboard của Windows.
+
+**Các mục dựa trên ước lượng, nên bạn xem kỹ khi chốt:**
+- **Đoán theo từ khóa:** CL-14 (nội dung `<h1>`), CL-64 (dòng hướng dẫn mật khẩu), CL-90 (nội dung thông báo khóa).
+- **CL-24:** Dựa trên điều bạn cho biết là đơn seed mang ngày 9 hoặc 10. Nếu không phân biệt được ngày với tháng thì ghi "Chạy tay".
+- **CL-54, CL-76:** Tên đọc được của ô và link chỉ tính gần đúng.
+- **CL-94:** Nhận dấu hiệu đang tải theo role, `aria-busy` hoặc tên class có "spin" / "loading".
+- **CL-32, CL-109:** Khi dò thấy phần tử chồng nhau thì ghi "Chạy tay", không ghi Failed.
+- **CL-96, CL-112:** Giả lập mạng chậm gần với mức "Slow 4G" của DevTools.
+
+Khi bạn cho phép, bước thử đầu tiên tôi đề xuất là chỉ soát cú pháp, không gọi tới localhost:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node --check n1_chrome_checklist.js
+```
+
+Sau đó mới chạy thật bằng `node n1_chrome_checklist.js`, khi phiên điều phối đã reset DB, chạy seed và không còn phiên usability nào.
+
+Tôi dừng ở đây, chờ bạn cho phép.
+````
+
+---
+
+### C100 | 09:51 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Bây giờ tôi sẽ cho pilot làm, ngoài việc hỏi, đưa đề, quay khi chạy web, hỏi khi làm xong, điền form khi làm xong thì có cần phải tạo file gì nữa không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Có. Pilot cũng phải có hồ sơ phiên như P1 đến P7, đặt trong `usability/pilot/`. Laptop đang để PL làm bài, nên trong phiên bạn ghi ra **giấy hoặc điện thoại**, sau phiên mới gõ vào file.
+
+## File cần tạo
+
+| File | Nội dung | Mẫu |
+|---|---|---|
+| `usability/pilot/notes.md` | Phần đầu: Phiếu thông tin trước phiên (A1 đến A4, B1 đến B7). Sau đó: Thông tin phiên, mốc T0 đến T4, kết quả từng chặng, nhật ký sự kiện (mã `La`, `DD`, `CT0`...), kết quả kiểm D6, 3 điểm vướng | `03_instruments.md` I3, I4.1 đến I4.7 |
+| `usability/pilot/scale.md` | Dòng câu trả lời của `PL` chép nguyên văn từ Google Form: Dấu thời gian và 10 câu | I5, mẫu `scale.md` |
+| `usability/pilot/probe.md` | Câu trả lời C1 đến C9 và câu hỏi theo tình huống, ghi theo ý | I6.4 |
+
+Ảnh chụp từ video (`PL_<số>_<nội dung>.png`) không bắt buộc. Chỉ chụp khi có chỗ vướng đáng minh họa, và phải che thông tin cá nhân.
+
+**Video:** Không commit (`.gitignore` đã chặn `.mp4`). Lưu lại để đưa vào bản nộp. Video có giọng nói của PL, nên **không đưa video cho AI**.
+
+## Ghi lúc nào
+
+| Lúc | Việc |
+|---|---|
+| Trong phiên (giấy hoặc điện thoại) | Đánh dấu A, B của phiếu thông tin; ghi giờ T0 đến T4 theo đồng hồ; ghi nhanh mã sự kiện và câu nói đáng chú ý; ghi câu trả lời câu hỏi mở |
+| Lúc PL điền form | Kiểm D6 (I4.6), ghi 3 điểm vướng (I4.7), rồi reset DB |
+| Sau phiên | Gõ vào 3 file trên; xem lại video để lấy mốc T0 đến T4 chính xác; chép dòng `PL` từ Google Form |
+
+## Việc riêng của pilot
+
+Mục đích của pilot là **thử bộ công cụ**, không phải lấy số liệu. Vì vậy, trong `notes.md` nên thêm một phần trả lời các điểm cần kiểm đã ghi sẵn:
+- `02_scenario.md` mục 9: URL ảnh, câu chữ kịch bản, chuyển qua lại giữa file và trình duyệt, thời gian từng chặng, ngưỡng 3 phút, reset DB (G4), cách kiểm D6.
+- `03_instruments.md` mục 8: Câu chữ SUS, tin nhắn đồng ý, ngưỡng 20 giây, thời lượng từng phần, Google Form, kịp ghi chép không, câu C4, có kịp kiểm D6 và reset trong lúc PL điền form không.
+
+Sau đó bạn đưa phần này cho phiên Task 2 để sửa `02_scenario.md`, `03_instruments.md` và điền cột "Sau pilot" của thời gian chuẩn. Chỉ đưa phần đã ẩn danh (mã `PL`, không có tên).
+
+Ngoài ra, điền dòng `PL` trong `participants.md` (ngày giờ, trạng thái "đã chạy"). Việc này bạn tự làm, AI không đọc file đó.
+
+Server đang chạy và DB đã sạch, bạn bắt đầu được.
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 13 phút** tới mốc 22:00 10/11 | **27 giờ 13 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C101 | 09:52 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Pilot không đồng ý ghi âm.
+- Các file cần tạo thì bạn tạo cho tôi đi, vì giờ pilot chưa cầm máy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate template sections and pilot check lists
+- Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\pilot\notes.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\pilot\scale.md
+- Write: D:\Dang\Test\Homeworks\HW03\usability\pilot\probe.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã tạo 3 file trong `usability/pilot/`, điền sẵn những gì đã biết.
+
+| File | Đã điền sẵn | Bạn điền |
+|---|---|---|
+| [notes.md](usability/pilot/notes.md) | Mã `PL`; hình thức trực tiếp; ghi âm **Không**; video không có âm thanh; thời gian chuẩn từng chặng | Phiếu thông tin A, B; giờ bắt đầu; mốc T0 đến T4; nhật ký sự kiện; kiểm D6; 3 điểm vướng; mục 8 |
+| [scale.md](usability/pilot/scale.md) | Khung bảng | Dòng `PL` chép nguyên văn từ Google Form |
+| [probe.md](usability/pilot/probe.md) | C1 đến C9 kèm tóm tắt câu hỏi, chỗ cho câu hỏi theo tình huống và câu hỏi về điểm vướng | Câu trả lời |
+
+Mục 8 của `notes.md` gom sẵn các điểm cần kiểm của pilot, lấy từ `02_scenario.md` mục 9 và `03_instruments.md` mục 8. Mỗi điểm có cột "Quan sát" và "Cần sửa". Sau pilot, bạn đưa mục này cho phiên Task 2 sửa.
+
+## Vì PL không đồng ý ghi âm
+
+- **Tắt micro** của phần mềm quay màn hình trước khi bật quay. Thử quay vài giây để chắc video không có tiếng.
+- **Lời think-aloud phải ghi tay ngay lúc nghe:** Ghi gần nguyên văn kèm giờ, rồi điền vào cột "Trích lời (ghi tay)". Không xem lại video để lấy lời được, vì video không có tiếng.
+- **Câu trả lời câu hỏi mở cũng ghi tay.** Nếu cần, bạn nói "Bạn chờ mình ghi chút nhé" rồi mới hỏi câu tiếp theo.
+- **Ghi lại xem có kịp ghi tay không:** Đây là một điểm kiểm ở mục 8.2. Nếu không kịp, phiên Task 2 có thể đơn giản hóa phiếu ghi chú cho những phiên không có âm thanh.
+
+Ba file này commit chung với kết quả pilot sau khi bạn điền xong (`[T2][pilot]`). Bây giờ chưa cần commit.
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 8 phút** tới mốc 22:00 10/11 | **27 giờ 8 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C102 | 10:02 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Trình duyệt và phiên bản và OS, độ phân giải, zoom đều là dùng trên máy tôi thì ghi lại cho tôi luôn đi, thông tin này đã có khi tôi điền ở task 1 rồi mà.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find recorded environment info from Task 1
+- Bash: Read environment rows from survey
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\pilot\notes.md
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền 2 dòng này trong [notes.md](usability/pilot/notes.md), lấy từ bảng môi trường của `checklist/00_survey.md` (máy của bạn, ghi ngày 08/11):
+
+| Mục | Giá trị |
+|---|---|
+| Trình duyệt và phiên bản | Google Chrome 156.0.8078.81 (chế độ khách / hồ sơ riêng, không có mật khẩu đã lưu) |
+| OS, độ phân giải, zoom | Windows 11 Version 26H2 (Build 26300.9818); màn hình 2560 x 1440, scale Windows 150%; zoom trình duyệt 100% |
+
+Còn một việc nên làm: Chrome tự cập nhật, nên phiên bản có thể đã khác từ 08/11. Trước khi PL bắt đầu, mở `chrome://version` xem dòng đầu. Nếu khác `156.0.8078.81` thì sửa lại số này. Nếu bạn dùng hồ sơ riêng thay vì chế độ khách, xóa phần không đúng trong ngoặc.
+
+Sheet "Môi trường" trong file Excel của Task 1 vẫn trống, vì bạn sẽ điền lúc chạy exec. Lúc đó cũng nên xem lại phiên bản Chrome.
+
+⏱ Còn khoảng **29 giờ** làm việc | Còn **12 giờ 5 phút** tới mốc 22:00 10/11 | **27 giờ 5 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C103 | 10:16 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi cần bạn tổng hợp các giai đoạn của các task đã đang tới đâu, đang đợi việc gì, đọc các session đi vì có cái đã xong rồi.
+Tiện thể phần pilot đã xong, giờ tôi đưa video vào đâu? Cần điền các thông tin gì? Form cũng đã được Pilot điền.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show git state and last turns of each design session
+- Bash: Read skill session's pending question and Task 1 commands during pilot
+- Bash: Read the end of the skill session's last reply
+- Bash: Check DB state, ignored video types and open decision D10
+- Bash: Ignore more video types, export log, update tracker
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 

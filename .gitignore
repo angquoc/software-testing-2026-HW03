@@ -8,6 +8,8 @@
 *.mp4
 *.mov
 *.mkv
+*.webm
+*.avi
 
 # File zip nộp Moodle
 *.zip
