@@ -11525,7 +11525,1343 @@ Tôi chưa commit, xuất log, đưa tôi commit phần sửa skill và cả scr
 **Output AI (nguyên văn):**
 
 ````text
+Log đã xuất lại: 177 lượt. Đây là lệnh commit cho phần sửa skill và script N3 của Task 3:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A skills
+git commit -m "[skill] Add exec, bugs and pilot steps from completed work"
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Fix N3 script for logged-in and cart groups"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+`git add -A skills` gom đủ 9 file đã sửa, 3 file mới (`step-exec.md`, `step-bugs.md`, `step-pilot.md`) và việc xóa `gui-checklist/references/step-later.md`.
+
+Chưa đưa vào lệnh:
+
+| File | Lý do |
+|---|---|
+| `checklist/tools/n3_run_log.txt` | Log của lần chạy cũ; bạn sẽ chạy lại N3, commit chung với log mới, ảnh mới và cột NT3 |
+| `cross_platform/firefox_triage.md` | Chờ bạn review |
+| `usability/sessions/P1/` đến `P7/` | Commit theo từng phiên sau khi chạy |
+| `bugs/image_links.txt` | File làm việc, không cần commit |
+
+Nếu phiên Agent Skill còn sửa theo cách xử lý script (chỉ mô tả cách làm, không đóng gói script EShop), commit thêm sau: `[skill] Describe exec scripts as pattern, not bundled code`.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Phiếu A, B của P1 đến P7 đã điền | Chạy P1 đến P7 (không trùng lúc chạy N3) | ~6,5 giờ |
+| Task 3 | Chuẩn bị chạy lại N3 | Reset và seed → chạy N3 → phiên Task 3 điền NT3 → commit; review danh sách N2; N2 trên cloud; compare, bugs | ~2,75 giờ |
+| Agent Skill | Đã bổ sung `exec`, `bugs`, `pilot` | Chốt cách xử lý script; phiên, score, analysis của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **14 giờ** làm việc | Còn **5 giờ 42 phút** tới mốc 22:00 10/11 | **20 giờ 42 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C178 | 16:22 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Trong lúc chờ N3 chạy, tôi nên làm gì để tiết kiệm thời gian và kịp deadline.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check forms folder and summary checklist items
+- Bash: List tools, forms and template folders
+- Bash: Locate AI-02/03/05 form templates
+
+**Output AI (nguyên văn):**
+
+````text
+Trong lúc N3 chạy, chỉ làm những việc **không đụng tới EShop và DB**. Xếp theo mức ưu tiên cho deadline:
+
+## 1. Chốt lịch P1 đến P7 (5 phút, quan trọng nhất)
+
+Task 2 là phần dài nhất còn lại và phụ thuộc người khác. Nhắn xác nhận giờ cho 7 người, xếp **liền nhau** tối nay, mỗi người cách nhau khoảng 30 phút. Phiên từ xa nhắc họ cài sẵn ứng dụng gọi video và thử điều khiển máy trước.
+
+Sau khi có lịch, gửi tôi các khung giờ (không cần tên). Tôi sẽ chen N2 và các lần reset vào giữa.
+
+## 2. Review `cross_platform/firefox_triage.md` (10 phút)
+
+Xem nhóm C (51 mục "không chạy lại"). Mục nào nghi là khác nhau giữa trình duyệt thì chuyển sang B, ví dụ CL-61, CL-63, CL-74, CL-107. Ghi vào bảng thay đổi, rồi commit `[T3][firefox] Review Firefox run triage`.
+
+## 3. Chuẩn bị BrowserStack, chưa mở phiên Live (10 phút)
+
+- Tạo tài khoản và xem **số phút trial thật**, ghi vào `01_setup.md` mục 7.2.
+- Tải `BrowserStackLocal.exe` và lấy access key. Không đưa key vào file hay vào prompt.
+- **Chưa mở phiên Live**, vì sẽ mất phút trial. N2 chạy sau, cũng không trùng giờ phiên usability, vì tunnel dùng cùng backend.
+
+## 4. Giao việc cho AI chạy song song (2 phút gửi prompt)
+
+**Phiên Agent Skill:** Gửi câu chốt cách xử lý script (ở tin trước).
+
+**Mở phiên Tổng hợp mới.** Đây là chỗ tiết kiệm nhiều nhất: Khoảng 3,5 giờ việc ở cuối có thể làm trước bây giờ cho phần đã xong (Task 1). Mẫu form có sẵn ở `Homeworks/AI Templates/` (bản `_Vn.docx`), HW01 đã có cách làm trong `forms/`.
+
+```text
+Đây là phiên Tổng hợp của HW03. Đọc đề HW03 (mục 9 đến 15), Homeworks/HW03/WORKFLOW.md, README.md.
+Làm trước các phần dựa trên việc ĐÃ XONG (Task 1), để khung cho phần chưa xong:
+1. checklist/03_results.md: Tóm tắt kết quả N1 từ checklist/HW03_T1_GUI_Checklist.xlsx (số mục theo IA, Passed / Failed / Không chạy được, mục Failed chính) và bug từ bugs/bug_report.md.
+2. report.md: Khung đủ các mục đề yêu cầu (GUI checklist, usability, cross-platform, Agent Skill, AI Critique, Disclosure, phụ lục Audit); viết đầy đủ phần Task 1; phần Task 2, Task 3, Skill để ⏳.
+3. README.md: Bảng tự chấm và Test summary (số màn hình, số mục thiết kế / chạy / Passed / Failed, số bug); số của Task 2, Task 3 để ⏳.
+4. forms/: Bản .md cho [AI-02] Audit Report, [AI-03] Disclosure, [AI-05] Privacy Checklist theo mẫu Homeworks/AI Templates/*_Vn.docx; được đọc prompt_log.md và mục "Cần khai báo (Audit)", "Chất liệu AI Critique" trong _NOTES.md. Chỗ cần tôi ký hoặc tự đánh giá thì để ⏳.
+Không đọc mã nguồn EShop, usability/participants.md, video, thư mục Homeworks/HW02/. Không tự commit.
+```
+
+Mở phiên này xong thì báo tôi session id để thêm vào danh sách xuất log.
+
+## Không nên làm lúc này
+
+- Reset DB, chạy script N1, chụp ảnh EShop: Đụng N3.
+- Phiên usability: Đụng DB.
+- Bắt đầu video demo của skill: Đợi skill đủ các bước.
+
+Nhớ là N3 sẽ dừng **2 lần nhờ bạn chuẩn bị giỏ hàng trên điện thoại**. Để mắt tới terminal.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Phiếu A, B đã điền | Chốt lịch tối nay; chạy P1 đến P7 sau N3 | ~6,5 giờ |
+| Task 3 | **Đang chạy lại N3** | Phiên Task 3 điền NT3; review danh sách N2; chuẩn bị BrowserStack; N2; compare, bugs | ~2,75 giờ |
+| Agent Skill | Đã bổ sung `exec`, `bugs`, `pilot` | Chốt cách xử lý script; các bước còn lại của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Chưa bắt đầu | **Nên mở phiên ngay** cho phần Task 1 | ~3,5 giờ (phần AI làm song song) |
+
+⏱ Còn khoảng **14 giờ** làm việc | Còn **5 giờ 38 phút** tới mốc 22:00 10/11 | **20 giờ 38 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C179 | 16:25 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `c934f0c0`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là phiên Tổng hợp của HW03. Đọc đề HW03 (mục 9 đến 15), Homeworks/HW03/WORKFLOW.md, README.md.
+Làm trước các phần dựa trên việc ĐÃ XONG (Task 1), để khung cho phần chưa xong:
+1. checklist/03_results.md: Tóm tắt kết quả N1 từ checklist/HW03_T1_GUI_Checklist.xlsx (số mục theo IA, Passed / Failed / Không chạy được, mục Failed chính) và bug từ bugs/bug_report.md.
+2. report.md: Khung đủ các mục đề yêu cầu (GUI checklist, usability, cross-platform, Agent Skill, AI Critique, Disclosure, phụ lục Audit); viết đầy đủ phần Task 1; phần Task 2, Task 3, Skill để ⏳.
+3. README.md: Bảng tự chấm và Test summary (số màn hình, số mục thiết kế / chạy / Passed / Failed, số bug); số của Task 2, Task 3 để ⏳.
+4. forms/: Bản .md cho [AI-02] Audit Report, [AI-03] Disclosure, [AI-05] Privacy Checklist theo mẫu Homeworks/AI Templates/*_Vn.docx; được đọc prompt_log.md và mục "Cần khai báo (Audit)", "Chất liệu AI Critique" trong _NOTES.md. Chỗ cần tôi ký hoặc tự đánh giá thì để ⏳.
+Không đọc mã nguồn EShop, usability/participants.md, video, thư mục Homeworks/HW02/. Không tự commit.
+
+
+Có thể xem lại các file ở HW cũ để làm cho đúng.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List HW03 directory tree
+- Bash: List rest of tree and templates
+- Bash: Extract HW03 assignment PDF text
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\c934f0c0-5bfe-4a4e-8582-6d4f32335fd7\scratchpad\hw03.txt
+- Read: D:\Dang\Test\Homeworks\HW03\WORKFLOW.md
+- Read: D:\Dang\Test\Homeworks\HW03\README.md
+- Read: D:\Dang\Test\Homeworks\HW03\_NOTES.md
+- Bash: Read all memory files
+- Bash: List HW02 forms and sizes
+- Read: D:\Dang\Test\Homeworks\HW02\report.md
+- Read: D:\Dang\Test\Homeworks\HW02\README.md
+- Bash: Read HW02 form markdown files
+- Bash: Read docx_to_md tool header
+- Bash: Convert original AI templates to markdown in scratchpad
+- Bash: Re-run conversion with UTF-8 output
+- Bash: Inspect Excel checklist sheets and header rows
+- Bash: Count checklist items and results per IA and platform
+- Bash: List Failed and not-run checklist items with notes
+- Read: D:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+- Bash: Show sizes and headings of checklist docs
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\02_checklist.md
+- Bash: Count change-table types and read survey/oracle summaries
+- Bash: Inspect prompt log header and turn headings
+- Bash: Extract per-turn summary from prompt log
+- Bash: Show Task 1, Task 3, skill session turns
+- Bash: Print selected verbatim Task 1 prompts
+- Bash: Find gh issue commands in prompt log
+- Bash: Read C147 turn actions and output
+- Bash: List AI actions in turns C152 to C155
+- Bash: Read turns C149 to C152
+- Bash: Cross-check Failed items against bug report
+- Bash: Search policy for AI level definitions
+- Bash: Inspect policy file and HW01 AI level
+- Bash: Check session whitelist, file lists, git log
+- Bash: List Task 1 commits and working tree status
+- Bash: Read prompts and outputs of result-filling turns
+- Write: D:\Dang\Test\Homeworks\HW03\checklist\03_results.md
+- Edit: D:\Dang\Test\Homeworks\HW03\checklist\03_results.md
+- Bash: Count AI draft items per IA
+- Bash: Read turn C56 prompt, actions and output
+- Write: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\README.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Bash: Generate AI-02 form markdown from report appendix
+- Write: D:\Dang\Test\Homeworks\HW03\forms\[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md
+- Edit: D:\Dang\Test\Homeworks\HW03\forms\[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md
+- Write: D:\Dang\Test\Homeworks\HW03\forms\[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md
+- Bash: Check for banned separators and lowercase after colon
+- Bash: Fix lowercase after colon in audit row
+- Bash: Validate markdown table column counts
+- Bash: Validate markdown table column counts
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu bằng việc xem cấu trúc thư mục HW03.
+
+Đọc đề HW03 trước.
+
+Giờ xem bản HW02 đã nộp (report, README, forms) để theo đúng mẫu đã dùng.
+
+Xem 3 form HW02 đã làm (bản .md) để giữ đúng cấu trúc mẫu.
+
+Giờ chuyển 3 mẫu .docx gốc sang md để đối chiếu (dùng `tools/docx_to_md.py` của HW03).
+
+Mẫu đã rõ. Giờ đọc dữ liệu Task 1: file Excel.
+
+Tính số liệu trực tiếp từ sheet Checklist (công thức không có giá trị cache).
+
+Giờ đọc bug report.
+
+Đếm bảng "Thay đổi so với bản AI" của 3 bước Task 1.
+
+Giờ xem prompt log (để dẫn mã lượt, giờ cho Audit và Disclosure).
+
+Log rất dài, tôi trích danh sách lượt kèm phiên và đầu prompt thay vì đọc toàn bộ.
+
+Lấy nguyên văn vài prompt quan trọng của Task 1 (để dẫn ở [AI-03] mục 3).
+
+C147 cho thấy issue có thể do AI tạo bằng `gh`. Kiểm tra ai thực sự chạy lệnh tạo issue để khai đúng.
+
+Đủ dữ liệu cho Task 1. Kiểm đối chiếu: Mỗi mục Failed đều nằm trong issue, bình luận, hoặc danh sách "không báo".
+
+Kiểm tra Policy xem cấp độ AI của HW03 có được quy định sẵn không (để biết ô "Cấp độ AI" là điền theo quy định hay SV tự chọn).
+
+Xem nhanh các lượt điền kết quả NT1 (C121 đến C135) để biết SV có sửa kết luận nào của AI không, cho đúng verdict ở Audit.
+
+Đã đủ dữ liệu. Bắt đầu viết `checklist/03_results.md`.
+
+Thêm CL-105 vào câu về phần W-04 không chạy được (Notes của CL-105 cũng ghi vậy).
+
+Đếm số mục của từng bản nháp AI để ghi vào report.
+
+Ba bản nháp IA-02 đến IA-04 cùng giờ tạo 15:03, trong khi WORKFLOW quy định mỗi lượt một IA. Kiểm lượt C56 để khai đúng.
+
+Giờ viết `report.md`: Đủ khung theo đề, Task 1 viết đầy đủ, phần còn lại ⏳.
+
+Giờ cập nhật `README.md`: Test Summary, tự chấm, video, và dòng phạm vi Task 3 (đã chốt ở `01_setup.md` nhưng README còn ghi "Chưa chốt").
+
+Đề §8 yêu cầu khai cả BrowserStack / LambdaTest trong Audit Report; thêm dòng này vào Appendix B.
+
+Tạo bản `.md` của [AI-02] từ bảng Appendix B (chuyển 6 cột thành 5 cột theo mẫu, bỏ in đậm như bản HW02).
+
+Viết [AI-03] Disclosure Form.
+
+Soát quy ước văn bản (không dùng "—", "·" ngoài phần chép nguyên văn mẫu; chữ hoa sau dấu ":").
+
+Kiểm số cột của mọi bảng trong các file vừa viết (tránh vỡ bảng khi xuất PDF).
+
+Tôi đã viết xong 6 file: `checklist/03_results.md`, `report.md`, `README.md` và 3 form .md trong `forms/`. Chưa commit, chưa xuất PDF.
+
+Số liệu tôi đếm thẳng từ Excel (cột NT1) và `bugs/bug_report.md`. 54 mục Failed đều có chỗ: 43 mục nằm trong 33 issue, 3 mục trong 2 bình luận (#18, #29), 8 mục thuộc danh sách "không báo".
+
+**Đã làm**
+- **[03_results.md](checklist/03_results.md):** Môi trường N1; kết quả theo IA (51 Passed, 54 Failed, 7 Không chạy được, tỉ lệ Passed 48,6%); kết quả theo căn cứ (SRS / khuyến nghị) và theo nguồn mục (cả 5 mục SV thêm đều Failed). Có 12 lỗi chính theo severity, đủ 54 mục Failed kèm số issue, 7 mục Không chạy được kèm lý do, và tổng hợp bug (1 critical, 2 high, 9 medium, 21 low).
+- **[report.md](report.md):** Có đủ các mục đề yêu cầu. Task 1 viết đầy đủ: Các bước, checklist 112 mục, mục AI bỏ sót kèm lý do, đánh giá bản AI, kết quả N1, bug. Task 2, Task 3, Skill, AI Critique, tự chấm để ⏳. Disclosure đã có bản nháp. Appendix B có sẵn 20 dòng (B01 đến B20), dòng Task 1 điền đủ.
+- **[README.md](README.md):** Có Test Summary (3 màn hình, 1 luồng, 112 mục, 105 đã chạy, 51 Passed, 54 Failed, 33 issue) và bảng tự chấm. Số của N2, N3, Task 2 để ⏳. Tôi cũng sửa dòng phạm vi Task 3: README còn ghi "Chưa chốt" nhưng `01_setup.md` đã chốt 3 nền tảng.
+- **forms/:** [AI-02] lấy theo bảng Appendix B; [AI-03] có 3 prompt nguyên văn (C64, C99, C147). [AI-05] để ⏳ mọi ô, cuối file có bảng "Căn cứ để đánh dấu" ghi sự kiện cho từng ô; bảng này cần xóa trước khi nộp.
+
+**Hai điều tôi tìm thấy trong prompt log và đã khai ở Appendix B**
+- **33 issue do AI tạo:** AI tạo 33 issue bằng `gh issue create` và chèn ảnh bằng `gh issue edit`, theo danh sách bạn đã duyệt (C147, C154). Bản HW02 ghi "tự tạo issue", nên lần này tôi viết theo đúng thực tế.
+- **IA-02 đến IA-04:** Ba IA này được sinh trong một lượt (C56) theo yêu cầu của bạn, khác WORKFLOW mục 3.1.2. Ở lượt đó bạn cũng dán kết quả DevTools trước khi có checklist.
+
+**Bạn cần quyết hoặc xác nhận**
+1. **Câu "Không dùng công cụ AI nào khác":** Câu này nằm trong [AI-03] và Appendix A. Tôi chỉ dựa vào việc mục 2 của prompt log đang trống, nên bạn cần xác nhận lại.
+2. **Verdict để ⏳:** B02 (các script trong `tools/`), B10 (AI điền cột NT1: bạn có sửa ô nào AI điền không) và B12 (phiên điều phối).
+3. **Phần tự đánh giá hoặc ký:** Cấp độ AI (HW01, HW02 khai Cấp 4), điểm tự chấm, Kết luận của Audit, ngày, chữ ký.
+4. **Phiên này chưa vào danh sách trắng:** Phiên này (`c934f0c0-5bfe-4a4e-8582-6d4f32335fd7`) chưa có trong `SESSIONS` của `tools/export_prompt_log.py`. Nhờ phiên điều phối thêm vào rồi xuất lại log trước khi commit.
+5. **Chỗ cũ trong `bugs/bug_report.md`:** Mục 5 vẫn ghi ⏳ dù ảnh `issues_list_T1_1`, `_2` đã có. Tôi không sửa vì nằm ngoài yêu cầu; nếu bạn muốn, tôi sửa.
+
+**Commit (sau khi phiên điều phối xuất log):**
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/03_results.md
+git commit -m "[T1][exec] Summarize N1 results and bugs in 03_results.md"
+git add report.md README.md
+git commit -m "[report] Add report skeleton with Task 1 and README test summary"
+git add "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" "forms/[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md" "forms/[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md"
+git commit -m "[forms] Add AI-02, AI-03, AI-05 drafts in Markdown"
+```
+````
+
+---
+
+### C180 | 16:32 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong kết quả, kiểm tra cho tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Scan new N3 log for phases, errors and fallbacks
+- Bash: Read CL-48 error detail and status counts
+- Bash: Read groups A and B results of new run
+- Bash: Read groups C to G results of new run
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-11.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-101_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-88_1.png
+- Bash: List manual and not-runnable items with reasons
+- Bash: Compare N1 with new N3 run and list screenshots
+- Bash: Verify every Failed item has a screenshot
+
+**Output AI (nguyên văn):**
+
+````text
+Lần chạy đi hết A đến G trong khoảng 9 phút. Chỉ có một mục bị lỗi script (CL-48). Tôi đọc chi tiết lỗi đó và phần kết quả.
+
+Lần chạy này cho kết quả hợp lệ ở cả nhóm G: CL-29 giờ Passed với đủ 3 trang, và CL-75 chạy được cả hai trạng thái. Tôi xem các ảnh vừa sửa cách chụp.
+
+Lần chạy mới hợp lệ và dùng được làm kết quả N3: Chạy đủ 7 nhóm trong 551 giây, cả 40 mục Failed đều có ảnh. Còn vài việc bạn cần làm tay trước khi chốt vào Excel.
+
+**Kết quả nháp N3 (`n3_run_log_2.txt`)**
+
+| Kết quả | Số mục |
+|---|---|
+| Failed | 40 |
+| Passed | 33 (thêm 1 mục "Passed, một phần không chạy được") |
+| Chạy tay (bạn tự xem) | 22 |
+| Lỗi script | 1 (CL-48) |
+| N/A (phím Tab, rê chuột, cửa sổ 1366) | 8 |
+| Không chạy được (trang Đăng ký từ chối mật khẩu hợp lệ; không có hộp xác nhận) | 7 |
+
+**Các lỗi của lần trước đã hết**
+- **Nhóm G đủ 3 trang:** CL-29 giờ Passed (3 nút giống nhau), CL-20 ghi đúng tiêu đề W-06, CL-75 chạy được cả hai trạng thái.
+- **Phần W-03 của nhóm B giờ hợp lệ:** CL-96 Failed, CL-112 Failed (gửi 3 request), CL-105 có thông báo nhưng không nói về mất kết nối.
+- **Ảnh thấy được lỗi:**
+  - Mục trong bảng (ví dụ `CL-11.png`) thấy rõ bảng, `10.000.000 ₫`, ngày `10/11/2026`.
+  - Mục có hộp thoại có ảnh `_1` chụp lúc hộp thoại đang hiện, ví dụ `CL-101_1.png` với "Số điện thoại không hợp lệ...".
+- **Ảnh đủ và đúng:** 53 ảnh, mục Failed nào cũng có ảnh, không có ảnh thừa. Mọi ảnh có lớp chữ đè và thanh địa chỉ `localhost:5173`.
+
+**So với Chrome (N1), chỉ 2 mục khác nhau, và đều do định dạng theo ngôn ngữ trình duyệt**
+- **CL-11:** N1 Passed (dấu phẩy), N3 Failed (`10.000.000`, dấu chấm).
+- **CL-24:** N1 Failed (`11/10/2026`), N3 Passed (`10/11/2026`).
+
+Đây là ứng viên bug Task 3. Như tôi đã lưu ý, nên kiểm lại ngôn ngữ của Chrome ở N1 (chạy qua Playwright) trước khi viết bug.
+
+**Việc bạn cần làm**
+1. **CL-48 bị lỗi script.** Khi script bấm vào ô nhập ở trang hồ sơ, nhãn "Email (Không đổi)" và "Số điện thoại" lại nằm ngay chỗ bấm, tức là bố cục bị xê dịch (nhiều khả năng do bàn phím ảo bật lên). Cách đơn giản nhất là kiểm tay trên điện thoại: Chạm vào từng ô Họ Tên, Số điện thoại, Địa chỉ giao hàng, gõ thử một ký tự. Nếu Passed thì không cần ảnh, ghi Notes là "kiểm tay". Chạy lại script chỉ cho mục này thì phải chạy lại cả nhóm C.
+2. **CL-68 và CL-69:** Lần này bạn có thật sự thêm sản phẩm vào giỏ trước khi bấm Enter không? Ảnh chỉ cho thấy navbar không có badge. Nếu giỏ thật sự có hàng thì kết quả Failed là đúng.
+3. **22 mục "Chạy tay"** cần bạn tự nhìn:
+   - Phần lớn xem được từ ảnh tổng quan: CL-01 đến CL-09, CL-25, CL-26, CL-27, CL-31, CL-35, CL-56, CL-66, CL-67, CL-84, CL-92.
+   - Phải làm trên điện thoại: CL-33 (phóng to 200% trong Cài đặt của Chrome) và CL-34 (Họ Tên dài).
+   - **Mục nào bạn kết luận Failed thì phải có ảnh.** Script chỉ tự chụp mục Failed, nên mục "Chạy tay" chưa có ảnh riêng. Ví dụ CL-105: Nếu chốt Failed giống N1 thì cần chụp tay lúc mất mạng và bấm gửi.
+4. **Ghi chú môi trường:**
+   - Ở `CL-88_1.png` có thông báo của Chrome "Chrome đang tải các cờ dòng lệnh..." ở góc dưới. Thông báo này xuất hiện do cờ `chrome://flags` mà script cần. Nó không che phần lỗi, nhưng nên ghi vào phần môi trường của N3.
+   - Cửa sổ Samsung Notes vẫn che vài dòng cuối của bảng. Bằng chứng của các mục vẫn nhìn thấy được.
+
+Tôi chưa điền gì vào Excel. Khi bạn xong CL-48, CL-68, CL-69 và các mục "Chạy tay", tôi có thể chép kết quả N3 vào cột NT3 để bạn duyệt.
+
+Commit kết quả N3:
+```
+git add cross_platform/screenshots/android-chrome checklist/tools/n3_run_log_2.txt
+git commit -m "[T3][android-chrome] Execute checklist on Android Chrome (Samsung SM-G998B)"
+```
+````
+
+---
+
+### C181 | 16:36 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã review cross_platform/firefox_triage.md xong và có các quyết định: 
+
+
+D-16: Để trống và ghi chú
+D-17: Mở server ảo chuyển file qua tunnel
+D-18: Giữ nguyên
+D-19: Đã chạy phần đó rồi mà.
+
+
+Nhưng task 3 giờ đang xử lý phần script rồi thì làm sao? Đẩy giải quyết N3 qua task 1 à?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read open decisions D-16 to D-19 in Firefox triage
+- Bash: Identify the new summary session id
+- Bash: Whitelist summary session, export log, record in tracker
+
+**Output AI (nguyên văn):**
+
+````text
+Không cần chuyển N3 sang phiên Task 1. Cứ để **phiên Task 3 làm xong N3**, rồi mới gửi các quyết định review.
+
+## Vì sao không chuyển sang Task 1 giữa chừng
+
+- **Hai phiên sửa cùng một file thì đè lên nhau.** Phiên Task 3 đang sửa `n3_android_checklist.js`. Nếu giờ phiên Task 1 cũng sửa file này, bản sửa của bên này dễ ghi đè bản sửa của bên kia. Quy tắc: **mỗi file chỉ một phiên sửa tại một thời điểm.**
+- **Phiên Task 3 đã đọc script rồi.** Chuyển sang Task 1 thì phải giải thích lại từ đầu.
+- **Chỉ chuyển khi phiên Task 3 bế tắc,** ví dụ sửa 2 lần mà vẫn lỗi. Lúc đó bảo phiên Task 3 dừng hẳn rồi mới đưa cho phiên Task 1.
+
+## Quyết định review: Gửi sau khi phiên Task 3 xong N3
+
+Phiên Claude xử lý từng lượt một. Nếu gửi bây giờ, tin nhắn sẽ chờ hoặc làm gián đoạn việc sửa script. Mấy quyết định này chỉ cần ghi vào file, mất khoảng 1 phút, không gấp.
+
+**D-19:** Bạn nói đúng, CL-33 và CL-34 **đã chạy trên Chrome** (cột NT1 có kết quả Passed và có ảnh). File triage được viết trước đó nên vẫn hỏi lại. Ghi là "Không cần, đã chạy".
+
+Câu gửi phiên Task 3 khi nó xong N3:
+
+```text
+Quyết định review firefox_triage.md: D-16: Để trống và ghi lý do ở Notes. D-17: Phục vụ file script qua tunnel (mở server tạm trên máy, mở URL trong Firefox từ xa). D-18: Giữ nguyên. D-19: Không cần, CL-33 và CL-34 đã chạy trên Chrome (NT1 có kết quả). Ghi vào bảng quyết định và bảng "Thay đổi so với bản AI", sửa các chỗ trong file còn ghi CL-33, CL-34 chưa chạy.
+```
+
+## Phiên Tổng hợp
+
+Phiên Tổng hợp (`c934f0c0`) đã chạy và tạo `report.md`, `checklist/03_results.md`, sửa `README.md`, và 2 form AI-02, AI-03. Tôi đã thêm phiên này vào danh sách xuất log. Log đã xuất lại: 181 lượt từ **6 phiên**.
+
+Chờ phiên đó xong thì tôi kiểm và đưa lệnh commit.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Phiếu A, B đã điền | Chốt lịch; chạy P1 đến P7 sau N3 | ~6,5 giờ |
+| Task 3 | Phiên Task 3 đang xử lý N3 | N3 xong → gửi D-16 đến D-19 → điền NT3 → commit; chuẩn bị BrowserStack; N2; compare, bugs | ~2,75 giờ |
+| Agent Skill | Đã bổ sung `exec`, `bugs`, `pilot` | Chốt cách xử lý script; các bước còn lại của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | **Phiên `c934f0c0` đang soạn** report, README, forms | Xong thì tôi kiểm | ~3 giờ |
+
+⏱ Còn khoảng **13,75 giờ** làm việc | Còn **5 giờ 24 phút** tới mốc 22:00 10/11 | **20 giờ 24 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C182 | 16:43 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Đã thử và bình thường.
+2. Có thêm rồi, navbar vốn không có badge á.
+3. Nếu xem được ảnh tổng quan thì thôi, bạn có thể save ở nháp và tôi sẽ review. Còn phần CL-33 và CL-34 giờ tôi sẽ làm và bổ sung ảnh.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read full script notes for manual items
+- Bash: Print full text of long notes for CL-05, 56, 84
+- Bash: Get full table rows and N1 notes for manual items
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_login_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_login_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_register_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_register_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_profile_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-78.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-79.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-91.png
+- Bash: Find measured status label colors
+- Bash: Get current time for draft header
+- Write: d:\Dang\Test\Homeworks\HW03\cross_platform\ai_raw\T3_android-chrome_manual.md
+- PowerShell: Check servers, phone connection and set adb reverse
+- PowerShell: Check IPv6 web server and portproxy state
+- Bash: Run a background TCP forwarder from IPv4 to IPv6 port 5173
+- PowerShell: Verify forwarder and open EShop login in phone Chrome
+- Bash: Count characters of a sample long name
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi sẽ xem ảnh tổng quan và các ảnh liên quan để lập bản nháp cho các mục "Chạy tay". Trước hết, tôi lấy phần dữ liệu script đã đo cho các mục đó (màu, chữ trạng thái, thông báo).
+
+Tôi đã có đủ căn cứ từ ảnh và log. Giờ tôi lưu bản nháp vào `ai_raw/`.
+
+Tôi kiểm tra server và điện thoại rồi mở sẵn trang đăng nhập EShop trên Chrome của điện thoại cho bạn làm CL-33 và CL-34.
+
+Backend vẫn chạy, nhưng web ở `127.0.0.1:5173` không trả lời. Tôi kiểm tra xem server web đã tắt hay đang nghe ở IPv6.
+
+Chrome trên điện thoại đã mở `http://localhost:5173/login`, bạn làm CL-33 và CL-34 được ngay.
+
+Lúc kiểm tra, tôi thấy server web đang chỉ nghe ở IPv6 `[::1]:5173` nên điện thoại không vào được. Tôi không khởi động lại server mà bật một bộ chuyển tiếp nhỏ chạy nền, chuyển `127.0.0.1:5173` sang `[::1]:5173`. Cách này không sửa gì của SUT. Làm xong thì báo tôi để tắt nó.
+
+**CL-33: Phóng to 200%**
+1. Bật cửa sổ nổi Samsung Notes trước khi chụp.
+2. Trong Chrome trên điện thoại: ⋮ > Cài đặt > Hỗ trợ tiếp cận > kéo thanh thu phóng trang lên 200%.
+3. Lần lượt xem `/login`, `/register`, rồi đăng nhập `test@eshop.com` / `Test1234!` và xem `/profile`. Tìm chữ bị cắt, phần tử chồng lên nhau, hoặc nút không bấm được.
+4. Chỉ cần chụp nếu Failed. Có nhiều ảnh thì đặt tên `CL-33_1.png`, `CL-33_2.png`... và lưu vào `cross_platform/screenshots/android-chrome/`.
+5. Xong thì đưa thu phóng về 100%.
+
+**CL-34: Họ Tên dài**
+1. Ở `/profile`, đổi Họ Tên thành chuỗi đúng 50 ký tự này rồi bấm "Cập nhật":
+   ```
+   Nguyễn Trần Hoàng Phương Thảo Lê Thị Minh Châu Anh
+   ```
+2. Xem lời chào trên navbar ở cả `/profile`, `/login`, `/register`, và ô "Họ Tên".
+3. Xong thì đổi Họ Tên về `Test User`.
+
+**Nếu muốn, chụp luôn 3 ảnh đang thiếu trong bản nháp**
+- **CL-06 (tiêu đề tab):** Bấm nút số tab cạnh thanh địa chỉ để mở danh sách tab, chụp lúc thấy tiêu đề "frontend-web".
+- **CL-05 ("Lỗi: Cannot cancel this order."):** Lần chạy vừa rồi đã hủy hết các đơn hủy được, nên phải reset DB và seed lại trước. Sau đó mở `/profile` ở 2 tab, hủy một đơn ở tab B, quay lại tab A bấm "Hủy đơn" của đúng đơn đó, chụp lúc hộp thoại đang hiện.
+- **CL-105 (mất kết nối):** Bật chế độ máy bay **không** làm mất kết nối, vì điện thoại đi qua cáp USB. Phải mở `chrome://inspect/#devices` trên máy tính, bấm "inspect" ở tab EShop, chọn **Offline** trong tab Network. Sau đó bấm "Sign In" ở W-03 và "Cập nhật" ở W-06, chụp khi thông báo hiện.
+
+**Bản nháp các mục "Chạy tay"**
+
+Tôi đã lưu ở [ai_raw/T3_android-chrome_manual.md](HW03/cross_platform/ai_raw/T3_android-chrome_manual.md) để bạn review. Tôi xem 9 ảnh và log của script rồi đề xuất:
+- **Failed (10 mục):** CL-01, 02, 05, 06, 08, 25, 26, 27, 66, 105.
+- **Passed (10 mục):** CL-03, 04, 07, 09, 31, 35, 56, 67, 84, 92.
+- **Ma trận trạng thái** cho cột NT3.
+- **Danh sách ảnh tổng quan cần chép thành `CL-xx.png`:** CL-01, 02, 08, 25, 26, 27, 66.
+
+Có một lỗi trong bản nháp: Mục 4 ghi "44 Passed (gồm 1 mục Passed một phần)", đúng ra là **45**, tức 33 + CL-48 + 10 đề xuất, cộng 1 mục Passed một phần. Tổng vẫn là 112. Tôi không sửa file vì file trong `ai_raw/` phải giữ nguyên. Bạn ghi lỗi này vào bảng "Thay đổi so với bản AI" với loại "Sai".
+````
+
+---
+
+### C183 | 16:48 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+CL-34: Họ Tên dài
+
+Ở /profile, đổi Họ Tên thành chuỗi đúng 50 ký tự này rồi bấm "Cập nhật":
+
+Nguyễn Trần Hoàng Phương Thảo Lê Thị Minh Châu Anh
+Xem lời chào trên navbar ở cả /profile, /login, /register, và ô "Họ Tên".
+Xong thì đổi Họ Tên về Test User.
+
+
+-> Phần này có thể viết script chụp mà. Viết đi để tôi chạy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find CL-34 logic in N1 script and N3 script
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Syntax-check and confirm helpers exist
+
+**Output AI (nguyên văn):**
+
+````text
+Được. Tôi xem cách N1 đã làm CL-34 để dùng lại cùng logic kiểm.
+
+N1 đã có sẵn nhóm H cho CL-34. Tôi chuyển nhóm này sang script N3, dùng **đúng chuỗi Họ Tên 50 ký tự mà N1 đã dùng** để hai nền tảng so được với nhau.
+
+Tôi đã thêm nhóm H (CL-34) vào [n3_android_checklist.js](HW03/checklist/tools/n3_android_checklist.js). Script qua kiểm cú pháp `node --check`, chưa chạy.
+
+**Nhóm H làm gì**
+1. Đăng nhập `test@eshop.com`, đổi Họ Tên thành `Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly`. Đây là đúng chuỗi 50 ký tự mà N1 đã dùng, nên kết quả hai nền tảng so được với nhau. Bạn bỏ chuỗi tôi đưa ở lượt trước.
+2. Tải lại trang, kiểm tên đã được lưu, rồi lần lượt mở `/profile`, `/register`, `/login` ở trạng thái đã đăng nhập.
+3. Ở mỗi trang, đo giống hệt N1:
+   - Lời chào có hiện đủ tên không, có bị cắt không.
+   - Các mục navbar có chồng lên nhau không, có còn thẳng một hàng không.
+   - Có mục nào tràn ra ngoài vùng trang, có thanh cuộn ngang không.
+4. Chụp cả 3 trang, kể cả khi Passed, để bạn xem lại:
+   - `CL-34_1.png`: W-06, thấy cả navbar và ô Họ Tên.
+   - `CL-34_2.png`: W-04.
+   - `CL-34_3.png`: W-03.
+5. Cuối cùng trả Họ Tên về như cũ, kể cả khi giữa chừng bị lỗi.
+
+Nhóm H chỉ chạy khi gọi riêng `--only=H`. Lần chạy đầy đủ không có `--only` sẽ không chạy nhóm này.
+
+**Lệnh chạy (cmd)**
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --only=H --log=n3_cl34_log.txt
+```
+
+**Trước khi chạy**
+- **Nếu bạn đã làm CL-33:** Nhớ đưa thu phóng trang của Chrome về **100%**. Nếu không, CL-34 sẽ bị đo ở mức 200%.
+- **Bộ chuyển tiếp cổng 5173** tôi bật lúc nãy vẫn đang chạy nền, script cần nó. Đừng tắt cửa sổ phiên này trước khi chạy xong.
+- **Không cần reset DB:** CL-34 chỉ đổi Họ Tên rồi trả lại.
+- **Mở sẵn cửa sổ nổi Samsung Notes**, đặt ở góc dưới để không che navbar.
+
+Chạy xong bạn báo tôi để xem kết quả và ảnh, sau đó tôi tắt bộ chuyển tiếp.
+````
+
+---
+
+### C184 | 16:54 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong. Đồng thời đây là các ảnh của phần CL-33, thêm vào và đặt đúng tên giúp tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read CL-34 run log and list CL-33/34 images
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-34_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-34_2.png
+- Bash: Inspect pasted CL-33 images and check for duplicates
+- Bash: Copy CL-33 screenshots with sequential names
+- Bash: Write draft revision v2 with CL-33 and CL-34 proposals
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi xem kết quả CL-34 trước, sau đó chép 12 ảnh CL-33 vào thư mục.
+
+Ảnh 2 và 3 giống nhau từng byte (cùng một ảnh dán hai lần), nên tôi chỉ giữ một bản. Còn 11 ảnh, tôi chép vào thư mục theo đúng thứ tự bạn gửi.
+
+Tôi đã chép ảnh CL-33, kiểm kết quả CL-34, và lưu bản nháp sửa lần 1.
+
+**Ảnh CL-33**
+
+11 ảnh đã nằm trong `cross_platform/screenshots/android-chrome/`, không ghi đè file nào. Ảnh số 2 và số 3 bạn gửi giống nhau từng byte, nên tôi chỉ giữ một bản, vì vậy còn 11 ảnh thay vì 12.
+
+| Tên mới | Ảnh bạn gửi | Nội dung |
+|---|---|---|
+| `CL-33_1` đến `CL-33_3` | 1, 2, 4 | `/login` |
+| `CL-33_4` đến `CL-33_6` | 5, 6, 7 | `/register` |
+| `CL-33_7` đến `CL-33_11` | 8 đến 12 | `/profile` |
+
+**Kết quả CL-34 (`n3_cl34_log.txt`)**
+
+Script chạy trọn. Tên đã được trả về `Test User`, và đủ 3 ảnh `CL-34_1` đến `CL-34_3`.
+
+| Trang | Script đo | Nhận xét khi xem ảnh |
+|---|---|---|
+| W-06 | Failed, chỉ vì "trang có thanh cuộn ngang" | Cuộn ngang ở trang này do bảng lịch sử đơn, đã có ở CL-109, **không phải do tên dài** |
+| W-04, W-03 | Passed (không chồng lấn, không tràn) | Lời chào xuống 4 dòng, navbar cao gấp đôi, "Giỏ hàng" bị ép xuống 2 dòng và dính sát chữ "EShop" |
+
+Tôi đề xuất **Failed**, vì kết quả mong đợi của CL-34 là lời chào không "đẩy lệch các mục khác". Bạn là người chốt. Nếu chốt Failed thì đây là khác biệt chỉ có trên điện thoại (N1 ở cửa sổ 1366px là Passed), tức thêm một ứng viên bug Task 3.
+
+**Bản nháp sửa lần 1:** [ai_raw/T3_android-chrome_manual_v2.md](HW03/cross_platform/ai_raw/T3_android-chrome_manual_v2.md). Bản gốc vẫn giữ nguyên.
+- **Thêm CL-33, đề xuất Failed:**
+  - `/login`: Không thấy nút "Thoát" nếu chưa cuộn ngang.
+  - `/register`: Mục "Đăng nhập" trên navbar bị cắt.
+  - `/profile`: Lời chào bị cắt; bảng chỉ thấy 2 cột, ngày bị cắt thành "10/11/202".
+- **Thêm CL-34, đề xuất Failed** như trên.
+- **Sửa số Passed** ở phần tổng hợp: 44 thành 45.
+- **Tổng dự kiến của N3 nếu bạn chấp nhận hết các đề xuất:** 52 Failed, 45 Passed (gồm 1 mục Passed một phần), 8 N/A, 7 Không chạy được, tổng 112.
+
+**Còn lại**
+- **3 mục chưa có ảnh thấy lỗi:** CL-05, CL-06, CL-105. Cách chụp tôi đã ghi trong bản nháp.
+- **7 mục cần chép ảnh tổng quan** thành `CL-xx.png`: CL-01, 02, 08, 25, 26, 27, 66.
+- **Bộ chuyển tiếp cổng 5173 vẫn đang chạy nền.** Bạn còn cần điện thoại để chụp CL-05, 06, 105 thì cứ để. Chụp xong báo tôi để tắt.
+
+Commit:
+```
+git add cross_platform/screenshots/android-chrome cross_platform/ai_raw/T3_android-chrome_manual.md cross_platform/ai_raw/T3_android-chrome_manual_v2.md checklist/tools/n3_android_checklist.js checklist/tools/n3_cl34_log.txt
+git commit -m "[T3][android-chrome] Add CL-33 and CL-34 evidence and draft manual results"
+```
+````
+
+---
+
+### C185 | 16:58 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+1. CL-05, CL-06, CL-105 -> Nêu lại ra chat giúp tôi.
+2. 7 mục cần chép ảnh tổng quan thành CL-xx.png: CL-01, 02, 08, 25, 26, 27, 66. -> Bạn làm đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Copy overview screenshots to Failed item names
+
+**Output AI (nguyên văn):**
+
+````text
+I đã chép xong ảnh cho 7 mục. Bên dưới là cách chụp 3 mục còn thiếu ảnh.
+
+**Ảnh đã chép** (chép nguyên file, không chỉnh sửa, không ghi đè)
+
+| Mục | File mới | Chép từ | Thấy gì trong ảnh |
+|---|---|---|---|
+| CL-01 | `CL-01.png` | `overview_login_1.png` | Nhãn "Username" |
+| CL-02 | `CL-02.png` | `overview_login_1.png` | Nút "Sign In" |
+| CL-08 | `CL-08.png` | `overview_register_1.png` | Nút "Đăng Ký" nền đỏ |
+| CL-25 | `CL-25.png` | `overview_login_1.png` | Tiêu đề "Đăng Ký", navbar "Đăng nhập", nút "Sign In" trên cùng một trang |
+| CL-26 | `CL-26_1.png` | `overview_register_1.png` | Tiêu đề "Đăng Ký Tài Khoản" viết hoa mọi chữ đầu |
+| | `CL-26_2.png` | `overview_profile_2.png` | Tiêu đề "Lịch sử đơn hàng" chỉ viết hoa chữ đầu |
+| CL-27 | `CL-27.png` | `overview_register_1.png` | Nút "Đăng Ký" so với navbar "Đăng ký" |
+| CL-66 | `CL-66_1.png` | `overview_login_1.png` | `/login`: Mục "Đăng nhập" không được làm nổi bật |
+| | `CL-66_2.png` | `overview_register_1.png` | `/register`: Mục "Đăng ký" không được làm nổi bật |
+| | `CL-66_3.png` | `CL-78.png` | `/profile` chưa đăng nhập, ảnh để so: Navbar trông y hệt hai trang trên |
+
+**3 mục cần bạn chụp thêm** (bật cửa sổ nổi Samsung Notes trước khi chụp)
+
+**CL-05: Thông báo tiếng Anh "Lỗi: Cannot cancel this order."**
+1. Reset DB và seed lại. Lần chạy trước đã hủy hết các đơn còn hủy được.
+   ```
+   cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+   node database.js
+   cd /d D:\Dang\Test\Homeworks\HW03
+   python tools\seed_orders.py
+   ```
+2. Trên Chrome của điện thoại, đăng nhập `test@eshop.com` / `Test1234!`, rồi mở `/profile` ở **2 tab** (gọi là tab A và tab B).
+3. Ở tab B, bấm "Hủy đơn" của một đơn đang "Chờ xác nhận".
+4. Quay lại tab A, **không tải lại trang**, bấm "Hủy đơn" của đúng đơn đó.
+5. Chụp lúc hộp thoại "Lỗi: Cannot cancel this order." đang hiện. Lưu thành `CL-05.png`.
+
+**CL-06: Tiêu đề tab "frontend-web"**
+1. Mở `/login`, rồi bấm nút số tab (ô vuông có số, cạnh thanh địa chỉ) để mở danh sách tab.
+2. Chụp lúc thấy thẻ tab ghi tiêu đề "frontend-web". Lưu thành `CL-06.png`.
+3. Muốn đủ cả 3 trang thì làm lại với `/register` và `/profile`, lưu thành `CL-06_1.png`, `CL-06_2.png`, `CL-06_3.png`.
+
+**CL-105: Mất kết nối, thông báo không nói là mất kết nối**
+
+Bật chế độ máy bay **không** làm mất kết nối, vì điện thoại đi qua cáp USB.
+1. Trên máy tính, mở Chrome, vào `chrome://inspect/#devices`, bấm **inspect** ở tab EShop của điện thoại.
+2. Trong cửa sổ DevTools vừa mở, vào tab **Network**, chọn **Offline** ở ô giới hạn mạng.
+3. Ở `/login` trên điện thoại: Nhập `test@eshop.com` / `Test1234!`, bấm "Sign In", chụp lúc hiện "Đăng nhập thất bại. Vui lòng kiểm tra lại.". Lưu thành `CL-105_1.png`.
+4. Đăng nhập lại khi đã bật mạng, rồi chuyển lại Offline. Ở `/profile`, bấm "Cập nhật", chụp lúc hộp thoại "Lỗi cập nhật" hiện. Lưu thành `CL-105_2.png`.
+5. Xong thì chuyển Network về **No throttling**.
+
+Bạn chụp xong thì gửi ảnh vào đây, tôi đặt tên và chép vào thư mục như với CL-33. Chụp xong cả 3 mục thì báo tôi để tắt bộ chuyển tiếp cổng 5173.
+````
+
+---
+
+### C186 | 16:59 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra tiến trình của từng task, xuất log và đưa commit message nếu cần. Đồng thời nếu có các quyết định nào cần chốt mà tôi chưa chốt thì nói tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo state and latest output of all sessions
+- Bash: Fix stale section 5 in bug report and export log
+- Bash: Update remaining-time estimates in tracker
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc lượt mới nhất của 5 phiên. Log đã xuất lại: 186 lượt từ 6 phiên.
+
+Phiên Tổng hợp có đọc `_NOTES.md` (chỉ các mục tôi cho phép) và file của HW02 (`report.md`, `README.md`, `forms/`). Việc đọc HW02 là theo câu "Có thể xem lại các file ở HW cũ" bạn gửi phiên đó; ở bước làm báo cáo thì không ảnh hưởng thiết kế test.
+
+## Tiến trình từng phiên
+
+| Phiên | Đã làm | Đang ở |
+|---|---|---|
+| **Task 2** | Lượt cuối lúc 11:38, sửa sau pilot đã commit | **Chưa chạy phiên nào trong P1 đến P7** |
+| **Task 3** | N3 chạy đủ, có 77 ảnh; đã chép 7 ảnh tổng quan thành CL-01, 02, 08, 25, 26, 27, 66 | Chờ bạn chụp tay 3 ảnh trên điện thoại (CL-05, CL-06, CL-105, hướng dẫn trong phiên); cột NT3 chưa điền |
+| **Agent Skill** | Đã đổi sang: Mô tả cách làm script, trỏ tới `checklist/tools/` làm ví dụ, không đóng gói script | Chờ các bước sau của Task 2; demo, video |
+| **Tổng hợp** | `report.md` (phần Task 1 đầy đủ), `README.md` (test summary, bảng tự chấm), `checklist/03_results.md`, 3 form `.md` | Chờ bạn chốt các ô ⏳ |
+
+Tôi đã sửa mục 5 của `bugs/bug_report.md`, chỗ vẫn ghi ⏳ dù 2 ảnh danh sách issue đã có (phiên Tổng hợp chỉ ra).
+
+## Quyết định bạn chưa chốt
+
+**Task 2**
+1. **Có cập nhật kết quả pilot vào test plan và bộ công cụ không:** Gồm G4 (reset xóa dữ liệu, đã xác nhận) ở `01_test_plan.md` mục 10.1, và cách kiểm D6 bằng form "Sửa" ở `03_instruments.md` mục I4.6. Gợi ý: Có, sửa ngắn.
+2. **"Thêm mới" ở trang Danh mục tạo danh mục tên trống:** Phiên Task 2 nhận định đây có thể là bug theo FR-14. Báo ở bước `bugs` của Task 2. Cần **tự chụp lại lỗi lúc không có người tham gia**, mất khoảng 2 phút sau khi reset.
+
+**Task 3**
+
+3. **D-16 đến D-19:** Đã chốt nhưng **chưa gửi phiên Task 3** (câu gửi ở tin trước).
+
+**Agent Skill**
+
+4. **"File tóm tắt kết quả ngoài Excel" (⏳):** Phiên Tổng hợp đã tạo `checklist/03_results.md`, nên trả lời là **có**.
+5. **Màn hình và luồng cho demo (B hay C), lúc quay video:** Vẫn mở.
+
+**Tổng hợp** (phiên Tổng hợp liệt kê)
+
+6. **Xác nhận "Không dùng công cụ AI nào khác"** trong AI-03 và Appendix A.
+7. **Đánh giá cho B02** (script trong `tools/`), **B10** (AI điền cột NT1: bạn có sửa ô nào không), **B12** (phiên điều phối).
+8. **Phần bạn tự điền:** Cấp độ AI (HW01, HW02 đều khai Cấp 4), điểm tự chấm, kết luận của Audit, ngày, chữ ký.
+9. **Ghi chú:** Ở [AI-05], bảng "Căn cứ để đánh dấu" cuối file phải **xóa trước khi nộp**.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/bug_report.md
+git commit -m "[T1][bugs] Point bug report to issue list screenshots"
+git add checklist/03_results.md
+git commit -m "[T1][exec] Summarize N1 results and bugs in 03_results.md"
+git add report.md README.md
+git commit -m "[report] Add report skeleton with Task 1 and README test summary"
+git add "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" "forms/[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md" "forms/[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md"
+git commit -m "[forms] Add AI-02, AI-03, AI-05 drafts in Markdown"
+git add checklist/tools/n3_android_checklist.js checklist/tools/n3_run_log.txt checklist/tools/n3_run_log_2.txt checklist/tools/n3_cl34_log.txt cross_platform/screenshots/android-chrome cross_platform/ai_raw/T3_android-chrome_manual.md cross_platform/ai_raw/T3_android-chrome_manual_v2.md
+git commit -m "[T3][android-chrome] Run N3 script and add Android screenshots"
+git add tools/export_prompt_log.py prompt_log.md
+git commit -m "[setup] Add summary session to prompt log whitelist"
+git push
+```
+
+Chưa commit:
+- `cross_platform/firefox_triage.md`: Chờ phiên Task 3 ghi D-16 đến D-19.
+- `usability/sessions/`: Commit theo từng phiên.
+- `bugs/image_links.txt`: File làm việc.
+
+Cột NT3 trong Excel và 3 ảnh chụp tay sẽ có commit `[T3][android-chrome]` thứ hai.
+
+## ⚠ Ưu tiên
+
+Đã 17:00 mà Task 2 **chưa chạy phiên nào**. Nếu tối nay 7 người làm được, nên bắt đầu P1 **ngay**:
+- Phần chụp tay của N3 (3 ảnh trên điện thoại) và N2 trên cloud **làm sau** các phiên, hoặc chen vào giữa hai phiên.
+- Chụp CL-05 phải reset DB, nên **chụp sau khi xong một phiên**, không làm trong phiên.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Hồ sơ P1 đến P7 đã có phiếu A, B | **Chạy P1 ngay**; quyết định 1, 2 | ~6,5 giờ |
+| Task 3 | N3 chạy đủ (77 ảnh) | 3 ảnh tay → điền NT3; gửi D-16 đến D-19; N2 trên cloud; compare, bugs | ~2,5 giờ |
+| Agent Skill | Phần thiết kế, exec, bugs, pilot đã viết | Quyết định 4, 5; các bước sau của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Đã có bản nháp phần Task 1, README, 3 form | Quyết định 6 đến 8; phần Task 2, Task 3, Skill; docx, PDF, zip | ~2 giờ |
+
+⏱ Còn khoảng **12,5 giờ** làm việc | Còn **5 giờ 1 phút** tới mốc 22:00 10/11 | **20 giờ 1 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C187 | 17:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+CL-05 phần này tôi đâu cần chạy tay đâu. Script không thể làm sao?
+chrome://inspect/#devices -> Không mở được trên điện thoại.
+Đây là ảnh của CL-06.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate CL-88 two-tab code
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Syntax-check script and confirm no existing images for these items
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Syntax-check after CL-06 fallback edit
+
+**Output AI (nguyên văn):**
+
+````text
+Được, cả CL-05, CL-06 và CL-105 đều làm bằng script được. Trước khi viết, tôi xem lại đoạn script đã làm phần "2 tab" của CL-88 để dùng lại cách tìm dòng đơn và nút "Hủy đơn".
+
+Tôi thêm nhóm I vào script, chỉ chạy khi gọi riêng `--only=I`, làm cả 3 mục.
+
+Tôi đã thêm nhóm I vào script để chụp cả 3 mục CL-105, CL-05, CL-06. Script qua kiểm cú pháp, chưa chạy.
+
+**Ảnh CL-06 bạn vừa gửi: Tôi chưa thêm vào thư mục.** Ảnh không có cửa sổ nổi Samsung Notes và không thấy URL `localhost`, nên chưa đạt R-03 và R-04 (mọi ảnh phải có lớp chữ đè và URL localhost). Nhóm I sẽ chụp lại mục này.
+
+Về câu hỏi `chrome://inspect/#devices`: Trang đó mở trên Chrome của **máy tính**, không phải điện thoại. Nhưng giờ không cần nữa, vì script tự bật chế độ mất kết nối.
+
+**Nhóm I làm gì** (luôn chụp ảnh, kể cả khi kết quả nháp không phải Failed)
+
+| Mục | Script làm | Ảnh |
+|---|---|---|
+| CL-105 | Ở `/login`: Bật mất kết nối, bấm "Sign In", chụp lúc thông báo đang hiện. Đăng nhập, rồi ở `/profile`: Mất kết nối, bấm "Cập nhật", chụp lúc hộp thoại "Lỗi cập nhật" đang hiện | `CL-105_1.png`, `CL-105_2.png` |
+| CL-05 | Mở đơn ở 2 tab, hủy ở tab B, quay về tab A (chưa tải lại) bấm "Hủy đơn" của cùng đơn đó, chụp lúc hộp thoại "Lỗi: Cannot cancel this order." đang hiện | `CL-05.png` |
+| CL-06 | Đọc tiêu đề của 3 trang, rồi mở trang Lịch sử của Chrome (`chrome://history`). Trang này hiện tiêu đề "frontend-web" kèm URL `localhost` của từng trang, và cửa sổ nổi vẫn nằm trên | `CL-06.png` |
+
+Nếu Chrome trên điện thoại không cho script mở `chrome://history`, log sẽ báo. Khi đó bạn chụp tay danh sách tab như lúc nãy, nhưng **để cửa sổ nổi Samsung Notes hiện trên màn hình** khi chụp.
+
+**Lệnh chạy (cmd)**
+
+Phải reset DB và seed trước, vì CL-05 cần một đơn còn hủy được.
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+node database.js
+cd /d D:\Dang\Test\Homeworks\HW03
+python tools\seed_orders.py
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --only=I --log=n3_extra_log.txt
+```
+
+**Trước và sau khi chạy**
+- Thu phóng của Chrome trên điện thoại đang ở 100%.
+- Cửa sổ nổi Samsung Notes đang mở.
+- Bộ chuyển tiếp cổng 5173 vẫn chạy nền như lúc nãy.
+- CL-05 hủy mất 1 đơn, nên chạy xong cần reset DB và seed lại nếu còn dùng dữ liệu.
+
+Chạy xong báo tôi để kiểm tra ảnh và kết quả.
+````
+
+---
+
+### C188 | 17:08 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+CL-06 sẽ chụp lại, nhưng mà bật tab thì sao mà thấy URL localhosst được? Cái này là vấn đề điện thoại mà.
+CL-105 liệu có thể chạy script luôn không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn nói đúng. Màn hình danh sách tab của Chrome trên điện thoại không hiện URL, đây là giới hạn của điện thoại chứ không phải do cách chụp. Vì vậy với CL-06, nhóm I không dùng danh sách tab mà mở trang Lịch sử của Chrome (`chrome://history`). Trang này hiện trên cùng một màn hình cả tiêu đề "frontend-web" lẫn URL `localhost:5173/...` của từng trang vừa mở, nên một ảnh đạt được cả hai yêu cầu.
+
+Nếu script không mở được `chrome://history` thì log sẽ báo. Khi đó mới cần chụp tay danh sách tab (nhớ bật cửa sổ nổi). Ảnh đó sẽ không có URL, bạn ghi vào cột Notes của CL-06, ví dụ: "Chrome Android không hiện tiêu đề và URL trên cùng một màn hình; tiêu đề lấy từ danh sách tab, URL của các trang xem ở `overview_login_1.png`, `overview_register_1.png`, `overview_profile_1.png`."
+
+CL-105 cũng đã nằm trong nhóm I và chạy bằng script luôn, bạn không cần làm tay. Script tự bật chế độ mất kết nối cho Chrome trên điện thoại, bấm gửi ở `/login` và `/profile`, chụp lúc thông báo đang hiện (`CL-105_1.png`, `CL-105_2.png`), rồi bật lại mạng.
+
+Một lệnh chạy cả 3 mục CL-105, CL-05, CL-06 (reset và seed trước vì CL-05 cần một đơn còn hủy được):
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+node database.js
+cd /d D:\Dang\Test\Homeworks\HW03
+python tools\seed_orders.py
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --only=I --log=n3_extra_log.txt
+```
+````
+
+---
+
+### C189 | 17:09 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Có, sửa ngắn.
+2. Đồng ý đó là bugs, tôi sẽ chụp ảnh cho bạn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sửa ngắn hai chỗ:
+- **`01_test_plan.md`:** G4 đổi thành "Đúng", căn cứ là pilot. D6 ghi rõ đã chốt kiểm bằng form "Sửa" trong Admin; trang chi tiết trên web bán hàng giữ làm cách dự phòng.
+- **`03_instruments.md`:** Mục I4.6 chỉ còn một cách kiểm danh mục là form "Sửa" trong Admin. Vì vậy không cần chạy web bán hàng `localhost:5173` trong lúc làm phiên.
+
+Mỗi thay đổi có một dòng trong bảng "Thay đổi so với bản AI" (căn cứ: pilot).
+
+**Ảnh cho bug tạo danh mục trống.** Bạn chụp ngoài phiên, theo quy tắc ảnh khảo sát luồng ở WORKFLOW mục 5. Ảnh lưu ở `usability/screenshots/`, đánh số tiếp sau `flow_11`:
+
+| File | Trạng thái cần chụp |
+|---|---|
+| `flow_12_category_empty_name.png` | Trang "Quản lý Danh mục", ô "Tên danh mục mới" để trống, chưa bấm "Thêm mới" |
+| `flow_13_category_empty_created.png` | Ngay sau khi bấm "Thêm mới": Bảng có thêm một dòng không có tên |
+
+**Khi chụp:**
+- Chụp cả cửa sổ trình duyệt, thấy được URL `localhost:5174`.
+- Chụp xong thì reset DB để xoá dòng trống.
+
+Chụp xong thì báo tôi. Tôi sẽ đối chiếu với FR-14 ("Tên danh mục là bắt buộc, không được để trống"), rồi viết phần bug này trong `bugs/bug_report.md` cùng nội dung issue theo quy ước ở README nhóm mục 4.
+
+**Commit:** Nếu chưa commit lần sửa sau pilot thì gộp chung vào commit đó. Nếu đã commit rồi thì commit riêng:
+
+```
+cd Homeworks/HW03
+git add usability/01_test_plan.md usability/03_instruments.md
+git commit -m "[T2][pilot] Confirm G4 and D6 check method from pilot"
+```
+````
+
+---
+
+### C190 | 17:12 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+2 ảnh của bug đây, thêm vào folder.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Copy the two bug screenshots into the usability screenshots folder
+- Read: D:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- PowerShell: List issue templates and bugs folder contents
+- Read: D:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+- Read: D:\Dang\Test\Homeworks\HW03\HW03_group\.github\ISSUE_TEMPLATE\bug_report.yml
+- Bash: Search group repo issues for existing category bugs
+- PowerShell: Search group repo issues for category-related titles via gh
+- PowerShell: Export all group repo issue titles to a scratch file
+- PowerShell: Export group repo issue titles using the gh full path
+- Bash: List group repo issues and filter admin/category related
+- Edit: D:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+
+**Output AI (nguyên văn):**
+
+````text
+Ảnh 2 (ô trống, bảng có 3 dòng) là trạng thái trước khi bấm. Ảnh 1 (có thêm dòng #4 không tên) là sau khi bấm. Tôi chép hai ảnh vào thư mục theo đúng thứ tự đó và giữ nguyên nội dung.
+
+Đã lưu hai ảnh. Giờ tôi viết bug report. Trước hết tôi xem quy ước Issues ở README nhóm, mẫu "Bug report" và thư mục `bugs/` hiện có gì.
+
+Tôi xem trên repo nhóm đã có issue nào về lỗi này chưa, vì README mục 4.1 yêu cầu tìm issue trùng trước khi tạo.
+
+Tôi đã lưu hai ảnh và viết phần bug Task 2 trong `bugs/bug_report.md`.
+
+**Ảnh** (trong [usability/screenshots/](Homeworks/HW03/usability/screenshots/)):
+- `flow_12_category_empty_name.png`: Ô tên trống, bảng có 3 danh mục mẫu. Đây là ảnh thứ hai bạn gửi.
+- `flow_13_category_empty_created.png`: Sau khi bấm "Thêm mới", bảng có thêm dòng `#4` không có tên. Đây là ảnh thứ nhất bạn gửi.
+
+**Bug report:** Tôi thêm phần Task 2 vào cuối [bugs/bug_report.md](Homeworks/HW03/bugs/bug_report.md), đánh số tiếp từ mục 6. Phần Task 1 giữ nguyên. Bug mang mã **B-T2-01**, cột Issue để "⏳ Chưa tạo".
+
+**Nội dung để tạo issue**, dán vào template "Bug report" trên repo nhóm:
+
+| Trường | Nội dung |
+|---|---|
+| Tiêu đề | `[23120061][T2][FL-05][Chrome] Bấm "Thêm mới" khi chưa nhập tên vẫn tạo danh mục không tên` |
+| MSSV người báo | `23120061` |
+| Task | T2: Usability Evaluation |
+| Màn hình hoặc luồng | `FL-05 Admin: Tạo danh mục → Thêm sản phẩm` |
+| IA | IA-02: Form (FR-22); IA-04: Phản hồi / trạng thái (FR-24) |
+| Mục checklist hoặc phiên | `PL (pilot), phút 00:29; tái hiện lại ngày 10/11/2026` |
+| Phân hệ | Web Admin |
+| Trình duyệt / OS | `Chrome 156.0.8078.81, Windows 11 Home Single Language 26H2 (build 26300.9818)` |
+| Severity | Medium |
+| Điều kiện tiên quyết | `Đã reset DB; đăng nhập admin@eshop.com; đang ở trang "Quản lý Danh mục" (có 3 danh mục mẫu).` |
+| Các bước tái hiện | `1. Để trống ô "Tên danh mục mới".` `2. Bấm "Thêm mới".` |
+| Kết quả mong đợi | `FR-14: "Tên danh mục là bắt buộc, không được để trống." Hệ thống không tạo danh mục khi tên để trống.` |
+| Kết quả thực tế | `Bảng danh mục có thêm dòng #4 với cột "Tên Danh Mục" trống; không có thông báo lỗi nào.` |
+| Ảnh chụp | Kéo thả `flow_12_category_empty_name.png` và `flow_13_category_empty_created.png` |
+| Ghi chú | `Phát hiện ở phiên pilot (không tính vào 7 người), tái hiện lại ngoài phiên.` |
+
+**Label:** `severity: medium`, `platform: admin`, `task: T2 usability`, `ia: IA-02`, `ia: IA-04`. Label `bug` do template tự gắn. Nhớ gán issue cho chính bạn (Assignees).
+
+Tạo xong thì gửi tôi số issue. Tôi sẽ điền vào cột Issue của B-T2-01. Ảnh trang issue sẽ chụp sau, khi đã đủ các bug của Task 2.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/screenshots/flow_12_category_empty_name.png usability/screenshots/flow_13_category_empty_created.png bugs/bug_report.md
+git commit -m "[T2][bugs] Report empty category name bug found in pilot"
+```
+````
+
+---
+
+### C191 | 17:13 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong script, kiểm tra và hoàn thiện file. Nếu cần ảnh nào thì nói tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read group I log and list new images
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-05.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-105_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-105_2.png
+- Bash: Find partial and script-error items, get time
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\n3_v3.py
+- Bash: Generate complete N3 draft and spot-check rows
+- Bash: Improve Notes formatting and regenerate draft
+- Bash: Fix segment separator and regenerate draft
+- Bash: Simplify N/A notes and regenerate
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã kiểm kết quả nhóm I và gộp xong bản nháp đủ 112 mục của N3. Chỉ còn thiếu một ảnh CL-06, cần bạn chụp.
+
+**Kết quả nhóm I (`n3_extra_log.txt`)**
+
+| Mục | Kết quả nháp | Ảnh |
+|---|---|---|
+| CL-105 | Failed. Ở W-03 khi mất kết nối, trang báo "Đăng nhập thất bại. Vui lòng kiểm tra lại."; ở W-06 hiện hộp thoại "Lỗi cập nhật". Cả hai đều không nói là mất kết nối | `CL-105_1.png`, `CL-105_2.png` |
+| CL-05 | Failed. Hủy cùng một đơn ở 2 tab, tab A nhận hộp thoại "Lỗi: Cannot cancel this order." (tiếng Anh) | `CL-05.png` |
+| CL-06 | Script đọc được tiêu đề cả 3 trang đều là "frontend-web", nhưng Chrome trên Android không cho script mở `chrome://history` (lỗi `ERR_INVALID_URL`) | **Chưa có** |
+
+Cả 3 ảnh mới đều thấy rõ thông báo, URL `localhost` và lớp chữ đè. Ở `CL-105_1.png` có thêm gợi ý của Chrome "Bạn có thể phóng to..." và thông báo về cờ dòng lệnh, nhưng không che phần đang kiểm.
+
+**Bản nháp đủ 112 mục:** [ai_raw/T3_android-chrome_manual_v3.md](HW03/cross_platform/ai_raw/T3_android-chrome_manual_v3.md). Hai bản trước vẫn giữ nguyên.
+
+Bản này có:
+- **Bảng 112 mục theo đúng cột NT3 của Excel:** Kết quả (chỉ dùng 4 giá trị mà Excel nhận: Passed, Failed, N/A, Không chạy được), Notes, tên ảnh.
+- **Cột "Nguồn kết quả":** Cho biết mỗi kết quả do script đo, do bạn tự kiểm (CL-48, CL-33) hay do AI xem ảnh rồi đề xuất.
+- **Ma trận trạng thái** và **sheet "Môi trường"** cho cột NT3, lấy số liệu từ log.
+
+| Kết quả | Số mục |
+|---|---|
+| Failed | 52 |
+| Passed | 45 |
+| N/A | 8 |
+| Không chạy được | 7 |
+| **Tổng** | **112** |
+
+Trong 52 mục Failed, chỉ **CL-06** chưa có ảnh.
+
+**Ảnh cần bạn chụp: CL-06**
+1. Mở danh sách tab của Chrome (nút số tab cạnh thanh địa chỉ), sao cho thấy các thẻ tab ghi "frontend-w...".
+2. **Bật cửa sổ nổi Samsung Notes trước khi chụp.** Ảnh lúc nãy thiếu cửa sổ này.
+3. Gửi ảnh vào đây, tôi sẽ đặt tên `CL-06.png` và chép vào thư mục.
+
+Màn hình danh sách tab không hiện URL, đây là giới hạn của Chrome trên điện thoại. Tôi đã ghi sẵn điều này vào Notes của CL-06 trong bản nháp.
+
+Bộ chuyển tiếp cổng 5173 vẫn chạy nền. Chụp CL-06 thì không cần nó, nên bạn muốn tôi tắt lúc nào cũng được. Khi bạn đã review xong bản nháp, tôi có thể chép kết quả vào cột NT3, sheet "Ma trận trạng thái" và sheet "Môi trường" trong Excel.
+
+Commit:
+```
+git add cross_platform/screenshots/android-chrome cross_platform/ai_raw/T3_android-chrome_manual_v3.md checklist/tools/n3_android_checklist.js checklist/tools/n3_extra_log.txt
+git commit -m "[T3][android-chrome] Add CL-05 and CL-105 evidence and full N3 draft results"
+```
+````
+
+---
+
+### C192 | 17:15 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Bạn tạo issue luôn cho tôi, máy có gh. Tạo xong tôi sẽ đưa link ảnh và bạn dán sau (link ảnh bằng cách tôi dán ảnh vào comment và đưa bạn cái đó)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List repo labels and current gh login
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\issue_B-T2-01.md
+- Bash: Create the B-T2-01 bug issue on the group repo
+- Edit: D:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn đã đồng ý cho tôi tạo issue bằng `gh`. Trước khi tạo, tôi kiểm tra các label định gắn đã có sẵn trên repo nhóm chưa, vì README nhóm không cho tự tạo label mới.
+
+Issue đã được tạo: #66. Tôi điền số issue vào `bug_report.md`.
+
+Tôi đã tạo issue **[#66](https://github.com/angquoc/software-testing-2026-HW03-group/issues/66)** trên repo nhóm:
+- **Tiêu đề:** `[23120061][T2][FL-05][Chrome] Bấm "Thêm mới" khi chưa nhập tên vẫn tạo danh mục không tên`
+- **Label:** `bug`, `severity: medium`, `platform: admin`, `task: T2 usability`, `ia: IA-02`, `ia: IA-04`
+- **Gán cho:** `angquoc`
+- **Nội dung:** Viết theo đúng thứ tự các trường của template "Bug report". Mục "Ảnh chụp" tạm ghi là ảnh sẽ bổ sung sau.
+
+Cột Issue của B-T2-01 trong `bugs/bug_report.md` đã điền số #66.
+
+**Bước tiếp theo:** Bạn dán hai ảnh vào ô bình luận của issue #66. GitHub sẽ sinh link ảnh dạng `![image](https://github.com/user-attachments/assets/...)`. Bạn chép hai link đó gửi tôi, không cần bấm "Comment". Tôi sẽ thay dòng tạm ở mục "Ảnh chụp" bằng hai ảnh, ghi rõ ảnh nào là trước khi bấm "Thêm mới" và ảnh nào là sau khi bấm.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước):
+
+```
+cd Homeworks/HW03
+git add usability/screenshots/flow_12_category_empty_name.png usability/screenshots/flow_13_category_empty_created.png bugs/bug_report.md
+git commit -m "[T2][bugs] Report empty category name bug found in pilot"
+```
+````
+
+---
+
+### C193 | 20:48 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+<img width="1280" height="719" alt="Image" src="https://github.com/user-attachments/assets/ae3c32fb-8f33-4e6f-a5ed-4634b378d36b" />
+
+<img width="1280" height="719" alt="Image" src="https://github.com/user-attachments/assets/3c5e0d88-af93-4e52-98ae-a299f221397d" />
+
+Ảnh đây.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Download the two GitHub image attachments to scratch
+- Bash: Download the attachments again using the gh auth token
+- Bash: Compare hashes of uploaded and local screenshots
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\issue_B-T2-01.md
+- Bash: Update issue 66 body with the two screenshots and verify
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi cần biết link nào là ảnh trước, link nào là ảnh sau khi bấm "Thêm mới". Tôi tải hai ảnh về thư mục tạm để xem.
+
+Không tải được vì link ảnh cần đăng nhập. Tôi thử tải lại bằng token `gh` của bạn (chỉ đọc ảnh, không đổi gì trên GitHub).
+
+Mã băm khớp từng byte: Link thứ nhất là `flow_12` (trước khi bấm), link thứ hai là `flow_13` (sau khi bấm). Tôi cập nhật mục "Ảnh chụp" của issue #66.
+
+Đã thêm hai ảnh vào issue [#66](https://github.com/angquoc/software-testing-2026-HW03-group/issues/66), ở mục "Ảnh chụp":
+- **Trước khi bấm "Thêm mới":** Ô tên để trống, bảng có 3 danh mục mẫu (link thứ nhất, `flow_12_category_empty_name.png`).
+- **Sau khi bấm:** Bảng có thêm dòng #4 không có tên, không có thông báo lỗi (link thứ hai, `flow_13_category_empty_created.png`).
+
+Tôi đã kiểm tra lại: Hai ảnh trên GitHub trùng từng byte với hai file trong `usability/screenshots/`, nên không bị gán nhầm thứ tự. Nội dung issue sau khi cập nhật có đủ cả hai ảnh.
+
+Ô bình luận trên issue #66 vẫn còn nội dung bạn dán ảnh vào nhưng chưa gửi. Bạn xoá nội dung đó đi, không cần bấm "Comment".
+
+`bugs/bug_report.md` không cần sửa thêm. Lệnh commit vẫn như lượt trước:
+
+```
+cd Homeworks/HW03
+git add usability/screenshots/flow_12_category_empty_name.png usability/screenshots/flow_13_category_empty_created.png bugs/bug_report.md
+git commit -m "[T2][bugs] Report empty category name bug found in pilot"
+```
+````
+
+---
+
+### C194 | 20:54 10/11/2026 | Tool: Claude Code (n/a) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>b9ohdz6la</task-id>
+<tool-use-id>toolu_01DAFBYLYbdtVxzpmTcTk1ty</tool-use-id>
+<status>stopped</status>
+<summary>Background shell command didn't finish before the previous session ended</summary>
+<note>No completion record was found for it in the previous session. It may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or it may have been running when the previous Claude Code process exited. Check the output file for partial results before assuming it completed.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C195 | 20:54 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chụp lại rồi đây.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check CL-06 image format and dimensions
+- Bash: Copy CL-06 screenshot into N3 folder
+
+**Output AI (nguyên văn):**
+
+````text
+I đã lưu ảnh vào `cross_platform/screenshots/android-chrome/CL-06.png`. Giờ cả 52 mục Failed của N3 đều có ảnh. Ảnh dùng được: Thấy cửa sổ nổi Samsung Notes và các thẻ tab ghi "frontend-w...".
+
+**Có một điểm bạn nên kiểm tra:** Ảnh này cao 1986 px, trong khi các ảnh bạn gửi trước (ví dụ ảnh CL-06 lần đầu, các ảnh CL-33) đều cao 2048 px. Phần bị thiếu nằm ở trên cùng, nên ảnh không còn thanh trạng thái có giờ chụp. Nếu bạn đã cắt ảnh, nên thay bằng ảnh gốc chưa cắt, vì ảnh bằng chứng không nên bị chỉnh sửa và giờ chụp trên thanh trạng thái cũng là bằng chứng. Bạn gửi ảnh gốc thì tôi thay vào `CL-06.png`.
+
+**Về bản nháp `T3_android-chrome_manual_v3.md`:** Bản này vẫn ghi "Mục Failed còn thiếu ảnh: CL-06" và chưa có tên ảnh ở dòng CL-06. Tôi không sửa vì file trong `ai_raw/` phải giữ nguyên. Khi chép vào Excel, bạn điền ảnh `CL-06.png` cho dòng đó.
+
+**Bộ chuyển tiếp cổng 5173 đã tự dừng** khi phiên trước kết thúc. Nếu cần chạy lại gì trên điện thoại, server web phải nghe ở `127.0.0.1` (chạy với `--host 127.0.0.1`) hoặc phải bật lại bộ chuyển tiếp.
+
+Bạn review xong bản nháp thì báo tôi, tôi chép kết quả N3 vào Excel (cột NT3, sheet "Ma trận trạng thái" và sheet "Môi trường").
+
+Commit:
+```
+git add cross_platform/screenshots/android-chrome/CL-06.png
+git commit -m "[T3][android-chrome] Add CL-06 tab title evidence"
+```
+````
+
+---
+
+### C196 | 20:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã review xong bản nháp. Lý do ngắn vậy vì nãy chụp tôi lỡ nhấn vào trạng thái cắt để full màn nên nó không hiển thị ngày, nhưng cũng đủ bằng chứng và ảnh chụp thật mà.
+Chép kết quả N3 vào excel đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect NT3 columns, environment and matrix sheets
+- Bash: Back up Excel and write N3 results into NT3 columns
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\write_n3_excel.py
+- Bash: Confirm backup exists and write N3 into Excel
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\verify_n3_excel.py
+- Bash: Verify N3 Excel write against backup
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi xem cấu trúc các cột NT3 trong Excel và cách N1 đã ghi để chép theo cùng kiểu.
+
+Lệnh lỗi trước khi ghi file (dấu `\` bị shell nuốt), nên Excel chưa bị đổi. Tôi viết script ra file riêng rồi chạy lại.
+
+Đã ghi. Tôi kiểm lại file: Số đếm, ảnh có thật trong thư mục không, và dropdown cùng công thức còn nguyên không.
+
+Đã chép xong kết quả N3 vào [HW03_T1_GUI_Checklist.xlsx](HW03/checklist/HW03_T1_GUI_Checklist.xlsx). Về ảnh CL-06, ảnh vẫn là ảnh chụp thật và đủ bằng chứng nên tôi giữ nguyên, không cần chụp lại.
+
+**Những gì đã ghi**
+- **Sheet "Checklist", cột NT3 (P, Q, R):** Đủ 112 mục, gồm Kết quả, Notes và tên ảnh.
+  - Notes ghi cùng kiểu với N1: Mục do AI xem ảnh để kết luận có tiền tố "(AI xem ảnh)"; CL-48 ghi "(SV kiểm tay)"; CL-33 ghi "(SV làm tay, AI xem ảnh)"; CL-68 và CL-69 ghi "(SV xác nhận)".
+  - Notes của CL-06 có thêm ý: Danh sách tab không hiện URL, URL của 3 trang xem ở các ảnh `overview_*`.
+- **Sheet "Môi trường", cột NT3:** Tên ngắn "Android Chrome" (tiêu đề cột trong sheet Checklist sẽ tự hiện "NT3: Android Chrome"), phiên bản Chrome và Android, thiết bị, độ phân giải, zoom, ngày giờ từng lần chạy, người chạy, ghi chú về nguồn kết quả.
+- **Sheet "Ma trận trạng thái", cột NT3:** Đủ 5 trạng thái, mỗi trạng thái có chữ hiển thị, màu nền nhãn và nút "Hủy đơn".
+
+**Kết quả NT3:** 52 Failed, 45 Passed, 8 N/A, 7 Không chạy được, tổng 112. Sheet "Tổng hợp" sẽ tự đếm khi bạn mở file bằng Excel.
+
+**Đã kiểm lại sau khi ghi**
+- Mục Failed nào cũng có ảnh, và mọi tên ảnh đều có file thật trong `cross_platform/screenshots/android-chrome/`.
+- Mục Failed, N/A và Không chạy được nào cũng có Notes.
+- Dropdown kết quả và các công thức vẫn còn nguyên.
+- Không ô nào ngoài vùng NT3 bị đổi nội dung. Chỉ có cột "Vì sao AI bỏ sót" (cột I), trước đây chứa chuỗi rỗng, nay thành ô trống hẳn. Nhìn trong Excel thì không khác gì.
+
+Bản sao file Excel trước khi ghi nằm ở `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\HW03_T1_GUI_Checklist.before_N3.xlsx`, nếu cần quay lại.
+
+Commit:
+```
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][android-chrome] Record N3 results in Excel checklist"
+```
+````
+
+---
+
+### C197 | 20:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra lại trạng thái các task, những phần nào tôi chưa quyết định không, xuất log và đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo, session progress and DB state
+- Bash: Read new turns of all sessions since 17:00
+- Bash: Check whether EShop servers are up
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop web frontend on port 5173
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Verify servers and export log
+
+**Output AI (nguyên văn):**
+
+````text
+Server EShop đã tắt hết, tôi bật lại để sẵn cho P1.
 ````
 
 
