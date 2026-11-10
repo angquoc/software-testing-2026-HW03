@@ -93,8 +93,8 @@ Các dòng dưới đây chỉ ghi sự kiện để sinh viên tự quyết t�
 | Artifact không được sinh bằng AI | Đề §11: Danh sách 7 người tham gia, ảnh cross-platform. WORKFLOW mục 1.2 thêm: Ghi chú quan sát, câu trả lời của người tham gia, kết quả chạy checklist |
 | Dữ liệu cá nhân | Họ tên, liên lạc, khuôn mặt, giọng nói của người tham gia không đưa vào AI (WORKFLOW mục 1.5; `participants.md` và video thuộc danh sách cấm đọc). Thông tin của chính sinh viên (họ tên, MSSV, email sinh viên) có đưa cho AI: Lớp chữ đè trên ảnh, người báo trong issue, AI xem ảnh chụp màn hình có lớp chữ đè (C123) |
 | Tài liệu có bản quyền | AI đọc chữ trích từ slide môn học, template GUI checklist của môn và SRS của EShop để làm oracle và nguồn checklist |
-| Code giới hạn license | Phiên điều phối đọc mã nguồn EShop (repo công khai của môn) ngày 05/11 để kiểm tra màn hình, và route backend ngày 08/11 để viết `seed_orders.py` (khai ở Appendix B, B01, B03) |
-| Prompt log | `prompt_log.md` xuất tự động, có timestamp, gồm 5 phiên trong danh sách trắng; phiên Tổng hợp chưa có trong danh sách trắng |
+| Code giới hạn license | Phiên điều phối đọc mã nguồn EShop (repo công khai của môn) ngày 05/11 để kiểm tra màn hình, và route backend ngày 08/11 để viết `seed_orders.py` (khai ở Appendix B, B01, B02) |
+| Prompt log | `prompt_log.md` xuất tự động, có timestamp, gồm đủ 6 phiên HW03 trong danh sách trắng (cả phiên Tổng hợp `c934f0c0`); sinh viên xác nhận chỉ dùng Claude Code, không dùng công cụ AI nào khác |
 | Trích dẫn đã xác minh | Ở C78, AI chỉ ra hai nguồn trong mục sinh viên thêm không có trong slide ("Mobile viewport layout", "Responsive Web Design"), đã sửa |
-| Code AI sinh đã chạy | `seed_orders.py`, `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1` đã chạy trong lần chạy N1; ⏳ script Task 3 và Agent Skill |
+| Code AI sinh đã chạy | `seed_orders.py`, `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1` đã chạy trong lần chạy N1; `n3_android_checklist.js` đã chạy cho N3; `docx_to_md.py` chạy được khi đặt `PYTHONIOENCODING=utf-8` (Appendix B, B03); `md_to_pdf.py` chưa chạy; ⏳ script của Agent Skill |
 | AI Critique, Disclosure, Disclosure Form | `report.md`: AI Critique ⏳; Mandatory Disclosure có bản nháp, còn ⏳ phần Task 2, Task 3, Skill; [AI-03] chưa ký |

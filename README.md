@@ -45,13 +45,25 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 
 ### Kết quả chạy checklist theo nền tảng
 
-"Đã chạy" là Passed + Failed; "Không chạy được" là mục bị chặn bởi một lỗi khác hoặc thiếu thành phần cần kiểm, không tính vào Passed / Failed. Chi tiết N1: `checklist/03_results.md`.
+"Đã chạy" là Passed + Failed; N/A là mục không áp dụng được trên nền tảng đó (ví dụ phím Tab, rê chuột trên điện thoại); "Không chạy được" là mục bị chặn bởi một lỗi khác hoặc thiếu thành phần cần kiểm. N/A và Không chạy được không tính vào Passed / Failed. Chi tiết N1: `checklist/03_results.md`; N3 và so sánh: `report.md` mục 4.
 
 | Nền tảng | Thiết kế | Đã chạy | Passed | Failed | N/A | Không chạy được |
 |---|---|---|---|---|---|---|
 | N1: Chrome 156, Windows 11 (Task 1) | 112 | 105 | 51 | 54 | 0 | 7 |
 | N2: Firefox, BrowserStack Live | 112 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
-| N3: Chrome Android | 112 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| N3: Chrome 156 Android, Samsung SM-G998B (điện thoại thật) | 112 | 97 | 45 | 52 | 8 | 7 |
+
+### Task 3 theo IA (N3)
+
+| IA | Thiết kế | Đã chạy | Passed | Failed | N/A | Không chạy được |
+|---|---|---|---|---|---|---|
+| IA-01 Tiêu chuẩn giao diện chung | 36 | 31 | 14 | 17 | 5 | 0 |
+| IA-02 Form | 31 | 27 | 13 | 14 | 0 | 4 |
+| IA-03 Điều hướng | 19 | 16 | 9 | 7 | 2 | 1 |
+| IA-04 Phản hồi và trạng thái | 26 | 23 | 9 | 14 | 1 | 2 |
+| **Tổng** | **112** | **97** | **45** | **52** | **8** | **7** |
+
+So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện thoại (phím Tab, rê chuột, cửa sổ 1366 x 768); CL-11 (dấu phân cách số tiền), CL-33 (zoom 200%), CL-34 (Họ Tên dài) từ Passed thành Failed; CL-24 (định dạng ngày) từ Failed thành Passed.
 
 ### Task 1 theo IA (N1)
 
@@ -79,6 +91,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Điểm SUS trung bình (độ lệch chuẩn) | ⏳ |
 | Số người hoàn thành nhiệm vụ | ⏳ / 7 |
 | Số finding theo severity | ⏳ |
+| Video phiên | Nộp đủ video quay màn hình của pilot và P1 đến P7 trong bản nộp (không commit lên git); cách nén, chia file chốt lúc đóng gói (⏳) |
 
 ## Video demo
 

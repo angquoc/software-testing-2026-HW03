@@ -31,7 +31,7 @@ Tài liệu được biên soạn lại từ Med Kharbach, PhD (2026) — Mẫu 
 
 Liệt kê mọi công cụ AI dùng cho bài tập này (ví dụ AI Tool (e.g., ChatGPT, Claude, Gemini), ChatGPT, GitHub Copilot, Cursor, Gemini).
 
-Claude Code (Anthropic, claude-opus-5-5), chạy trong VS Code: 1 phiên điều phối (949bce7e), 1 phiên Task 1 (f2487351), 1 phiên Task 2 (de8fb2a8), 1 phiên Task 3 (99fcf7b9), 1 phiên Agent Skill (a498e700), 1 phiên Tổng hợp (⏳ mã phiên sau khi thêm vào danh sách trắng). Không dùng công cụ AI nào khác. Công cụ không phải AI được đề §8 yêu cầu khai: BrowserStack Live (bản trial) cho nền tảng N2 của Task 3.
+Claude Code (Anthropic, claude-opus-5-5), chạy trong VS Code: 1 phiên điều phối (949bce7e), 1 phiên Task 1 (f2487351), 1 phiên Task 2 (de8fb2a8), 1 phiên Task 3 (99fcf7b9), 1 phiên Agent Skill (a498e700), 1 phiên Tổng hợp (c934f0c0). Không dùng công cụ AI nào khác. Công cụ không phải AI được đề §8 yêu cầu khai: BrowserStack Live (bản trial) cho nền tảng N2 của Task 3.
 
 ### 2. Giai đoạn nào của bài tập có dùng AI:
 
