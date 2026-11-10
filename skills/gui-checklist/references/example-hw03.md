@@ -23,6 +23,7 @@ Lần làm đầu, dùng để tra cách viết. Bản đầy đủ nằm ở th
 | Cuối | 112 mục `CL` (58 AI giữ nguyên, 49 AI SV sửa, 5 SV thêm); 50 căn cứ SRS, 62 khuyến nghị |
 | `exec` (NT1 Chrome trên Windows) | Script Playwright cho kết quả nháp 39 Passed, 44 Failed, 7 Không chạy được, 22 Chạy tay; sau khi chạy tay, chụp bổ sung, AI điền từ log và ảnh (21 mục "AI xem ảnh"), sinh viên chốt: 51 Passed, 54 Failed, 7 Không chạy được |
 | `bugs` | 33 issue mới, 2 bình luận vào issue dùng chung, 8 mục Failed không báo vì ảnh không thấy lỗi; 2 ảnh danh sách issue |
+| `03_results.md` | Tóm tắt NT1: Tỉ lệ Passed trên đã thực thi 48,6% (thấp nhất IA-04: 37,5%); cả 5 mục sinh viên thêm đều Failed; đối chiếu 54 mục Failed = 43 mục trong 33 issue + 3 mục trong 2 bình luận + 8 mục không báo |
 
 ## Script của bước `exec` (ví dụ tham khảo)
 

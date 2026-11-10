@@ -2,7 +2,7 @@
 
 **Mục tiêu:** Có kết quả Passed / Failed (hoặc giá trị khác đã chốt) cho mọi mục trên nền tảng thứ nhất, với Notes cho mục Failed và ảnh chụp mục Failed. Kết quả chỉ đến từ **lần chạy thật**.
 
-**Đầu ra:** Cột kết quả của nền tảng thứ nhất (NT1) và sheet "Môi trường" trong file Excel; ảnh `screenshots/<mã mục>_<nền tảng>[_n].png`; log của lần chạy (nếu dùng script).
+**Đầu ra:** Cột kết quả của nền tảng thứ nhất (NT1) và sheet "Môi trường" trong file Excel; ảnh `screenshots/<mã mục>_<nền tảng>[_n].png`; log của lần chạy (nếu dùng script); `03_results.md` (tóm tắt kết quả).
 
 Quy trình dưới đây rút từ lần làm đầu (HW03, NT1 Chrome trên Windows, 10/11/2026): Một script DevTools chỉ đọc dán vào Console, một script Playwright điều khiển Chrome cài trên máy cho kết quả nháp, sinh viên chạy tay các mục cần nhìn, AI điền kết quả nháp vào Excel từ log và ảnh, sinh viên review và chốt. Kết quả cuối: 51 Passed, 54 Failed, 7 Không chạy được.
 
@@ -77,16 +77,29 @@ Skill **không** kèm script chạy sẵn: Script gắn chặt với từng hệ
    - Sheet "Môi trường", dòng Ghi chú: Kết quả do AI điền từ log nào và ảnh nào, sinh viên review và chốt.
 4. **Sinh viên review** từng dòng và chốt. Sửa theo sinh viên.
 5. Sheet "Tổng hợp" tự đếm; báo số Passed, Failed, Không chạy được.
+6. Viết `03_results.md` (mục dưới) sau khi sinh viên đã chốt.
+
+## Tóm tắt kết quả `03_results.md`
+
+File **chỉ tóm tắt**: Kết quả từng mục, Notes và tên ảnh nằm trong Excel; nội dung mục nằm trong `02_checklist.md`. File phục vụ cả `exec` và `bugs` (đầu file ghi `[T1][exec]`, `[T1][bugs]`): Phần kết quả viết ở `exec`; phần issue (mục 3, cột Issue của mục 4, mục 6) điền khi xong `bugs` (`step-bugs.md`, Pha 4). Theo mẫu `assets/templates/results.md`:
+
+1. **Môi trường chạy:** Tên ngắn, trình duyệt (cách điều khiển), OS, thiết bị, màn hình và cửa sổ (của script và khi chạy tay), zoom và scale, ngày giờ của từng lần chạy (lần chính, chạy tay, các nhóm chạy thêm), dữ liệu, người chạy và công cụ dùng cho nhóm mục nào, **cách chốt kết quả** (AI điền nháp từ log nào và ảnh nào, nhãn "(AI xem ảnh)", sinh viên chốt). Nếu nền tảng này cũng tính cho cross-platform, ghi ảnh có lớp chữ đè.
+2. **Tổng hợp kết quả:**
+   - Theo IA: Số mục, Passed, Failed, Không chạy được, đã thực thi (Passed + Failed), tỉ lệ Passed trên đã thực thi; dòng tổng. Ghi có mục N/A hay không, và "Không chạy được" không tính vào Passed / Failed.
+   - Theo căn cứ (SRS, khuyến nghị) và theo nguồn (`AI`, `AI, SV sửa`, `SV thêm`). Nhóm nào cho kết quả đáng chú ý thì ghi một câu (ở lần đầu: Cả 5 mục sinh viên thêm đều Failed), vì đây là dữ liệu cho phần AI Critique.
+3. **Mục Failed chính:** Xếp theo issue và severity (critical, high, medium), mỗi dòng một lỗi gốc và các mục CL của nó; câu cuối tóm tắt nhóm lỗi severity low.
+4. **Danh sách đủ mục Failed**, chia theo IA: Mã, lỗi quan sát được (ngắn, chép nguyên văn chữ trên giao diện), màn hình, Issue (`#số`, "Bình luận #số", hoặc "Không báo").
+5. **Mục Không chạy được:** Mã, IA, lý do (mục nào Failed hoặc bug nào chặn). Ghi thêm các mục chỉ một phần màn hình không chạy được.
+6. **Bug:** Link bug report và ảnh danh sách issue; bảng chỉ số (số issue mới, theo severity, theo căn cứ, theo IA, số bình luận, số issue có `Related`); câu đối chiếu: Tổng mục Failed bằng số mục trong issue cộng số mục trong bình luận cộng số mục không báo.
+
+Mọi con số đếm từ Excel (sheet "Tổng hợp" hoặc đọc bằng `openpyxl`) và từ `bug_report.md`, không đếm tay. Kiểm: Số dòng ở mục 4 bằng số Failed ở mục 2; số dòng ở mục 5 bằng số "Không chạy được".
 
 ## Tự kiểm
 
 - Mọi dòng NT1 có kết quả; mục Failed có Notes và ít nhất một ảnh có trong `screenshots/`; tên ảnh đúng quy ước.
 - Mục bị một bug chặn đã ghi "Không chạy được" kèm lý do, không ghi Failed.
 - Giá trị thay thế dùng để vượt một bug (ví dụ số điện thoại mà trang chấp nhận) được ghi trong Notes của các mục dùng nó.
+- Số liệu ở `03_results.md` khớp Excel.
 - Checklist bước `exec` trong `lessons.md`.
 
 **Dừng**, đưa commit message (ví dụ `[T1][exec] Execute checklist on Chrome Windows`). Nhắc reset dữ liệu nếu script đã đổi dữ liệu.
-
-## Quyết định còn mở
-
-- ⏳ File tóm tắt kết quả ngoài Excel (ví dụ `03_results.md` nếu dự án yêu cầu): Lần đầu chưa làm, chưa có mẫu.

@@ -57,6 +57,7 @@ Liệt kê thư mục để biết tên file không phải là đọc nội dung
 ├── 00_survey.md                  survey: Bản sinh viên điền rồi AI đối chiếu
 ├── 01_oracle.md                  oracle: Bản review
 ├── 02_checklist.md               review và add: Checklist đã review
+├── 03_results.md                 exec (phần issue điền ở bugs): Tóm tắt kết quả
 ├── <tên>.xlsx                    excel; exec ghi kết quả vào cột của từng nền tảng
 ├── ai_raw/
 │   ├── T1_survey.md
@@ -187,6 +188,6 @@ Mỗi mục (ở mọi bước, kể cả mục sinh viên thêm):
 | `oracle` | Trích nguyên văn; mỗi mã có IA, màn hình, cột Áp dụng; "Không áp dụng" có lý do; câu hỏi CH đã có quyết định; có tổng hợp theo IA và màn hình; có bảng thay đổi |
 | `ai-draft` | Đủ 4 file; mã `AI-<IA>-<nn>` không trùng; mỗi file có truy vết oracle, ý đã loại, câu hỏi CHD |
 | `review`, `add` | Mã `CL` không trùng; trên 40 mục (hoặc mức dự án yêu cầu); đủ 4 IA; cột Nguồn; mục sinh viên thêm có "Vì sao AI bỏ sót"; có truy vết oracle và bảng thay đổi |
-| `exec` | Mọi mục có kết quả; mục Failed có Notes và ảnh; mục "Không chạy được" có lý do; sheet "Môi trường" ghi đủ và ghi rõ ai điền kết quả nháp; có log nếu dùng script |
+| `exec` | Mọi mục có kết quả; mục Failed có Notes và ảnh; mục "Không chạy được" có lý do; sheet "Môi trường" ghi đủ và ghi rõ ai điền kết quả nháp; có log nếu dùng script; `03_results.md` khớp Excel |
 | `bugs` | Mọi mục Failed nằm ở một issue, một bình luận hoặc bảng "không báo" có lý do; mỗi issue có ảnh và đủ label; có ảnh danh sách issue |
 | Mọi bước | `ai_raw/` có bản AI tương ứng; tên file đúng; định dạng văn bản đúng (`check_checklist.py`) |

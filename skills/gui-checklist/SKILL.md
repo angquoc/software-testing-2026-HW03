@@ -112,8 +112,8 @@ Sửa bản review sau đó: Sửa trực tiếp bản review, ghi thời gian c
 | `review` | Lọc trước (nếu sinh viên muốn), sinh viên quyết, soạn checklist mã `CL-nn` | `02_checklist.md` (phần mục AI) | `references/step-review-add.md` |
 | `add` | Sinh viên thêm mục, AI kiểm; xét các mảng AI hay bỏ sót | `02_checklist.md` (mục sinh viên thêm) | `references/step-review-add.md` |
 | `excel` | Xuất Excel từ `02_checklist.md` | File `.xlsx` | `references/step-excel.md` |
-| `exec` | Chuẩn bị dữ liệu; chạy tay hoặc chạy script (sinh viên chạy); chạy tay và chụp bổ sung; AI điền kết quả nháp từ log và ảnh; sinh viên chốt | Cột NT1 và sheet "Môi trường" của Excel, `screenshots/<mã mục>_<nền tảng>.png`, log | `references/step-exec.md` |
-| `bugs` | Chọn bug, tìm trùng, soạn issue theo template, tạo bằng `gh`, chèn ảnh, bình luận issue dùng chung, chụp danh sách issue | `bugs/bug_report.md`, issue trên repo nhóm, `bugs/screenshots/issues_list_*.png` | `references/step-bugs.md` |
+| `exec` | Chuẩn bị dữ liệu; chạy tay hoặc chạy script (sinh viên chạy); chạy tay và chụp bổ sung; AI điền kết quả nháp từ log và ảnh; sinh viên chốt | Cột NT1 và sheet "Môi trường" của Excel, `screenshots/<mã mục>_<nền tảng>.png`, log, `03_results.md` | `references/step-exec.md` |
+| `bugs` | Chọn bug, tìm trùng, soạn issue theo template, tạo bằng `gh`, chèn ảnh, bình luận issue dùng chung, chụp danh sách issue | `bugs/bug_report.md`, issue trên repo nhóm, `bugs/screenshots/issues_list_*.png`, phần issue của `03_results.md` | `references/step-bugs.md` |
 
 ## Điểm dừng chờ sinh viên
 
@@ -136,7 +136,7 @@ Sửa bản review sau đó: Sửa trực tiếp bản review, ghi thời gian c
 - `references/step-exec.md`, `step-bugs.md`: Hướng dẫn bước chạy và báo bug, kèm quyết định còn mở.
 - `references/sources.md`: Nguồn ngoài SRS đã dùng và cách ghi.
 - `references/example-hw03.md`: Ví dụ rút gọn từ lần làm đầu.
-- `assets/templates/`: Mẫu `ai_raw_header.md`, `survey.md`, `oracle.md`, `draft_ia.md`, `checklist.md`, `changes_table.md`.
+- `assets/templates/`: Mẫu `ai_raw_header.md`, `survey.md`, `oracle.md`, `draft_ia.md`, `checklist.md`, `changes_table.md`, `results.md`.
 - `scripts/check_checklist.py`: Kiểm tra máy móc (không đánh giá nội dung). Cách dùng:
 
   ```bash

@@ -80,11 +80,13 @@ Sinh viên duyệt nội dung. **Dừng.**
 5. **Mục Failed không báo lên Issues:** Mục CL và lý do; các mục đã gộp vào issue khác.
 6. **Ảnh danh sách issue:** Sau khi chèn ảnh xong, chụp trang Issues đã lọc theo người báo và task (ví dụ `author:<login> label:"task: T1 checklist"`), chụp đủ mọi issue, lưu `bugs/screenshots/issues_list_<task>_<n>.png`.
 
+Sau đó hoàn thiện `checklist/03_results.md` (`step-exec.md`, mục "Tóm tắt kết quả"): Mục "Mục Failed chính", cột Issue của danh sách mục Failed, mục "Bug" có bảng chỉ số và câu đối chiếu.
+
 ## Tự kiểm
 
 - Mọi mục Failed có mặt ở đúng một nơi: Một issue, một bình luận, hoặc bảng "không báo" (có lý do).
 - Mỗi issue có ảnh; ảnh đúng mục (đối chiếu tên in đậm với ảnh); label đủ; tiêu đề đúng quy ước.
-- Số issue trong bug report khớp với trang Issues.
+- Số issue trong bug report khớp với trang Issues và với mục "Bug" của `03_results.md`.
 - Checklist bước `bugs` trong `lessons.md`.
 
 **Dừng**, đưa commit message (ví dụ `[T1][bugs] Report GUI bugs`).
