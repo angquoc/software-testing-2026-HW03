@@ -6504,6 +6504,113 @@ Tiện thể phần pilot đã xong, giờ tôi đưa video vào đâu? C�
 - Bash: Read the end of the skill session's last reply
 - Bash: Check DB state, ignored video types and open decision D10
 - Bash: Ignore more video types, export log, update tracker
+- Bash: Update time estimates after pilot and skill drafts
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc lại cả 4 phiên thiết kế. Không phiên nào đọc file bị cấm, và trong lúc pilot chạy, phiên Task 1 không gọi tới `localhost` hay reset DB. Log đã xuất lại: 103 lượt từ 5 phiên.
+
+Có một điểm cần bạn trả lời: **DB hiện vẫn còn danh mục "Loa Bluetooth" của PL, mang id 5.**
+- Nếu bạn **chưa reset** sau khi kiểm D6 thì không sao.
+- Nếu bạn **đã reset** lúc PL điền form mà danh mục vẫn còn, nghĩa là reset khi server đang chạy không xóa được dữ liệu. Đó là kết quả quan trọng cho điểm G4. Ghi vào mục 8.1 của `notes.md` và báo tôi.
+
+## Tình hình 4 phiên (10:18 10/11)
+
+### Task 1 (phiên `f2487351`)
+**Đã xong:** Survey, oracle, ai-draft, review, add (112 mục), Excel, script Console `devtools_check.js`.
+
+**Đang ở:** Script Playwright `n1_chrome_checklist.js` đã viết xong nhưng **chưa chạy lần nào**. Phiên đó cũng chưa soát cú pháp, vì lượt trước bị cấm chạy `node`.
+
+**Đang chờ:** Bạn cho phép chạy thử. Trước đó tôi reset DB và chạy `seed_orders.py`. Chỉ chạy ngoài giờ phiên usability, giới hạn 1,5 giờ.
+
+**Sau đó:** Chạy exec N1 thật (script và các mục chạy tay), có Sticky Notes, rồi `bugs`.
+
+### Task 2 (phiên `de8fb2a8`)
+**Đã xong:** Plan, scenario, instruments, Google Form (phiên đã đối chiếu form), `participants.md`, **chạy pilot**.
+
+**Đang ở:** Điền hồ sơ pilot.
+
+**Đang chờ:**
+- Bạn điền 3 file trong `usability/pilot/` (xem phần dưới).
+- Sau đó đưa mục 8 của `notes.md` cho phiên Task 2 sửa kịch bản, bộ công cụ, và cột "Sau pilot".
+
+**Sau đó:** P1 đến P7 (mỗi phiên một commit), `score`, `analysis`, `bugs`.
+
+### Task 3 (phiên `99fcf7b9`)
+**Đã xong:** Setup, đã chốt mọi quyết định (N2 dùng BrowserStack Live) và đã commit.
+
+**Đang chờ:** Task 1 xong exec N1. Lúc rảnh có thể chuẩn bị trước: Cài `adb`, thử S-03 trên điện thoại, tạo ghi chú Samsung Notes.
+
+**Sau đó:** Chạy N2 và N3, rồi `compare`, `bugs`.
+
+### Agent Skill (phiên `a498e700`)
+**Đã xong:** Viết 2 skill trong `skills/` là `gui-checklist` và `usability-evaluation`. Phần thiết kế viết đầy đủ; exec, pilot, phiên, score, analysis chỉ có khung. Đã có script kiểm tra và script xuất Excel, phiên đó đã chạy thử trên file thật.
+
+**Đang chờ bạn quyết 2 việc:**
+1. ⏳ Mâu thuẫn giữa WORKFLOW ("ai-draft mỗi lượt một IA") và skill (viết 4 IA rồi dừng một lần). Có 3 cách:
+   - (a) Sửa WORKFLOW cho khớp skill.
+   - (b) Ghi ngoại lệ vào SKILL.md.
+   - (c) Giữ nguyên.
+
+   Tôi nghiêng về **(b)**: WORKFLOW ghi đúng cách HW03 đã làm (commit từng IA), còn 2a là cải tiến cho lần sau. Sửa WORKFLOW sẽ làm sai lịch sử đã làm.
+2. ⏳ Thư mục chứa kết quả demo (B: Admin Quản lý Danh mục; C: Đăng ký → Cập nhật hồ sơ). Phải là thư mục riêng để không ghi đè `checklist/` và `usability/`.
+
+## Pilot xong: Video để đâu, điền gì
+
+**Video:** Để vào `usability/pilot/`, ví dụ đặt tên `PL_video.mp4`.
+- Git đã chặn `.mp4`, `.mov`, `.mkv`. Tôi vừa thêm `.webm` và `.avi`, phòng khi phần mềm quay lưu định dạng đó. Sau khi chép video vào, chạy `git status` để chắc video không hiện ra.
+- Không đưa video cho AI.
+- Video sẽ đưa vào bản nộp theo cách nào (nén, chia nhỏ hay nộp link) vẫn là quyết định mở D10, chốt lúc đóng gói.
+
+**Cần điền:**
+
+| File | Điền gì | Lấy từ |
+|---|---|---|
+| `pilot/notes.md` | Mục 1: Phiếu A, B. Mục 2: Giờ bắt đầu, chuột hay touchpad, thời lượng, kết quả, số lần can thiệp. Mục 3 và 4: Mốc T0 đến T4 (`mm:ss` trong video) và tính thời gian từng chặng. Mục 5: Nhật ký sự kiện kèm lời nói ghi tay. Mục 6: Kết quả D6. Mục 7: 3 điểm vướng. **Mục 8: Kết quả kiểm bộ công cụ** (quan trọng nhất của pilot) | Giấy hoặc ghi chú trong phiên, xem lại video để lấy mốc |
+| `pilot/scale.md` | Dấu thời gian và 10 câu trả lời của dòng `PL` | Google Form, tab "Câu trả lời", chép nguyên văn |
+| `pilot/probe.md` | Câu trả lời C1 đến C9, câu hỏi theo tình huống đã hỏi, câu hỏi về điểm vướng | Ghi tay trong phiên |
+| `participants.md` | Dòng `PL`: Ngày giờ, "đã chạy" | Bạn tự điền |
+
+## Lệnh commit (những gì đã sẵn sàng)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n1_chrome_checklist.js checklist/tools/package.json checklist/tools/package-lock.json checklist/tools/.gitignore
+git commit -m "[T1][exec] Add Playwright script for N1 draft run"
+git add skills/gui-checklist
+git commit -m "[skill] Add GUI checklist skill (design steps)"
+git add skills/usability-evaluation
+git commit -m "[skill] Add usability evaluation skill (design steps)"
+git add .gitignore usability/ai_raw/.gitkeep prompt_log.md
+git commit -m "[setup] Ignore more video formats and drop unused .gitkeep"
+git push
+```
+
+- `usability/ai_raw/.gitkeep` đã bị xóa. Thư mục đó đã có file nên không cần `.gitkeep` nữa; lệnh trên ghi nhận việc xóa.
+- `usability/pilot/` chưa có trong lệnh. Commit sau khi điền xong: `[T2][pilot] Run pilot session`.
+
+⏱ Còn khoảng **28 giờ** làm việc | Còn **11 giờ 42 phút** tới mốc 22:00 10/11 | **26 giờ 42 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C104 | 10:27 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Task 1: Tôi cho phép chạy thử trong lúc tôi điền thông tin thu thập từ pilot. Phiền bạn reset DB và chạy seed_orders để tôi cho task 1 chạy. Ý là chạy kiểm tra cú pháp thôi, chưa chạy thật để tôi cap được không?
+Task 2: Đang điền.
+Task 3: Tạm để đó đi vì vướng task 1.
+Agent Skill: 1b. Thật ra khi làm tôi nhận thấy review từng phần thì tiện nhưng chờ AI tạo sau mỗi lần rất bất tiện, thay vào đó làm 1 lần để người review sẽ có mạch hơn. 2. Đã có chỗ để đặt chưa? bạn đã tạo chưa?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset DB with server running, verify categories, seed orders
+- Bash: Show folder structure sections in WORKFLOW and README
+- Bash: Create demo folder with README, update structure docs, export log
 
 **Output AI (nguyên văn):**
 

@@ -100,7 +100,8 @@ HW03/
 ├── bugs/
 │   ├── bug_report.md           Danh sách bug và số issue
 │   └── screenshots/            Ảnh trang issue
-└── skills/                     Agent Skill
+├── skills/                     Agent Skill
+└── demo/                       Kết quả chạy skill trên màn hình / luồng khác, dùng cho video demo
 ```
 
 ### 2.1 File trong `ai_raw/`

@@ -16,6 +16,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | `cross_platform/` | Kết quả và ảnh chụp trên từng nền tảng |
 | `bugs/` | Bug report, liên kết tới GitHub Issues của nhóm, ảnh trang Issues |
 | `skills/` | Agent Skill |
+| `demo/` | Kết quả chạy Agent Skill trên màn hình / luồng khác, dùng cho video demo |
 | `forms/` | [AI-02] Audit Report, [AI-03] Disclosure, [AI-05] Privacy Checklist |
 | `tools/` | Script hỗ trợ (xuất prompt log, xuất PDF, ...) |
 | `WORKFLOW.md` / `.pdf` | Quy trình làm bài: Các bước của từng task, nguyên tắc kiểm thử hộp đen, cách lưu bản AI và bảng "Thay đổi so với bản AI", riêng tư người tham gia |
