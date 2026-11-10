@@ -18,6 +18,9 @@
  *   Chạy thử để gỡ lỗi script: node n1_chrome_checklist.js --dry-run
  *     (gặp Failed chỉ ghi lại rồi chạy tiếp, không dừng chờ Enter; bỏ qua 2 bước chuẩn bị giỏ hàng; không hỏi xác nhận).
  *   Chỉ chạy một số nhóm: --only=A,B (nhóm A đến G, xem hàm main).
+ *   Nhóm H (thêm sau lần chạy thật): CL-34 Họ Tên dài, chỉ chạy khi gọi riêng: --only=H --log=n1_cl34_log.txt
+ *   Nhóm I (thêm sau lần chạy thật): Chụp ảnh bổ sung (tổng quan N1, CL-105, CL-05), cần reset và seed trước:
+ *     --only=I --log=n1_shots_log.txt
  *
  * Script KHÔNG: Bật server, reset DB, chạy seed, có cấu hình webServer / globalSetup.
  * Script CÓ đổi dữ liệu (vì checklist yêu cầu thao tác thật): Tạo vài tài khoản hw03.n1.*@eshop.com,
@@ -367,15 +370,19 @@ async function check(code, scr, res, why, page) {
   }
 }
 const SHOTS = new Map(); // mã CL -> { scr: màn hình đã chụp, file }
-async function capture(page, code) {
+async function capture(page, code, name) {
   try { await page.bringToFront(); } catch (e) { /* trang đã đóng */ }
   await sleep(400);
-  let out = path.join(SHOT_DIR, `${code}_chrome.png`);
-  if (fs.existsSync(out)) out = path.join(SHOT_DIR, `${code}_chrome_${RUN_ID}.png`);
+  return shotTo(SHOT_DIR, name || `${code}_chrome`);
+}
+// Chụp toàn màn hình Windows vào <dir>/<base>.png (đã có thì thêm hậu tố mã lần chạy); không gọi tới trang nên dùng được cả lúc hộp thoại đang mở
+function shotTo(dir, base) {
+  let out = path.join(dir, `${base}.png`);
+  if (fs.existsSync(out)) out = path.join(dir, `${base}_${RUN_ID}.png`);
   return new Promise((resolve) => {
     execFile('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(__dirname, 'capture_screen.ps1'),
       '-Out', out, '-SinceMs', String(LAUNCH_MS)], { windowsHide: true, timeout: 30000 }, (err, stdout) => {
-      if (err) { console.log(`    (Không chụp được ${code}: ${String(err.message).split('\n')[0]})`); resolve(null); return; }
+      if (err) { console.log(`    (Không chụp được ${base}: ${String(err.message).split('\n')[0]})`); resolve(null); return; }
       console.log(`    Ảnh: ${String(stdout).trim()}`);
       resolve(out);
     });
@@ -402,6 +409,7 @@ function finalOf(parts) {
 // ---------------------------------------------------------------- tiện ích phía Node
 const DIALOGS = [];
 let dialogMode = 'accept';
+let DIALOG_SHOT = null; // { re, dir, base }: Chụp màn hình khi hộp thoại khớp re đang mở (nhóm I)
 const CDP = new WeakMap();
 const pathOf = (page) => { try { return new URL(page.url()).pathname.replace(/\/+$/, '') || '/'; } catch (e) { return ''; } };
 
@@ -409,6 +417,11 @@ function setupPage(page) {
   page.on('dialog', async (d) => {
     DIALOGS.push({ type: d.type(), msg: d.message() });
     NOTES.messages.add(`(hộp ${d.type()}) ${d.message()}`);
+    if (SHOTS_ON && DIALOG_SHOT && !DIALOG_SHOT.file && DIALOG_SHOT.re.test(d.message())) {
+      await sleep(800); // chờ hộp thoại vẽ xong
+      DIALOG_SHOT.file = await shotTo(DIALOG_SHOT.dir, DIALOG_SHOT.base);
+      DIALOG_SHOT.msg = d.message();
+    }
     try { if (dialogMode === 'dismiss' && d.type() === 'confirm') await d.dismiss(); else await d.accept(); } catch (e) { /* bỏ qua */ }
   });
   return page;
@@ -1548,9 +1561,168 @@ async function crossPage(page) {
   }
 }
 
+// ---------------------------------------------------------------- H. CL-34: Họ Tên dài (chỉ chạy khi gọi --only=H)
+// Thêm sau lần chạy thật 10/11/2026 11:46: CL-34 trước đó là mục chạy tay. Cửa sổ 1366 x 768 như các nhóm khác.
+// Đổi Họ Tên của test@eshop.com thành tên 50 ký tự, xem navbar ở W-06, W-04, W-03 (đã đăng nhập), chụp cả 3 màn hình,
+// rồi trả Họ Tên cũ. Số điện thoại được đặt APP_OK_PHONE vì trang chỉ lưu được với số này.
+const LONG_NAME = 'Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly'; // 50 ký tự, chỉ chữ cái và khoảng trắng
+async function phaseLongName(page) {
+  console.log(`\n=== H. CL-34: Họ Tên dài ${LONG_NAME.length} ký tự trên navbar ===`);
+  if (!(await login(page, ACC.test))) return check('CL-34', 'W-06', 'Chạy tay', 'Không đăng nhập được test@eshop.com (tài khoản có thể đang bị khóa 30 giây)');
+  await go(page, '/profile');
+  const name0 = await val(await fieldH(page, RE.name));
+  await fillF(page, RE.name, LONG_NAME);
+  await fillF(page, RE.phone, APP_OK_PHONE);
+  const o = await observe(page, () => clickBtn(page, RE.submitProfile));
+  await go(page, '/profile');
+  const saved = await val(await fieldH(page, RE.name));
+  if (saved !== LONG_NAME) {
+    await check('CL-34', 'W-06', 'Chạy tay', `Không lưu được Họ Tên dài (sau khi tải lại ô Họ Tên là "${saved}"); thông báo ${msgText(o)}`);
+    return;
+  }
+  const screens = [['W-06', '/profile', 1], ['W-04', '/register', 2], ['W-03', '/login', 3]];
+  try {
+    for (const [scr, p, k] of screens) {
+      const sl = `${scr} (đăng nhập)`;
+      await T('CL-34', sl, page, async () => {
+        await go(page, p);
+        if (pathOf(page) !== p) return skip('CL-34', sl, `Trang tự chuyển sang ${pathOf(page)} khi đã đăng nhập`);
+        const r = await ev(page, () => {
+          const hw = window.__hw;
+          const nav = hw.navRoot();
+          const g = hw.navEl(/^chào,/i);
+          if (!nav || !g) return null;
+          const items = Array.from(nav.querySelectorAll('a, button, [role="button"]')).filter(hw.vis);
+          const rects = items.map((e) => ({ t: hw.norm(e.textContent).slice(0, 20), r: e.getBoundingClientRect() }));
+          const ov = [];
+          for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
+            const a = rects[i].r; const b = rects[j].r;
+            if (items[i].contains(items[j]) || items[j].contains(items[i])) continue;
+            if (Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1) ov.push(`"${rects[i].t}" chồng "${rects[j].t}"`);
+          }
+          const gr = g.getBoundingClientRect();
+          const lh = parseFloat(getComputedStyle(g).lineHeight) || parseFloat(getComputedStyle(g).fontSize) * 1.2;
+          const tops = rects.map((x) => Math.round(x.r.top + x.r.height / 2));
+          const de = document.documentElement;
+          return {
+            text: hw.norm(g.textContent), lines: Math.round(gr.height / lh), clipped: g.scrollWidth > g.clientWidth + 1,
+            ov, offRow: Math.max(...tops) - Math.min(...tops) > 4, outside: rects.filter((x) => x.r.right > innerWidth + 1 || x.r.left < -1).map((x) => x.t),
+            hScroll: Math.max(de.scrollWidth, document.body.scrollWidth) > de.clientWidth + 1, navH: Math.round(nav.getBoundingClientRect().height), w: innerWidth,
+          };
+        });
+        if (!r) return check('CL-34', sl, 'Chạy tay', 'Không tìm thấy navbar hoặc lời chào');
+        const bad = [];
+        if (!r.text.includes(LONG_NAME)) bad.push(`lời chào không hiện đủ tên ("${r.text}")`);
+        if (r.clipped) bad.push('lời chào bị cắt');
+        if (r.ov.length) bad.push(`chồng lấn: ${r.ov.join(', ')}`);
+        if (r.offRow) bad.push('các mục navbar không còn thẳng một hàng');
+        if (r.outside.length) bad.push(`mục tràn ra ngoài cửa sổ: ${r.outside.join(', ')}`);
+        if (r.hScroll) bad.push('trang có thanh cuộn ngang');
+        const m = `Cửa sổ rộng ${r.w} px; lời chào ${r.lines} dòng; navbar cao ${r.navH} px${bad.length ? `; ${bad.join('; ')}` : '; không tràn, không chồng lấn, các mục thẳng một hàng'}`;
+        await check('CL-34', sl, bad.length ? 'Failed' : 'Passed', m); // không truyền page: ảnh chụp riêng ở dưới
+        // Chụp cả 3 màn hình (kể cả khi Passed) để sinh viên xem lại; tên CL-34_chrome_1 (W-06), _2 (W-04), _3 (W-03)
+        if (SHOTS_ON) {
+          const f = await capture(page, 'CL-34', `CL-34_chrome_${k}`);
+          if (!SHOTS.has('CL-34')) SHOTS.set('CL-34', { scr: sl, file: f });
+        }
+      });
+    }
+  } finally {
+    await go(page, '/profile');
+    await fillF(page, RE.name, name0);
+    await fillF(page, RE.phone, APP_OK_PHONE);
+    await clickBtn(page, RE.submitProfile); await sleep(WAIT);
+    console.log(`  (Đã trả Họ Tên về "${name0}"; Số điện thoại là ${APP_OK_PHONE})`);
+  }
+}
+
+// ---------------------------------------------------------------- I. Ảnh bổ sung (chỉ chạy khi gọi --only=I)
+// Thêm sau lần chạy thật: Chụp các ảnh còn thiếu, không ghi kết quả mới (kết quả đã có trong Excel).
+//   cross_platform/screenshots/chrome/: overview_env (chrome://version), overview_login, overview_register, overview_profile
+//   checklist/screenshots/: CL-105_chrome_1 (W-03 mất mạng), CL-105_chrome_2 (W-06 mất mạng, hộp thoại đang mở),
+//   CL-05_chrome (hộp "Lỗi: Cannot cancel this order." khi hủy cùng một đơn Đã xác nhận ở 2 tab)
+// Cần dữ liệu ngay sau reset và seed (ảnh overview_profile). Cuối nhóm có hủy 1 đơn Đã xác nhận: Sau đó cần reset lại.
+const OV_DIR = path.resolve(__dirname, '..', '..', 'cross_platform', 'screenshots', 'chrome');
+async function overviewShots(page, name) {
+  await page.bringToFront().catch(() => {});
+  await ev(page, () => window.scrollTo(0, 0)); await sleep(600);
+  const g = await ev(page, () => ({ sh: Math.max(document.documentElement.scrollHeight, document.body.scrollHeight), vh: innerHeight }));
+  const step = Math.floor(g.vh * 0.8);
+  const n = Math.min(6, g.sh > g.vh + 2 ? 1 + Math.ceil((g.sh - g.vh) / step) : 1);
+  for (let i = 0; i < n; i++) {
+    if (i) { await ev(page, (y) => window.scrollTo(0, y), i * step); await sleep(600); }
+    await shotTo(OV_DIR, n === 1 ? `overview_${name}` : `overview_${name}_${i + 1}`);
+  }
+  await ev(page, () => window.scrollTo(0, 0));
+}
+async function dialogShot(re, base, action, ms = 4000) {
+  DIALOG_SHOT = { re, dir: SHOT_DIR, base };
+  try {
+    await action();
+    const t0 = Date.now();
+    while (!DIALOG_SHOT.file && Date.now() - t0 < ms) await sleep(150);
+    return DIALOG_SHOT;
+  } finally { DIALOG_SHOT = null; }
+}
+async function phaseExtraShots(ctx, page) {
+  console.log('\n=== I. Ảnh bổ sung: tổng quan N1 (Task 3), CL-105, CL-05 ===');
+  fs.mkdirSync(OV_DIR, { recursive: true });
+  // Ảnh môi trường
+  try { await page.goto('chrome://version'); await sleep(1200); await shotTo(OV_DIR, 'overview_env'); } catch (e) {
+    console.log(`  (Không mở được chrome://version: ${String(e.message).split('\n')[0]}; chụp tay overview_env.png)`);
+  }
+  // Tổng quan W-03, W-04 khi chưa đăng nhập
+  await go(page, '/login');
+  if (await isLoggedIn(page)) { await logout(page); await go(page, '/login'); }
+  await overviewShots(page, 'login');
+  await go(page, '/register');
+  await overviewShots(page, 'register');
+  // CL-105 W-03: Mất kết nối, bấm "Sign In" (request không tới được hệ thống nên không tính là một lần đăng nhập sai)
+  await go(page, '/login');
+  await fillF(page, RE.loginEmail, ACC.test.email);
+  await fillF(page, RE.password, ACC.test.pw);
+  await ctx.setOffline(true);
+  const d1 = await dialogShot(/./, 'CL-105_chrome_1', () => clickBtn(page, RE.submitLogin), 3500);
+  if (!d1.file) { await sleep(500); await capture(page, 'CL-105', 'CL-105_chrome_1'); }
+  await ctx.setOffline(false);
+  console.log(`  CL-105 W-03: ${d1.msg ? `hộp thoại "${d1.msg}"` : 'thông báo trên trang (xem ảnh)'}`);
+  // Tổng quan W-06: Đăng nhập test@eshop.com, dữ liệu như sau reset và seed
+  if (!(await login(page, ACC.test))) { console.log('  Không đăng nhập được test@eshop.com: Dừng nhóm I (thiếu overview_profile, CL-105_chrome_2, CL-05_chrome)'); return; }
+  await go(page, '/profile');
+  await overviewShots(page, 'profile');
+  // CL-105 W-06: Mất kết nối, bấm "Cập nhật" (số điện thoại app chấp nhận để không bị chặn ở bước kiểm số; không lưu vì mất mạng)
+  await go(page, '/profile');
+  await fillF(page, RE.phone, APP_OK_PHONE);
+  await ctx.setOffline(true);
+  const d2 = await dialogShot(/lỗi|kết nối|mạng|network|failed|error/i, 'CL-105_chrome_2', () => clickBtn(page, RE.submitProfile));
+  await ctx.setOffline(false);
+  console.log(`  CL-105 W-06: ${d2.file ? `đã chụp hộp thoại "${d2.msg}"` : 'không thấy hộp thoại lỗi; chụp tay'}`);
+  // CL-05: Hủy cùng một đơn Đã xác nhận ở 2 tab, chụp hộp thoại lỗi ở tab A
+  await go(page, '/profile');
+  const H = await ev(page, () => window.__hw.history());
+  const iSt = H ? H.hdr.findIndex((h) => /trạng thái/i.test(h)) : -1;
+  const iId = H ? H.hdr.findIndex((h) => /^mã/i.test(h)) : -1;
+  const rowC = H ? H.rows.find((r) => r.cells[iSt] === STATUS_TEXT.confirmed) : null;
+  if (!rowC) { console.log('  Không có đơn Đã xác nhận: Bỏ qua CL-05 (cần reset và seed)'); return; }
+  const idC = rowC.cells[iId];
+  const cancelBtn = async (p) => (await p.evaluateHandle((x) => window.__hw.rowCancelBtn(x), idC)).asElement();
+  const yes = async (p) => { await sleep(400); const y = await handle(p, 'modalBtn', RE.yes); if (y) await y.click(); };
+  const pageB = setupPage(await ctx.newPage());
+  await go(pageB, '/profile');
+  await (await cancelBtn(pageB)).click(); await yes(pageB); await sleep(WAIT);
+  await pageB.close();
+  await page.bringToFront(); await sleep(300);
+  const bA = await cancelBtn(page);
+  if (!bA) { console.log('  Tab A không còn nút Hủy đơn: Chụp tay CL-05'); return; }
+  const d3 = await dialogShot(/cannot|không thể|lỗi/i, 'CL-05_chrome', async () => { await bA.click(); await yes(page); });
+  console.log(`  CL-05 (đơn ${idC}): ${d3.file ? `đã chụp hộp thoại "${d3.msg}"` : 'không thấy hộp thoại lỗi; chụp tay'}`);
+  console.log('  (Đơn Đã xác nhận đã bị hủy: Cần reset DB và seed trước lần chạy sau)');
+}
+
 // ---------------------------------------------------------------- in bảng cuối
 function printFinal() {
   for (const [code, why] of Object.entries(MANUAL)) {
+    if (R.has(code)) continue; // mục đã có kết quả đo (ví dụ CL-34 ở nhóm H): Không ghi đè
     let extra = '';
     if (code === 'CL-05' || code === 'CL-56') extra = ` | Thông báo bắt được: ${[...NOTES.messages].join(' | ').slice(0, 300)}`;
     if (code === 'CL-06') extra = ` | Tiêu đề tab: ${Object.entries(NOTES.titles).map(([k, v]) => `${k} "${v}"`).join(', ')}`;
@@ -1608,9 +1780,11 @@ async function main() {
     ['E', () => phaseNewUser(page)],
     ['F', () => phaseLockout(page)],
     ['G', () => crossPage(page)],
+    ['H', () => phaseLongName(page)],
+    ['I', () => phaseExtraShots(ctx, page)],
   ];
   for (const [name, fn] of phases) {
-    if (ONLY.length && !ONLY.includes(name)) continue;
+    if (ONLY.length ? !ONLY.includes(name) : ['H', 'I'].includes(name)) continue; // nhóm H, I chỉ chạy khi gọi --only=
     console.log(`\n[${stamp()}] Bắt đầu nhóm ${name}`);
     try { await fn(); } catch (e) {
       console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.stack || e).split('\n').slice(0, 3).join(' / ')}`);
