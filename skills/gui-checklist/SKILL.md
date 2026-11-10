@@ -1,6 +1,6 @@
 ---
 name: gui-checklist
-description: Thiết kế GUI checklist cho một hoặc nhiều màn hình theo 4 khía cạnh giao diện IA-01 (tiêu chuẩn chung), IA-02 (form), IA-03 (điều hướng), IA-04 (phản hồi và trạng thái), đi từng bước survey (khảo sát màn hình qua ảnh sinh viên chụp), oracle (trích yêu cầu giao diện nguyên văn từ SRS), ai-draft (AI sinh checklist, mỗi IA một file), review (sinh viên giữ, sửa, bỏ, gộp, tách), add (sinh viên thêm mục AI bỏ sót kèm lý do), excel (xuất Excel để chạy). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI" và cột "Vì sao AI bỏ sót". Kiểm thử hộp đen, không đọc mã nguồn, không tự mở giao diện, không dùng DevTools khi thiết kế. Dùng khi người dùng nói "GUI checklist", "checklist giao diện", "UI checklist", "kiểm thử giao diện màn hình", "làm survey (oracle, ai-draft, review, add, excel) cho màn hình", "checklist IA-01 đến IA-04", kể cả khi chỉ đưa thư mục checklist và bảo "làm bước tiếp theo". Bước exec và bugs mới có khung. Không dùng cho usability evaluation (dùng skill usability-evaluation) hay để ghi kết quả chạy thay sinh viên.
+description: Thiết kế GUI checklist cho một hoặc nhiều màn hình theo 4 khía cạnh giao diện IA-01 (tiêu chuẩn chung), IA-02 (form), IA-03 (điều hướng), IA-04 (phản hồi và trạng thái), đi từng bước survey (khảo sát màn hình qua ảnh sinh viên chụp), oracle (trích yêu cầu giao diện nguyên văn từ SRS), ai-draft (AI sinh checklist, mỗi IA một file), review (sinh viên giữ, sửa, bỏ, gộp, tách), add (sinh viên thêm mục AI bỏ sót kèm lý do), excel (xuất Excel để chạy), exec (chạy checklist bằng tay, script DevTools chỉ đọc hoặc script điều khiển trình duyệt cho kết quả nháp; sinh viên chốt), bugs (bug report, tìm trùng và tạo GitHub Issues bằng gh, chèn ảnh). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI" và cột "Vì sao AI bỏ sót". Kiểm thử hộp đen, không đọc mã nguồn, không tự mở giao diện, không dùng DevTools khi thiết kế. Dùng khi người dùng nói "GUI checklist", "checklist giao diện", "UI checklist", "kiểm thử giao diện màn hình", "làm survey (oracle, ai-draft, review, add, excel) cho màn hình", "checklist IA-01 đến IA-04", "chạy checklist", "báo bug lên Issues", kể cả khi chỉ đưa thư mục checklist và bảo "làm bước tiếp theo". Không dùng cho usability evaluation (dùng skill usability-evaluation); không tạo kết quả khi chưa có lần chạy thật.
 ---
 
 # Thiết kế GUI checklist
@@ -19,8 +19,8 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 1 trên 
 | `review` | Giữ, sửa, bỏ, gộp, tách từng mục AI | **Sinh viên** quyết; AI lọc trước nếu được yêu cầu và soạn file | Đầy đủ |
 | `add` | Thêm mục AI bỏ sót, mỗi mục có lý do | **Sinh viên** viết; AI kiểm | Đầy đủ |
 | `excel` | Xuất checklist ra Excel | AI chạy script, sinh viên kiểm | Đầy đủ |
-| `exec` | Chạy checklist | **Sinh viên** | Khung, bổ sung sau |
-| `bugs` | Báo bug lên Issues | Sinh viên, AI hỗ trợ | Khung, bổ sung sau |
+| `exec` | Chạy checklist trên nền tảng thứ nhất | **Sinh viên** chạy (tay hoặc script AI viết); AI điền kết quả nháp từ log và ảnh; sinh viên chốt | Đầy đủ |
+| `bugs` | Chọn bug, tạo issue có ảnh, bug report | AI đề xuất và soạn; sinh viên chốt và cho phép đăng | Đầy đủ |
 
 ## Bước 0: Xác định ngữ cảnh (đầu mỗi phiên)
 
@@ -45,10 +45,12 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 1 trên 
    | Đủ 4 file `ai_raw/T1_draft_IA-0n.md`, chưa có `02_checklist.md` | `review` |
    | `02_checklist.md` có mục "Mục sinh viên thêm" còn trống | `add` |
    | `02_checklist.md` đã có mục sinh viên thêm, chưa có file Excel | `excel` |
-   | Đã có file Excel | `exec` (khung, xem `references/step-later.md`) |
+   | Đã có file Excel, cột kết quả của nền tảng thứ nhất còn trống | `exec` |
+   | Cột kết quả nền tảng thứ nhất đã chốt, chưa có `bugs/bug_report.md` | `bugs` |
+   | `bugs/bug_report.md` còn mục ⏳ (ảnh chưa chèn, chưa chụp danh sách issue) | `bugs` (phần còn lại) |
 
 4. **Bắt đầu từ giữa chừng** (các bước trước làm tay hoặc theo quy trình khác): Rà các bản review đã có theo mục "Rà bước trước" ở `references/rules.md`, báo cho sinh viên những gì thiếu. **Không tự viết lại**; chờ sinh viên quyết định.
-5. **Nạp tài liệu:** Luôn đọc `references/rules.md` và `references/lessons.md`; đọc `references/step-<bước>.md` của bước sắp làm; đọc `references/sources.md` ở bước `ai-draft` và `add`.
+5. **Nạp tài liệu:** Luôn đọc `references/rules.md` và `references/lessons.md`; đọc `references/step-<bước>.md` của bước sắp làm; đọc `references/sources.md` ở bước `ai-draft` và `add`. Bước `exec` và `bugs` đọc thêm README của repo nhóm (quy ước issue).
 
 ## Quy tắc cứng
 
@@ -60,7 +62,8 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 - **Không bao giờ sửa hay ghi đè file trong `ai_raw/`** sau khi đã giao. AI làm lại thì lưu file mới `_v2`, `_v3`, đầu file ghi lần sửa, thời gian, lý do.
 - **Chỗ đặc tả không nói:** Ghi thành câu hỏi mở hoặc giả định có phương án đánh chữ cái. AI không tự chọn, không khẳng định quá căn cứ.
 - **Mục ngoài SRS** ghi rõ nguồn và ghi là **khuyến nghị**, không phải yêu cầu của SRS.
-- **Kết quả chạy chỉ lấy từ lần chạy thật.** AI không ghi Passed hay Failed thay sinh viên, không tạo hay chỉnh ảnh chụp.
+- **Kết quả chạy chỉ lấy từ lần chạy thật.** AI được điền kết quả **nháp** từ bằng chứng của lần chạy đó (log, ảnh, ghi chú chạy tay), ghi rõ mục nào AI kết luận bằng cách xem ảnh; sinh viên review và chốt. Không có bằng chứng thì để trống. AI không tạo hay chỉnh nội dung ảnh, không tự chạy script trên giao diện khi sinh viên chưa cho phép.
+- **Đăng ra ngoài** (tạo, sửa issue, bình luận) chỉ làm khi sinh viên đã duyệt nội dung và cho phép rõ ràng; mặc định đưa lệnh để sinh viên chạy.
 - **Bước `add` là của sinh viên.** AI không viết mục mới thay sinh viên; chỉ kiểm và chỉ ra chỗ chưa đạt.
 - **Bản review** có bảng "Thay đổi so với bản AI" với cột Loại chỉ nhận 5 giá trị và cột "Vì sao AI bỏ sót" (chỉ với Loại "Thiếu"). Ghi rõ người phát hiện mỗi thay đổi; không đoán.
 - **AI không tự commit.** Chỉ đưa commit message và lệnh.
@@ -109,7 +112,8 @@ Sửa bản review sau đó: Sửa trực tiếp bản review, ghi thời gian c
 | `review` | Lọc trước (nếu sinh viên muốn), sinh viên quyết, soạn checklist mã `CL-nn` | `02_checklist.md` (phần mục AI) | `references/step-review-add.md` |
 | `add` | Sinh viên thêm mục, AI kiểm; xét các mảng AI hay bỏ sót | `02_checklist.md` (mục sinh viên thêm) | `references/step-review-add.md` |
 | `excel` | Xuất Excel từ `02_checklist.md` | File `.xlsx` | `references/step-excel.md` |
-| `exec`, `bugs` | Khung, bổ sung sau | | `references/step-later.md` |
+| `exec` | Chuẩn bị dữ liệu; chạy tay hoặc chạy script (sinh viên chạy); chạy tay và chụp bổ sung; AI điền kết quả nháp từ log và ảnh; sinh viên chốt | Cột NT1 và sheet "Môi trường" của Excel, `screenshots/<mã mục>_<nền tảng>.png`, log | `references/step-exec.md` |
+| `bugs` | Chọn bug, tìm trùng, soạn issue theo template, tạo bằng `gh`, chèn ảnh, bình luận issue dùng chung, chụp danh sách issue | `bugs/bug_report.md`, issue trên repo nhóm, `bugs/screenshots/issues_list_*.png` | `references/step-bugs.md` |
 
 ## Điểm dừng chờ sinh viên
 
@@ -120,6 +124,8 @@ Sửa bản review sau đó: Sửa trực tiếp bản review, ghi thời gian c
 - `review`: Sau bảng đề xuất lọc (nếu có); sau khi soạn `02_checklist.md`.
 - `add`: Sau khi kiểm các mục sinh viên thêm.
 - `excel`: Sau khi xuất file.
+- `exec`: Trước khi chạy (chọn cách chạy, chuẩn bị dữ liệu); trong lúc sinh viên chạy; sau khi điền kết quả nháp (chờ sinh viên chốt).
+- `bugs`: Sau bảng đề xuất chọn bug; sau khi soạn nội dung issue; trước mỗi lệnh đăng ra ngoài; sau khi viết bug report.
 - Bất cứ lúc nào thiếu thông tin mà chỉ người dùng cung cấp được.
 
 ## Tài nguyên
@@ -127,7 +133,7 @@ Sửa bản review sau đó: Sửa trực tiếp bản review, ghi thời gian c
 - `references/rules.md`: Nguồn được đọc và không được đọc, hộp đen, mã và tên file, `ai_raw/`, bản review, bảng thay đổi, commit, định dạng, rà bước trước.
 - `references/lessons.md`: Checklist tự kiểm theo từng bước, rút từ lỗi đã gặp.
 - `references/step-survey.md`, `step-oracle.md`, `step-ai-draft.md`, `step-review-add.md`, `step-excel.md`: Hướng dẫn chi tiết, kèm "Hỏi trước khi viết".
-- `references/step-later.md`: Khung bước `exec`, `bugs` và các quyết định còn mở.
+- `references/step-exec.md`, `step-bugs.md`: Hướng dẫn bước chạy và báo bug, kèm quyết định còn mở.
 - `references/sources.md`: Nguồn ngoài SRS đã dùng và cách ghi.
 - `references/example-hw03.md`: Ví dụ rút gọn từ lần làm đầu.
 - `assets/templates/`: Mẫu `ai_raw_header.md`, `survey.md`, `oracle.md`, `draft_ia.md`, `checklist.md`, `changes_table.md`.

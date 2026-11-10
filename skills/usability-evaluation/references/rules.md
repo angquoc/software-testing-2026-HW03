@@ -27,6 +27,7 @@
 | Slide môn học về usability testing; template usability của môn | Video, ghi âm của các phiên; ảnh chụp từ video chưa che mặt và thông tin cá nhân |
 | Chính skill này | Prompt log, ghi chú cá nhân của sinh viên (nếu dự án nêu tên); lịch sử git; log phiên AI |
 | File trong **thư mục làm việc** và ảnh `flow_*` | Hồ sơ phiên (`sessions/`), trừ khi dự án cho phép và dữ liệu đã ẩn danh |
+| Hồ sơ pilot đã ẩn danh (`pilot/notes.md`, `probe.md`, `scale.md`, mã `PL`) khi sinh viên cho phép | Video pilot |
 | File do chính phiên này tạo ra | Thư mục làm việc của luồng khác, trừ khi sinh viên cho phép |
 
 Liệt kê thư mục để biết tên file không phải là đọc nội dung, nhưng không mở file bị cấm dù tên có vẻ hữu ích.
@@ -121,6 +122,7 @@ Phần thân áp mọi quyết định, đổi `⏳` thành "Đã chốt: ..." �
 - AI chỉ đưa commit message và lệnh; sinh viên tự commit.
 - Định dạng mặc định: `[T2][<bước>] <Verb> <nội dung>`, tiếng Anh, động từ mệnh lệnh, không dấu chấm cuối.
 - Mỗi bước thiết kế: (1) Bản AI (`... (AI draft)`); (2) bản review. Ảnh luồng: Một commit riêng. Bản `_vN`: `... (AI revision N)`.
+- `pilot`: Hồ sơ pilot và các chỗ sửa sau pilot (ví dụ `[T2][pilot] Run pilot session and refine scenario`); video không commit nếu dự án chặn.
 
 ## 10. Định dạng văn bản
 
@@ -137,4 +139,5 @@ Phần thân áp mọi quyết định, đổi `⏳` thành "Đã chốt: ..." �
 | `plan` | Có ảnh luồng; đủ 9 phần; câu hỏi gắn chặng và khía cạnh probe; số liệu liên kết với câu hỏi; giả định đã đối chiếu ảnh; quyết định có trạng thái; có bảng thay đổi |
 | `scenario` | Kịch bản không dùng nhãn nút; có phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành theo cái người điều phối nhìn thấy, thời gian chuẩn có căn cứ đo; có can thiệp và tình huống đặc biệt; có mục "Cần kiểm ở pilot" |
 | `instruments` | Đủ công cụ của đề (thang đo, câu hỏi mở đủ khía cạnh); câu hỏi trung lập; phiếu ghi chú dùng mã của plan và kịch bản; không thu thông tin cá nhân |
+| `pilot` | Hồ sơ pilot đủ (I3, I4, I5, I6) và có bảng "Kết quả kiểm bộ công cụ"; mọi điểm "Cần kiểm ở pilot" có quan sát; mỗi chỗ sửa có dòng trong bảng thay đổi của file đó; con số giống nhau ở 3 file |
 | Mọi bước | `ai_raw/` có bản AI; tên file đúng; `check_usability.py format`, `changes`, `privacy` không lỗi |

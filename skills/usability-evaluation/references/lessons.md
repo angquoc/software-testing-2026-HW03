@@ -51,3 +51,19 @@ Rút từ các bảng "Thay đổi so với bản AI" của lần làm đầu (H
 - [ ] Mã sự kiện ở phiếu ghi chú khớp số liệu của plan và tình huống của kịch bản.
 - [ ] Câu hỏi mở phủ đủ khía cạnh đề yêu cầu, câu chữ trung lập; có phần hỏi theo tình huống và hỏi lại điểm vướng.
 - [ ] Danh sách chuẩn bị đã cập nhật theo mọi quyết định (form thang đo, tin nhắn đồng ý).
+
+## `pilot`
+
+- [ ] Mẫu hồ sơ pilot có bảng kiểm từng điểm "Cần kiểm ở pilot", có chỗ ghi điều **phát sinh**.
+  *Đã gặp:* Ba điểm quan trọng nhất của pilot là phát sinh, không có trong danh sách: Bộ gõ tiếng Việt đang bật làm người pilot gõ sai email; người pilot hỏi có được sao chép từ phiếu dữ liệu không; người pilot đăng nhập trước khi đọc kịch bản nên mốc T1 rơi trước T0.
+- [ ] Trạng thái ban đầu có cả điều kiện của máy (bộ gõ, ngôn ngữ bàn phím), không chỉ của trình duyệt.
+- [ ] Kịch bản dặn rõ thời điểm bắt đầu thao tác (đọc hết rồi mới chạm chuột) để mốc thời gian đúng thứ tự.
+- [ ] Phiếu dữ liệu nói rõ được sao chép, nếu đưa ở dạng sao chép được.
+- [ ] Bội số thời gian chuẩn được kiểm lại bằng số đo pilot; ngưỡng "bế tắc hẳn" chỉnh theo chuẩn mới.
+  *Đã gặp:* Người pilot làm toàn luồng trong 01:24, khoảng 36% chuẩn x5 cũ (03:51.25), nên chuẩn x5 không phân biệt được chặng vướng; sinh viên giảm xuống x3 (02:18.75) và giảm ngưỡng "bế tắc hẳn" từ 3 xuống 2 phút.
+- [ ] Thời lượng phiên trong test plan và trong tin nhắn xin đồng ý cập nhật theo số đo.
+  *Đã gặp:* Test plan ước lượng 25 đến 40 phút; pilot 16 phút. Test plan đổi thành 15 đến 25 phút, tin nhắn đổi thành 15 đến 30 phút.
+- [ ] Ghi hạn chế khi chỉnh theo một người pilot (nhóm tuổi, mức quen máy tính của người đó).
+- [ ] Con số sau pilot giống nhau ở cả test plan, kịch bản, bộ công cụ.
+- [ ] Lỗi chỉ lộ ra khi người điều phối kiểm kết quả sau phiên thì câu hỏi theo tình huống cho lỗi đó không hỏi được; ghi lại trong hồ sơ.
+  *Đã gặp:* Người pilot lưu giá thiếu một chữ số 0 mà không nhận ra; lỗi chỉ thấy lúc kiểm kết quả sau phiên, khi câu hỏi mở đã xong.

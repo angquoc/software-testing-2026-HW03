@@ -21,6 +21,32 @@ Lần làm đầu, dùng để tra cách viết. Bản đầy đủ nằm ở th
 | `review` | Bỏ hoặc gộp 5 mục, tách 3 mục thành 6, thêm 1 mục từ CHD-09 |
 | `add` | Sinh viên thêm 4 mục |
 | Cuối | 112 mục `CL` (58 AI giữ nguyên, 49 AI SV sửa, 5 SV thêm); 50 căn cứ SRS, 62 khuyến nghị |
+| `exec` (NT1 Chrome trên Windows) | Script Playwright cho kết quả nháp 39 Passed, 44 Failed, 7 Không chạy được, 22 Chạy tay; sau khi chạy tay, chụp bổ sung, AI điền từ log và ảnh (21 mục "AI xem ảnh"), sinh viên chốt: 51 Passed, 54 Failed, 7 Không chạy được |
+| `bugs` | 33 issue mới, 2 bình luận vào issue dùng chung, 8 mục Failed không báo vì ảnh không thấy lỗi; 2 ảnh danh sách issue |
+
+## Script của bước `exec` (ví dụ tham khảo)
+
+Nằm ở `checklist/tools/` của HW03, **không** kèm trong skill vì gắn chặt EShop (nhãn, mã CL, tài khoản, dữ liệu). Đọc để tham khảo cách làm khi viết script mới (khi sinh viên cho phép, như phần còn lại của `checklist/`); không chép phần đặc thù.
+
+| File | Nội dung | Phần tham khảo được |
+|---|---|---|
+| `devtools_check.js` | Script Console chỉ đọc trang, in bảng kết quả nháp cho các mục DevTools của W-03, W-04, W-06 | Cách tìm phần tử theo chữ nhìn thấy; cách in bảng mã mục, đo được, gợi ý |
+| `n1_chrome_checklist.js` | Script Playwright điều khiển Chrome cài trên máy (NT1), các nhóm mục A đến J, cờ `--dry-run`, `--only=`, `--log=`, `--no-shots` | Phần đầu file (chuẩn bị, dữ liệu bị đổi, cách chạy); cách gộp kết quả theo màn hình; danh sách "Chạy tay"; tự chụp mục Failed; bảng cuối dạng Tab |
+| `capture_screen.ps1` | Chụp toàn màn hình Windows, đưa cửa sổ Chrome của script lên trước | Cách chụp thấy thanh địa chỉ, tab, taskbar (chỉ Windows) |
+| `package.json` | Phụ thuộc `playwright-core`, `axe-core` (không tải trình duyệt; dùng Chrome cài trên máy) | |
+| `n1_run_log.txt`, `n1_cl34_log.txt`, `n1_shots_log.txt`, `n1_bugshots_log.txt` | Log của lần chạy thật và các lần chạy thêm một nhóm | Dạng log và bảng cuối mà AI dùng để điền cột NT1 |
+
+Dữ liệu chạy được tạo bằng `tools/seed_orders.py` của HW03 (gọi API như giao diện, không sửa DB trực tiếp), sau khi reset DB.
+
+## Một issue (rút gọn)
+
+Tiêu đề: `[23120061][T1][W-04][Chrome] Đăng ký từ chối mật khẩu hợp lệ "Abcdef1!" với thông báo mật khẩu quá yếu`. Label: `bug`, `ia: IA-02`, `platform: web`, `severity: critical`, `task: T1 checklist`. Thân theo các trường của template nhóm; trường "Mục checklist" ghi `CL-65 (và CL-39, CL-40, CL-60, CL-104, ...: Không chạy được vì lỗi này)`; trường "Ảnh chụp":
+
+```markdown
+**CL-65_chrome.png**
+
+![CL-65_chrome.png](https://github.com/user-attachments/assets/...)
+```
 
 ## Một dòng oracle
 

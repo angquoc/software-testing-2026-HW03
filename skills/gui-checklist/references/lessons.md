@@ -81,3 +81,30 @@ Các mục sinh viên thêm ở lần đầu, để thấy AI hay bỏ sót gì:
 
 - [ ] Excel sinh lại từ `02_checklist.md`, không sửa nội dung trong Excel.
 - [ ] Số mục trong Excel khớp mục tổng hợp; không ghi đè file đã có kết quả chạy.
+
+## `exec`
+
+- [ ] Kết quả nháp của script chưa phải kết quả cuối; đã chạy tay mọi mục "Chạy tay".
+  *Đã gặp:* Bảng cuối của script NT1 có 39 Passed, 44 Failed, 7 Không chạy được, 22 Chạy tay; sau khi sinh viên chạy tay, chụp bổ sung và AI xem ảnh, kết quả chốt là 51 Passed, 54 Failed, 7 Không chạy được.
+- [ ] Mục AI kết luận bằng cách xem ảnh có nhãn `(AI xem ảnh)` trong Notes, và sinh viên đã review.
+  *Đã gặp:* 21 mục NT1 do AI kết luận từ ảnh (ngôn ngữ, highlight, zoom 200%); ghi nhãn để sinh viên biết mục nào cần xem kỹ.
+- [ ] Ảnh tự chụp thật sự thấy lỗi; chụp bổ sung đúng lúc lỗi hiện.
+  *Đã gặp:* Hộp thoại `alert` tự đóng trước khi chụp nên không có trong ảnh; phải thêm một nhóm chụp riêng lúc hộp thoại đang mở. 8 mục Failed (focus sau khi báo lỗi, lỗi lúc rê chuột, lúc đang tải, trong tab Network, hộp xác nhận không xuất hiện, bước xóa dữ liệu site) không báo lên Issues được vì ảnh không thấy lỗi.
+- [ ] Bug chặn điều kiện của mục khác thì mục đó ghi "Không chạy được" kèm lý do, không ghi Failed.
+  *Đã gặp:* Trang Đăng ký từ chối mọi mật khẩu hợp lệ, nên 5 mục (email sai định dạng, email trùng, Họ Tên chỉ có khoảng trắng, chuyển trang và thông báo sau khi đăng ký thành công) ghi "Không chạy được"; issue của lỗi này ghi đủ các mục bị chặn.
+- [ ] Giá trị thay thế để vượt một bug chỉ dùng cho mục không kiểm quy tắc đó, và ghi trong Notes.
+  *Đã gặp:* Trang hồ sơ từ chối số điện thoại hợp lệ `0912345678`; script dùng số trang chấp nhận cho các mục chỉ cần một lần gửi thành công (đang chờ, mất kết nối, gửi trùng).
+- [ ] Script đổi dữ liệu thì ghi rõ ở đầu script và nhắc reset sau khi chạy; mục khóa tài khoản chạy cuối.
+- [ ] Ảnh mục Failed chụp toàn màn hình (thấy thanh địa chỉ, tab, taskbar), đúng tên quy ước; ảnh đã có thì không ghi đè.
+- [ ] Sheet "Môi trường" ghi cả kích thước vùng trang của script và cửa sổ khi chạy tay nếu khác nhau.
+
+## `bugs`
+
+- [ ] Nhiều mục cùng một lỗi gốc gộp một issue.
+  *Đã gặp:* Số điện thoại hợp lệ bị từ chối làm Failed 3 mục (cập nhật thành công, khoảng trắng hai đầu, dữ liệu điền sẵn sau khi lưu), gộp vào một issue.
+- [ ] Lỗi ở thành phần dùng chung đã có issue thì bình luận, không tạo mới; lỗi cùng loại ở màn hình khác thì ghi `Related #<số>`.
+- [ ] Ô "Mục checklist" của issue ghi cả các mục bị lỗi này chặn.
+- [ ] Ảnh ghép đúng tên file.
+  *Đã gặp:* Kéo 31 ảnh vào một ô bình luận, GitHub sinh mọi thẻ với `alt="Image"`, nên alt không cho biết tên file; phải ghép theo thứ tự kéo thả và kiểm lại từng ảnh sau khi chèn.
+- [ ] Mọi mục Failed có mặt ở đúng một nơi (issue, bình luận, hoặc bảng "không báo" có lý do).
+- [ ] Chụp danh sách issue đã lọc **sau** khi chèn ảnh xong.

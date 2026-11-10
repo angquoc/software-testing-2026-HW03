@@ -28,6 +28,8 @@
 | Chính skill này | Log phiên AI (ví dụ file `.jsonl`) |
 | File trong **thư mục làm việc** và ảnh trong `screenshots/` của nó | Thư mục làm việc của màn hình khác, kết quả và bug của bài khác (làm lệch bản AI), trừ khi sinh viên cho phép |
 | File do chính phiên này tạo ra | Mọi file dự án ghi là cấm |
+| `exec`: Log của lần chạy, ảnh mục Failed, ghi chú chạy tay của sinh viên | |
+| `bugs`: README và template issue của repo nhóm; danh sách và nội dung issue trên repo nhóm (để tìm trùng, đọc bằng `gh`) | |
 
 Liệt kê thư mục để biết tên file không phải là đọc nội dung, nhưng không mở file bị cấm dù tên có vẻ hữu ích.
 
@@ -38,6 +40,7 @@ Liệt kê thư mục để biết tên file không phải là đọc nội dung
 - Không dùng DevTools ở các bước thiết kế, và không yêu cầu sinh viên dùng DevTools khi khảo sát. Thuộc tính HTML, số thẻ `<h1>`, thứ tự Tab, độ tương phản là **nội dung cần kiểm** ở bước `exec`, không phải dữ liệu khảo sát.
 - Hiểu biết chung về chuẩn (HTML, WCAG, hành vi của trình duyệt) được dùng để thiết kế vì đó không phải mã nguồn của hệ thống. Khi dùng, ghi rõ nguồn để sinh viên kiểm chứng.
 - Cách kiểm của một mục phải làm được bằng thao tác của người dùng hoặc công cụ chuẩn của trình duyệt; không đòi biết cấu trúc bên trong hệ thống (ví dụ token lưu ở đâu).
+- Ở bước `exec`, script do AI viết (DevTools chỉ đọc, hoặc điều khiển trình duyệt) vẫn là hộp đen: Tìm phần tử theo chữ nhìn thấy trên trang, chỉ đo những gì mục checklist yêu cầu, không đọc mã nguồn để viết script. Sinh viên chạy script trên giao diện.
 
 ## 3. Khi thiếu thông tin
 
@@ -54,12 +57,16 @@ Liệt kê thư mục để biết tên file không phải là đọc nội dung
 ├── 00_survey.md                  survey: Bản sinh viên điền rồi AI đối chiếu
 ├── 01_oracle.md                  oracle: Bản review
 ├── 02_checklist.md               review và add: Checklist đã review
-├── <tên>.xlsx                    excel
+├── <tên>.xlsx                    excel; exec ghi kết quả vào cột của từng nền tảng
 ├── ai_raw/
 │   ├── T1_survey.md
 │   ├── T1_oracle.md
 │   └── T1_draft_IA-01.md ... T1_draft_IA-04.md
-└── screenshots/                  survey_<số>_<nội dung>.png
+├── tools/                        exec: Script và log của lần chạy (nếu dùng script)
+└── screenshots/                  survey_<số>_<nội dung>.png; exec: <mã mục>_<nền tảng>.png
+bugs/                             cạnh thư mục làm việc
+├── bug_report.md
+└── screenshots/                  issues_list_<task>_<số>.png
 ```
 
 Nhiều ảnh cho cùng một nội dung (trang dài phải cuộn): Mọi ảnh có hậu tố đánh số từ `_1` (`survey_05_profile_1.png`, `survey_05_profile_2.png`). Chỉ một ảnh thì không thêm hậu tố.
@@ -75,6 +82,8 @@ Nhiều ảnh cho cùng một nội dung (trang dài phải cuộn): Mọi ảnh
 | `AI-<IA>-<nn>` | Mục trong bản AI (IA viết 2 chữ số) | `ai-draft` | `AI-02-07` |
 | `CHD-nn` | Câu hỏi mở của bản AI, đánh số liên tục qua 4 file IA | `ai-draft` | `CHD-09` |
 | `CL-nn` | Mục cuối cùng, giữ cố định sau khi chốt (Excel, ảnh, issue dẫn chiếu) | `review`, `add` | `CL-23` |
+| `NTn` | Nền tảng chạy (nhóm cột kết quả trong Excel); NT1 là lần chạy `exec` | `excel`, `exec` | `NT1` |
+| `B-nn` | Bug trong bug report, mỗi mã một issue | `bugs` | `B-04` |
 
 Mã đã dùng thì không dùng lại cho thứ khác, kể cả khi mục đó bị bỏ. Mục bổ sung được đánh số tiếp, không chèn giữa.
 
@@ -155,6 +164,8 @@ Mỗi mục (ở mọi bước, kể cả mục sinh viên thêm):
   | `oracle` | (1) Bản AI; (2) bản review |
   | `ai-draft` | Mỗi IA một commit (4 commit) |
   | `review`, `add`, `excel` | Mỗi bước một commit |
+  | `exec` | Kết quả, ảnh, script và log của lần chạy (ví dụ `[T1][exec] Execute checklist on Chrome Windows`); mục thêm sau khi chạy là commit riêng |
+  | `bugs` | Bug report và ảnh danh sách issue (ví dụ `[T1][bugs] Report GUI bugs`) |
   | Bản `_vN` | `... (AI revision N)` |
 
 - Không biết sinh viên đã commit bản trước chưa (vì không được xem lịch sử git): Hỏi, hoặc đưa cả hai phương án lệnh.
@@ -176,4 +187,6 @@ Mỗi mục (ở mọi bước, kể cả mục sinh viên thêm):
 | `oracle` | Trích nguyên văn; mỗi mã có IA, màn hình, cột Áp dụng; "Không áp dụng" có lý do; câu hỏi CH đã có quyết định; có tổng hợp theo IA và màn hình; có bảng thay đổi |
 | `ai-draft` | Đủ 4 file; mã `AI-<IA>-<nn>` không trùng; mỗi file có truy vết oracle, ý đã loại, câu hỏi CHD |
 | `review`, `add` | Mã `CL` không trùng; trên 40 mục (hoặc mức dự án yêu cầu); đủ 4 IA; cột Nguồn; mục sinh viên thêm có "Vì sao AI bỏ sót"; có truy vết oracle và bảng thay đổi |
+| `exec` | Mọi mục có kết quả; mục Failed có Notes và ảnh; mục "Không chạy được" có lý do; sheet "Môi trường" ghi đủ và ghi rõ ai điền kết quả nháp; có log nếu dùng script |
+| `bugs` | Mọi mục Failed nằm ở một issue, một bình luận hoặc bảng "không báo" có lý do; mỗi issue có ảnh và đủ label; có ảnh danh sách issue |
 | Mọi bước | `ai_raw/` có bản AI tương ứng; tên file đúng; định dạng văn bản đúng (`check_checklist.py`) |

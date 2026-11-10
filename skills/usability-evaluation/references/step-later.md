@@ -1,4 +1,4 @@
-# Các bước sau `instruments`: Khung, bổ sung sau
+# Các bước sau `pilot`: Khung, bổ sung sau
 
 Các bước dưới đây **chưa làm xong** ở lần làm đầu, nên skill chưa có quy trình đã kiểm chứng. Phần dưới chỉ là khung: Ràng buộc đã chốt từ trước (ở `rules.md` và quy trình của dự án) và các quyết định còn mở. Không tự điền nội dung cho các quyết định mở; khi sinh viên làm tới bước nào, hỏi và ghi lại, rồi cập nhật file này sau khi làm thật.
 
@@ -20,16 +20,6 @@ Ràng buộc chung đã có (không phải quy trình mới):
 Quyết định mở:
 
 - ⏳ AI có đưa mẫu bảng trống không, và mẫu gồm những cột nào. (Lần làm đầu có một mẫu do AI soạn trong `ai_raw/`, nhưng bước này chưa xong nên chưa đưa vào skill.)
-
-## `pilot`: Phiên thử
-
-**Trạng thái:** Bổ sung sau.
-
-Quyết định mở:
-
-- ⏳ Cấu trúc hồ sơ phiên pilot.
-- ⏳ Cách ghi các điểm đã sửa sau pilot vào kịch bản và bộ công cụ (sửa bản review và ghi bảng thay đổi, hay ghi ở file riêng).
-- ⏳ Cách chỉnh thời gian chuẩn sau pilot (cột "Sau pilot" của kịch bản).
 
 ## `P1` đến `Pn`: Từng phiên
 

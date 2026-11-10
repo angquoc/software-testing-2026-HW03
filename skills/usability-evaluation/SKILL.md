@@ -1,6 +1,6 @@
 ---
 name: usability-evaluation
-description: Thiết kế usability evaluation có người điều phối (moderated) cho một luồng end-to-end, đi từng bước plan (test plan 9 phần theo slide S13, sau khi có ảnh khảo sát luồng), scenario (kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành, thời gian chuẩn, can thiệp), instruments (danh sách chuẩn bị, xin đồng ý, lời dặn think-aloud, phiếu thông tin, phiếu ghi chú quan sát có mã sự kiện, thang đo SUS hoặc UEQ-S, câu hỏi mở về clarity, error recovery, speed, trust). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI". Bảo vệ riêng tư người tham gia, không bịa dữ liệu của người thật. Dùng khi người dùng nói "usability test", "usability evaluation", "đánh giá khả dụng", "test plan usability", "kịch bản nhiệm vụ", "task scenario", "SUS", "UEQ-S", "think-aloud", "câu hỏi probe", "làm plan (scenario, instruments) cho luồng", kể cả khi chỉ đưa thư mục usability và bảo "làm bước tiếp theo". Các bước participants, pilot, phiên, score, analysis mới có khung. Không dùng cho GUI checklist (dùng skill gui-checklist).
+description: Thiết kế usability evaluation có người điều phối (moderated) cho một luồng end-to-end, đi từng bước plan (test plan 9 phần theo slide S13, sau khi có ảnh khảo sát luồng), scenario (kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành, thời gian chuẩn, can thiệp), instruments (danh sách chuẩn bị, xin đồng ý, lời dặn think-aloud, phiếu thông tin, phiếu ghi chú quan sát có mã sự kiện, thang đo SUS hoặc UEQ-S, câu hỏi mở về clarity, error recovery, speed, trust), pilot (chuẩn bị hồ sơ phiên thử, đọc kết quả pilot đã ẩn danh, đề xuất và áp các chỗ sửa sau pilot vào kịch bản, bộ công cụ, test plan). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI". Bảo vệ riêng tư người tham gia, không bịa dữ liệu của người thật. Dùng khi người dùng nói "usability test", "usability evaluation", "đánh giá khả dụng", "test plan usability", "kịch bản nhiệm vụ", "task scenario", "SUS", "UEQ-S", "think-aloud", "câu hỏi probe", "làm plan (scenario, instruments) cho luồng", "pilot", "sửa sau pilot", kể cả khi chỉ đưa thư mục usability và bảo "làm bước tiếp theo". Các bước participants, phiên thật, score, analysis mới có khung. Không dùng cho GUI checklist (dùng skill gui-checklist).
 ---
 
 # Thiết kế usability evaluation
@@ -17,7 +17,7 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
 | `scenario` | Kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, thành phần nhiệm vụ, thời gian chuẩn, can thiệp, tình huống đặc biệt | AI đề xuất, sinh viên review; sinh viên tự đo thời gian | Đầy đủ |
 | `instruments` | Danh sách chuẩn bị, xin đồng ý và lời dặn, phiếu thông tin, phiếu ghi chú, thang đo, câu hỏi mở, lời kết | AI đề xuất, sinh viên review | Đầy đủ |
 | `participants` | Bảng người tham gia | **Sinh viên**, không đưa vào AI | Khung, bổ sung sau |
-| `pilot` | Phiên thử, sửa kịch bản và công cụ | **Sinh viên** | Khung, bổ sung sau |
+| `pilot` | Phiên thử; sửa kịch bản, công cụ, test plan theo kết quả | **Sinh viên** chạy và ghi; AI chuẩn bị mẫu trống, đọc hồ sơ đã ẩn danh, đề xuất sửa; sinh viên chốt | Đầy đủ |
 | `P1` đến `Pn` | Từng phiên | **Sinh viên** | Khung, bổ sung sau |
 | `score`, `analysis`, `bugs` | Tính điểm, gom phát hiện, báo bug | Sinh viên, AI hỗ trợ trên dữ liệu đã ẩn danh | Khung, bổ sung sau |
 
@@ -42,7 +42,10 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
    | `ai_raw/T2_scenario.md`, chưa có `02_scenario.md` | Chờ sinh viên review kịch bản |
    | `02_scenario.md` | `instruments` |
    | `ai_raw/T2_instruments.md`, chưa có `03_instruments.md` | Chờ sinh viên review công cụ |
-   | `03_instruments.md` | Bước của người thật (`references/step-later.md`) |
+   | `03_instruments.md`, chưa có `pilot/` | `pilot` pha 1 (mẫu hồ sơ pilot) |
+   | `pilot/` có mẫu, chưa điền | Chờ sinh viên chạy pilot |
+   | `pilot/notes.md` đã điền, các mục "Cần kiểm ở pilot" chưa dẫn tới kết quả pilot | `pilot` pha 3 (đề xuất sửa) |
+   | Đã sửa sau pilot | Bước của người thật (`references/step-later.md`) |
 
 4. **Bắt đầu từ giữa chừng:** Rà các bản đã có theo mục "Rà bước trước" ở `references/rules.md`, báo cho sinh viên những gì thiếu, không tự viết lại.
 5. **Nạp tài liệu:** Luôn đọc `references/rules.md` và `references/lessons.md`; đọc `references/step-<bước>.md` của bước sắp làm.
@@ -80,7 +83,8 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 | `plan` | Pha 0: Danh sách ảnh luồng, chờ ảnh. Test plan 9 phần, câu hỏi `Qn` gắn khía cạnh probe, mục tiêu `On`, chặng `Mn`, số liệu `Dn`, giả định đối chiếu ảnh `Gn`, rủi ro | `screenshots/flow_*.png`, `ai_raw/T2_plan.md`, `01_test_plan.md` | `references/step-plan.md` |
 | `scenario` | Kịch bản mục tiêu, phiếu dữ liệu, trạng thái ban đầu, thành phần nhiệm vụ, cách đo thời gian chuẩn, mốc `Tn`, can thiệp, tình huống đặc biệt, trình tự | `ai_raw/T2_scenario.md`, `02_scenario.md` | `references/step-scenario.md` |
 | `instruments` | `I1` đến `I7`: Chuẩn bị, đồng ý và lời dặn, phiếu thông tin, phiếu ghi chú và mã sự kiện, thang đo, câu hỏi mở `Cn`, lời kết | `ai_raw/T2_instruments.md`, `03_instruments.md` | `references/step-instruments.md` |
-| Bước của người thật | Khung, bổ sung sau | | `references/step-later.md` |
+| `pilot` | Mẫu hồ sơ pilot có bảng "Kết quả kiểm bộ công cụ"; sinh viên chạy và ghi; AI kiểm hồ sơ, đề xuất sửa có tính sẵn con số; áp vào 3 bản review | `pilot/notes.md`, `probe.md`, `scale.md`; cập nhật `01`, `02`, `03` | `references/step-pilot.md` |
+| Các bước còn lại | Khung, bổ sung sau | | `references/step-later.md` |
 
 ## Điểm dừng chờ sinh viên
 
@@ -88,13 +92,14 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 - Trước khi viết bản AI, nếu có quyết định ảnh hưởng tới cấu trúc cả bản.
 - Sau bản AI của mỗi bước; sau bản review của mỗi bước.
 - Khi một số liệu cần sinh viên tự đo hoặc tự thử (thời gian chuẩn, hành vi của một ô nhập).
+- `pilot`: Sau khi chuẩn bị mẫu (chờ sinh viên chạy); sau bảng đề xuất sửa (chờ chốt); sau khi cập nhật 3 bản review.
 - Mọi bước của người thật.
 
 ## Tài nguyên
 
 - `references/rules.md`: Nguồn được đọc và không được đọc, riêng tư, hộp đen, tên file và mã, `ai_raw/`, bản review, bảng thay đổi, quyết định để mở, commit, định dạng, rà bước trước.
 - `references/lessons.md`: Checklist tự kiểm theo từng bước, rút từ lỗi đã gặp.
-- `references/step-plan.md`, `step-scenario.md`, `step-instruments.md`: Hướng dẫn chi tiết.
+- `references/step-plan.md`, `step-scenario.md`, `step-instruments.md`, `step-pilot.md`: Hướng dẫn chi tiết.
 - `references/step-later.md`: Khung các bước của người thật và quyết định còn mở.
 - `references/example-fl05.md`: Ví dụ rút gọn từ lần làm đầu.
 - `assets/templates/`: Mẫu `ai_raw_header.md`, `plan.md`, `scenario.md`, `instruments.md`, `changes_table.md`.
