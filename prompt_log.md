@@ -10715,6 +10715,816 @@ Sau commit này, **Task 1 xong**. Phần tóm tắt kết quả (`checklist/03_r
 **Output AI (nguyên văn):**
 
 ````text
+**Task 1 đã xong**, tôi đã đánh dấu trong tracker. N3 thì **chưa đạt**: Có 36 mục chưa chạy vì 2 nhóm của script bị lỗi giữa chừng. Log đã xuất lại: 168 lượt.
+
+## Task 1: Xong
+
+Commit `733362f` đủ các phần:
+- 33 issue (#33 đến #65) đều có ảnh.
+- Đã bình luận vào #18 và #29.
+- Có `bug_report.md` và 2 ảnh danh sách issue.
+
+Phần test summary (số mục, số bug) làm chung ở bước Tổng hợp.
+
+Thư mục `bugs/screenshots/.gitkeep` vừa bị xóa (thư mục đã có ảnh nên không cần nữa). Commit kèm theo:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/screenshots/.gitkeep prompt_log.md
+git commit -m "[setup] Drop unused .gitkeep and update prompt log"
+git push
+```
+
+## N3: Tôi đã xem log, cần sửa rồi chạy lại 2 nhóm
+
+Kết quả lần 1: 16 Passed, 22 Failed, 7 N/A, 6 Không chạy được, 25 Chạy tay, **36 Chưa chạy**.
+
+| Nhóm | Lỗi | Hệ quả |
+|---|---|---|
+| C (đã đăng nhập) | "Không đăng nhập được test@eshop.com; dừng nhóm C" | Các mục ở W-06 không chạy: CL-10 đến 12, 17, 18, 22, 24, 48 đến 53... |
+| F | `click: Timeout 30000ms` | Các mục ở W-06 không chạy: hủy đơn, CL-68 đến 70 (giỏ hàng, nút đăng xuất)... |
+
+**Nên đưa cho phiên Task 1 gỡ lỗi**, không phải phiên Task 3. Phiên Task 1 viết script này nên biết code, còn phiên Task 3 chưa đọc script. Sau khi script chạy đủ, mới để **phiên Task 3 điền cột NT3** (prompt đã đưa trước đó).
+
+Prompt gửi phiên Task 1:
+
+```text
+N3 đã chạy (log: checklist/tools/n3_run_log.txt). Nhóm C dừng vì "Không đăng nhập được test@eshop.com", nhóm F dừng vì "elementHandle.click: Timeout 30000ms"; 36 mục "Chưa chạy". Đọc log, tìm nguyên nhân (ví dụ bàn phím ảo che nút, tài khoản bị khóa do thứ tự nhóm, cửa sổ nổi Samsung Notes che) và sửa script. CHỈ SỬA, chưa chạy; cho tôi lệnh chạy lại chỉ nhóm C và F (--only=C,F). Không ghi đè ảnh N3 đã có.
+```
+
+**Chạy lại C, F vào khoảng trống giữa hai phiên usability.** Trước khi chạy báo tôi reset và seed (hoặc bạn tự chạy lệnh reset và seed). DB hiện có danh mục sạch, nên **P1 bắt đầu được ngay** mà không cần reset.
+
+## Agent Skill: Bổ sung được một phần
+
+| Skill | Bổ sung được ngay | Chưa được (chờ làm xong) |
+|---|---|---|
+| `gui-checklist` | **`exec`**: Script Console, script Playwright có chế độ chạy thử và tự chụp ảnh, chỉ chụp ảnh mục Failed, đánh số hậu tố ảnh, điền Excel, reset DB giữa các lần chạy. **`bugs`**: Tìm trùng bằng `gh`, tạo issue bằng `gh`, kéo ảnh một lần rồi ghép link, bình luận issue dùng chung, chụp danh sách issue | Phần chạy trên nhiều nền tảng (chờ N3, N2 xong) |
+| `usability-evaluation` | **`pilot`**: Hồ sơ pilot, bảng kiểm bộ công cụ (mục 8 của notes), sửa thời gian chuẩn sau pilot | Các phiên, `score`, `analysis`, `bugs` |
+
+Phần còn thiếu, vẫn để mở (⏳):
+- **Có đóng gói script vào skill không:** `devtools_check.js`, `n1_chrome_checklist.js`. Script đang gắn với EShop (tìm phần tử theo chữ trên trang), nên nếu đưa vào thì chỉ nên là mẫu.
+- **Màn hình hoặc luồng demo:** B hay C, đã bàn trước đó.
+- **Video demo:** Làm cuối cùng.
+
+Prompt gửi phiên Agent Skill:
+
+```text
+Bổ sung các bước đã làm xong, dựa trên file thật:
+- gui-checklist: Viết đầy đủ `exec` (checklist/tools/devtools_check.js, n1_chrome_checklist.js, n1_run_log.txt, Excel cột NT1, WORKFLOW mục 5 về ảnh) và `bugs` (bugs/bug_report.md; cách làm: tìm trùng bằng gh issue list, tạo issue bằng gh, kéo nhiều ảnh vào một ô bình luận rồi ghép link theo alt bằng gh issue edit, bình luận issue dùng chung, chụp danh sách issue đã lọc). Thêm bài học vào lessons.md.
+- usability-evaluation: Viết đầy đủ `pilot` (usability/pilot/, các thay đổi sau pilot trong 02_scenario.md, 03_instruments.md).
+Không đọc usability/participants.md, usability/sessions/, video. Các bước còn lại giữ khung. Đề xuất (không tự chốt): Có đóng gói script vào skill không, và dạng nào.
+```
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | ✅ **Xong** | (Test summary làm ở Tổng hợp) | 0 |
+| Task 2 | Đang điền hồ sơ; DB sạch, P1 chạy được | P1 đến P7 | ~6,5 giờ |
+| Task 3 | N3 lần 1: 36 mục chưa chạy (nhóm C, F lỗi) | Phiên Task 1 sửa script → chạy lại C, F giữa hai phiên → phiên Task 3 điền NT3; review danh sách N2; N2 trên cloud | ~3 giờ |
+| Agent Skill | Có thể bổ sung `exec`, `bugs`, `pilot` | Gửi prompt trên; demo và video để cuối | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **15 giờ** làm việc | Còn **6 giờ 14 phút** tới mốc 22:00 10/11 | **21 giờ 14 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C169 | 15:47 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+N3 đã chạy (log: checklist/tools/n3_run_log.txt). Nhóm C dừng vì "Không đăng nhập được test@eshop.com", nhóm F dừng vì "elementHandle.click: Timeout 30000ms"; 36 mục "Chưa chạy". Đọc log, tìm nguyên nhân (ví dụ bàn phím ảo che nút, tài khoản bị khóa do thứ tự nhóm, cửa sổ nổi Samsung Notes che) và sửa script. CHỈ SỬA, chưa chạy; cho tôi lệnh chạy lại chỉ nhóm C và F (--only=C,F). Không ghi đè ảnh N3 đã có.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate group headers and errors in N3 log
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_run_log.txt
+- Bash: Find relevant functions and item code in N3 script
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Look for Playwright call-log detail and error handlers
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Trace test-account login attempts and SRS lockout rule
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: List existing N3 screenshots and overview/logout call sites
+- Bash: Inspect logout items and start of group C
+- Bash: Find all network-emulation sites and back up script
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Syntax-check edited script and review diff size
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi bắt đầu sửa (đã sao lưu bản cũ vào scratchpad). Sửa đầu tiên: Ghi đủ "call log" của Playwright khi lỗi, để lần sau biết chính xác bị kẹt ở đâu.
+
+Tôi đã sửa xong [n3_android_checklist.js](HW03/checklist/tools/n3_android_checklist.js) và chưa chạy lại. Script qua kiểm cú pháp `node --check`. Bản trước khi sửa được sao lưu ở `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\n3_android_checklist.before.js`.
+
+**Nguyên nhân tìm được trong log**
+
+| Nghi vấn | Kết luận |
+|---|---|
+| **Mạng chậm bị "rò" sang các nhóm sau** | **Chắc chắn là lỗi.** CL-96 bật giả lập mạng chậm rồi mới bấm "Sign In". Lần bấm bị lỗi hết 30 giây, nên dòng tắt mạng chậm phía sau không bao giờ chạy. Từ đó cả nhóm C, E, F chạy trong mạng chậm. CL-112 bị y hệt. CL-105 (mất kết nối) và CL-94 cũng có cùng lỗi code này, dù lần này chưa xảy ra. |
+| **Đăng xuất không thật sự đăng xuất** | **Có dấu hiệu rõ.** Ở CL-105, sau khi script "đăng xuất" rồi bấm "Sign In" lúc mất mạng, trang lại hiện danh sách sản phẩm của trang chủ. Tức là trang vẫn đang ở trạng thái đã đăng nhập. |
+| **Bàn phím ảo che nút** | **Có thể.** Lệnh điền ô làm bàn phím ảo hiện lên trên điện thoại thật. Log chỉ giữ dòng đầu của lỗi ("attempting click action"), nên không xác nhận được chắc chắn. |
+| **Tài khoản bị khóa do thứ tự nhóm** | **Không phải nguyên nhân của nhóm C.** Nhóm B chỉ đăng nhập sai 1 lần (CL-103), sau đó CL-61 đăng nhập đúng nên bộ đếm sai về 0. Nhóm C lỗi ngay ở thao tác bấm nút, chưa tới bước server trả lời. |
+| **Cửa sổ nổi Samsung Notes che** | **Không phải.** Playwright gửi thao tác bấm thẳng vào trang qua DevTools, không đi qua màn hình, nên cửa sổ nổi không chặn được. Cửa sổ chỉ hiện trong ảnh, đúng như mong muốn. |
+
+**Những gì đã sửa**
+1. **Tắt mạng chậm và chế độ mất kết nối một cách chắc chắn:** Ở CL-96, CL-112, CL-94, CL-105 bây giờ luôn được tắt kể cả khi mục đó lỗi. Script cũng tắt lại sau mỗi mục và ở đầu mỗi nhóm.
+2. **Trước mỗi lần bấm nút:** Bỏ focus khỏi ô nhập để ẩn bàn phím ảo, cuộn nút vào vùng nhìn thấy, và chỉ chờ tối đa 15 giây thay vì 30.
+3. **Đăng nhập ở bước chuẩn bị:**
+   - Nếu bấm "Sign In" không được thì gửi form bằng phím Enter (CL-61 đã cho thấy Enter gửi được), và ghi lại vào log.
+   - Nếu trang báo tài khoản bị khóa thì chờ 35 giây rồi thử lại một lần.
+4. **Đăng xuất ở bước chuẩn bị:** Nếu bấm nút xong mà trang vẫn đăng nhập, script xóa dữ liệu trang EShop để chắc chắn đã đăng xuất. Riêng CL-81 và CL-82 vẫn chỉ bấm nút, vì chính việc đăng xuất là thứ đang được kiểm.
+5. **Nhóm F** bắt đầu bằng một lần đăng nhập đúng, để 3 lần sai sau đó đúng là 3 lần sai liên tiếp.
+6. **Log ghi đầy đủ chi tiết lỗi của Playwright**, để nếu còn kẹt thì biết chính xác kẹt ở bước nào.
+7. **Ảnh:** Khi chạy với `--only`, mục nào đã có ảnh `CL-xx.png` và ảnh tổng quan nào đã có (`overview_env`, `overview_login_*`, `overview_register_*`) thì không chụp lại. Ảnh tổng quan `overview_profile` chưa có nên sẽ được chụp. Ảnh cũ không bao giờ bị ghi đè. Muốn chụp thêm thì dùng `--reshoot`, ảnh mới sẽ có hậu tố riêng.
+
+**Lệnh chạy lại nhóm C và F (cmd, gõ từng dòng)**
+
+Trước khi chạy:
+- Server web vẫn phải nghe ở `127.0.0.1:5173` (cách sửa ở lượt trước).
+- Điện thoại mở khóa, cửa sổ nổi Samsung Notes đang mở.
+
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+node database.js
+cd /d D:\Dang\Test\Homeworks\HW03
+python tools\seed_orders.py
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --check
+node n3_android_checklist.js --only=C,F --log=n3_run_log.txt
+```
+
+**Lưu ý khi chạy và sau khi chạy**
+- Nhóm C sẽ dừng 2 lần để bạn tự chuẩn bị giỏ hàng trên điện thoại (cho CL-68, CL-69).
+- Log được ghi nối tiếp vào cuối file `n3_run_log.txt`. Bảng kết quả của lần này chỉ có các mục của nhóm C và F; các mục khác hiện "Chưa chạy". Kết quả nhóm A, B, E, G lấy từ lần chạy trước.
+- CL-96 và CL-112 ở W-03 (thuộc nhóm B) vẫn đang là "Lỗi script" từ lần trước. Bản sửa cũng áp dụng cho chúng, nhưng muốn có kết quả thì phải chạy lại nhóm B.
+- Chạy xong cần reset DB và seed lại trước khi dùng tiếp.
+
+Commit bản sửa script:
+```
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Fix network reset, keyboard and login fallback in N3 script"
+```
+````
+
+---
+
+### C170 | 15:49 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+Bổ sung các bước đã làm xong, dựa trên file thật:
+- gui-checklist: Viết đầy đủ `exec` (checklist/tools/devtools_check.js, n1_chrome_checklist.js, n1_run_log.txt, Excel cột NT1, WORKFLOW mục 5 về ảnh) và `bugs` (bugs/bug_report.md; cách làm: tìm trùng bằng gh issue list, tạo issue bằng gh, kéo nhiều ảnh vào một ô bình luận rồi ghép link theo alt bằng gh issue edit, bình luận issue dùng chung, chụp danh sách issue đã lọc). Thêm bài học vào lessons.md.
+- usability-evaluation: Viết đầy đủ `pilot` (usability/pilot/, các thay đổi sau pilot trong 02_scenario.md, 03_instruments.md).
+Không đọc usability/participants.md, usability/sessions/, video. Các bước còn lại giữ khung. Đề xuất (không tự chốt): Có đóng gói script vào skill không, và dạng nào.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List current HW03 task files
+- Bash: Read updated WORKFLOW exec, screenshot and bug sections
+- Bash: Read tool package, capture script and runner header
+- Bash: Inspect runner structure and manual items
+- Bash: Read result recording and main of runner
+- Bash: Inspect runner log runs and summary
+- Bash: Inspect Excel NT1 results and environment
+- Bash: Read bug report and image link file
+- Bash: Check alt texts in image links and gh availability
+- PowerShell: View one real issue with gh (read-only)
+- Bash: Locate GitHub CLI installation
+- Bash: Read issue 33 body and issue 18 comments
+- Bash: Read issues 33 and 42 as plain text
+- Bash: Read rest of issue 33 and template fields
+- Bash: Read pilot session files
+- Bash: Find post-pilot changes in usability design files
+- Bash: Read post-pilot sections details
+- Bash: Check DevTools script output and extra-shot group
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-bugs.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Bash: Remove old skeleton file and locate rules sections
+- Read: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Read: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\lessons.md
+- Bash: List items marked not runnable in NT1
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\lessons.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\lessons.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-pilot.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-later.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-later.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\lessons.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\example-fl05.md
+- Bash: Run format and privacy checks on updated skills
+
+**Output AI (nguyên văn):**
+
+````text
+Mình đọc các file thật của bước `exec`, `bugs` và `pilot`. Trước hết là các mục liên quan trong WORKFLOW và script chạy checklist.
+
+Đã nắm cách tạo issue (theo mẫu "Bug report" của nhóm, ảnh ghép theo thứ tự trong `image_links.txt`). Giờ đọc phần pilot.
+
+Giờ cập nhật SKILL.md, rules.md, lessons.md và ví dụ của `gui-checklist`, rồi xóa `step-later.md` cũ (đã thay bằng hai file mới).
+
+Phần `gui-checklist` gần xong; mình sửa lại một con số (8 mục Failed không báo, không phải 7) rồi chuyển sang `pilot` của skill usability.
+
+Đã cập nhật xong cả hai skill. Chạy lại các script kiểm trên toàn bộ file của skill.
+
+Mình đã viết đầy đủ ba bước `exec`, `bugs` và `pilot` vào hai skill, dựa trên các file thật. Các bước còn lại vẫn để khung. Kiểm định dạng và riêng tư trên toàn bộ file của skill không báo lỗi.
+
+## Một quy tắc phải sửa cho khớp thực tế
+
+Skill cũ ghi "AI không ghi Passed / Failed thay sinh viên". Thực tế ở NT1 (sheet Môi trường, dòng Ghi chú), AI đã điền kết quả nháp từ log của lần chạy thật và từ ảnh. 21 mục có nhãn "(AI xem ảnh)", rồi bạn review và chốt.
+
+Quy tắc mới trong [SKILL.md](Homeworks/HW03/skills/gui-checklist/SKILL.md):
+- AI chỉ điền kết quả **nháp** từ bằng chứng của lần chạy thật (log, ảnh, ghi chú chạy tay), ghi rõ mục nào AI kết luận bằng cách xem ảnh. Không có bằng chứng thì để trống.
+- AI không tự chạy script trên giao diện khi bạn chưa cho phép.
+- Tạo, sửa issue hay bình luận chỉ làm khi bạn đã duyệt nội dung và cho phép.
+
+## `gui-checklist`
+
+**[step-exec.md](Homeworks/HW03/skills/gui-checklist/references/step-exec.md):**
+- Có ba cách chạy để bạn chọn: chạy tay, script DevTools chỉ đọc dán vào Console, hoặc script Playwright cho kết quả nháp.
+- Script vẫn là hộp đen: Tìm phần tử theo chữ nhìn thấy trên trang, chỉ đo những gì mục checklist yêu cầu, ghi rõ dữ liệu bị đổi, tự chụp toàn màn hình ở mục Failed, ghi log dạng cột cách nhau bằng Tab.
+- Sau lần chạy: Chạy tay các mục cần nhìn, chụp bổ sung, AI điền cột NT1 từ log và ảnh, bạn chốt.
+- Số liệu lần đầu: Script cho 39 Passed / 44 Failed / 22 Chạy tay; kết quả chốt là 51 Passed / 54 Failed / 7 Không chạy được.
+
+**[step-bugs.md](Homeworks/HW03/skills/gui-checklist/references/step-bugs.md):**
+- Quy tắc chọn bug lấy từ `bug_report.md`.
+- Tìm trùng bằng `gh issue list`, tạo issue bằng `gh issue create` với thân theo đúng các trường của template "Bug report".
+- Kéo nhiều ảnh vào một ô bình luận để lấy link, rồi chèn bằng `gh issue edit`, mỗi ảnh có tên file in đậm ngay trên.
+- Bình luận vào issue dùng chung, chụp danh sách issue đã lọc.
+
+**Ghép ảnh:** Trong `bugs/image_links.txt`, cả 31 link đều có `alt="Image"`, nên không ghép theo alt được. Skill ghi: Ghép theo alt nếu alt là tên file; nếu không thì ghép theo thứ tự kéo thả, rồi kiểm lại từng ảnh sau khi chèn.
+
+**Bài học thêm vào [lessons.md](Homeworks/HW03/skills/gui-checklist/references/lessons.md):**
+- Hộp thoại `alert` tự đóng trước khi chụp nên không có trong ảnh tự chụp.
+- 8 mục Failed không báo lên Issues được vì ảnh không thấy lỗi.
+- Bug ở trang Đăng ký làm 5 mục "Không chạy được".
+- Dùng giá trị thay thế để vượt bug số điện thoại, ghi trong Notes.
+- Gộp nhiều mục cùng một lỗi gốc vào một issue.
+
+`rules.md` và `example-hw03.md` cũng đã cập nhật. Mình đã xóa `step-later.md` cũ của skill này vì đã thay bằng hai file trên.
+
+## `usability-evaluation`
+
+**[step-pilot.md](Homeworks/HW03/skills/usability-evaluation/references/step-pilot.md)** có 4 pha:
+1. AI chuẩn bị mẫu trống, gồm bảng "Kết quả kiểm bộ công cụ" có dòng cho điều "Phát sinh".
+2. Bạn chạy pilot và điền hồ sơ.
+3. AI đọc hồ sơ đã ẩn danh (không đọc video), đề xuất sửa và tính sẵn con số cho từng phương án.
+4. Áp các chỗ sửa vào 3 bản review, mỗi thay đổi một dòng "Quyết định của SV, căn cứ Pilot", con số giống nhau ở cả 3 file.
+
+Có bảng các chỗ đã sửa ở lần đầu để tra: x5 thành x3, ngưỡng 3 phút thành 2 phút, bộ gõ, câu "được sao chép", câu dặn đọc hết kịch bản, thời lượng phiên.
+
+Một quyết định giữ dạng mở: Dữ liệu pilot có đưa vào phân tích không ⏳.
+
+Bài học về pilot đã thêm vào `lessons.md`. `rules.md` giờ cho đọc hồ sơ pilot đã ẩn danh nhưng không đọc video pilot.
+
+## Có đóng gói script vào skill không ⏳ (chưa chốt)
+
+Các script thật nằm trong `checklist/tools/`:
+- `devtools_check.js` (354 dòng).
+- `n1_chrome_checklist.js` (1835 dòng, gắn chặt EShop: nhãn, mã CL, tài khoản, các nhóm A đến J).
+- `capture_screen.ps1` (chụp toàn màn hình, chỉ chạy trên Windows).
+- `package.json` (playwright-core, axe-core).
+
+| Phương án | Ưu | Nhược |
+|---|---|---|
+| (a) Không đóng gói, chỉ giữ hướng dẫn trong `step-exec.md` | Skill gọn, không mang code của EShop | Lần sau AI phải viết lại script từ đầu |
+| (b) Chép nguyên văn vào `assets/examples/hw03/` (không kèm `node_modules`), có README chỉ rõ phần dùng lại được và phần gắn EShop | Nhanh; đúng thứ đã chạy thật | Khoảng 2200 dòng; AI dễ chép máy móc phần đặc thù |
+| (c) Tách phần dùng chung thành khung chạy được trong `scripts/` (khởi động Chrome, ghi kết quả, Chạy tay, chụp Failed, log, các cờ `--dry-run`, `--only`, `--log`); mỗi dự án chỉ viết các nhóm mục | Dùng lại thật | Code mới, phải chạy thử lại, tốn thời gian nhất |
+
+Thêm tùy chọn (d), đi kèm bất kỳ phương án nào: Script đọc bảng Tab trong log rồi ghi nháp vào cột NT của Excel. Lần đầu chưa có script này.
+
+Mình nghiêng về (b) cho bài này, còn (c) để sau nếu còn thời gian. Bạn chọn phương án nào thì mình làm tiếp.
+
+## Commit
+
+Lệnh chạy từ `Homeworks/HW03`. `git add skills` bao gồm cả việc xóa `step-later.md` của `gui-checklist`.
+
+```
+git add skills
+git commit -m "[skill] Add exec, bugs and pilot steps to skills"
+```
+````
+
+---
+
+### C171 | 16:03 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong, hãy kiểm tra kết quả.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find the latest run section in N3 log
+- Bash: Read the latest C,F run log (first part)
+- Bash: Scan latest run for phases, errors, fallbacks
+- Bash: Read groups C and F output of latest run
+- Bash: Check screenshot times, CL-102 detail, status counts
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_profile_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-68.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-11.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\overview_profile_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-87.png
+- Bash: Check CL-11 oracle wording in checklist and oracle
+- Bash: Look up oracle UI-R33 and CH-04
+- Bash: Merge final tables of run 1 and run 2
+- Bash: Read group G comparison logic
+- Bash: Compare N1 Chrome and merged N3 results
+
+**Output AI (nguyên văn):**
+
+````text
+Ảnh cũ giữ nguyên giờ tạo (15:37 đến 15:44), 21 ảnh mới đều tạo trong lần chạy này, không có ảnh nào bị ghi đè. Tôi xem vài ảnh then chốt.
+
+Nhóm C và F lần này đã chạy trọn, không còn lỗi script. Gộp với lần chạy 1 thì đủ cả 112 mục. Nhưng vẫn còn 3 việc cần xử lý trước khi chốt kết quả N3, vì một phần dữ liệu của lần 1 không dùng được và nhiều ảnh mục Failed không thấy lỗi.
+
+**Lần chạy 2 (`--only=C,F`)**
+- **Không còn kẹt:** Không có "Lỗi script". Script cũng không phải dùng đường dự phòng nào (gửi form bằng Enter, xóa dữ liệu trang), nên nguyên nhân chính của lần trước là mạng chậm bị kéo sang các nhóm sau.
+- **Ảnh không bị ghi đè:** 21 ảnh mới (19 ảnh mục Failed và `overview_profile_1`, `overview_profile_2`). Ảnh cũ giữ nguyên giờ tạo 15:37 đến 15:44. 22 mục đã có ảnh từ lần 1 thì không chụp lại.
+- **Ảnh đúng yêu cầu:** Có lớp chữ đè (MSSV, họ tên, email) và thanh địa chỉ `localhost:5173`.
+
+**Kết quả N3 sau khi gộp 2 lần chạy (nháp)**
+
+| Kết quả | Số mục |
+|---|---|
+| Failed | 41 |
+| Passed | 32 (thêm 2 mục "Passed, một phần không chạy được") |
+| Chạy tay (bạn tự xem) | 22 |
+| N/A (phím Tab, rê chuột, cửa sổ 1366) | 8 |
+| Không chạy được (trang Đăng ký từ chối mọi mật khẩu hợp lệ; không có hộp xác nhận) | 7 |
+
+**So với Chrome (N1), chỉ 3 mục ra kết quả khác**
+
+| Mục | N1 Chrome | N3 Android | Nhận xét |
+|---|---|---|---|
+| CL-11 phân cách hàng nghìn | Passed | Failed (`10.000.000 ₫`) | Khác biệt thật giữa 2 nền tảng |
+| CL-24 thứ tự ngày | Failed (`11/10/2026`) | Passed (`10/11/2026`) | Khác biệt thật giữa 2 nền tảng |
+| CL-29 nút Submit giống nhau | Passed | Failed | **Kết quả sai do script**, xem vấn đề 1 |
+
+CL-11 và CL-24 là ứng viên tốt cho bug Task 3 "chỉ xuất hiện trên một số nền tảng". Khả năng cao trang định dạng số và ngày theo ngôn ngữ của trình duyệt. Cần lưu ý: N1 chạy bằng Chrome do Playwright mở, nên ngôn ngữ trình duyệt ở N1 có thể khác Chrome bạn dùng hằng ngày. Nên kiểm lại cài đặt này trước khi viết bug.
+
+**Vấn đề cần xử lý**
+1. **Nhóm G của lần 1 không hợp lệ.** Nhóm G so sánh 3 trang, và dữ liệu trang W-06 lấy từ nhóm C. Ở lần 1 nhóm C bị lỗi, nên:
+   - CL-20 ghi W-06 là `"undefined"`. Kết quả Failed vẫn đúng, vì W-03 và W-04 cùng tiêu đề, nhưng ghi chú sai.
+   - CL-28 và CL-29 chỉ so được W-03 với W-04. CL-29 bị báo Failed chỉ vì thiếu W-06, trong khi hai nút còn lại giống hệt nhau (cao 40px, 16px, bo góc 4px). Ảnh `CL-29.png` là ảnh của kết quả sai này.
+   - CL-75 ở trạng thái đã đăng nhập chưa chạy.
+   - Nhóm G chỉ có đủ dữ liệu khi chạy cùng nhóm A và C, nên phải chạy lại `--only=A,C,G`.
+2. **Phần W-03 của CL-96, CL-105, CL-112 ở lần 1 không hợp lệ.** Lúc đó mạng chậm đang bị rò và trang vẫn ở trạng thái đã đăng nhập. CL-105 ở W-03 còn ghi nhận nhầm danh sách sản phẩm ở trang chủ. Lần 2 đã chạy đúng 3 mục này ở W-06.
+3. **Nhiều ảnh mục Failed không thấy bằng chứng lỗi.** Script luôn chụp ở đầu trang:
+   - **Mục nằm trong bảng lịch sử đơn** (CL-11, CL-87, CL-97, CL-88): Ảnh không thấy bảng. Riêng `overview_profile_2.png` thấy được dấu chấm phân cách, ngày `10/11/2026`, và đơn "Đang giao" có nút "Hủy đơn", nên dùng được cho CL-11, CL-24, CL-87.
+   - **Mục báo lỗi bằng hộp thoại của trình duyệt** (CL-52, CL-101, CL-102, CL-108, CL-110, CL-88): Script tự đóng hộp thoại trước khi chụp, nên ảnh không có hộp thoại.
+   - **Mục về mạng** (CL-94, CL-96, CL-112): Ảnh tĩnh không thể hiện được, bằng chứng nằm trong log.
+   - Ở `overview_profile_2.png`, cửa sổ Samsung Notes che một phần dòng đơn #1 (Đã giao).
+
+**Bạn cần xác nhận một việc:** Ở CL-68 và CL-69, bạn có thật sự thêm sản phẩm vào giỏ khi script dừng chờ không? Ảnh chỉ cho thấy navbar không có badge, không cho thấy giỏ hàng có gì. Nếu chưa thêm, hai mục này phải chạy lại.
+
+**Cách xử lý, bạn chọn (⏳)**
+
+| Cách | Làm gì | Ưu, nhược |
+|---|---|---|
+| **A. Chạy lại toàn bộ một lần** | Tôi sửa phần chụp ảnh (cuộn tới phần tử đang kiểm; chụp trong lúc hộp thoại còn hiện rồi mới đóng). Sau đó reset DB, seed, rồi chạy `--only=A,B,C,E,F,G`, khoảng 6 đến 8 phút | Ra một bộ kết quả thống nhất, không phải gộp, xử lý luôn cả 3 vấn đề trên. Ảnh cũ vẫn giữ, vì mục đã có ảnh thì không chụp lại. Khi đó các mục đang có ảnh sai hoặc không thấy lỗi cần chụp mới: hoặc bạn xóa ảnh cũ của các mục đó trước, hoặc chạy thêm `--reshoot` |
+| **B. Chỉ sửa nhóm G** | Reset DB, seed, rồi chạy `--only=A,C,G`. Ảnh cho các mục trong bảng và các mục có hộp thoại thì bạn chụp tay | Nhanh hơn, nhưng vẫn phải gộp kết quả và tự chụp bổ sung |
+
+Tôi chưa điền gì vào Excel. Bạn chọn cách nào thì tôi làm tiếp theo cách đó.
+````
+
+---
+
+### C172 | 16:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra trạng thái của các task, có thể ngưng báo cáo task 1 trong bảng trạng thái vì đã xong.
+Kiểm tra, xuất log và đưa commit message cho tôi (tôi đã điền task 2, task 3 đã chạy xong N3 và đang kiểm tra kết quả. Agent skill đã bổ sung xong.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo status, session fill state, N3 shots, DB
+- Bash: Inspect what was filled in session records
+- Bash: Compare session records across participants for duplication
+- Bash: Check outcome fields across session notes
+- Bash: Check sessions for forbidden reads and skill diff
+- Bash: Check separator in skill file, N3 summary, export log
+
+**Output AI (nguyên văn):**
+
+````text
+Đang soát lần cuối file skill và xuất log.
+
+Đã kiểm 4 phiên (không phiên nào đọc file bị cấm). Log đã xuất lại: 172 lượt. Từ giờ bảng trạng thái không còn dòng Task 1. Hồ sơ Task 2 có một điểm cần bạn xem lại **trước khi commit**.
+
+## ⚠ Task 2: Hồ sơ P1 đến P7 có kết quả nhưng chưa có số liệu phiên
+
+Cả 7 file `notes.md` đã có phiếu thông tin A, B (mỗi người trả lời khác nhau, ổn). Nhưng cả 7 cùng ghi:
+- "Kết quả toàn luồng: ☑ Tự hoàn thành"
+- "Số lần can thiệp: 0"
+
+Trong khi đó các phần cho thấy phiên đã chạy thì **đều trống**:
+- Giờ bắt đầu.
+- Mốc T0 đến T4 và thời gian từng chặng.
+- Nhật ký sự kiện, kiểm D6.
+- `scale.md` (SUS), `probe.md` (câu hỏi mở).
+
+Nếu 7 phiên **chưa chạy** thì kết quả và số can thiệp **phải để trống**. Kết quả chỉ ghi sau khi kiểm D6. Như pilot cho thấy, người tham gia tưởng đã xong nhưng giá vẫn có thể sai, nên không đoán trước "Tự hoàn thành" được. Ghi kết quả trước khi chạy dễ bị coi là số liệu bịa, và đề §11 phạt nặng phần này. Bạn bỏ tick 2 dòng đó, điền lại sau mỗi phiên.
+
+Nếu phiên **đã chạy** thì cần điền đủ các phần còn trống rồi mới commit, mỗi phiên một commit.
+
+Hiện chưa đưa lệnh commit cho `usability/sessions/`.
+
+## Task 3: N3
+
+Phiên Task 3 đang kiểm kết quả. Log mới nhất (lần chạy lại) còn 24 mục "Chưa chạy". Nếu lần chạy lại chỉ gồm nhóm C, F (`--only=C,F`) thì 24 mục này là của các nhóm không chạy lại; kết quả của chúng nằm ở lần chạy 1. Khi điền cột NT3, **phiên Task 3 phải ghép kết quả của cả 2 lần chạy**. Nhắc phiên đó nếu nó chỉ đọc lần chạy cuối.
+
+## Agent Skill
+
+Đã bổ sung đủ phần đã làm:
+- `gui-checklist`: Thêm `step-exec.md`, `step-bugs.md`; bỏ `step-later.md` vì không còn bước nào chỉ có khung.
+- `usability-evaluation`: Thêm `step-pilot.md`. Các bước phiên, score, analysis, bugs vẫn để khung.
+
+Còn ⏳: Đóng gói script vào skill, màn hình demo, video.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A skills
+git commit -m "[skill] Add exec, bugs and pilot steps from completed work"
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Fix N3 script for logged-in and cart groups"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Commit sau:
+- **N3:** Log, 48 ảnh và cột NT3 trong Excel, sau khi phiên Task 3 kiểm xong. Commit `[T3][android-chrome] Run checklist on Android Chrome`.
+- **`usability/sessions/`:** Sau khi sửa như trên và chạy từng phiên.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Phiếu A, B của P1 đến P7 đã điền; **bỏ tick kết quả điền trước** | Chạy P1 đến P7; DB đang sạch | ~6,5 giờ |
+| Task 3 | N3 đã chạy (2 lần); phiên Task 3 đang kiểm | Điền NT3 (ghép 2 lần chạy) → commit; review danh sách N2; N2 trên cloud; compare, bugs | ~2,5 giờ |
+| Agent Skill | Đã bổ sung `exec`, `bugs`, `pilot` | Phiên, score, analysis của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **14 giờ** làm việc | Còn **5 giờ 55 phút** tới mốc 22:00 10/11 | **20 giờ 55 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C173 | 16:11 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Sao không thể xóa hết ảnh rồi xài bộ ảnh mới luôn?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Được, và đó là cách gọn nhất. Trước đây tôi giữ ảnh cũ chỉ vì lượt trước bạn dặn "Không ghi đè ảnh N3 đã có". Nếu bạn quyết định bỏ bộ ảnh cũ thì không có quy định nào bắt phải giữ. Bộ ảnh cũ cũng không có giá trị gì nhiều: Nó đến từ hai lần chạy dở dang, có ảnh của kết quả sai (CL-29), và nhiều ảnh không thấy lỗi.
+
+**Bộ ảnh mới vẫn sẽ có cùng điểm yếu nếu chưa sửa script.** Script hiện vẫn chụp ở đầu trang và đóng hộp thoại trước khi chụp. Vì vậy cần làm theo thứ tự:
+
+1. **Sửa phần chụp ảnh:**
+   - Cuộn tới đúng phần tử đang kiểm (bảng đơn, nút, ô bị lỗi) rồi mới chụp.
+   - Với mục báo lỗi bằng hộp thoại, chụp trong lúc hộp thoại còn hiện rồi mới đóng.
+   - Tôi làm phần này nếu bạn đồng ý. Cũng như lần trước, tôi chỉ sửa, chưa chạy.
+2. **Dọn thư mục ảnh**, chọn một trong hai:
+   - Nếu ảnh cũ **đã commit** lên git: Xóa luôn, lịch sử git vẫn giữ bản cũ.
+     ```
+     rmdir /s /q D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome
+     ```
+   - Nếu **chưa commit**: Chuyển ra ngoài repo để còn bản dự phòng, xóa thì mất hẳn.
+     ```
+     move D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome D:\Dang\Test\n3_anh_cu
+     ```
+3. **Reset DB, seed, rồi chạy toàn bộ một lần** (không dùng `--only`). Nên ghi log ra file mới để log cũ còn làm bằng chứng quá trình cho AI Audit Report:
+   ```
+   cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+   node database.js
+   cd /d D:\Dang\Test\Homeworks\HW03
+   python tools\seed_orders.py
+   cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+   node n3_android_checklist.js --log=n3_run_log_2.txt
+   ```
+
+**Kết quả của cách này**
+- Ra một bộ kết quả và một bộ ảnh thống nhất, không phải gộp hai lần chạy.
+- Hết luôn các vấn đề đã nêu: Nhóm G thiếu W-06, phần W-03 của CL-96, CL-105, CL-112 không hợp lệ, và CL-29 bị báo Failed sai.
+- Thời gian chạy khoảng 6 đến 8 phút, cộng 2 lần dừng để bạn chuẩn bị giỏ hàng. Lần này nhớ thêm sản phẩm vào giỏ thật trước khi bấm Enter.
+
+Bạn đồng ý thì tôi sửa phần chụp ảnh trong script ngay.
+````
+
+---
+
+### C174 | 16:14 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Chưa commit, bạn backup nó đi.
+Sửa script đi.
+Tôi sẽ reset db.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Move old N3 screenshots to a backup folder outside the repo
+- Bash: Find page helpers and table-item check sites
+- Bash: Inspect history helper and __hw export
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Find outdated header note about alerts
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\n3_android_checklist.js
+- Bash: Syntax-check script and list dialog-shot references
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi sao lưu ảnh cũ trước (chuyển ra ngoài repo), rồi sửa script.
+
+Tôi đã sao lưu ảnh cũ và sửa script. Script qua kiểm cú pháp `node --check`, chưa chạy.
+
+**Ảnh cũ**
+
+48 ảnh đã chuyển sang `D:\Dang\Test\n3_anh_cu_20261110_1614`, nằm ngoài repo nên sẽ không bị commit. Thư mục `cross_platform/screenshots/android-chrome` giờ đã bị chuyển đi hẳn. Script sẽ tự tạo lại thư mục này khi chụp ảnh đầu tiên.
+
+**Phần chụp ảnh đã sửa trong [n3_android_checklist.js](HW03/checklist/tools/n3_android_checklist.js)**
+1. **Mục thuộc bảng lịch sử đơn** (CL-07, 10, 11, 12, 18, 24, 84 đến 88, 94, 95, 97 đến 100): Trước khi chụp, script cuộn tới bảng, chừa chỗ cho tiêu đề "Lịch sử đơn hàng". Chụp xong thì cuộn về đầu trang như cũ.
+2. **Mục có hộp thoại của trình duyệt** (alert, confirm): Script chụp màn hình trong lúc hộp thoại còn hiện rồi mới đóng nó. Nếu mục đó Failed, script lưu 2 ảnh theo quy ước `_1`, `_2` của WORKFLOW §5:
+   - `CL-xx_1.png`: Lúc hộp thoại đang hiện, ví dụ "Số điện thoại không hợp lệ".
+   - `CL-xx_2.png`: Màn hình sau khi đóng hộp thoại, ví dụ CL-52 sau khi tải lại trang.
+3. Ảnh chụp lúc có hộp thoại chỉ gắn với đúng mục vừa làm ra hộp thoại đó. Khi sang mục mới, thao tác mới hoặc trang mới, ảnh này bị bỏ, nên không gắn nhầm sang mục khác.
+4. Ảnh vẫn là PNG nguyên bản do `adb screencap` chụp, không chỉnh sửa, và không ghi đè file đã có.
+
+Mục về mạng chậm và mất kết nối (CL-94, CL-96, CL-112) vẫn lấy bằng chứng chính từ log, vì ảnh tĩnh không thể hiện được thời gian chờ.
+
+**Lệnh chạy (cmd, sau khi bạn reset DB)**
+
+Đừng quên chạy seed sau khi reset. Thiếu seed thì trang hồ sơ không có đơn hàng.
+
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\backend
+node database.js
+cd /d D:\Dang\Test\Homeworks\HW03
+python tools\seed_orders.py
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --check
+node n3_android_checklist.js --log=n3_run_log_2.txt
+```
+
+**Trước và trong khi chạy**
+- Server web vẫn phải nghe ở `127.0.0.1:5173`.
+- Đặt cửa sổ nổi Samsung Notes ở **góc dưới màn hình**. Khi script cuộn tới bảng, bảng sẽ nằm ở nửa trên màn hình, nên cửa sổ ở góc dưới sẽ không che các dòng đơn như ở ảnh lần trước.
+- Ở 2 lần dừng cho CL-68 và CL-69: Thêm sản phẩm vào giỏ thật trên Chrome của điện thoại rồi mới bấm Enter.
+
+Chạy xong, bạn báo tôi để kiểm tra kết quả và ảnh như lần trước.
+
+Commit bản sửa script:
+```
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Capture N3 evidence at table position and while dialogs are open"
+```
+````
+
+---
+
+### C175 | 16:15 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+"Kết quả toàn luồng: ☑ Tự hoàn thành" -> Tôi copy nhưng quên bỏ phần đó, sửa lại giúp tôi phần đó nha.
+Skill là chạy tổng quát mà đúng không, nếu chèn script của luồng mình làm vào thì có làm skill khó dùng không?
+Tôi chưa commit gì, tiện thể tiếp tục kiểm tra các task và xuất log, bởi vì sẽ có thay đổi (N3 tôi tính chạy lại để lấy bộ ảnh kết quả khác)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Clear prefilled outcome fields in P1 to P7 notes; check status
+- Bash: Export prompt log and check DB categories
+
+**Output AI (nguyên văn):**
+
+````text
+Đã bỏ kết quả điền sẵn ở cả 7 hồ sơ. Log đã xuất lại: 175 lượt.
+
+## Đã sửa P1 đến P7
+
+Ở cả 7 file `notes.md`:
+- "Kết quả toàn luồng" bỏ tick, cả 3 ô để trống.
+- "Số lần can thiệp" để trống.
+
+Mục **"Thiết bị nhập: ☑ Chuột"** tôi giữ, vì máy của bạn dùng chuột nên biết trước được. Nếu người nào dùng touchpad thì sửa lại sau phiên.
+
+## Skill có nên chứa script của luồng mình không
+
+Đúng, skill phải dùng được cho màn hình và luồng khác. Chép nguyên script của mình vào sẽ làm skill **khó dùng hơn**, vì cả hai script đều gắn chặt với EShop:
+- Tìm phần tử theo chữ tiếng Việt cụ thể ("Sign In", "Họ Tên", "Cập nhật").
+- Dùng tài khoản `test@eshop.com`, `seed_orders.py`, đường dẫn `/login`, `/profile`.
+- Đánh mã theo CL-01 đến CL-112 của checklist này.
+
+Đưa vào skill thì lần sau AI sẽ bê nguyên script sang trang khác, tốn công sửa hoặc chạy ra kết quả sai.
+
+**Gợi ý, ít tốn thời gian nhất:**
+- **Không đưa script vào `scripts/` của skill.** Chỉ trỏ tới script trong `references/example-hw03.md`, ghi là ví dụ của lần làm HW03.
+- **Trong `step-exec.md`, mô tả *cách làm*,** không chép mã:
+  - Script Console chỉ đọc trang, cho kết quả nháp.
+  - Script Playwright có chế độ chạy thử, tự chụp toàn màn hình ở mục Failed, ghi log.
+  - Reset DB trước mỗi lần chạy.
+  - Kết quả cuối do người chốt.
+
+  Lần sau AI tự viết script mới theo checklist của trang mới.
+
+**Phương án thêm nếu còn thời gian:** Tách `devtools_check.js` thành bản chung. Phần lớn các mục kiểm của nó là chung cho mọi trang: Số thẻ `<h1>`, `lang`, `type` của ô email và mật khẩu, `autocomplete`, `<main>`, `aria-live`, cuộn ngang. Chỉ phần nhận ra trang và nhãn ô là của EShop. Bản chung cho nhãn ô làm tham số thì đưa vào `scripts/` hợp lý. Việc này mất khoảng 20 đến 30 phút của AI; để bạn quyết.
+
+Câu gửi phiên Agent Skill (nếu chọn gợi ý tối thiểu):
+
+```text
+Script: Không đưa script EShop vào scripts/ của skill. Trong step-exec.md mô tả cách làm (script Console chỉ đọc trang cho kết quả nháp; script Playwright có --dry-run, tự chụp toàn màn hình mục Failed, ghi log; reset dữ liệu trước mỗi lần chạy; người chốt kết quả); trong references/example-hw03.md trỏ tới checklist/tools/ làm ví dụ.
+```
+
+## Lệnh commit
+
+N3 chạy lại nên **chưa commit ảnh, log hay cột NT3**. Script N3 thì commit được ngay.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A skills
+git commit -m "[skill] Add exec, bugs and pilot steps from completed work"
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Fix N3 script for logged-in and cart groups"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Nếu phiên skill sửa thêm theo câu trên thì có thêm một commit `[skill] Describe exec scripts as pattern, not bundled code`.
+
+**Trước khi chạy lại N3:** Reset DB và seed. Thư mục `android-chrome/` đã trống, nên bộ ảnh mới không bị trùng tên với bộ cũ. Lúc chạy N3 thì không chạy phiên usability.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Phiếu A, B của P1 đến P7 đã điền; đã bỏ kết quả điền trước | Chạy P1 đến P7 (không trùng lúc chạy N3) | ~6,5 giờ |
+| Task 3 | Chuẩn bị chạy lại N3 | Reset và seed → chạy N3 → phiên Task 3 điền NT3 → commit; review danh sách N2; N2 trên cloud; compare, bugs | ~2,75 giờ |
+| Agent Skill | Đã bổ sung `exec`, `bugs`, `pilot` | Chốt cách xử lý script; phiên, score, analysis của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **14 giờ** làm việc | Còn **5 giờ 45 phút** tới mốc 22:00 10/11 | **20 giờ 45 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C176 | 16:16 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+Script: Không đưa script EShop vào scripts/ của skill. Trong step-exec.md mô tả cách làm (script Console chỉ đọc trang cho kết quả nháp; script Playwright có --dry-run, tự chụp toàn màn hình mục Failed, ghi log; reset dữ liệu trước mỗi lần chạy; người chốt kết quả); trong references/example-hw03.md trỏ tới checklist/tools/ làm ví dụ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Bash: Check format of edited exec files
+
+**Output AI (nguyên văn):**
+
+````text
+Script EShop không đưa vào `scripts/` của skill. `step-exec.md` giờ mô tả cách làm, còn `example-hw03.md` trỏ tới `checklist/tools/` làm ví dụ. Kiểm định dạng hai file đã sửa không có lỗi.
+
+**[step-exec.md](Homeworks/HW03/skills/gui-checklist/references/step-exec.md)**, mục Script:
+- **Lý do không kèm script:** Script gắn chặt với từng hệ thống (nhãn, mã mục, tài khoản, dữ liệu), nên mỗi lần làm phải viết mới.
+- **Quy tắc chung:** Script vẫn là hộp đen, chỉ đo những gì mục checklist yêu cầu, kết quả luôn là nháp. AI không tự chạy script trên giao diện.
+- **Script Console chỉ đọc trang:**
+  - Bạn dán vào Console, chạy ở từng màn hình và từng trạng thái.
+  - Script không sửa DOM, không đổi focus, không ghi storage, không gửi request.
+  - Chỉ phủ các mục DevTools đo được và liệt kê phạm vi ở đầu script.
+  - Script in bảng kết quả nháp; ảnh chụp bảng dùng được làm ảnh bằng chứng.
+- **Script Playwright:**
+  - Điều khiển Chrome cài trên máy, có giao diện.
+  - Đầu script ghi rõ cần chuẩn bị gì và dữ liệu nào bị đổi.
+  - Có các cờ `--dry-run`, `--only=`, `--log=`, `--no-shots`.
+  - Tự chụp toàn màn hình ở mục Failed. Hộp thoại `alert` cần một bước chụp riêng.
+  - Bảng cuối ghi vào log dạng cột cách nhau bằng Tab.
+- **Reset dữ liệu:** Trước **mỗi** lần chạy, kể cả lần chỉ chạy thêm một nhóm. Mục Chuẩn bị cũng ghi như vậy.
+- **Ai chốt kết quả:** AI điền kết quả nháp từ log và ảnh; bạn review và chốt. Chỉ kết quả bạn đã chốt mới tính.
+- Quyết định mở về đóng gói script đã bỏ. Chỉ còn một quyết định mở: File tóm tắt kết quả ngoài Excel ⏳.
+
+**[example-hw03.md](Homeworks/HW03/skills/gui-checklist/references/example-hw03.md)** có mục mới "Script của bước `exec`":
+- Bảng các file trong `checklist/tools/`, gồm `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1`, `package.json` và các file log. Mỗi file có cột nội dung và cột "phần tham khảo được".
+- Dặn chỉ đọc khi bạn cho phép, và không chép phần đặc thù của EShop.
+- Ghi dữ liệu được tạo bằng `tools/seed_orders.py` sau khi reset DB.
+
+Commit (chạy từ `Homeworks/HW03`):
+
+```
+git add skills/gui-checklist
+git commit -m "[skill] Describe exec scripts and point to HW03 tools as example"
+```
+
+Nếu chưa commit lượt trước thì gộp cả hai lượt:
+
+```
+git add skills
+git commit -m "[skill] Add exec, bugs and pilot steps to skills"
+```
+````
+
+---
+
+### C177 | 16:17 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi chưa commit, xuất log, đưa tôi commit phần sửa skill và cả script của task 3 nữa.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check pending changes and export log
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
