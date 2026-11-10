@@ -15821,11 +15821,72 @@ Hãy đề xuất cách ghi phát hiện này vào phần so sánh và bug của
 
 ````text
 Đang đối chiếu phát hiện của bạn với kỳ vọng của CL-11, CL-24 và bug #53 đã có, sau đó sẽ đưa đề xuất.
+
+Phát hiện này giải thích đúng vì sao CL-11 và CL-24 khác nhau giữa N1 và N3. Tôi chưa sửa file nào; dưới đây là đề xuất và 5 việc cần bạn chốt.
+
+## 1. Phát hiện này cho thấy gì
+
+- **Nguyên nhân khác biệt là ngôn ngữ trình duyệt, không phải hệ điều hành hay loại trình duyệt.** Bạn đã thử trên cùng máy, cùng Chrome, cùng dữ liệu; chỉ đổi ngôn ngữ là kết quả đổi theo. N1 dùng Chrome tiếng Anh. N3 cho kết quả giống Chrome tiếng Việt.
+  - Cần bạn xác nhận Chrome trên điện thoại đang dùng tiếng Việt (Cài đặt > Ngôn ngữ). Hiện điều này mới là suy ra từ kết quả.
+- **Không ngôn ngữ nào qua được cả hai mục.** Lý do: Kỳ vọng của CL-11 theo SRS là `300,000 ₫` (dấu phẩy, quyết định CH-04 trong `01_oracle.md`). Kỳ vọng của CL-24 lại theo quy ước Việt Nam, ngày / tháng / năm.
+
+| Ngôn ngữ trình duyệt | CL-11 (dấu phẩy) | CL-24 (ngày / tháng / năm) |
+|---|---|---|
+| Tiếng Anh (N1) | Passed | Failed |
+| Tiếng Việt (N3) | Failed | Passed |
+
+- **Cùng một đơn hàng hiện hai ngày khác nhau:** "11/10/2026" và "10/11/2026". Người đọc dễ hiểu sai thành tháng 10.
+- **Việc ngày bị lùi không ảnh hưởng kết luận.** Cả hai cửa sổ đều cho ngày 10, tháng 11; chỉ đảo thứ tự. Bằng chứng về thứ tự ngày tháng vẫn đúng.
+- **Bug #53 (B-21, CL-24) đúng nhưng chưa đủ:** Lỗi này chỉ xảy ra khi trình duyệt dùng tiếng Anh.
+
+## 2. Ghi vào `02_compare.md`
+
+- Trong bảng các mục có kết quả khác nhau, CL-11 và CL-24 có thêm cột "Nguyên nhân": Ngôn ngữ trình duyệt. Bằng chứng là `CL-24_locale_1.png` và `CL-24_locale_2.png`.
+- Nên chia các khác biệt theo nguyên nhân:
+  - Ngôn ngữ trình duyệt: CL-11, CL-24.
+  - Kích thước màn hình hoặc zoom: CL-33, CL-34.
+- ⏳ **D-20: Ghi ngôn ngữ của từng nền tảng ở đâu?** Sheet "Môi trường" không có dòng ngôn ngữ.
+  - (a) Chỉ ghi trong `02_compare.md`.
+  - (b) Ghi thêm vào dòng "Ghi chú" của NT1 và NT3, và thêm Notes cho CL-24 ở NT3 (hiện đang trống).
+- ⏳ **D-21: Việc ngày bị lùi.** Bạn đã chốt không báo riêng. Còn hai cách:
+  - (a) Bỏ hẳn.
+  - (b) Ghi một dòng "quan sát ngoài phạm vi" trong `02_compare.md`. Lý do: Nó giống nhau trên cả hai cửa sổ, nên không phải khác biệt giữa nền tảng.
+
+## 3. Bug cho Task 3
+
+⏳ **D-22: Cách báo bug.**
+
+| Cách | Làm gì | Ưu | Nhược |
+|---|---|---|---|
+| A (tôi nghiêng về cách này) | Tạo một issue T3 mới cho CL-11, ví dụ `[23120061][T3][W-06][Android Chrome] Số tiền dùng dấu chấm phân cách hàng nghìn: Hiện 10.000.000 ₫ thay vì 10,000,000 ₫`. Thêm một bình luận vào #53 rằng lỗi chỉ xảy ra với Chrome tiếng Anh (Android Chrome tiếng Việt Passed), kèm hai ảnh | Đúng nghĩa "bug chỉ xuất hiện trên một số nền tảng"; không trùng #53; mỗi bug một issue | Hai issue cùng một nguyên nhân |
+| B | Tạo một issue T3 chung: "Định dạng ngày và tiền ở W-06 đổi theo ngôn ngữ trình duyệt", gồm CL-11 và CL-24, liên kết #53 | Nêu đúng gốc | Trùng một phần #53; một issue chứa hai hành vi sai; tiêu đề nêu nguyên nhân suy đoán thay vì hành vi sai so với đặc tả |
+| C | Không tạo issue mới, chỉ bình luận vào #53 | Ít việc nhất | CL-11 sai so với SRS trên N3 mà không có issue nào |
+
+Phần chung cho mọi cách:
+- `bug_report.md` thêm mục "Task 3", làm giống mục Task 2.
+- Mức `severity` và label `platform` của issue mới để bạn chọn lúc tạo.
+
+## 4. Có cần kiểm thêm ở N2 không
+
+Tôi đề xuất **có kiểm, nhưng không đổi ngôn ngữ Firefox**:
+- CL-11 và CL-24 đã nằm trong nhóm "B-ảnh" của `firefox_triage.md`, nên chỉ cần ảnh tổng quan `/profile`, không tốn thêm phút.
+- Ghi thêm ngôn ngữ Firefox của máy BrowserStack. Cách nhanh là gõ một dòng ở tab Console khi chạy nhóm Console:
+  ```js
+  [navigator.language, Intl.DateTimeFormat().resolvedOptions().locale, Intl.NumberFormat().resolvedOptions().locale]
+  ```
+- Máy BrowserStack nhiều khả năng dùng tiếng Anh, nên N2 có thể ra giống N1 (CL-11 Passed, CL-24 Failed). Như vậy hiện tượng được xác nhận thêm trên Firefox.
+
+⏳ **D-23: Có đổi Firefox sang tiếng Việt trên BrowserStack không?** Tôi không đề xuất:
+- Việc này tốn phút trial và có thể phải tải gói ngôn ngữ.
+- Tôi không chắc cách Firefox định dạng ngày và số theo ngôn ngữ giao diện hay theo cài đặt vùng của hệ điều hành.
+- Nguyên nhân đã chứng minh được trên Chrome.
+
+⏳ **D-24: Sửa `firefox_triage.md` sau khi có N2.** Hai chỗ ghi chú CL-24 ("Firefox trên máy cloud có thể ra khác") có thể cập nhật theo kết quả này. Chỉ nên sửa sau khi chạy N2.
 ````
 
 ---
 
-### C242 | 02:16 11/11/2026 | Tool: Claude Code (n/a) | Session `f2487351`
+### C242 | 02:16 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
 
 **Prompt (nguyên văn):**
 
@@ -15837,12 +15898,74 @@ Hãy đề xuất cách sửa issue #53 (tiêu đề, mô tả, có thêm ảnh 
 
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
-- (không)
+- Bash: Read CL-10..12, CL-24 rows and issue #53
+- Bash: Read UI-R33 and CH-04 definitions
 
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Dưới đây là bản đề xuất. Tôi chưa chạy `gh issue edit` và chưa sửa Excel.
+
+## Nhận định
+
+Theo kết quả bạn kiểm thêm, trang không cố định định dạng mà lấy theo ngôn ngữ của trình duyệt. Đáng chú ý là **không ngôn ngữ nào đạt cả hai mục**:
+
+| Ngôn ngữ trình duyệt | Ngày đặt (CL-24) | Tổng tiền (CL-11, theo UI-R33 và CH-04: `300,000 ₫`) |
+|---|---|---|
+| Tiếng Anh (N1) | "11/10/2026": **Sai** (tháng/ngày/năm) | "10,000,000 ₫": Đạt |
+| `--lang=vi` | "10/11/2026": Đạt | "10.000.000 ₫": **Sai** (dấu chấm, SRS ghi dấu phẩy) |
+
+Vì vậy gốc lỗi là: Định dạng ngày và tiền đổi theo ngôn ngữ trình duyệt, không cố định theo tiếng Việt và SRS. Lỗi ngày tháng/ngày/năm chỉ là biểu hiện của gốc lỗi đó trên N1.
+
+## 1. Issue #53
+
+**⏳ Quyết định 1: Phạm vi issue**
+
+| Phương án | Nội dung |
+|---|---|
+| **(a) Mở rộng #53 (đề xuất)** | Một gốc lỗi thì một issue: #53 gồm cả ngày (CL-24) và tiền (CL-11) |
+| (b) Giữ #53 chỉ về ngày | Chỉ thêm nguyên nhân vào #53; phần tiền để dành, ví dụ báo ở Task 3 nếu N2 hoặc N3 chạy bằng giao diện tiếng Việt |
+
+**Bản sửa theo (a).** Các mục không nhắc tới thì giữ nguyên.
+
+- **Tiêu đề:** `[23120061][T1][W-06][Chrome] Ngày đặt và Tổng tiền đổi định dạng theo ngôn ngữ trình duyệt, không cố định theo tiếng Việt`
+- **Mục checklist:** `CL-24 (Failed ở N1); CL-11 (Passed ở N1, không đạt khi Chrome dùng tiếng Việt)`
+- **Trình duyệt / OS / thiết bị:** Thêm `Chrome giao diện tiếng Anh (N1)`. Thêm dòng: `Kiểm thêm 11/11/2026: Cùng máy, Chrome 156 mở bằng --lang=vi`.
+- **Điều kiện tiên quyết:** Thêm `Ngôn ngữ giao diện Chrome: Tiếng Anh, rồi tiếng Việt (--lang=vi)`.
+- **Các bước tái hiện:**
+  1. Mở Chrome giao diện tiếng Anh, vào `http://localhost:5173/profile`, xem cột "Ngày đặt" và "Tổng tiền".
+  2. Đóng Chrome, mở lại bằng `chrome.exe --lang=vi`, đăng nhập test@eshop.com, mở lại `/profile`.
+  3. So hai lần.
+- **Kết quả mong đợi:** `Theo CL-24 (slide S13, Localization): Ngày hiển thị theo ngày / tháng / năm của tiếng Việt, ví dụ "10/11/2026". Theo UI-R33 (FR-21): Luôn dùng ký hiệu ₫ với định dạng phân cách hàng nghìn, kiểm theo cách viết trong SRS "300,000 ₫" (CH-04). Định dạng không đổi theo ngôn ngữ của trình duyệt.`
+- **Kết quả thực tế:** Đưa bảng 2 dòng ở phần Nhận định vào, kèm câu: `Không ngôn ngữ nào cho đúng cả ngày lẫn tiền.`
+- **Ghi chú:** `Sửa ngày 11/11/2026: Bổ sung nguyên nhân sau khi kiểm thêm với Chrome tiếng Việt (bản đầu chỉ ghi hiện tượng trên N1).`
+- **Thêm một bình luận ngắn vào #53** nói đã sửa gì, để người xem không thấy nội dung đổi mà không rõ lý do.
+
+**⏳ Quyết định 2: Ảnh.** Nên thêm, vì hiện chỉ có ảnh giao diện tiếng Anh. Mỗi ảnh phải có Sticky Notes và URL `localhost`:
+
+| Ảnh | Nội dung |
+|---|---|
+| `CL-24_chrome_1.png` | Ảnh hiện có (`CL-24_chrome.png`), đổi tên |
+| `CL-24_chrome_2.png` | `/profile` trong Chrome `--lang=vi`: Thấy "10/11/2026" và "10.000.000 ₫" |
+| `CL-24_chrome_3.png` | `chrome://version` của cửa sổ đó: Dòng Command Line có `--lang=vi`, làm bằng chứng ngôn ngữ |
+
+**Cần chụp trước lần reset và seed tiếp theo.** Seed lại hôm nay thì đơn mang ngày 11/11, và "11/11/2026" đọc theo kiểu nào cũng giống nhau nên không phân biệt được. Bạn đã có ảnh của lần kiểm thêm thì đưa tôi xem. Nếu chưa có, tôi có thể thêm nhóm K vào script N1 (Chrome mở bằng `--lang=vi`, tự chụp 2 ảnh) để bạn chạy.
+
+## 2. Excel
+
+Kết quả của cả hai mục **giữ nguyên**, vì WORKFLOW quy định kết quả thực tế chỉ lấy từ lần chạy thật trên N1. Chỉ ghi thêm vào Notes:
+
+- **CL-24 (giữ Failed),** nối vào sau Notes hiện có: `Kiểm thêm 11/11/2026: Định dạng ngày đổi theo ngôn ngữ giao diện trình duyệt. Chrome mở bằng --lang=vi hiện "10/11/2026" (đúng ngày / tháng / năm); N1 chạy bằng Chrome giao diện tiếng Anh nên hiện "11/10/2026". Giữ Failed vì trang không cố định định dạng tiếng Việt (issue #53).` Cột Ảnh: `CL-24_chrome_1.png, CL-24_chrome_2.png, CL-24_chrome_3.png`.
+- **CL-11 (giữ Passed),** Notes đang trống: `Kiểm thêm 11/11/2026: Phân cách hàng nghìn đổi theo ngôn ngữ trình duyệt. Chrome giao diện tiếng Anh (N1) hiện "10,000,000 ₫" (đạt); Chrome --lang=vi hiện "10.000.000 ₫" (dấu chấm, không đạt theo CH-04). Kết quả N1 vẫn Passed vì đúng với môi trường N1 (xem issue #53).`
+- **Sheet Môi trường NT1,** thêm vào Ghi chú (đề xuất): `Ngôn ngữ giao diện Chrome: Tiếng Anh. Ngày đặt và Tổng tiền đổi định dạng theo ngôn ngữ này (CL-11, CL-24).`
+
+## 3. Ảnh hưởng thêm (để bạn biết)
+
+- **CL-10 và CL-12 không đổi:** Cả hai ngôn ngữ đều có `₫` đặt sau số, cách một khoảng.
+- **⏳ N2 và N3 (Task 3):** Kết quả CL-11 và CL-24 sẽ tùy ngôn ngữ giao diện của Firefox cloud và Chrome trên điện thoại. Nên ghi ngôn ngữ trình duyệt vào sheet Môi trường của N2, N3 khi chạy. Script N3 hiện chưa ghi thông tin này; tôi có thể thêm nếu bạn muốn.
+- **bug_report.md:** Dòng B-21 cần sửa tiêu đề theo bản chốt.
+
+Bạn chốt Quyết định 1 và 2. Tôi sẽ sửa #53, đăng bình luận, sửa Excel và `bug_report.md` cùng một lượt.
 ````
 
 ---
@@ -15858,11 +15981,96 @@ Kiểm tra trạng thái các task và báo lại tôi, xem thử có câ
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Show time, repo status, recent commits, export prompt log
+- Bash: Inspect bug report change, issue list screenshot naming, and last commits content
+- Bash: Check score and analysis review files against AI raw versions
+- Bash: List tracker rows for Task 2, Task 3, Skill and summary
+- Bash: Read tracker rows to update
+- Bash: Update tracker rows for Task 2 and Task 3 progress
+- Bash: Check skill folders and whether the tracker is ignored
 
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Đang cập nhật bảng tracker trong `_NOTES.md` theo các commit mới (7 phiên, score, analysis, bug, bằng chứng locale).
+
+Có 3 thứ cần commit: ảnh danh sách issue của Task 2, mục 7 mới của bug report, và log (đã xuất lại, 243 lượt). Task 2 gần xong: Score và analysis đã commit, mỗi file review đều có bảng "Thay đổi so với bản AI". Tôi đã cập nhật tracker trong `_NOTES.md`. File này nằm trong `.gitignore` nên không cần commit.
+
+## Kết quả kiểm
+
+**Task 2:**
+- 7 phiên, score và analysis đã commit. 3 commit `[T3][chrome]`, `[T2][score]`, `[T2][analysis]` cùng lúc 02:14.
+- `04_scores.md` khác bản AI ở những chỗ bạn đã chốt: QĐ-S1 bỏ "Cách 2". Cả `04_scores.md` lẫn `05_findings.md` đều có bảng thay đổi.
+- **Chưa commit:**
+  - Ảnh `bugs/screenshots/issues_list_T2.png` (lọc `task: T2 usability`, có #66 và #67). Tên này đúng quy ước: Chỉ có một ảnh nên không có hậu tố.
+  - Mục 7 trong `bug_report.md`, dẫn tới ảnh trên.
+- **Còn lại:** Bước 2.12, phần usability trong `report.md`. Phiên Tổng hợp viết phần này từ `04_scores.md` và `05_findings.md`.
+
+**Task 3:**
+- Ảnh bằng chứng ngôn ngữ trình duyệt đã commit.
+- **Chưa thấy phiên Task 1 hay Task 3 sửa file nào sau đó.** Nếu bạn chưa gửi hai tin nhắn ở lượt trước, gửi ngay, nhớ dùng đường dẫn `cross_platform/screenshots/chrome/CL-24_locale_1.png` đến `_4.png`.
+- N2 chưa chạy. DB đang ở trạng thái đã seed, đúng như N2 cần.
+
+**Agent Skill:** Có một việc trong tracker chưa làm: **Bước 4.3, chép skill sang `D:\Dang\Test\.claude\skills\`**.
+- `skills/` của repo có `gui-checklist` và `usability-evaluation`, nhưng `.claude/skills/` mới có 2 skill cũ của HW02.
+- Việc này cần trước khi quay video demo, vì Claude Code chỉ nạp được skill nằm trong `.claude/skills/`.
+- Nhờ phiên Agent Skill làm, khi nó đã cập nhật xong phần score và analysis của `usability-evaluation`.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/screenshots/issues_list_T2.png bugs/bug_report.md
+git commit -m "[T2][bugs] Add T2 issue list screenshot"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Việc tiếp theo, theo thứ tự
+
+1. Gửi tin cho phiên Task 3 và Task 1 về ngôn ngữ trình duyệt, nếu chưa gửi.
+2. Chạy N2 trên BrowserStack. Báo phiên Task 2 không chạy script trên EShop trong lúc này.
+3. Song song: Nhờ phiên Tổng hợp viết phần Task 2 của report. Nhờ phiên Agent Skill hoàn thiện `usability-evaluation` rồi chép sang `.claude/skills/`. Hai việc này không dùng DB.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Score, analysis, #66, #67 xong | Commit ảnh danh sách issue; phần report (Tổng hợp viết) | ~0,5 giờ |
+| Task 3 | N1, N3, bằng chứng ngôn ngữ xong | Tin cho Task 1, Task 3 → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | `gui-checklist` có bước `03_results.md` | Hoàn thiện `usability-evaluation`; chép sang `.claude/skills/`; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **6 giờ** làm việc | Còn **10 giờ 43 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C244 | 02:23 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 2 đã xong chỉ còn report thì tính là đã xong đi.
+- Task 3 và task 1 tôi đều đã gửi tin nhắn, kiểm tra, xuất log và báo lại cho tôi thay vì tôi đi từng cái kiểm.
+- Agent skill: Đưa tôi những cái tôi cần gửi nó để hoàn thiện skill, task 1 và 2 đã có đủ, skill còn phải chờ task 3 không?
+- Phàn report tạm thời để làm xong hết rồi viết 1 lần, bạn là người viết, có log, cũng có NOTES và tôi sẽ kiểm tra mà. Làm lắt nhắt không mấy hiệu quả, chưa kể bạn làm thì không tính là 2h đâu, cũng nhanh hơn mà.
+- Tôi tính cho xong mọi thứ tới N2 thì dừng để 8h sáng mai làm tiếp, sau đó compare, bugs và quay video nộp bài được không? Giờ tôi buồn ngủ quá.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read the latest turn of the Task 1, Task 3 and Skill sessions
+- Bash: Read the latest turn of the Task 1 and Task 3 sessions with UTF-8 output
+- Bash: Read the latest turn of the Task 1 and Task 3 sessions with UTF-8 output
+- Bash: Read the rest of the Task 1 and Task 3 latest replies
+- Bash: Check skill scope, cross-platform coverage and unfinished parts
+- PowerShell: Export prompt log and show repo status
+
+**Output AI (nguyên văn):**
+
+````text
+Đã đọc xong lượt mới nhất của phiên Task 1 và Task 3. Giờ xuất log và kiểm git.
 ````
 
 
