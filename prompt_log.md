@@ -13754,6 +13754,1271 @@ Tôi đã chạy được P1 và P2, xuất log, đưa commit message. Tôi 
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Show time, repo status, recent commits, export prompt log
+- Bash: Look up how participants file is meant to be handled, without reading it
+- Bash: Check video ignore rules, session files, and skill copy sync
+- Bash: Mechanically check P1 and P2 SUS answers and outcomes are filled
+- Bash: Skim the Agent Skill changes to name the commit
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã kiểm repo, xuất lại log (209 lượt) và kiểm hồ sơ P1, P2. Trả lời câu hỏi trước, lệnh commit ở dưới.
+
+## Nên commit ngay sau mỗi phiên, không đợi tới P7
+
+- **Mốc thời gian là bằng chứng.** Mỗi phiên một commit đúng giờ chạy cho thấy 7 phiên diễn ra thật, cách nhau. Nếu dồn tới cuối thì 7 commit cùng một phút, nhìn như điền sau một lượt.
+- **Bạn tự commit được, không cần tôi.** Mỗi phiên chỉ cần 2 lệnh, gõ trong lúc reset DB. Message theo mẫu `[T2][P<n>] Run session P<n>`.
+- **Log chỉ cần xuất một lần sau P7.** Xuất sau từng phiên chỉ làm lịch sử commit rối hơn mà không thêm gì.
+
+Mẫu cho mỗi phiên (thay `3` bằng số phiên):
+
+```powershell
+git add usability/sessions/P3
+git commit -m "[T2][P3] Run session P3"
+```
+
+Video `.mp4` đã nằm trong `.gitignore`, nên `git add` cả thư mục là an toàn.
+
+## Kết quả kiểm P1, P2
+
+- Hai phiên có đủ 3 file. Form SUS có dấu thời gian và đủ 10 câu trả lời. Kết quả toàn luồng đã đánh dấu: P1 Không hoàn thành, P2 Tự hoàn thành.
+- **Cần lưu ý câu trả lời SUS của P1:** P1 chấm 5 cho cả câu tích cực (1, 3, 5) lẫn câu tiêu cực (2 "phức tạp", 4 "cần người hỗ trợ"). Có thể P1 đọc lướt và chấm đồng ý hết. Khi tính điểm, nhờ phiên Task 2 ghi chú việc này; đừng sửa số của P1.
+- `participants.md` có 2 dòng bạn vừa sửa. Tôi không đọc file này, chỉ đưa lệnh commit riêng cho nó.
+- Phiên Agent Skill đã thêm phần tóm tắt `03_results.md` (bước exec, bugs) và một file mẫu mới. Đây là kết quả của câu trả lời "File tóm tắt kết quả" trước đó.
+
+## Lệnh commit bây giờ
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add usability/sessions/P1
+git commit -m "[T2][P1] Run session P1"
+git add usability/sessions/P2
+git commit -m "[T2][P2] Run session P2"
+git add usability/participants.md
+git commit -m "[T2][participants] Update participant table"
+git add skills/gui-checklist
+git commit -m "[skill] Add results summary step and template"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+- Thư mục P3 đến P7 hiện chỉ có hồ sơ trống. Chạy phiên nào thì `git add` thư mục phiên đó.
+- `bugs/image_links.txt` vẫn để ngoài, không commit.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | P1, P2 xong | P3 đến P7 (khoảng 30 phút mỗi phiên) → score, analysis, bugs | ~4,5 giờ |
+| Task 3 | N1, N3 xong; danh sách N2 đã chốt | Kiểm định dạng ngày và số; N2 trên cloud; compare, bugs | ~2 giờ |
+| Agent Skill | Đã thêm bước `03_results.md` | Phần còn lại theo Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **10 giờ** làm việc | Còn **14 giờ 12 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C210 | 22:59 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P3 đã xong:
+- "Đề gì mà dài thế, ghi làm gì làm gì luôn được không?" (00:05). Tôi không trả lời vì họ phải tự thao tác, chắc họ muốn được chỉ dẫn để nhanh lẹ.
+- Đọc đề xong lúc 00:23
+- Thấy dashboard: 00:43
+- Vào danh mục: 00:50
+- Họ đã suýt bấm thêm mới, nhưng rồi lại bảo "đề bảo thêm gì quên rồi" nên họ mở đề ra đọc (00:54), và khi đó họ đã copy vào chỗ trống và mới thêm nên không dính lỗi của PL và P1 (thêm xong 01:00)
+- Họ tính vào sản phẩm xem luôn nhưng lại bật đề ra đọc xem lại rồi vào (01:05)
+- Thêm xong sản phẩm lúc 01:35 (tất cả đều copy và chọn đúng danh mục).
+- Họ có lướt xuống xem, thấy có ảnh và tên, mở đề lên đọc lại thấy hết rồi nên báo xong (01:45)
+
+Form: Đã gửi 22:49 10/11/26 và theo thứ tự điểm 2, 2, 3, 2, 2, 3, 4, 1, 4, 2.
+
+c1. Thêm loa ở danh mục rồi vào sản phẩm điền đúng thông tin đã cho
+c2. bên trái màn hình
+c3. ô nào cũng điền được
+c4. không
+c5. nhanh
+c6. nhìn vào bảng bên dưới thấy có tên
+c7. Lúc tạo đã chọn ở thanh thả xuống tên loa bluetooth
+c8. Thấy bình thường, không có gì khó nên cũng thấy dễ như nhau
+c9. Giá tiền nhìn lé mắt nên muốn thêm dấu ngăn cách
+
+Thiếu thông tin gì thì nói tôi.
+Bắt đầu: 22:39, kết thúc 23:00
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect P3 files state
+- Bash: Fill P3 notes, probe and scale files
+
+**Output AI (nguyên văn):**
+
+````text
+Đã ghi xong phiên P3 vào [notes.md](notes.md), [probe.md](probe.md) và [scale.md](scale.md), không còn thiếu thông tin. File notes của P3 vẫn còn 5 chỗ ghi "P1" do bạn chép từ file P1, tôi đã sửa hết. Tôi hiểu là mục 1 (phiếu thông tin) và mục 2 (thông tin phiên) bạn đã sửa thành thông tin của P3, giống lần P2.
+
+**Kết quả P3**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:20 | 00:21.09 | Tự hoàn thành |
+| M2 | 00:17 | 00:48.57 | Tự hoàn thành |
+| M3 | 00:35 | 01:00.84 | Tự hoàn thành |
+| Toàn luồng | 01:22 | 02:18.75 | **Tự hoàn thành**, không chặng nào vượt chuẩn, 0 can thiệp |
+
+- **Phiên:** 21 phút (22:39 đến 23:00).
+- **SUS:** 62,5 điểm, gửi lúc 22:49. Câu 1 ("muốn dùng thường xuyên") và câu 5 ("các chức năng kết nối tốt") chỉ được 2.
+
+**Những điểm đáng chú ý khi phân tích**
+- **Đọc lại kịch bản:** P3 mở lại kịch bản ở mỗi bước, P2 cũng vậy. Một phần nguyên nhân là kịch bản dài: P3 than "Đề gì mà dài thế". Khi viết `05_findings.md`, cần tách rõ vấn đề nào do cách làm bài kiểm thử (kịch bản), vấn đề nào do giao diện. Chỉ vấn đề giao diện mới là phát hiện usability.
+- **Lỗi nút "Thêm mới":** P3 suýt bấm "Thêm mới" khi ô tên còn trống. P3 thoát được chỉ vì quên tên danh mục nên phải mở kịch bản ra xem. Đến giờ đã có 3 trên 4 người (PL, P1, P3) bấm hoặc suýt bấm nút này trước khi nhập tên.
+- **Giá tiền:** P3 sao chép giá nên giá đúng. P3 cũng tự góp ý ở C9 là ô giá thiếu dấu ngăn cách hàng nghìn ("nhìn lé mắt"). Ý này khớp với lỗi giá của PL và P1.
+
+**Một chỗ nhỏ về cách điều phối:** Lúc 00:05 P3 hỏi cách làm và bạn không trả lời. Theo mục 5 của kịch bản, khi người tham gia hỏi cách làm, câu đáp chuẩn là "Bạn cứ làm theo cách bạn nghĩ là đúng." Kết quả P3 không bị ảnh hưởng. Ở các phiên sau bạn dùng câu này để người tham gia không nghĩ là mình bị phớt lờ.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P3/notes.md usability/sessions/P3/probe.md usability/sessions/P3/scale.md
+git commit -m "[T2][P3] Record P3 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3: Xong.
+- T2 P4 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4,5 đến 6 giờ làm việc: 4 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 14 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C211 | 23:47 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P6 đã xong. P6 nói ít, làm nhiều, tại cũng hơi ngại.
+
+- Đọc xong đề lúc 00:17
+- Thấy Dashboard lúc 00:26
+- Ở dashboard họ phải đọc lại đề vì chưa nắm rõ nên làm gì, sau đó mới qua danh mục (00:40)
+- Thêm xong danh mục lúc 00:56 và qua luôn sản phẩm, nhưng vì thấy giao diện có import sản phẩm từ CSV nên lại qua tab dưới sản phẩm (mã giảm giá để xem) (01:00) (Họ nói là: "Import cái gì là sao, để icon như AI vậy, ảnh đồ gì cũng không có). Sau khi qua mã giảm giá không thấy gì thì họ mới quay lại sản phẩm và đọc đề.
+- Họ copy hết các thông tin trong form và tạo xong lúc 01:30. Thông tin đều đúng hết.
+- Sau đó họ lại mở đề ra đọc lại xem có cần làm gì nữa không, thấy không có gì và đã có sản phẩm nên họ dừng (01:46)
+
+Form: Đã gửi 23:16 10/11/26 và điểm theo thứ tự 1, 1, 3, 1, 2, 2, 3, 2, 4, 1.
+
+Câu hỏi: C1: Chỉ cần đọc qua hướng dẫn là có thể hiểu và làm được, làm theo hướng dẫn chỉ.
+C2: Nhìn màn hình.
+C3: Không có.
+C4: Không có.
+C5: Nhanh.
+C6: Nhìn màn hình.
+C7: Có mục phân loại, nhấp vào loa sẽ thấy.
+C8: Mục tạo sản phẩm.
+C9: Giao diện trông đơn giản mà cũng hơi AI, nên sửa lại cho thuận mắt hơn.
+
+Thiếu thông tin gì thì nói tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect P6 files state
+- Bash: Fill P6 notes, probe and scale files
+- Bash: Mark think-aloud prompt as unconfirmed
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền phiên P6 vào [notes.md](notes.md), [probe.md](probe.md) và [scale.md](scale.md). File notes chép từ P1 nên còn 5 chỗ ghi "P1", tôi đã sửa thành "P6". Còn 3 chỗ đánh dấu ⏳ chờ bạn bổ sung (ở cuối).
+
+**Kết quả P6**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:09 | 00:21.09 | Tự hoàn thành |
+| M2 | 00:30 | 00:48.57 | Tự hoàn thành (gồm 14 giây đọc lại kịch bản ở Dashboard) |
+| M3 | 00:34 | 01:00.84 | Tự hoàn thành (gồm một lần bấm nhầm sang "Mã giảm giá") |
+| Toàn luồng | 01:29 | 02:18.75 | **Tự hoàn thành**, 0 can thiệp |
+
+Điểm SUS của P6 là **65**, form gửi lúc 23:16.
+
+**Phát hiện mới:** P6 là người đầu tiên vướng ở khối "Import sản phẩm từ CSV". Khi test plan dự đoán rủi ro này (D3 (a)) thì chưa có bằng chứng, giờ đã có. Tôi ghi hai mã:
+- **`PN` (than phiền):** P6 nói "Import cái gì là sao, để icon như AI vậy".
+- **`La` (bấm sai chỗ):** P6 rời trang sản phẩm, sang mục "Mã giảm giá" rồi mới quay lại.
+
+Ở C9, P6 cũng chê giao diện "hơi AI". Ý này giống góp ý giao diện lỗi thời của P2.
+
+**Tiến độ:** Bạn đã chạy P1, P2, P3, P6. P4 và P5 chưa chạy, tôi đoán bạn đổi thứ tự lịch. Mã người tham gia không cần theo thứ tự thời gian, miễn là trong `participants.md` mỗi mã ứng với đúng một người.
+
+**Bạn bổ sung giúp:**
+1. Giờ bắt đầu và kết thúc phiên P6.
+2. Mốc P6 quay lại trang sản phẩm sau khi sang "Mã giảm giá" (khoảng giữa 01:00 và 01:30). Nếu bạn không ghi mốc này, tôi sẽ ghi "không ghi mốc".
+3. P6 nói ít: Bạn có nhắc think-aloud lần nào không ("Bạn đang nghĩ gì?")? Nếu có thì cho tôi mốc thời gian.
+
+Lệnh commit (chạy sau khi tôi điền xong 3 mục trên):
+```
+cd Homeworks/HW03
+git add usability/sessions/P6/notes.md usability/sessions/P6/probe.md usability/sessions/P6/scale.md
+git commit -m "[T2][P6] Record P6 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3: Xong.
+- T2 P6: Đã điền, còn chờ 3 mục trên.
+- T2 P4, P5, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5,5 giờ làm việc: 3 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C212 | 23:51 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Giờ bắt đầu: 23:00, kết thúc: 23:20
+2. 01:00 -> 01:02 họ đã quay lại.
+3. Tôi không, vì tôi thấy họ chỉ nghiền ngẫm đề thôi, và nếu cái gì vướng mắc thì họ đã nói ra, phần UI á.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill remaining P6 info
+
+**Output AI (nguyên văn):**
+
+````text
+P6 đã ghi xong, file [notes.md](notes.md) không còn ô nào để trống:
+- **Thời lượng:** 20 phút, từ 23:00 đến 23:20.
+- **Nhật ký sự kiện:** P6 sang nhầm "Mã giảm giá" lúc 01:00 và quay lại trang sản phẩm lúc 01:02, tức lạc mất 2 giây. Điền form sản phẩm từ 01:02 đến 01:30.
+- **Think-aloud:** Ghi là không nhắc lần nào. Lý do: P6 chủ yếu đọc kỹ kịch bản, và khi vướng ở giao diện (khối Import CSV) thì đã tự nói ra. Lý do này khớp với hướng dẫn I2.4 cho người nói ít.
+
+Lần lạc trang này chỉ mất 2 giây, nên khi phân tích, khối Import CSV làm người dùng bối rối nhiều hơn là làm chậm. Bằng chứng chính là lời P6 nói, mã `PN` (than phiền), chứ không phải thời gian.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P6/notes.md usability/sessions/P6/probe.md usability/sessions/P6/scale.md
+git commit -m "[T2][P6] Record P6 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3, P6: Xong.
+- T2 P4, P5, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5,5 giờ làm việc: 3 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C213 | 00:06 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P5 đã xong.
+
+- Đọc xong đề: 00:10. Họ hơi khựng lại khi bấm login (tôi có hỏi phần này sau khi kết thúc, họ bảo rằng không thấy được mật khẩu nên không biết đúng không, dù họ copy)
+- Thấy dashboard: 00:24
+- Sau đó họ ở dashboard đọc lại đề rồi mới qua danh mục lúc 00:48.
+- Thêm xong danh mục lúc 00:58
+- Rồi họ lại mở đề lên đọc tiếp, khi đó mới qua sản phẩm lúc 01:12.
+- Họ copy điền tất cả các thông tin trong ô trống rồi nhấn tạo sản phẩm luôn nên phần danh mục để điện thoại. Xong sản phẩm lúc 01:58. Ngay sau đó họ có nói là "ủa ủa là xong chưa, xong rồi đó hả" khi họ kéo xuống thấy ảnh loa bluetooth. Và họ mở lại đề xem lại 1 xíu đúng chưa và báo kết thúc lúc 02:04.
+
+Phiên bắt đầu: 23:54, kết thúc lúc 00:05 (vắt sang ngày hôm sau).
+
+Form: Đã gửi 23:57 10/11/26 và điểm lần lượt là 2, 2, 2, 2, 2, 3, 3, 2, 3, 2.
+
+Câu hỏi: C1: Thì vào tạo thôi, tạo loa ở danh mục rồi sang sản phẩm.
+C2: Nhìn thanh menu ở trái.
+C3: Không có
+C4: Không có
+C5: Nhanh
+C6: Nhìn bảng
+C7: Ủa có phần đó hả, chết, hình như quên bỏ rồi.
+C8: Thêm danh mục
+C9: Cho xem cái chỗ mật khẩu được không.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect P5 files state
+- Bash: Fill P5 notes, probe and scale files
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên P5 đã điền vào [notes.md](notes.md), [probe.md](probe.md) và [scale.md](scale.md). Trong notes.md vẫn còn 5 chỗ ghi "P1" do chép từ file P1, tôi đã sửa hết thành "P5".
+
+**Kết quả P5**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:14 | 00:21.09 | Tự hoàn thành (có khựng lại trước khi bấm đăng nhập) |
+| M2 | 00:34 | 00:48.57 | Tự hoàn thành (gồm 24 giây đọc lại đề ở Dashboard) |
+| M3 | 01:00 | 01:00.84 | **Không hoàn thành**: sản phẩm vào danh mục "Điện thoại" |
+| Toàn luồng | 01:54 | 02:18.75 | Không hoàn thành, 0 can thiệp |
+
+- **SUS:** **55 điểm**, đều quanh mức 2 đến 3 ở cả 10 câu.
+- **Câu bạn hỏi thêm sau phiên** (vì sao khựng lại ở trang đăng nhập): Tôi ghi vào mục câu hỏi theo tình huống, cùng dòng với mã `DD` ở trang đăng nhập.
+
+**Phát hiện**
+- **Quên chọn danh mục:** Đã có 2 trên 5 người (P1, P5) lưu sản phẩm mà không chọn danh mục, và cả hai không nhận ra. Ở C7, P5 nói "Ủa có phần đó hả", tức là P5 không hề thấy ô danh mục trong form. Cùng với câu "tưởng có tên loa là được" của P1, đây đang là vấn đề nặng nhất của luồng.
+- **Ô mật khẩu không cho xem:** Đây là vấn đề mới. Ô mật khẩu không có nút hiện mật khẩu, nên P5 dán vào rồi vẫn không chắc đã đúng. P5 cũng đề xuất sửa chỗ này ở C9.
+
+**Bạn kiểm giúp 3 chỗ:**
+1. **Giờ phiên:** Phiên bắt đầu 23:54 nhưng form SUS đã gửi lúc 23:57. Như vậy phần mở đầu, phiếu thông tin, làm nhiệm vụ (khoảng 2 phút) và điền form chỉ gói trong 3 phút. Bạn xem lại giờ bắt đầu, có thể là 23:45 không? Nếu 23:54 đúng thì tôi giữ nguyên.
+2. **Giá:** P5 sao chép mọi ô nên tôi ghi giá `2990000 ₫` là đạt. Bạn xác nhận lúc kiểm D6.
+3. **Câu hỏi về trang đăng nhập:** Bạn còn nhớ đã hỏi P5 nguyên văn thế nào không? Nếu không nhớ thì tôi ghi là "Lúc ở trang đăng nhập, bạn đang nghĩ gì?" (câu chuẩn I6.2).
+
+Lệnh commit (chạy sau khi tôi điền xong 3 chỗ trên):
+```
+cd Homeworks/HW03
+git add usability/sessions/P5/notes.md usability/sessions/P5/probe.md usability/sessions/P5/scale.md
+git commit -m "[T2][P5] Record P5 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3, P6: Xong.
+- T2 P5: Đã điền, chờ 3 chỗ kiểm trên.
+- T2 P4, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: 2 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C214 | 00:11 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Đúng. Tôi tính phiên bắt đầu từ lúc nhấn quay, khi quay xong cũng nhanh mà, cỡ 2 phút, sau đó form gửi sẵn họ mở làm luôn. Họ điền form nhanh lắm.
+2. Đúng. Nếu tôi không nói gì thì tức là thông tin đúng.
+3. Tôi hỏi là "Sao nãy ở chỗ đăng nhập thấy khựng lại vậy?"
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Finish P5 fields and update session defaults memory
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên P5 đã ghi xong, không còn chỗ nào trống:
+- **Thời lượng:** Ghi là "11 phút, tính từ lúc bật quay".
+- **Giá:** Đạt.
+- **Câu hỏi về lúc khựng lại ở trang đăng nhập:** Ghi nguyên văn "Sao nãy ở chỗ đăng nhập thấy khựng lại vậy?".
+
+Tôi đã lưu thêm hai quy ước cho các phiên sau:
+- **Chi tiết bạn không nhắc:** Coi là đúng như quan sát, nên tôi sẽ không hỏi lại để xác nhận.
+- **Thời lượng phiên:** Tính từ lúc bật quay.
+
+Thời lượng tính từ lúc bật quay thì không gồm phần mở đầu và phiếu thông tin. Trong khi đó, test plan mục 5 tính thời lượng gồm cả hai phần này. Khi viết `04_scores.md`, tôi sẽ ghi rõ cách tính này cho cả 7 phiên. Có ghi như vậy thì các con số 11 đến 21 phút mới so được với mức 15 đến 25 phút của test plan.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P5/notes.md usability/sessions/P5/probe.md usability/sessions/P5/scale.md
+git commit -m "[T2][P5] Record P5 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P4, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: 2 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C215 | 00:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Phần mở đầu tôi đã gửi tin nhắn rồi mà, tôi chỉ hỏi họ 1 câu bạn vẫn đồng ý với những quyết định khi nhắn tin đúng không và họ bắt đầu đọc đề làm thôi. Phiếu thông tin tôi đã cho họ điền trước khi quay các luồng mất rồi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record actual session procedure in memory
+
+**Output AI (nguyên văn):**
+
+````text
+Vậy tôi hiểu sai: Tôi tưởng phần mở đầu và phiếu thông tin nằm ngoài thời lượng 11 đến 21 phút. Thực ra hai phần đó vẫn có, chỉ là làm trước khi bật quay:
+- **Mở đầu:** Gửi qua tin nhắn từ trước. Đến phiên, bạn chỉ hỏi lại một câu để họ xác nhận vẫn đồng ý.
+- **Phiếu thông tin:** Người tham gia điền trước khi quay.
+
+Như vậy thời lượng tính từ lúc bật quay gồm: Làm nhiệm vụ, điền form SUS và trả lời câu hỏi mở. Test plan mục 5 dự kiến ba phần này cộng lại là 9 đến 18 phút. Các phiên của bạn từ 11 đến 21 phút, nên gần như khớp. Riêng P1 dài 45 phút, vì có thời gian người tham gia ngồi chờ bạn ghi chú.
+
+Tôi đã ghi lại cách làm này. Khi viết phần phương pháp ở `04_scores.md`, tôi sẽ nêu rõ: "Mở đầu qua tin nhắn trước phiên; tại phiên chỉ xác nhận lại đồng ý; phiếu thông tin điền trước khi quay; thời lượng tính từ lúc bật quay." Ghi rõ như vậy thì người chấm hiểu vì sao các con số ngắn hơn test plan.
+
+Còn một điều tôi cần hỏi để ghi vào phần hạn chế: Trước khi họ đọc đề, bạn có giới thiệu think-aloud không? Đây là phần dặn họ vừa làm vừa nói ra suy nghĩ (I2.3 trong `03_instruments.md`). Nếu đã ghi phần này trong tin nhắn gửi trước thì cũng tính là có giới thiệu. Nếu không giới thiệu, đó có thể là một lý do khiến P2, P3, P6 nói ít.
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P4, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: 2 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C216 | 00:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Còn form điểm thì sau khi làm.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Đúng vậy, form SUS điền sau khi họ làm xong nhiệm vụ, nên vẫn nằm trong phần đã quay. Phần tôi đã ghi khớp với cách bạn làm: Thời lượng tính từ lúc bật quay gồm làm nhiệm vụ, điền form SUS rồi đến câu hỏi mở. Phần mở đầu qua tin nhắn và phiếu thông tin thì làm trước khi quay.
+
+Tôi còn chờ một câu: Trước khi họ đọc đề, bạn có giới thiệu think-aloud không (vừa làm vừa nói ra suy nghĩ, mục I2.3)? Nếu bạn đã dặn trong tin nhắn gửi trước thì cũng tính là có giới thiệu.
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P4, P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: 2 phiên, mỗi phiên khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C217 | 00:16 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P7 có sự cố như này: Họ đã đọc đề, sau đó đăng nhập, họ không copy mà nhìn và gõ máy. Trong quá trình gõ pass chữ a gần nút capslock nên họ đã vô tình bật nhưng không biết dẫn đến pass sai. Họ không nhận ra, chỉ xóa và gõ lại nhưng vẫn sai. Họ quyết định copy để đăng nhập xong vẫn bị báo sai dù họ spam liên tục. Các bước sau đó không thể tiến hành được nữa.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: FR-02
+- Bash: Read FR-02 oracle text
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên P7 có thể giữ làm dữ liệu hợp lệ: Người tham gia không đăng nhập được, nên M1 tính là "Không hoàn thành". Với một bài kiểm thử usability, đây là kết quả có thật, không phải phiên hỏng. Muốn ghi đúng, tôi cần hiểu chuyện gì đã xảy ra lúc P7 dán mật khẩu đúng mà vẫn bị báo sai.
+
+**Vì sao dán mật khẩu vẫn sai:** Caps Lock không ảnh hưởng đến chữ được dán vào. Vậy lần dán đó lẽ ra đúng. Nhiều khả năng tài khoản đã bị khoá theo FR-02, vì đã sai từ 3 lần trở lên. P7 bấm liên tục nên mỗi lần bấm có thể làm thời gian khoá kéo dài thêm.
+
+Theo FR-02 (oracle UI-R08), sai 3 lần thì tài khoản bị khoá 30 giây. Khi đó hệ thống phải "trả về thông báo lỗi phù hợp", nhưng "không để lộ chi tiết nguyên nhân". Phát hiện usability vì vậy có thể có tới 3 phần:
+- **Không cảnh báo Caps Lock:** Ô mật khẩu không báo khi Caps Lock đang bật.
+- **Không xem được mật khẩu:** Ô mật khẩu không cho hiện chữ đã gõ. P5 cũng đã góp ý điểm này.
+- **Thông báo không rõ:** Nếu khi bị khoá hệ thống vẫn chỉ báo "sai mật khẩu", người dùng sẽ không biết phải chờ.
+
+Phần thứ ba có thể là bug, nếu thông báo khi bị khoá không "phù hợp", hoặc nếu chờ đủ 30 giây mà vẫn không đăng nhập được. Để kết luận, tôi cần các thông tin dưới đây.
+
+**Bạn bổ sung giúp (xem lại video):**
+1. **Mốc thời gian:** Lúc đọc xong đề (T0), lần đăng nhập sai đầu tiên, lúc chuyển sang dán mật khẩu, và lúc dừng phiên. Nếu đếm được thì cho tôi biết tổng số lần bấm đăng nhập.
+2. **Thông báo lỗi:** Màn hình hiện chữ gì, ghi nguyên văn. Thông báo có đổi khác sau lần sai thứ 3 không, có nhắc đến khoá hay chờ không? Nếu video có cảnh này, bạn chụp lại một ảnh, vì có thể cần dùng cho bug report.
+3. **Can thiệp:** Bạn có nói gì với P7 không? Kịch bản mục 6 ghi: Người tham gia không hiểu chuyện gì quá 30 giây thì người điều phối đọc lại email và mật khẩu (can thiệp mức 1). Ai quyết định dừng phiên, và dừng vì lý do gì?
+4. **Có chờ hết 30 giây không:** Sau đó có ai ngừng bấm đủ 30 giây rồi thử lại không? Kết quả thế nào? Nếu chưa, bạn tự thử lại ngoài phiên giúp tôi: Cố ý sai 3 lần, bấm liên tục, rồi chờ đủ 30 giây mà không bấm gì, rồi nhập mật khẩu đúng. Thử như vậy mới biết đây là lỗi hay hệ thống làm đúng thiết kế.
+5. **Form và phỏng vấn:** P7 có điền form SUS và trả lời C1 đến C9 không? Nếu có, bạn gửi điểm và câu trả lời.
+6. **Thông tin phiên:** Giờ bắt đầu và kết thúc phiên.
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P7: Không đăng nhập được, chờ 6 mục trên.
+- T2 P4: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: P4 khoảng 20 đến 25 phút, ghi P7 và có thể thêm một bug, cộng 3 đến 4 giờ phân tích. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C218 | 00:23 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Mốc thời gian: Đọc xong đề: 00:10
+Lần sai đầu: 00:28
+Lần sai hai: 00:37
+Chuyển sang copy - Vẫn bị báo không đăng nhập được. Tôi thấy họ copy đủ và dán vào, nhưng tôi cũng không thể rõ họ có copy sai chỗ nào không vì pass không thấy được trực diện, tôi coi phần họ bôi đen thì đúng.
+2. Thông báo chỉ luôn báo đăng nhập thất bại. Ảnh trong video đây.
+3. Họ bấm không được nên tôi có bảo "Thôi chắc bị khóa rồi. Do sai quá 3 - 4 lần nên bị khóa, có cố đăng nhập cũng không vào được. Chắc dừng nha bà."
+4. Chưa, dừng ngay sau đó. 
+Tôi đã thử: Đăng nhập được.
+5. Không, vì họ đã vào được luồng để thực hiện đâu.
+6. Bắt đầu 12:07, kết thúc 12:09
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: 7 người|ít nhất \d+ người|5 người|người tham gia
+- Bash: Inspect P7 notes state
+- Bash: Read WORKFLOW naming rules section
+- Bash: Fill P7 files and save login failure screenshot
+- Bash: Check whether anything changed in P7
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\fill_p7.py
+- Bash: Run P7 fill script
+
+**Output AI (nguyên văn):**
+
+````text
+Lệnh ghi file vừa lỗi cú pháp và chưa sửa được file nào. Tôi đang viết lại thành script riêng rồi chạy lại.
+
+Đã ghi xong phiên P7 vào [notes.md](usability/sessions/P7/notes.md), [probe.md](usability/sessions/P7/probe.md) và [scale.md](usability/sessions/P7/scale.md). Ảnh bạn gửi tôi lưu thành [P7_01_login_failed_alert.png](usability/sessions/P7/P7_01_login_failed_alert.png), đặt tên theo WORKFLOW mục 5. Ảnh chỉ có trang đăng nhập và thanh taskbar, không có thông tin của người tham gia.
+
+**Đã ghi**
+- **Kết quả:** M1 Không hoàn thành; M2 và M3 chưa bắt đầu nên cũng Không hoàn thành. Toàn luồng Không hoàn thành, 0 can thiệp.
+- **Thời lượng:** 2 phút (00:07 đến 00:09 ngày 11/11).
+- **Nhật ký:**
+  - 00:28 và 00:37: Hai lần sai, cùng hộp thoại "Đăng nhập thất bại".
+  - Sau 00:37: P7 chuyển sang dán mật khẩu và bấm liên tục.
+  - Cuối video: Bạn dừng phiên. Câu bạn nói được chép nguyên văn.
+- **Ghi chú trung thực:**
+  - Chưa xác định được vì sao dán mật khẩu cũng thất bại. Có thể tài khoản đã bị khoá, hoặc chuỗi dán vào bị sai ký tự.
+  - Bạn đã thử lại sau phiên và đăng nhập được.
+  - Phiên bị dừng sớm, không làm đúng kịch bản mục 6 (đáng lẽ phải đọc lại email và mật khẩu cho P7).
+- **probe.md và scale.md:** Ghi là P7 không trả lời câu hỏi mở và không điền SUS, kèm lý do.
+
+**Không nên báo bug:** FR-02 yêu cầu thông báo lỗi khi bị khoá "phù hợp" nhưng "không để lộ chi tiết nguyên nhân". Vì vậy việc chỉ hiện "Đăng nhập thất bại" chưa chắc là sai SRS, và tài khoản cũng tự mở lại sau thời gian khoá. Đây là phát hiện usability, cùng nhóm với góp ý của P5 về ô mật khẩu:
+- **Caps Lock:** Ô mật khẩu không cảnh báo khi đang bật.
+- **Xem mật khẩu:** Ô mật khẩu không có nút hiện mật khẩu.
+- **Thông báo lỗi:** Không gợi ý người dùng phải làm gì tiếp.
+
+**Cần bạn quyết:** P7 có tính là một trong 7 người không? WORKFLOW mục 3.2.1 yêu cầu 7 người.
+- **A (tôi đề xuất):** Giữ P7. P7 đủ tiêu chí và đã thật sự làm nhiệm vụ. Thất bại ở bước đăng nhập là dữ liệu có thật. Khi tổng hợp sẽ tính tỷ lệ hoàn thành trên 7 người, còn SUS và câu hỏi mở chỉ có 6 người (sau khi chạy P4). Báo cáo ghi rõ điều này ở phần hạn chế.
+- **B:** Tìm thêm một người nữa để đủ 7 phiên có SUS, P7 vẫn giữ trong báo cáo. Cách này tốn thêm khoảng 25 phút, và cần tìm người ngay trong đêm hoặc sáng nay.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P7/notes.md usability/sessions/P7/probe.md usability/sessions/P7/scale.md usability/sessions/P7/P7_01_login_failed_alert.png
+git commit -m "[T2][P7] Record P7 session stopped at login (M1 not completed)"
+```
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong. P7 không hoàn thành ở M1; cần bạn chọn A hoặc B.
+- T2 P4: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: P4 khoảng 20 đến 25 phút, cộng 3 đến 4 giờ phân tích. Nếu chọn B thì cộng thêm khoảng 25 phút. Còn khoảng 13 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C219 | 00:43 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P4 đã xong.
+- Đọc xong đề: 00:09. Tôi thấy họ lướt chuột qua các dòng rất nhanh, có vẻ là đọc lướt.
+- Khi đăng nhập họ có nói "con chuột này xài cứ trượt trượt, dí khó" (do họ copy thông tin đăng nhập email mà được 1 nửa thì bị trượt mất)
+- Thấy dashboard: 00:25. Họ mở lại đề đọc rồi vào danh mục lúc 00:34.
+- Nhấn thêm mới ngay nên cũng bị lỗi giống PL và P1. Họ đã nói "ủa là sao, không điền mà cũng tạo được à" (00:40). Họ đã thêm danh mục thành công lúc 00:47 và xóa phần sai đi. Họ có nói "xóa không báo gì luôn, nãy trượt tay nhầm qua loa là phải tạo lại rồi ha ha" (00:52)
+- Họ mở ra đề đọc lại và qua sản phẩm lúc 01:00. Các thành phần được họ copy. Trong lúc dò lại các phần đã điền đúng chưa, họ trượt tay bấm chữ w thành ra đang ở url ảnh hiện chữ "ư", họ đã thấy và xóa. Vì vội nên thành ra xóa mất cả chữ g, họ nhấn thêm lại mà nhấn nhanh thành f và chọn tạo luôn (01:41) trong khi chưa chọn danh mục (mặc định điện thoại).
+- Khi họ lướt xuống xem không thấy ảnh nên đã nhấn vào sửa, thấy sai link url nên sửa lại, đồng thời phát hiện ra chưa chọn danh mục nên chọn lại đúng và update thành công lúc 01:55.
+- Họ lại lướt xuống kiểm tra nhưng thấy ảnh vẫn chưa có, nhấn vào thì link url lỗi như cũ dù họ đã xóa sửa lại. Họ lại xóa sửa lại và update thành công lúc 02:12.
+- Lại thấy vẫn chưa có ảnh, họ lại nhấn sửa y chang và update thành công lúc 02:18. Lúc đó họ có nói "cái gì ảnh mà sửa rồi sao không ăn vậy, lần cuối không được nữa là chịu đấy"
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: xác nhận|confirm|Sửa|cập nhật sản phẩm|FR-1[3-6]
+- Grep: FR-15|FR-16
+- Bash: Inspect P4 files state
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\fill_p4.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\fill_p4.py
+- Bash: Run P4 partial fill script
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền trước phần P4 có dữ liệu vào [notes.md](usability/sessions/P4/notes.md), gồm mốc T0 đến T2, kết quả M1 và M2, 14 dòng nhật ký sự kiện và 3 điểm vướng. Phần sau 02:18 tôi đánh dấu ⏳, vì tin nhắn của bạn dừng ở đó.
+
+**Kết quả đến 02:18**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:16 | 00:21.09 | Tự hoàn thành |
+| M2 | 00:22 | 00:48.57 | Tự hoàn thành (có tạo nhầm dòng trống rồi tự xóa) |
+| M3 | ít nhất 01:31 | 01:00.84 | Vượt chuẩn; kết quả ⏳ |
+
+**Ba điểm đáng chú ý ở P4**
+1. **Lỗi "Thêm mới" khi chưa nhập tên:** Đã có 3 trên 6 người ở P1 đến P7 mắc lỗi này (P1, P4, P7 thì chưa tới bước này), cộng thêm PL. Vì vậy lỗi #66 xảy ra thường xuyên, nên ưu tiên cao khi tính criticality. P4 còn góp thêm một ý: Nút "Xóa" xóa ngay, không hỏi xác nhận. SRS chỉ bắt buộc hộp thoại xác nhận khi xóa sản phẩm khỏi giỏ hàng, nên đây là vấn đề usability, không phải bug.
+2. **Quên chọn danh mục:** Có thêm P4, như vậy là 3 người (P1, P4, P5). Riêng P4 tự phát hiện, nhưng chỉ vì mở form "Sửa" để tìm lỗi ảnh.
+3. **URL ảnh có thể không được lưu:** Đây có thể là bug. P4 cập nhật 3 lần, lần nào cũng báo thành công, nhưng mở lại form "Sửa" thì URL vẫn sai như cũ. Có hai khả năng: P4 dán lại đúng chuỗi sai, hoặc form "Sửa" không lưu thay đổi ở ô URL ảnh. Danh mục thì có vẻ đã được lưu, cần bạn xác nhận khi kiểm D6.
+
+**Cần bạn bổ sung:**
+1. **Sau 02:18:** Ảnh có hiện không? P4 làm gì tiếp, và nói "xong" lúc nào (T4)?
+2. **Kết quả kiểm D6:**
+   - Sản phẩm thuộc danh mục nào?
+   - URL ảnh cuối cùng trong form "Sửa" là gì, và ảnh có hiện không?
+   - Giá có đúng không?
+3. **Thử tái hiện ngoài phiên** (phải làm sau khi kiểm D6 xong, trước khi reset DB; nếu đã reset thì tạo lại một sản phẩm):
+   - Bấm "Sửa" một sản phẩm, đổi URL ảnh sang một URL đúng khác (ví dụ URL trong phiếu dữ liệu), rồi bấm cập nhật.
+   - Mở lại "Sửa" xem URL đã đổi chưa, và xem ảnh trong bảng có đổi theo không.
+   - Làm thêm một lần nữa, lần này đổi tên hoặc giá. Mục đích là xem chỉ riêng ô URL không được lưu hay cả form đều không lưu.
+   - Nếu đúng là không lưu, bạn chụp ảnh trước và sau như lần báo issue #66, tôi sẽ tạo issue.
+4. **Form SUS:** Giờ gửi và 10 điểm.
+5. **Câu trả lời C1 đến C9.**
+6. **Giờ phiên:** Giờ bắt đầu và kết thúc.
+
+**P7 vẫn chờ bạn chọn A hoặc B:**
+- **A:** Giữ P7 trong 7 người, SUS chỉ có 6 người.
+- **B:** Tìm thêm một người để đủ 7 phiên có SUS.
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P7: Xong, chờ bạn chọn A hoặc B.
+- T2 P4: Đã điền đến 02:18, chờ 6 mục trên. Có thể có bug lưu URL ảnh.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: Hoàn tất P4 và có thể thêm một bug (khoảng 30 phút), cộng 3 đến 4 giờ phân tích. Còn khoảng 12,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C220 | 00:47 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+- Vì không được nữa nên họ dừng lại.
+- Phiên bắt đầu: 00:30, kết thúc 00:40
+- Form: Đã gửi 00:34 11/11/26 và điểm lần lượt là 1, 2, 2, 2, 2, 3, 2, 3, 3, 2
+- Câu hỏi: C1: Đăng nhập rồi vào tạo theo hướng dẫn đề thôi, đề bảo vào đâu thì vào đó.
+C2: Menu trái
+C3: Không có
+C4: Tạo danh mục rỗng đã xóa đi, sai url ảnh và chưa chọn danh mục cho sản phẩm, đã sửa lại nhưng url ảnh không thành công.
+C5: Lúc đầu nhanh, lúc sau lỗi nên bị chậm
+C6: Nhìn màn hình
+C7: Có mục phân loại lúc điền để chọn.
+C8: Danh mục.
+C9: Sửa lại cái url giùm cái, cập nhật mà không ăn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\fill_p4b.py
+- Bash: Fill remaining P4 data
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã ghi xong phần lớn phiên P4 vào [notes.md](usability/sessions/P4/notes.md), [probe.md](usability/sessions/P4/probe.md) và [scale.md](usability/sessions/P4/scale.md).
+
+**Kết quả P4**
+- **Kết quả:** M1, M2 tự hoàn thành. M3 **Không hoàn thành**: ảnh không hiện, và P4 bỏ cuộc sau lần cập nhật thứ ba. Toàn luồng Không hoàn thành, 0 can thiệp.
+- **Kiểm D6:** Có đúng một danh mục, có sản phẩm, giá đúng, danh mục đúng (P4 tự sửa lúc 01:55). Chỉ có ảnh không hiện được.
+- **Phiên:** 10 phút (00:30 đến 00:40 ngày 11/11).
+- **SUS:** **45 điểm**, thấp nhất trong 6 người có điểm. Điều này khớp với C5 ("lúc sau lỗi nên bị chậm") và C9 ("cập nhật mà không ăn").
+
+Ở C4 P4 kể đủ cả 3 lỗi của mình, và nói URL ảnh "đã sửa lại nhưng không thành công". Đây là thêm một dấu hiệu cho bug lưu URL ảnh.
+
+**Còn thiếu:**
+1. **Mốc P4 dừng lại (sau 02:18):** Cần mốc này để tính thời gian toàn luồng. Nếu bạn không ghi thì tôi điền "không ghi mốc".
+2. **Mốc lúc chuột trượt khi sao chép email:** Nằm trong khoảng 00:09 đến 00:25. Không ghi cũng được.
+3. **Tái hiện bug URL ảnh:** Đây là việc quan trọng nhất.
+   - Mở "Sửa" một sản phẩm, dán URL ảnh đúng, rồi bấm cập nhật.
+   - Mở lại "Sửa" xem URL đã đổi chưa.
+   - Thử thêm một lần, đổi tên hoặc giá, để biết chỉ ô URL không lưu hay cả form không lưu.
+
+   Nếu đúng là không lưu, bạn gửi ảnh trước và sau, tôi sẽ tạo issue. Nếu lưu được thì lỗi là do P4 dán lại chuỗi sai. Khi đó tôi ghi đây là vấn đề usability (ô URL không báo URL sai, bảng không có ảnh thay thế), không báo bug.
+4. **P7:** Chọn A (giữ P7 trong 7 người, SUS chỉ có 6 người) hay B (tìm thêm một người)?
+
+Lệnh commit (chạy sau khi xong mục 1 đến 3):
+```
+cd Homeworks/HW03
+git add usability/sessions/P4/notes.md usability/sessions/P4/probe.md usability/sessions/P4/scale.md
+git commit -m "[T2][P4] Record P4 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2, P3, P5, P6: Xong.
+- T2 P7: Xong, chờ bạn chọn A hoặc B.
+- T2 P4: Gần xong, chờ mốc dừng và kết quả tái hiện bug URL ảnh.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: Tái hiện bug và có thể tạo thêm một issue (khoảng 30 phút), cộng 3 đến 4 giờ phân tích. Còn khoảng 12 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C221 | 00:50 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Ngay 02:18 là dừng làm đó. 
+3. Tôi đã tái hiện và nó chỉ sửa mỗi tên, còn nữa sửa các vùng khác đều không lưu. Phần này phải chụp thì hơi nhiều, viết script tự chụp được không?
+4. Giữ P7
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: Playwright|Selenium|script|tự mở|DevTools|tự động|hộp đen
+- Bash: Read severity decision tree in group README
+- Grep: FR-15
+- Bash: Search group issues for duplicate product edit bug
+- Bash: View issue #9 to check for duplicate
+- Bash: Update P4 stop time, bug note, D6 category
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã sửa xong phần P4 trong [notes.md](usability/sessions/P4/notes.md):
+- **Thời điểm dừng:** P4 bỏ cuộc lúc 02:18, nên toàn luồng tính là 02:09 và kết quả là Không hoàn thành.
+- **Bug form "Sửa":** Tôi ghi lại kết quả bạn tái hiện: Form "Sửa" chỉ lưu thay đổi ở ô tên, các ô khác không được lưu. Lỗi này giải thích vì sao P4 sửa URL ảnh 3 lần mà không lần nào được lưu.
+- **P7:** Giữ trong 7 người. Khi tính SUS ở `04_scores.md` tôi sẽ ghi n = 6.
+
+**Cần bạn kiểm lại ở P4:** Lúc kiểm D6, sản phẩm thực sự nằm trong danh mục nào? Tôi đã điền "Loa Bluetooth" vì P4 chọn lại danh mục lúc 01:55. Nhưng nếu form "Sửa" không lưu danh mục thì sản phẩm phải vẫn ở "Điện thoại". Bạn xem lại video hoặc nhớ lại lúc kiểm D6. Tôi để ⏳ ở ô này cho đến khi bạn trả lời.
+
+**Có điểm mâu thuẫn với issue #9 của bạn 23120046:** Trong bước tái hiện, bạn ấy ghi đã "đổi giá AirPods trong Admin", tức là sửa giá có vẻ lưu được. Có thể lỗi chỉ xảy ra với sản phẩm mới tạo, không xảy ra với sản phẩm có sẵn. Bạn thử thêm một lần với sản phẩm có sẵn (ví dụ AirPods Pro 2) để biết lỗi xảy ra trong trường hợp nào. Issue #9 nói về trang thanh toán, nên không trùng với bug này.
+
+**Về script tự chụp:** Tôi không viết script mở trình duyệt để tự chụp. WORKFLOW mục 1.1 cấm AI tự mở trang. Script như vậy cũng cần biết cấu trúc HTML của trang, mà muốn biết thì phải xem mã nguồn hoặc dùng DevTools, hai việc này đều bị cấm. Cách nhanh nhất là bấm **Win + PrtScn**: Windows tự lưu ảnh toàn màn hình vào `Pictures\Screenshots`, đánh số sẵn, không cần cắt. Bạn chụp xong thì báo tôi, tôi sẽ chép ảnh vào `usability/screenshots/`, đổi tên theo mẫu `flow_14_...`, rồi viết bug report và tạo issue.
+
+Chỉ cần 4 ảnh cho sản phẩm mới tạo:
+1. Form "Sửa" vừa mở, đang hiện giá trị cũ.
+2. Form "Sửa" sau khi đã đổi tên, giá, URL ảnh và danh mục, lúc chưa bấm cập nhật.
+3. Ngay sau khi bấm cập nhật: Thông báo thành công và dòng sản phẩm trong bảng.
+4. Mở lại form "Sửa": Chỉ có tên mới, các ô khác vẫn là giá trị cũ.
+
+Nếu thử với sản phẩm có sẵn mà kết quả khác, chụp thêm 1 ảnh tương ứng với ảnh 4.
+
+**Bạn cho tôi biết thêm:**
+- **Thông báo thành công:** Nguyên văn chữ hiện ra là gì?
+- **Các ô đã thử:** Bạn đã thử những ô nào (giá, mô tả, URL ảnh, danh mục, ô khác nếu có)?
+
+Tôi đề xuất mức **High** cho bug này. Lý do: Bug sai FR-15 ("Admin có thể Thêm / Xem / Sửa / Xóa sản phẩm"). Hệ thống báo thành công nên người dùng không biết thay đổi bị mất. Cách đi vòng duy nhất là xóa rồi tạo lại sản phẩm. Nếu bạn coi việc thay đổi bị bỏ mà vẫn báo thành công là "mất dữ liệu" thì có thể nâng lên Critical. Mức nào là do bạn chốt.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Gần xong, chờ danh mục ở D6.
+- T2 bug form "Sửa": Chờ 4 ảnh, nguyên văn thông báo và các ô đã thử.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: bug và issue khoảng 30 phút, phân tích 3 đến 4 giờ. Còn khoảng 12 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C222 | 00:55 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Lỗi còn nghiêm trọng hơn thế nhiều. Ví dụ tôi nhấn vào MacBook Pro M3 sửa giá thì bên dưới sẽ thành 
+
+
+Ảnh	Tên SP	Giá	Hành động
+MacBook Pro M3	MacBook Pro M3	300001 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	28000001 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	4500002 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	6000000 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	4000000 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	2990000 ₫
+Sửa
+Xóa
+
+
+Sau khi reload trang thì về dashboard, vào lại sản phẩm thì mới 
+
+
+Ảnh	Tên SP	Giá	Hành động
+Loa Bluetooth JBL Flip 6	Loa Bluetooth JBL Flip 6	300001 ₫
+Sửa
+Xóa
+Loa Bluetooth JBL Flip 6	Loa Bluetooth JBL Flip 6	28000001 ₫
+Sửa
+Xóa
+MacBook Pro M3	MacBook Pro M3	4500000 ₫
+Sửa
+Xóa
+Tai nghe AirPods Pro 2	Tai nghe AirPods Pro 2	6000000 ₫
+Sửa
+Xóa
+Bàn phím cơ Keychron Q1	Bàn phím cơ Keychron Q1	4000000 ₫
+Sửa
+Xóa
+Loa Bluetooth JBL Flip 6	Loa Bluetooth JBL Flip 6	2990000 ₫
+Sửa
+Xóa
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn nói đúng, lỗi này nặng hơn tôi nghĩ. So hai bảng bạn gửi, thấy có hai lỗi chồng lên nhau.
+
+**Lỗi 1: Thay đổi không được lưu.** Bạn sửa giá MacBook từ 4500000 thành 4500002. Ngay sau khi cập nhật, bảng hiện 4500002. Tải lại trang thì giá quay về 4500000. Hệ thống báo thành công nhưng không lưu gì.
+
+**Lỗi 2: Bảng hiện sai tên sau khi cập nhật.** Cả 6 dòng đều đổi tên thành "MacBook Pro M3", cả cột Ảnh lẫn cột Tên SP. Giá của các dòng khác thì vẫn đúng. Tải lại trang thì tên trở lại bình thường.
+
+Lỗi 2 có thể giải thích lần trước bạn thấy "chỉ có tên được sửa". Rất có thể tên cũng chỉ đổi trên màn hình, chưa được lưu. Bạn kiểm lại giúp: Sửa tên một sản phẩm, tải lại trang, rồi xem tên mới còn không.
+
+**Liên quan đến issue #9 (của 23120046):** Issue này báo "Trang thanh toán vẫn dùng giá cũ sau khi Admin đổi giá". Nếu sửa giá không bao giờ được lưu, thì trang thanh toán dùng giá cũ là đúng, vì đó là giá thật trong cơ sở dữ liệu. Như vậy nguyên nhân của #9 có thể chính là bug này. Khi tạo issue, tôi sẽ ghi "Related #9" ở phần Ghi chú, đúng như template yêu cầu. Bạn nên báo cho bạn đó biết, vì kết luận của #9 có thể phải sửa.
+
+**Ảnh cần chụp:** Dùng Win + PrtScn, ảnh tự lưu vào `Pictures\Screenshots`. Khoảng 5 ảnh, chụp với một sản phẩm có sẵn như MacBook:
+1. Bảng sản phẩm vừa tải lại, chưa sửa gì.
+2. Form "Sửa" của MacBook sau khi đã đổi giá, lúc chưa bấm cập nhật.
+3. Thông báo thành công (nếu có hiện).
+4. Bảng ngay sau khi cập nhật: Cả 6 dòng mang tên "MacBook Pro M3", giá MacBook là giá mới.
+5. Sau khi tải lại trang và vào lại "Sản phẩm": Tên đã trở lại bình thường, giá MacBook vẫn là giá cũ.
+
+**Bạn cho tôi biết thêm:**
+1. Nguyên văn thông báo thành công.
+2. Tên mới có còn sau khi tải lại trang không (cách kiểm ở trên).
+3. Đổi danh mục hoặc URL ảnh có bị y như đổi giá không (không lưu, và bảng hiện sai tên)?
+4. P4 lúc kiểm D6: Bạn đã tải lại trang trước khi mở form "Sửa" chưa? Nếu chưa, form có thể đang hiện giá trị chỉ có trên màn hình, chưa được lưu. Khi đó danh mục thật của sản phẩm P4 có thể vẫn là "Điện thoại".
+
+**Mức độ:** Tôi vẫn đề xuất **High**. Lý do: Sai FR-15 ("Admin có thể ... Sửa sản phẩm"), và không có cách nào sửa được sản phẩm. Cách duy nhất là xóa rồi tạo lại, mà đó là thao tác khác hẳn. Thêm vào đó, hệ thống báo thành công và bảng hiện sai dữ liệu, nên người dùng tưởng đã sửa xong.
+
+Nếu bạn xem đây là "chặn luồng chính quản lý shop" hoặc "mất dữ liệu" (thay đổi bị bỏ mà vẫn báo thành công), thì có thể chọn **Critical**. Chọn mức nào là do bạn quyết.
+
+Ngoài ra còn một lỗi nhỏ: Tải lại trang thì bị đưa về Dashboard, không ở lại trang Sản phẩm. Lỗi này thuộc điều hướng (IA-03). Tôi chỉ ghi chú trong bug report, không tạo issue riêng, trừ khi bạn muốn.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Gần xong, chờ câu 4 về danh mục ở D6.
+- T2 bug form "Sửa": Chờ 5 ảnh và câu trả lời 1 đến 3, sau đó tôi viết bug report và tạo issue.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: bug và issue khoảng 30 phút, phân tích 3 đến 4 giờ. Còn khoảng 12 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C223 | 00:56 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Lỗi này có vẻ rộng, tôi nghĩ bạn nên viết script phủ các trường hợp test, đồng thời cho cap màn hình (có thể tham khảo các script cũ), rồi chúng ta sẽ phân tích các ảnh. Nếu như bug thì cũng có ảnh để báo cáo luôn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read black-box rules and find existing scripts
+- Bash: Inspect existing checklist scripts
+- Bash: Read rest of checklist script and find package.json
+- Bash: Inspect package.json, capture helper, launch code, screenshots
+- Read: D:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_09_product_form_filled.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_11_product_in_list.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\screenshots\flow_10_product_created.png
+- Bash: Read data sheet and capture helper usage
+- Write: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Bash: Syntax-check script and verify playwright resolves
+
+**Output AI (nguyên văn):**
+
+````text
+Đã đủ thông tin để viết script. Tôi đang viết script Playwright chạy 7 trường hợp sửa sản phẩm; mỗi trường hợp chụp toàn màn hình ở 6 bước.
+
+Tôi đã viết xong script [edit_product_check.js](usability/tools/edit_product_check.js) và kiểm tra cú pháp, chưa chạy thử lần nào. Theo WORKFLOW mục 1.1, tôi không được tự mở trang, nên bạn là người chạy script, giống cách làm với script của T1.
+
+**Script dựa trên script cũ của T1:**
+- **Thư viện và cách chụp:** Dùng lại `playwright-core` đã cài ở `checklist/tools/node_modules` và [capture_screen.ps1](checklist/tools/capture_screen.ps1). Ảnh là ảnh toàn màn hình Windows, thấy cả thanh địa chỉ và taskbar.
+- **Cách tìm phần tử:** Chỉ theo chữ hiện trên giao diện, lấy từ ảnh `flow_06` đến `flow_11`: mục "Sản phẩm" ở thanh bên trái, các placeholder "Tên sản phẩm", "Giá tiền", "URL Ảnh", "Mô tả", nút "Sửa", bảng có cột "Tên SP". Script không đọc mã nguồn và không gọi thẳng API.
+- **Hộp thoại:** Nếu có alert hiện ra, script chụp trước rồi mới bấm OK, và ghi lại nguyên văn nội dung.
+
+**7 trường hợp, mỗi trường hợp chụp 6 ảnh:**
+- E1: Chỉ đổi giá (MacBook Pro M3).
+- E2: Chỉ đổi tên (Keychron Q1).
+- E3: Chỉ đổi URL ảnh (AirPods Pro 2).
+- E4: Chỉ đổi mô tả (Samsung S24 Ultra).
+- E5: Chỉ đổi danh mục (iPhone 15 Pro Max).
+- E6: Tạo một sản phẩm mới rồi đổi cả 5 ô. Trường hợp này để so sản phẩm mới với sản phẩm mẫu.
+- E7: Sửa giá 2 sản phẩm liền nhau, không tải lại trang. Trường hợp này kiểm câu cuối của FR-15: "Khi Sửa một sản phẩm, chỉ sản phẩm đó bị thay đổi".
+
+Sáu ảnh của mỗi trường hợp:
+1. Form vừa mở sau khi bấm "Sửa".
+2. Form sau khi đã đổi, trước khi lưu.
+3. Hộp thoại sau khi bấm lưu.
+4. Bảng ngay sau khi lưu.
+5. Bảng sau khi tải lại trang.
+6. Form "Sửa" mở lại sau khi tải lại.
+
+Log ghi từng dòng của bảng đã đổi gì. Cuối log có bảng tổng hợp: Ô nào được lưu, ô nào không, có dòng khác bị đổi theo không, ngay sau khi lưu và sau khi tải lại.
+
+**Cách chạy:**
+1. Reset DB (`cd backend && node database.js`). Phải reset vì bảng đang có các dòng "Loa Bluetooth" bạn tạo lúc thử; script cần đúng 5 sản phẩm mẫu.
+2. Bật backend và frontend-admin (`http://localhost:5174`).
+3. Chạy:
+   ```
+   cd Homeworks/HW03/usability/tools
+   node edit_product_check.js --log=edit_check_log.txt
+   ```
+   Trong lúc chạy, bạn không bấm vào máy, vì script chụp toàn màn hình.
+4. Chạy xong thì reset DB lại. Script đã sửa 5 sản phẩm mẫu và tạo thêm sản phẩm "HW03 E6 ...".
+
+Nếu một trường hợp bị lỗi, script ghi lỗi vào log rồi chạy tiếp trường hợp sau. Muốn chạy lại riêng một vài trường hợp thì thêm `--only=E1,E3`.
+
+Có một điểm tôi chưa biết chắc: Bấm "Sửa" thì form hiện ở đâu, vì chưa có ảnh nào chụp lúc đang sửa. Script thử lần lượt 3 chỗ: hộp thoại, ô nhập ngay trong bảng, rồi form phía trên trang. Chỗ tìm được ghi ở dòng "Form ở ..." trong log. Nếu form không nằm ở 3 chỗ đó, bạn gửi tôi log để tôi sửa script.
+
+Chạy xong, bạn báo tôi đường dẫn [edit_check_log.txt](usability/tools/edit_check_log.txt). Ảnh nằm trong thư mục `usability/tools/edit_check_shots/`. Tôi sẽ đọc log và xem ảnh để chốt bug. Sau đó tôi chọn vài ảnh, đổi tên theo mẫu `flow_14_...` và chép sang `usability/screenshots/` để làm bằng chứng cho issue.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Chờ danh mục thật ở D6 (bạn đã tải lại trang trước khi mở form "Sửa" chưa?).
+- T2 bug form "Sửa": Script đã sẵn sàng, chờ bạn chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc: chạy script và xem ảnh khoảng 30 phút, bug report và issue khoảng 30 phút, phân tích 3 đến 4 giờ. Còn khoảng 12 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C224 | 01:08 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+D:\Dang\Test\Homeworks\HW03\usability\tools>node edit_product_check.js --log=edit_check_log.txt
+
+===== Lần chạy 01:07:30 11/11/2026 | --log=edit_check_log.txt | http://localhost:5174
+
+===== Tổng hợp (kết quả nháp, sinh viên xem ảnh để chốt)
+Mã      Trường hợp      Ô đã đổi: lưu hay không Dòng khác đổi ngay sau lưu      Dòng khác đổi sau tải lại       Hộp thoại
+Nhắc: Reset DB sau khi chạy (cd backend && node database.js).
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('input[type="email"], input[type="text"]').first()
+
+    at login (D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js:148:15)
+    at async D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js:325:5 {
+  log: [
+    `  - waiting for locator('input[type="email"], input[type="text"]').first()`
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.11.0
+
+
+Kiểm tra xem script sai ở đâu.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Bash: Syntax-check updated script
+
+**Output AI (nguyên văn):**
+
+````text
+Script dừng ngay ở bước đăng nhập, lúc tìm ô email. Selector đang dùng là `input[type="email"], input[type="text"]`. Nếu ô email trong HTML không ghi thuộc tính `type`, selector này không khớp được, dù trình duyệt vẫn coi đó là ô chữ. Trường hợp trang Admin chưa chạy thì đã bị loại: Khi đó lệnh mở trang sẽ báo lỗi kết nối ngay, chứ không đợi 30 giây.
+
+Tôi sửa theo hướng không phụ thuộc vào thuộc tính `type`, đồng thời bỏ qua bước đăng nhập nếu đã ở sẵn trong trang Admin.
+
+Tôi đã sửa xong lỗi đăng nhập trong [edit_product_check.js](usability/tools/edit_product_check.js). Script đã qua kiểm tra cú pháp nhưng tôi chưa chạy thử, vì theo WORKFLOW tôi không được tự mở trang. Bạn chạy lại để kiểm.
+
+**Nguyên nhân:** Script tìm ô email bằng `input[type="email"], input[type="text"]`. Selector này chỉ khớp ô có ghi rõ thuộc tính `type` trong HTML. Ô email của trang đăng nhập Admin nhiều khả năng không ghi `type`. Trình duyệt vẫn coi đó là ô chữ, nhưng selector không tìm thấy, nên script chờ 30 giây rồi báo lỗi.
+
+**Đã sửa:**
+- **Cách tìm ô:** Tìm ô mật khẩu trước, vì chắc chắn có `type="password"` (ô hiện dấu chấm, như ảnh P7_01). Ô email lấy ô nhập đầu tiên đang hiện mà không phải ô mật khẩu.
+- **Đã đăng nhập sẵn:** Nếu mở trang mà đã thấy mục "Sản phẩm" ở thanh bên trái thì script bỏ qua bước đăng nhập.
+- **Lỗi đăng nhập:** Nếu vẫn lỗi, script ghi URL và tiêu đề trang lúc lỗi vào log, rồi chụp màn hình thành `edit_check_shots/E0_login_error.png`. Lần sau bạn chỉ cần gửi ảnh đó, khỏi phải chép lỗi.
+
+Bạn chạy lại bằng đúng lệnh cũ. Log mới được ghi nối tiếp vào cuối file:
+```
+node edit_product_check.js --log=edit_check_log.txt
+```
+
+Nếu lỗi lần trước đã làm hỏng dữ liệu thì bạn nhớ reset DB trước khi chạy. Thực ra lần trước script dừng ở bước đăng nhập nên chưa đổi dữ liệu gì.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Chờ bạn xác nhận danh mục thật lúc kiểm D6.
+- T2 bug form "Sửa": Script đã sửa, chờ bạn chạy lại.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 đến 5 giờ làm việc. Còn khoảng 12 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C225 | 01:16 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong rồi, bạn kiểm tra các ảnh đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List shots and read latest run log
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E1_4_table_after_save.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E7_5_table_after_reload.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E7_7_second_form_after_reload.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E1_3_dialog.png
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_product_check.js
+- Bash: Syntax-check script with E8
+- Bash: Correct P4 note about edit form bug
+- Bash: Update P4 D6 category note wording
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đọc log trước rồi xem ảnh để đối chiếu. Log cho thấy kết quả khác với kết luận lúc trước. Tôi xem các ảnh quan trọng để kiểm lại.
+
+Script đã thêm E8 và qua kiểm cú pháp. Tiếp theo tôi sửa ghi chú P4, vì kết luận cũ "form chỉ lưu tên" không đúng.
+
+Tôi đã xem log và 4 ảnh chính (E1_3, E1_4, E7_5, E7_7). Kết quả sửa lại kết luận trước đó của chúng ta, và lỗi thật còn nặng hơn.
+
+**Kết quả từ script**
+1. **Form "Sửa" lưu được mọi ô.** Từ E1 đến E6, mỗi lần sửa một lần trên trang vừa tải lại, cả 5 ô (tên, giá, URL ảnh, mô tả, danh mục) đều được lưu, và hệ thống báo "Cập nhật thành công!". Như vậy kết luận "chỉ lưu tên" lúc trước là sai. Tôi đã sửa lại ghi chú trong [notes.md](usability/sessions/P4/notes.md) của P4.
+2. **Bảng hiện sai ngay sau khi lưu** (ảnh E1_4). Lúc chưa tải lại trang, cả 5 dòng đều mang tên của sản phẩm vừa sửa. Giá và ảnh thì vẫn là giá trị cũ, kể cả ở chính dòng vừa sửa: MacBook đã lưu giá 45000111 nhưng bảng vẫn hiện 45000000. Lỗi này xảy ra ở cả 7 trường hợp.
+3. **Dữ liệu bị ghi sai thật** (E7, ảnh E7_5 và E7_7). Sửa giá iPhone xong, chưa tải lại trang, rồi bấm "Sửa" ở dòng Samsung. Lúc này form điền sẵn tên "iPhone 15 Pro Max", lấy từ bảng đang hiện sai. Bấm lưu thì Samsung bị đổi tên thành "iPhone 15 Pro Max" trong cơ sở dữ liệu, tải lại trang tên vẫn sai. Điều này trái với FR-15: "Khi Sửa một sản phẩm, chỉ sản phẩm đó bị thay đổi, các sản phẩm khác giữ nguyên." Bảng tổng hợp cuối log ghi "Không" ở cột "dòng khác đổi sau tải lại". Đó là lỗi đếm của script, vì script loại dòng Samsung ra khỏi phép đếm. Tôi đã sửa script để lần sau báo đúng.
+
+Lỗi 3 cũng giải thích lần bạn tự thử trước đó. Sau khi tải lại, bảng của bạn có hai dòng giá 300001 và 28000001 mang tên "Loa Bluetooth JBL Flip 6". Đó chính là iPhone và Samsung đã bị ghi đè tên theo cách này.
+
+**Với P4:** Lần cập nhật lúc 01:55 có thể đã lưu được URL và danh mục. Nhưng bảng vẫn hiện ảnh cũ, nên P4 tưởng chưa lưu và sửa tiếp hai lần trên trang chưa tải lại. Hai lần sửa này có thể đã ghi đè danh mục bằng giá trị cũ. Để biết chắc, tôi thêm trường hợp **E8** vào [edit_product_check.js](usability/tools/edit_product_check.js): Sửa cùng một sản phẩm hai lần liền như P4, lần 1 đổi URL và danh mục, lần 2 chỉ đổi mô tả. Sau đó tải lại trang xem URL và danh mục của lần 1 còn không.
+
+**Bạn làm giúp:**
+1. Đóng `participants.md` trong VS Code và thu nhỏ VS Code. Script chụp toàn màn hình, nên các ảnh vừa rồi có lộ tab và tiêu đề của `participants.md` (chưa thấy tên người tham gia). Khi gắn ảnh vào issue, tôi sẽ cắt chỉ lấy cửa sổ Chrome.
+2. Reset DB, rồi chạy:
+   ```
+   node edit_product_check.js --only=E8 --log=edit_check_log.txt
+   ```
+3. P4 lúc kiểm D6: Bạn có tải lại trang trước khi mở form "Sửa" không, và danh mục lúc đó hiện gì? Nếu không nhớ thì kết quả E8 sẽ cho biết khả năng nào cao hơn.
+
+**Mức độ:** Tôi đề xuất **Critical**. Theo cây quyết định của nhóm, câu 1 hỏi lỗi có "làm mất dữ liệu" không. Ở đây là có: Thao tác sửa bình thường (sửa hai sản phẩm liền nhau) ghi đè tên của một sản phẩm khác, tải lại trang vẫn mất, và hệ thống vẫn báo thành công nên admin không biết. Mức độ cuối cùng là do bạn chốt.
+
+Có E8 rồi, tôi sẽ viết bug B-T2-02 vào [bug_report.md](bugs/bug_report.md) và tạo issue, ghi chú "Related #9" vì có thể cùng nguyên nhân.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Chờ E8 và câu 3 để chốt danh mục ở D6.
+- T2 bug form "Sửa": Đã xác định, chờ E8, sau đó viết bug report và tạo issue.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 giờ làm việc: E8, bug report và issue khoảng 40 phút, phân tích 3 đến 4 giờ. Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C226 | 01:21 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Vậy bỏ tất cả ảnh kia, chạy lại script từ đầu, thêm trường hợp E8 đi.
+2. Sau khi đầy đủ thì đưa tôi lệnh chạy lại từ đầu script, như vậy để an toàn tuyệt đối dù không lộ gì.
+3. P4 không tải lại trang.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: D:\Dang\Test\Homeworks\HW03\usability\tools\capture_screen_max.ps1
+- Bash: Switch script to new capture helper
+- Bash: Delete old screenshots from previous run
+- Bash: Rename old log to keep it separate
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi sẽ xóa ảnh cũ và sửa script trước khi đưa lệnh chạy lại. Ở lần chạy trước, Chrome không phóng to hết màn hình nên cửa sổ VS Code lọt vào ảnh. Vì vậy tôi viết một file chụp màn hình riêng cho Task 2: Phóng to Chrome trước rồi mới chụp. File chụp của T1 tôi để nguyên.
+
+Tôi đã chuẩn bị xong để bạn chạy lại script từ đầu, gồm 8 trường hợp E1 đến E8.
+
+**Đã làm**
+- **Ảnh cũ:** Xóa hết 44 ảnh của lần chạy trước trong `edit_check_shots/`.
+- **Log cũ:** Đổi tên thành [edit_check_log_run1.txt](usability/tools/edit_check_log_run1.txt) để không lẫn với lần chạy mới. File này chỉ có dữ liệu sản phẩm, không có thông tin người tham gia.
+- **Chụp màn hình:** Thêm [capture_screen_max.ps1](usability/tools/capture_screen_max.ps1). File này phóng to cửa sổ Chrome của script rồi mới chụp, nên ảnh chỉ có Chrome và taskbar. Nếu không tìm thấy đúng cửa sổ Chrome thì nó bỏ qua, không chụp, để không chụp nhầm cửa sổ khác. File chụp của T1 tôi không sửa.
+- **E8:** Sửa cùng một sản phẩm hai lần liền mà không tải lại trang, giống P4. Script ghi lại form mở lần 2 hiện giá trị mới hay cũ, và sau khi tải lại thì URL ảnh và danh mục của lần 1 còn không.
+- **E7:** Bảng tổng hợp giờ báo đúng khi sản phẩm sửa lần 2 bị đổi tên.
+
+**Lệnh chạy lại từ đầu**
+1. Đóng `participants.md` ở mọi cửa sổ VS Code.
+2. Reset DB:
+   ```
+   cd Homeworks/eshop-sut/backend
+   node database.js
+   ```
+   Backend và frontend-admin phải đang chạy ở `http://localhost:5174`.
+3. Chạy script. Trong lúc chạy, bạn không bấm vào máy, khoảng 3 đến 4 phút:
+   ```
+   cd Homeworks/HW03/usability/tools
+   node edit_product_check.js --log=edit_check_log.txt
+   ```
+4. Chạy xong thì reset DB lại (lệnh ở bước 2).
+
+**P4:** Bạn nói P4 không tải lại trang. Vậy lúc bạn kiểm D6 bằng form "Sửa", form có thể vẫn hiện giá trị cũ, chưa phải giá trị thật đã lưu. Tôi để ⏳ ở ô danh mục, chờ E8 cho biết danh mục cũ có bị ghi đè lên không rồi mới chốt.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Chờ E8 để chốt danh mục ở D6.
+- T2 bug form "Sửa": Script đủ 8 trường hợp, chờ bạn chạy lại.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 giờ làm việc: chạy lại và xem ảnh khoảng 20 phút, bug report và issue khoảng 30 phút, phân tích 3 đến 4 giờ. Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C227 | 01:24 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Lúc tôi kiểm tra cũng không tải lại trang và tôi cũng không thấy lỗi khi đó, do tôi kéo đến sản phẩm cuối để bấm sửa (sản phẩm tạo ra ở cuối) và thấy vẫn y như cũ. Chính tôi cũng mắc lỗi giống P4.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show P4 D6 rows
+- Bash: Mark P4 D6 image/category as undeterminable with note
+- Bash: Adjust P4 outcome wording
+
+**Output AI (nguyên văn):**
+
+````text
+Vậy là chính bạn lúc kiểm cũng bị cùng lỗi hiển thị đánh lừa như P4. Đây là bằng chứng mạnh cho bug: Người đã biết rõ luồng mà kiểm cẩn thận vẫn không nhận ra.
+
+**Đã sửa ở [notes.md](usability/sessions/P4/notes.md) của P4**
+- **Ảnh và danh mục ở D6:** Đổi thành "Không xác định được". Bạn kiểm trên trang chưa tải lại, nên form "Sửa" có thể đang hiện giá trị cũ chứ không phải giá trị đã lưu. DB cũng đã reset, nên không kiểm lại được.
+- **Ghi chú dưới bảng D6:** Ghi rõ người điều phối kiểm thế nào và vì sao không nhận ra lỗi.
+- **Kết quả M3 và toàn luồng:** Vẫn là "Không hoàn thành", nhưng lý do đổi thành "P4 bỏ cuộc", vì kịch bản mục 4.3 tính bỏ cuộc là không hoàn thành. Lý do cũ là "ảnh không hiện" thì không còn chắc chắn nữa.
+
+**Các phiên khác không bị ảnh hưởng.** Chỉ P4 có lưu bằng form "Sửa". P1 có mở form "Sửa" nhưng không lưu, nên bảng chưa bị hiện sai. D6 của các phiên còn lại vẫn đúng.
+
+**Ghi vào hạn chế khi phân tích:** Cách kiểm D6 trong test plan (mở form "Sửa", không tải lại trang) không đáng tin khi người tham gia đã lưu bằng form "Sửa". Đây là cách kiểm do chúng ta tự chọn ở pilot, và vì có bug này nên nó không còn đúng. Tôi sẽ ghi điều này ở phần hạn chế trong `05_findings.md` và nêu là bài học khi thiết kế cách kiểm.
+
+Lệnh chạy lại script vẫn như lượt trước: Đóng `participants.md`, reset DB, rồi chạy:
+```
+cd Homeworks/HW03/usability/tools
+node edit_product_check.js --log=edit_check_log.txt
+```
+Chạy xong thì reset DB lại.
+
+Status:
+- T2 P1, P2, P3, P5, P6, P7: Xong.
+- T2 P4: Xong. Còn một ghi chú chờ E8 để ghi rõ cơ chế lỗi (dòng 98).
+- T2 bug form "Sửa": Chờ bạn chạy lại script (E1 đến E8).
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 4 giờ làm việc: chạy script và xem ảnh khoảng 20 phút, bug report và issue khoảng 30 phút, phân tích 3 đến 4 giờ. Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C228 | 01:27 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong script. Kiểm tra ảnh đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Summarize new run log and shots
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E8_3c_form_reopened.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E8_6_form_after_reload.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E8_2_form_changed.png
+- Bash: Read Task 2 section of bug report
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E7_5_table_after_reload.png
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\edit_check_shots\E1_4_table_after_save.png
+- Bash: Copy evidence shots and read FR-24 text
+- Bash: Append B-T2-02 to bug report
+- Bash: Finalize P4 note with E8 result
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\issue_B-T2-02.md
+
+**Output AI (nguyên văn):**
+
+````text
+Log của E8 xác nhận đúng cơ chế đã gặp ở P4. Tôi xem ảnh để kiểm cả nội dung lẫn việc ảnh có còn lộ cửa sổ khác không.
+
+Ảnh của lần chạy mới đã đủ làm bằng chứng. Tôi chép 5 ảnh vào `usability/screenshots/` và lấy nguyên văn FR-24 để ghi vào bug report.
+
+Tôi đã xem log và ảnh của lần chạy mới. Kết luận về bug:
+
+| Trường hợp | Kết quả |
+|---|---|
+| E1 đến E6: Sửa một lần, trang vừa tải lại | Mọi ô (tên, giá, URL ảnh, mô tả, danh mục) đều lưu đúng |
+| Cả 8 trường hợp: Ngay sau khi lưu, chưa tải lại | Mọi dòng hiện tên của sản phẩm vừa sửa; giá và ảnh vẫn là giá trị cũ (`flow_14`) |
+| E7: Sửa sản phẩm thứ hai khi chưa tải lại | Samsung bị ghi đè tên thành "iPhone 15 Pro Max", tải lại trang vẫn sai (`flow_15`) |
+| E8: Sửa cùng một sản phẩm hai lần, như P4 | Lần 2, form hiện URL ảnh và danh mục cũ (`flow_17`); lưu xong thì thay đổi của lần 1 mất (`flow_18`) |
+
+Lần nào lưu, hệ thống cũng báo "Cập nhật thành công!", nên người dùng không biết dữ liệu đã bị ghi sai.
+
+**Đã làm**
+- **Ảnh bằng chứng:** Chép 5 ảnh vào `usability/screenshots/`, từ `flow_14_product_edit_list_wrong_names.png` đến `flow_18_product_edit_change_lost.png`. Ảnh chỉ có Chrome, taskbar và khung MSSV của bạn.
+- **Bug report:** Viết B-T2-02 vào [bug_report.md](bugs/bug_report.md), gồm 2 trường hợp tái hiện A và B, căn cứ FR-15, IA-02 và IA-04, và ghi chú "Related #9".
+- **P4:** Chốt ghi chú trong [notes.md](usability/sessions/P4/notes.md), không còn ⏳. Danh mục chọn lúc 01:55 có thể đã bị hai lần lưu sau trả về "Điện thoại".
+- **Nội dung issue:** Đã soạn sẵn tại `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\de8fb2a8-8661-4c27-bebc-c7667ef44584\scratchpad\issue_B-T2-02.md`.
+
+**Cần bạn chốt trước khi tôi tạo issue:**
+1. **Mức độ:** Tôi đề xuất **Critical**. Lý do theo câu 1 của cây quyết định: Có mất dữ liệu, vì một thao tác sửa bình thường đã ghi đè dữ liệu đã lưu, kể cả của sản phẩm khác. Nếu bạn cho rằng tải lại trang trước mỗi lần sửa là cách đi vòng được thì chọn **High**.
+2. **Tạo issue luôn không?** Nếu đồng ý, tôi tạo bằng `gh` như issue #66. Sau đó bạn dán 5 ảnh vào ô comment để lấy link, gửi tôi các thẻ `<img>`, rồi tôi chèn vào mục "Ảnh chụp".
+
+Status:
+- T2 P1 đến P7: Xong.
+- T2 bug B-T2-01 (#66): Xong.
+- T2 bug B-T2-02: Đã soạn xong bug report và nội dung issue, chờ bạn chốt mức độ và đồng ý tạo.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 3,5 đến 4,5 giờ làm việc: tạo issue và gắn ảnh khoảng 15 phút, phân tích 3 đến 4 giờ. Còn khoảng 11,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C229 | 01:29 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã xong 7 phiên và commit, trong khi đó có tìm ra lỗi nên task 2 đang kiểm tra. Bạn hãy kiểm tra các phần đã làm, xuất log và đưa commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show time, repo status, recent commits, export prompt log
 
 **Output AI (nguyên văn):**
 
