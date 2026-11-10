@@ -10648,6 +10648,73 @@ Kiểm tra các task, xuất log, đưa commit message. Đã xong các issu
 **Output AI (nguyên văn):**
 
 ````text
+Đúng, chỉ cần 2 đến 3 ảnh **trang danh sách issue** là đủ. Task 1 gần xong `bugs`, còn N3 thì **vẫn đang chạy**.
+
+## Kiểm tra
+
+**Task 1, `bugs`:**
+- Tôi đã kiểm từng issue từ #33 đến #65: **đủ 33 issue đều đã có ảnh**.
+- Đã bình luận vào **#18** (badge giỏ hàng, kèm ảnh CL-68 và CL-69) và **#29** (nút "Thoát", kèm ảnh CL-70).
+- `bug_report.md` đã cập nhật đúng hai việc trên.
+
+**Task 3, N3: Chưa xong.** Log mới chạy tới nhóm W-03 (CL-103, CL-47); chưa có `overview_profile` và các mục ở W-06. Đã có 19 ảnh trong `cross_platform/screenshots/android-chrome/`.
+
+Đừng commit ảnh N3 và `n3_run_log.txt` lúc này. Chờ script chạy xong, phiên Task 3 điền cột NT3, rồi commit một lần.
+
+## Chụp danh sách issue
+
+1. Mở: `https://github.com/angquoc/software-testing-2026-HW03-group/issues?q=is:issue author:angquoc label:"task: T1 checklist"`
+2. GitHub hiện 25 issue mỗi trang, nên 33 issue sẽ ra 2 trang. Chụp mỗi trang, cuộn thêm nếu trang dài: Thường là 2 đến 3 ảnh.
+3. Lưu thành `bugs/screenshots/issues_list_T1_1.png`, `issues_list_T1_2.png`... (theo WORKFLOW §5 đã sửa).
+4. Ảnh cần thấy được: Ô lọc, số issue, tiêu đề, label. Ảnh này **không cần** Sticky Notes, vì lớp chữ đè chỉ bắt buộc cho ảnh của Task 3.
+
+**Đừng chụp lúc N3 đang chạy.** Script chụp màn hình điện thoại, nên không ảnh hưởng tới ảnh trên máy tính. Nhưng tránh thao tác trên máy để không làm gián đoạn script đang chờ bạn chuẩn bị giỏ hàng.
+
+## Lệnh commit (sau khi có ảnh danh sách issue)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/bug_report.md bugs/screenshots/issues_list_T1_*.png prompt_log.md
+git commit -m "[T1][bugs] Add issue images, related comments and issue list screenshots"
+git push
+```
+
+Sau commit này, **Task 1 xong**. Phần tóm tắt kết quả (`checklist/03_results.md` và test summary trong README) sẽ làm ở bước Tổng hợp.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs` gần xong | Chụp 2 đến 3 ảnh danh sách issue → commit | ~0,25 giờ |
+| Task 2 | Hồ sơ P1 đến P7 đã tạo sẵn | N3 xong → reset → P1 | ~6,5 giờ |
+| Task 3 | **N3 đang chạy** (tới W-03) | N3 xong → phiên Task 3 điền NT3; review danh sách N2; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **15,5 giờ** làm việc | Còn **6 giờ 21 phút** tới mốc 22:00 10/11 | **21 giờ 21 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C168 | 15:45 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Đã bổ sung và commit task 1. Bạn có thể kiểm tra và đánh dấu trạng thái task 1. Chúng ta có thể bổ sung agent skill được chưa? Còn thiếu phần nào không?
+- N3 đã chạy xong, bạn sẽ kiểm tra hay đưa task 3 kiểm tra?
+- Hồ sơ của task 2 đang được bổ sung.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check commits, N3 summary, DB state and session file progress
+- Bash: Find group errors in N3 log
+- Bash: Export log and mark Task 1 done in tracker
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
