@@ -7802,6 +7802,886 @@ Tôi đã điền xong cột NT1 trong [HW03_T1_GUI_Checklist.xlsx](Homeworks/HW
 **Output AI (nguyên văn):**
 
 ````text
+Cả hai commit được. Task 1 còn 4 chỗ nhỏ phải bổ sung, nhưng không chặn commit. Log đã xuất lại: 124 lượt. Từ giờ cuối mỗi tin nhắn tôi sẽ thêm bảng trạng thái từng task (đã lưu vào bộ nhớ).
+
+## Kiểm tra
+
+### Task 1: File Excel cột NT1 và 9 ảnh chụp tay
+
+| Kiểm | Kết quả |
+|---|---|
+| Số mục có kết quả | 110/112: 49 Passed, 54 Failed, 7 Không chạy được |
+| Ô trống | **CL-33** (zoom 200%) và **CL-34** (Họ Tên dài) |
+| Mục Failed có Notes | Đủ |
+| Mục Failed có ảnh | Thiếu ảnh ở **CL-05** và **CL-105** (đề yêu cầu ảnh cho mọi mục Failed) |
+| Tên ảnh trong Excel khớp file thật | Khớp; `CL-26_chrome_1/_2` đánh số đúng quy tắc |
+| Sheet "Môi trường" NT1 | Đã điền |
+
+Lưu ý cho phần Audit: Ghi chú trong Excel nói phiên Task 1 **tự xem ảnh chụp màn hình** để kết luận một số mục (đánh dấu "(AI xem ảnh)"). Tôi đã ghi điểm này vào tracker. Vì vậy bạn cần xem lại các mục có đánh dấu này trước khi coi là kết quả chốt.
+
+### Task 2: Sửa sau pilot
+
+Phần sửa nhất quán giữa 3 file, mỗi thay đổi có dòng trong bảng thay đổi:
+- Thời gian chuẩn đổi sang **×3** (toàn luồng 02:18.75), cố định cho P1 đến P7.
+- Ngưỡng "bế tắc hẳn" giảm còn 2 phút.
+- Thời lượng phiên đổi thành 15 đến 25 phút.
+- Thêm việc đặt bộ gõ về tiếng Anh, dặn người tham gia đọc to hết kịch bản trước khi chạm chuột, và câu "được sao chép" ở đầu phiếu dữ liệu.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/screenshots/CL-*_chrome*.png
+git commit -m "[T1][exec] Record N1 results in Excel with manual-check screenshots"
+git add usability/01_test_plan.md usability/02_scenario.md usability/03_instruments.md prompt_log.md
+git commit -m "[T2][pilot] Apply pilot findings to plan, scenario and instruments"
+git push
+```
+
+## Có bắt buộc chạy tay không
+
+**Task 1: Có, nhưng chỉ còn rất ít.** Đề ghi "Execute the checklist... marking each item as Passed or Failed", nghĩa là mục nào cũng phải có kết quả. Phần còn lại khoảng 15 phút:
+- CL-33: Bấm `Ctrl` và `+` tới 200%, xem 3 trang.
+- CL-34: Đổi Họ Tên thành chuỗi 50 ký tự, xem navbar ở 3 trang.
+- Chụp ảnh cho CL-05 và CL-105.
+- 3 ảnh tổng quan N1 và `overview_env.png` cho Task 3.
+
+Không nên xóa mục khỏi checklist để khỏi chạy. Checklist đã chốt ở bước review và add, xóa lúc này sẽ lệch với các file đã commit.
+
+**Task 3, Android (N3): Dùng script được.**
+- **Chạy script:** `playwright-core` đang cài có hỗ trợ Chrome trên Android thật qua `adb` (mức thử nghiệm). Có thể phải bật thêm một cờ trong `chrome://flags` của điện thoại; phiên viết script sẽ kiểm việc này.
+- **Chụp ảnh:** Dùng `adb exec-out screencap`. Lệnh này chụp đúng màn hình điện thoại, có cả cửa sổ Samsung Notes và thanh địa chỉ, nên đúng yêu cầu ảnh của Task 3.
+- **Mục N/A:** Các mục về phím Tab và rê chuột ghi N/A kèm lý do (điện thoại không có bàn phím vật lý và chuột).
+- **Chi phí:** Sửa script từ bản N1 mất khoảng 1 giờ, chủ yếu là thời gian của AI, giới hạn trong 1 giờ. Nên nhờ **phiên Task 1** làm vì phiên đó viết script N1; kết quả ghi vào cột NT3.
+
+**Task 3, Firefox trên cloud (N2): Chạy tay một phần là hợp lý.** Để phút trial dùng đúng chỗ:
+1. **Dán `devtools_check.js` vào Console** ở 4 trạng thái trang. Mỗi lần vài giây, xong khoảng 17 mục.
+2. **Ưu tiên mục dễ khác nhau giữa trình duyệt:** Bong bóng validate của HTML5 (CL-39, CL-45), dấu focus (CL-21), font, bố cục, cuộn ngang (CL-28 đến CL-32, CL-109), định dạng ngày (CL-24), hover (CL-74, CL-107), chụp ảnh tổng quan.
+3. **Mục chỉ phụ thuộc xử lý phía server thì không chạy lại**, vì trình duyệt nào cũng cho cùng kết quả. Ví dụ: Trang Đăng ký từ chối mật khẩu, kiểm số điện thoại, khóa tài khoản. Ghi "Không chạy được" kèm lý do "Hết phút trial; mục phụ thuộc xử lý phía server, không phụ thuộc trình duyệt; kết quả trên N1: ...". Như vậy là trung thực và có căn cứ.
+
+Bạn có thể nhờ **phiên Task 3** lập sẵn danh sách 112 mục chia 3 nhóm (Console, ưu tiên chạy tay, không chạy lại) **trước khi** đăng ký trial. Phần này AI làm, không tốn phút trial.
+
+Prompt cho phiên Task 1 (Android):
+
+```text
+Bước Task 3, nền tảng N3 (Android Chrome trên điện thoại thật, cắm USB, đã bật USB debugging). Viết n3_android_checklist.js dựa trên n1_chrome_checklist.js, dùng playwright-core `_android` qua adb. Chụp ảnh mục Failed bằng `adb exec-out screencap -p` (chụp màn hình điện thoại, có lớp chữ đè Samsung Notes), lưu ở cross_platform/screenshots/android-chrome/CL-xx.png. Mục Tab, rê chuột: N/A kèm lý do. Kiểm trước điều kiện cần (cờ chrome://flags, phiên bản Chrome). CHỈ VIẾT, chưa chạy; chạy thử khi tôi cho phép và phiên điều phối đã reset DB. Giới hạn khoảng 1 giờ.
+```
+
+## Trạng thái
+
+| Task | Đang ở | Chờ |
+|---|---|---|
+| Task 1 | Exec N1 gần xong | Bạn làm CL-33, CL-34, ảnh CL-05, CL-105, ảnh tổng quan N1 → sau đó `bugs` |
+| Task 2 | Đã sửa xong sau pilot | Chạy **P1 đến P7** (báo tôi trước mỗi lượt để reset DB) |
+| Task 3 | Setup xong | Chờ script Android (phiên Task 1) và danh sách ưu tiên cho N2 (phiên Task 3) |
+| Agent Skill | Phần thiết kế xong | Chờ các bước sau xong để bổ sung, rồi demo và video |
+
+⏱ Còn khoảng **24 giờ** làm việc | Còn **9 giờ 16 phút** tới mốc 22:00 10/11 | **24 giờ 16 phút** tới deadline 13:00 11/11
+
+Với 24 giờ việc mà chỉ còn 24 giờ 16 phút tới deadline, mốc 22:00 hôm nay không còn khả thi.
+````
+
+---
+
+### C125 | 13:16 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Bước Task 3, nền tảng N3 (Android Chrome trên điện thoại thật, cắm USB, đã bật USB debugging). Viết n3_android_checklist.js dựa trên n1_chrome_checklist.js, dùng playwright-core `_android` qua adb. Chụp ảnh mục Failed bằng `adb exec-out screencap -p` (chụp màn hình điện thoại, có lớp chữ đè Samsung Notes), lưu ở cross_platform/screenshots/android-chrome/CL-xx.png. Mục Tab, rê chuột: N/A kèm lý do. Kiểm trước điều kiện cần (cờ chrome://flags, phiên bản Chrome). CHỈ VIẾT, chưa chạy; chạy thử khi tôi cho phép và phiên điều phối đã reset DB. Giới hạn khoảng 1 giờ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Grep: cross_platform|N3|Task 3|android
+- Bash: List cross_platform folder, tools, and locate adb
+- Bash: Read Task 3 workflow sections, setup doc, find adb
+- Bash: Read Task 3 section and setup doc outline
+- Bash: Read N3 setup sections of 01_setup.md
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Bash: Inspect Playwright Android implementation details
+- Bash: Find Playwright Android source file
+- Bash: Extract Android launch logic snippets from bundle
+- Bash: Read launchBrowser and driver install code
+- Bash: Read checklist rows for device-sensitive items
+- Bash: Show package.json, gitignore, N1 CL-63 result
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\make_n3.py
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\n3_tail.js
+- Bash: Generate N3 script and syntax-check it
+- Bash: Fix probe email tag and list diff hunks
+- Bash: Compare line endings of scripts
+- Bash: Restore CRLF and review changed regions
+- Edit: D:\Dang\Test\Homeworks\HW03\checklist\tools\package.json
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đang đọc script N1 (1628 dòng) để chuyển sang N3: Đã thấy adb ở `%LOCALAPPDATA%\Android\Sdk\platform-tools`. Đọc nốt phần còn lại rồi viết.
+
+Đang xem cách Playwright mở Chrome trên Android (ghi file cờ dòng lệnh, có cài driver APK hay không) để script không cài gì lạ lên điện thoại.
+
+Script N3 đã sinh xong và qua `node --check`; đang soát lại phần khác với N1 và trả lại kiểu xuống dòng CRLF cho giống các file khác.
+
+Tôi đã viết xong [n3_android_checklist.js](Homeworks/HW03/checklist/tools/n3_android_checklist.js) nhưng chưa chạy. Chỉ mới chạy `node --check` (kiểm cú pháp, không thực thi) và qua; script chưa kết nối điện thoại hay EShop lần nào.
+
+**Cách làm:** Script được sinh từ N1 bằng một file patch nên logic kiểm từng mục giữ y như N1. Chỉ khác cách mở trình duyệt, cách chụp ảnh và các mục N/A. Tôi thêm 2 lệnh vào [package.json](Homeworks/HW03/checklist/tools/package.json): `npm run n3:check` và `npm run n3`.
+
+**Kiểm điều kiện trước khi chạy (`--check`, không mở EShop, không đổi dữ liệu):**
+- **adb:** Tự tìm ở `%LOCALAPPDATA%\Android\Sdk\platform-tools` vì adb chưa nằm trong PATH.
+- **Thiết bị:** Báo rõ khi chưa bấm "Cho phép gỡ lỗi USB".
+- **Phiên bản Chrome:** Playwright cần từ 87 trở lên; script cũng kiểm Chrome có bị tắt không.
+- **Cờ `chrome://flags`** "Enable command line on non-rooted devices": Script ghi một dòng lệnh thử rồi mở lại Chrome, xem Chrome có nhận dòng lệnh đó không. Bước này **đóng rồi mở lại Chrome trên điện thoại** một lần; các tab cũ vẫn giữ.
+- **Cờ không bật được** (bản Chrome mới có thể đã bỏ cờ này): Có phương án dự phòng `--via=cdp`, nối vào cổng gỡ lỗi mặc định của Chrome.
+- **Cảnh báo, không chặn:** Màn hình tắt hay đang khóa; Samsung Notes chưa mở.
+- **`adb reverse`:** Tự đặt cổng 5173 và 3000 nếu chưa có.
+- **Thông tin máy cho sheet Môi trường:** Model, Android, độ phân giải, cỡ chữ.
+
+**Ảnh:** Chụp bằng `adb exec-out screencap -p`, lưu nguyên bản không chỉnh sửa vào `cross_platform/screenshots/android-chrome/CL-xx.png`. Mỗi mục Failed chỉ chụp ở màn hình Failed đầu tiên, giống N1. Script chụp thêm các ảnh tổng quan theo mục 6.3 của 01_setup.md:
+- `overview_env` (trang `chrome://version`)
+- `overview_login`, `overview_register`
+- `overview_profile`: Trang dài thì đánh số `_1`, `_2`.
+
+Tắt ảnh tổng quan bằng `--no-overview`.
+
+**An toàn cho điện thoại:** Script không cài ứng dụng nào và không đổi cài đặt máy. Nó chỉ xóa dữ liệu của `localhost:5173` và `localhost:3000` trong Chrome thật của bạn, không đụng tới trang web khác.
+
+**Bạn cần quyết** (chưa ghi vào Excel hay 02_checklist.md):
+
+| Mục | Script đang làm | Lý do |
+|---|---|---|
+| CL-15, 16, 17, 21, 73 | N/A | Không có phím Tab (theo yêu cầu của bạn) |
+| CL-74, 107 | N/A | Không có rê chuột (theo yêu cầu của bạn) |
+| CL-32 | **N/A** (tôi tự đề xuất) | Điện thoại không đặt được cửa sổ 1366 x 768 |
+| CL-22 | Chỉ kiểm thuộc tính `readonly` / `disabled` | Phần "Tab khớp với thuộc tính" không kiểm được; Notes có ghi rõ |
+| CL-109 | Kiểm ở khổ thật của điện thoại, ghi bề rộng thật | Khổ thật có thể khác 360 px |
+| CL-33 | Chạy tay | Phóng to 200% bằng Chrome > Cài đặt > Hỗ trợ tiếp cận, vì không có Ctrl và dấu + |
+| CL-63 | Thử dán tự động | Không dán được nhưng trang không chặn sự kiện dán thì ghi "Chạy tay" (dán tay bằng nhấn giữ), không ghi Failed |
+| CL-57, 61 | Vẫn kiểm tự động | Bàn phím ảo vẫn có focus và phím Enter / Đi |
+
+**Có thể cần chụp lại tay:** Ảnh chụp đúng phần màn hình đang hiện, nên phần đang kiểm có thể nằm ngoài màn hình hoặc bị cửa sổ nổi che. Tôi cho rằng thanh địa chỉ không bị ẩn vì script cuộn bằng lệnh chứ không vuốt, nhưng chưa thử. Khi xem ảnh, nhớ kiểm thanh địa chỉ.
+
+**Khi bạn cho phép chạy thử:**
+1. `node n3_android_checklist.js --check`: Không gọi EShop. Có thể chạy ngay cả khi phiên usability đang dùng backend, nhưng vẫn cần bạn cho phép vì nó đóng và mở lại Chrome trên điện thoại.
+2. Sau khi phiên điều phối reset DB và seed: `node n3_android_checklist.js --dry-run --log=n3_dry_log.txt`.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n3_android_checklist.js checklist/tools/package.json
+git commit -m "[T3][android-chrome] Add Playwright script for N3 Android Chrome draft run" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+````
+
+---
+
+### C126 | 13:16 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+lập sẵn danh sách 112 mục chia 3 nhóm (Console, ưu tiên chạy tay, không chạy lại) trước khi đăng ký trial
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List checklist and cross_platform folders
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Bash: List checklist tools and screenshots
+- Bash: Inspect Excel sheets and header rows
+- Bash: Inspect Excel sheets with UTF-8 output
+- Bash: Inspect Excel sheets with UTF-8 output
+- Bash: Dump checklist items and scan console script
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\items.txt
+- Bash: Check script viewport handling and non-run item notes
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\devtools_check.js
+- Bash: Read Chrome notes for browser-sensitive items
+- Bash: Read environment sheet, validation lists, summary
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\triage.py
+- Bash: Generate the 112-item grouping table
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\body.md
+- Bash: Assemble AI raw and review files, verify counts
+- Bash: Scan prose for lowercase after colon
+
+**Output AI (nguyên văn):**
+
+````text
+Task 1 đã chạy trên Chrome (có ảnh `CL-xx_chrome.png`). Tôi xem checklist, file Excel và thư mục `checklist/tools/` để phân nhóm.
+
+I've made the list. All 112 items are split into 3 groups and sorted into the order you'll run them in the BrowserStack session.
+
+- AI draft, saved verbatim: [ai_raw/T3_firefox_triage.md](HW03/cross_platform/ai_raw/T3_firefox_triage.md)
+- Your review copy: [firefox_triage.md](HW03/cross_platform/firefox_triage.md). The "Thay đổi so với bản AI" table at the end is still empty.
+
+**The 3 groups**
+
+| Group | Items | How it's checked |
+|---|---|---|
+| A Console | 17 | Paste `checklist/tools/devtools_check.js` into the remote Firefox console. It covers exactly these 17 items, and its header says it also runs on Firefox. |
+| B Ưu tiên chạy tay | 44 | 12 items done during the session (Tab order, focus outline, HTML5 email check, 200% zoom, Back button), plus 32 "Nhìn" items you judge from the overview screenshots you already have to take. |
+| C Không chạy lại | 51 | The result comes from the page's text, data or logic, so it's unlikely to differ between browsers. Some also take too long (account lockout, 2 tabs, a second account), or were "Không chạy được" on Chrome too. |
+
+**Changes from what you described**
+- **B is split in two.** The 32 items read from the overview screenshots after the session cost no trial minutes, but they are still real observations on Firefox. This raises the items actually run on Firefox to 61 of 112.
+- **The run order** (section 3.2) has 18 steps. My rough estimate is 20 to 25 minutes, not measured yet. The 200% zoom check (CL-34 is the last step) is only for if time is left.
+
+**Two items to watch**
+- **CL-24 (date format):** Chrome shows month/day/year. This usually means the page formats dates by the browser's locale, so Firefox on the cloud machine, or your Android phone, may show something different. This is the likeliest bug that appears on only some platforms.
+- **CL-33, CL-34:** The Chrome column is still empty, so the Chrome and Firefox results for these two can't be compared yet.
+
+**Do not copy Chrome results into the Firefox column for group C.** That breaks the rule that results come only from a real run. N/A and "Không chạy được" also don't fit, because these items apply to Firefox and were simply not attempted. In the Excel file, a blank cell is counted as "Chưa chạy" (not run).
+
+**Decisions for you (section 6)**
+- **D-16:** How to record group C: leave blank with the reason in Notes, or run some if minutes remain.
+- **D-17:** Backup if pasting the 21 KB script into the remote machine fails. I suggest serving just that one file through the tunnel, then copying and pasting it inside the remote Firefox.
+- **D-18:** Keep the "judge from screenshots" approach for the 32 items or not.
+- **D-19:** Run CL-33 and CL-34 on Chrome before the Firefox run or not.
+
+I named the file `firefox_triage.md` myself because WORKFLOW doesn't set a name for this. Tell me if you want a different name.
+
+Commit (ask the coordination session to export the prompt log first):
+```
+git add cross_platform/ai_raw/T3_firefox_triage.md cross_platform/firefox_triage.md
+git commit -m "[T3][firefox] Add item triage for BrowserStack session (AI draft)"
+```
+````
+
+---
+
+### C127 | 13:34 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi đã bổ sung thêm ảnh, hãy thêm và điền thêm thông tin vào file excel cho tôi. Còn thiếu thông tin nào không? Tôi nhớ hình như có 1 script nào để xem thông tin phần devtools mà đúng không? Hay đại loại thế. Còn thiếu ảnh nào không?
+- Về script: Các phần quyết đều đồng ý với bạn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List screenshots by modification time
+- Bash: Inspect new screenshot files and sizes
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-33_chrome_1.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-33_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-33_chrome_3.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-33_chrome_4.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-33_chrome_5.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-34_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-68_chrome_1.png
+- Bash: Read DevTools helper header and covered items
+- Bash: Inspect Excel layout and target rows
+- Bash: Check multi-image format and recalc method
+- Bash: Find Excel recalc helper in scratchpad
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_b.py
+- PowerShell: Fill Excel rows and recalculate via Excel
+- PowerShell: Read per-platform result summary rows
+- Bash: Read Môi trường sheet NT1 values
+- PowerShell: Update NT1 environment cells and recalc
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_env_b.py
+- PowerShell: Update environment sheet and recalc workbook
+
+**Output AI (nguyên văn):**
+
+````text
+Đã xem 7 ảnh mới (CL-33 năm ảnh, CL-34, CL-68_1). Giờ xem lại script DevTools cũ và file Excel để điền.
+
+Đã ghi Excel và tính lại; đang đọc dòng tổng hợp NT1 để xác nhận số liệu.
+
+Tôi đã điền thêm vào [HW03_T1_GUI_Checklist.xlsx](Homeworks/HW03/checklist/HW03_T1_GUI_Checklist.xlsx) và tính lại. NT1 giờ đủ 112/112 mục: 51 Passed, 54 Failed, 7 Không chạy được, không còn ô trống, tỉ lệ Passed 48,6%.
+
+**Đã điền từ 7 ảnh mới:**
+- **CL-33 → Passed (AI xem ảnh).** Ảnh chụp ở mức zoom 200%. W-03 và W-04 cuộn dọc thấy đủ form, không chữ nào bị cắt, không chồng lấn. Ở W-06, nhãn "Chờ xác nhận" và số tiền xuống 2 dòng nhưng vẫn đọc được. Tuy vậy, ảnh W-06 chỉ có phần đầu trang; tôi đã ghi điều này trong Notes.
+- **CL-34 → Passed (AI xem ảnh).** Họ Tên dài 57 ký tự, lời chào vẫn nằm trên một dòng, không đẩy lệch "Giỏ hàng" hay "Thoát". Hai điểm bạn cần biết khi review:
+  - Chỉ có ảnh W-06, chưa có ảnh navbar ở W-03 và W-04.
+  - Cửa sổ Chrome mở toàn màn hình, không phải 1366 x 768.
+- **CL-68:** Thêm ảnh `_1` vào Notes và cột Ảnh. Ảnh này cho thấy giỏ thật có 2 sản phẩm khác nhau, mỗi sản phẩm số lượng 1, mà link "Giỏ hàng" vẫn không có badge. Vậy CL-68 Failed là đúng.
+- **Sheet Môi trường:** Thêm giờ chạy tay (13:20 đến 13:27), zoom 200% của CL-33, và ghi chú cửa sổ toàn màn hình.
+
+**Đúng là có script đó:** [devtools_check.js](Homeworks/HW03/checklist/tools/devtools_check.js). Cách dùng: Mở trang, F12, tab Console, dán cả file rồi Enter (lần đầu Chrome bắt gõ `allow pasting`). Script in ra một bảng giá trị đo được cho CL-13, 19, 44, 46, 54, 62, 76, 106 và vài mục khác. Bạn chỉ cần chụp 3 ảnh bảng đó, ở `/login`, `/register` và `/profile` (đã đăng nhập), thay vì chụp từng mục trong Elements. Lưu tên tạm như `devtools_login.png`, tôi sẽ sao ra đúng tên `CL-xx_chrome_*.png`. Với CL-106, trang phải đang hiện một thông báo lỗi lúc bạn dán script.
+
+**Ảnh còn thiếu:**
+1. **Từ devtools_check.js:** 3 ảnh như trên.
+2. **CL-23:** Lighthouse, mục Accessibility, phần Contrast. devtools_check.js không kiểm mục này.
+3. **Chụp lúc đang thao tác:**
+   - CL-15, 16: Bấm Tab lần đầu ở `/login`.
+   - CL-57: Focus sau khi báo lỗi.
+   - CL-74, 107: Đang rê chuột.
+   - CL-94, 96: Network đặt Slow 4G, chụp lúc đang tải hoặc đang chờ.
+   - CL-112: Tab Network thấy 3 request.
+   - CL-108: Bước Clear site data rồi hộp thông báo.
+4. **Chụp lúc hộp thoại còn mở:**
+   - CL-05, 88: Hủy đơn.
+   - CL-52, 101, 102, 110: Số điện thoại.
+   - CL-105: Mất mạng.
+5. **Ảnh N1 cho Task 3** (01_setup.md mục 7.1), thư mục `cross_platform/screenshots/chrome/` còn trống:
+   - `overview_login.png`, `overview_register.png`
+   - `overview_profile.png`: Đã đăng nhập test@eshop.com, dữ liệu vừa reset và seed.
+   - `overview_env.png`: Trang `chrome://version`.
+6. **Nên có thêm (không bắt buộc):**
+   - CL-34: Navbar ở W-03, W-04 khi đã đăng nhập.
+   - CL-33: Phần dưới của W-06.
+   - CL-69: Trang giỏ hàng có 1 sản phẩm, số lượng 2.
+
+Nhóm 3, 4 và ảnh `overview_profile` cần dữ liệu sạch, nên nhờ phiên điều phối reset DB và seed trước. Ảnh CL-34 cho thấy hồ sơ test@eshop.com đang bị đổi (Họ Tên dài, số điện thoại 912345678).
+
+**Việc dọn:** Trong `checklist/screenshots/` có một thư mục rỗng tên `CL-33_`, bạn nên xóa.
+
+**Script N3:** Đã ghi nhận bạn đồng ý các quyết định. Script không cần sửa gì; tôi chờ bạn cho phép mới chạy `--check`.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/screenshots/CL-33_chrome_*.png checklist/screenshots/CL-34_chrome.png checklist/screenshots/CL-68_chrome_1.png
+git commit -m "[T1][exec] Add manual results for CL-33, CL-34 and cart evidence for CL-68" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+````
+
+---
+
+### C128 | 13:34 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra các task đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo state and latest activity of all design sessions
+- Bash: Check screenshot naming for CL-05/105/68 and update tracker
+- Bash: Export prompt log
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã đọc lượt mới nhất của 4 phiên thiết kế. Không phiên nào đọc file bị cấm hay đụng tới DB. Log đã xuất lại: 128 lượt.
+
+## Từng task
+
+### Task 1 (phiên `f2487351`): **Đang chạy**, phiên đang điền Excel cho ảnh bạn vừa bổ sung
+- **Ảnh mới:** `CL-33_chrome_1` đến `_5` và `CL-34_chrome`. Vậy CL-33 và CL-34 đã có kết quả.
+- **Vẫn thiếu ảnh CL-05 và CL-105.** Hai mục này Failed nên bắt buộc có ảnh. Chờ phiên Task 1 trả lời "còn thiếu ảnh nào", rồi chụp nốt.
+- **⚠ Tên ảnh CL-68 sai quy tắc:** Đang có cả `CL-68_chrome.png` (script chụp, đã commit) và `CL-68_chrome_1.png` (bạn vừa chụp). Theo WORKFLOW §5, đã có nhiều ảnh thì **mọi ảnh đều có hậu tố**. Đổi tên ảnh của script thành `_1`, ảnh mới thành `_2` (hoặc ngược lại, tùy ảnh nào nên đứng trước), rồi sửa cột Ảnh trong Excel. Ví dụ:
+  ```powershell
+  cd D:\Dang\Test\Homeworks\HW03\checklist\screenshots
+  Rename-Item CL-68_chrome_1.png CL-68_chrome_2.png
+  git mv CL-68_chrome.png CL-68_chrome_1.png
+  ```
+- **Script Android `n3_android_checklist.js`:** Đã viết, mới kiểm cú pháp, **chưa chạy**. Script có bước `--check` để kiểm điện thoại trước (adb, cờ Chrome), bước này không đụng DB.
+
+### Task 2 (phiên `de8fb2a8`): **Rảnh**, chờ bạn chạy P1 đến P7
+Đã sửa xong sau pilot và commit (`1d1c6d1`). Trước mỗi phiên, báo tôi để reset DB. Bạn cũng có thể tự chạy `node database.js` trong lúc người tham gia điền form.
+
+### Task 3 (phiên `99fcf7b9`): **Chờ bạn review** `cross_platform/firefox_triage.md`
+Phiên đã chia 112 mục cho N2 (Firefox trên BrowserStack):
+
+| Nhóm | Số mục | Cách làm |
+|---|---|---|
+| A: Console | 17 | Dán `devtools_check.js` |
+| B: Chạy tay | 44 | 12 mục làm trong phiên cloud, 32 mục xem từ ảnh tổng quan, không tốn phút trial |
+| C: Không chạy lại | 51 | Kết quả do nội dung hoặc logic của trang quyết định, ít phụ thuộc trình duyệt |
+
+Phiên ước tính 20 đến 25 phút trial. Khi review, nên xem kỹ nhóm C, vì 51 trên 112 mục là gần một nửa. Vài mục trong C vẫn có thể khác giữa trình duyệt:
+- CL-61: Bấm Enter có gửi form không, do trình duyệt xử lý.
+- CL-63: Dán mật khẩu.
+- CL-74, CL-107: Hiệu ứng khi rê chuột.
+
+Nếu còn phút trial thì chuyển mấy mục này sang B. Phiên cũng nhắc **CL-24 (định dạng ngày)** dễ ra kết quả khác trên Firefox và Android, đây có thể là bug chỉ xuất hiện trên một số nền tảng.
+
+### Agent Skill (phiên `a498e700`): **Rảnh**
+Chờ các bước exec, P1 đến P7 và analysis xong để bổ sung, sau đó demo và quay video.
+
+## Lệnh commit (phần đã sẵn sàng)
+
+Excel và ảnh của Task 1 **chờ phiên Task 1 điền xong** mới commit.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n3_android_checklist.js checklist/tools/package.json
+git commit -m "[T3][android-chrome] Add N3 Android script (not yet run)"
+git add cross_platform/ai_raw/T3_firefox_triage.md
+git commit -m "[T3][firefox] Add Firefox run triage of 112 items (AI draft)"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+`cross_platform/firefox_triage.md` (bản review) commit sau khi bạn review xong.
+
+## Gợi ý thứ tự cho mấy giờ tới
+
+1. **Ưu tiên P1 đến P7 theo lịch hẹn**, vì Task 2 chiếm 40 điểm và phụ thuộc người khác.
+2. **Xen giữa các phiên:**
+   - Chụp nốt ảnh CL-05, CL-105; sửa tên ảnh CL-68; commit Task 1.
+   - Review `firefox_triage.md`.
+   - Cắm điện thoại và chạy `npm run n3:check` (không đụng DB).
+3. **N3 chạy thật và N2 trên cloud:** Làm vào khung giờ không có phiên usability, vì dùng chung DB. Trước mỗi lượt báo tôi reset DB.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ |
+|---|---|---|
+| Task 1 | Exec N1: Phiên đang điền Excel | Ảnh CL-05, CL-105; sửa tên CL-68 → commit → `bugs` |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn của 7 người |
+| Task 3 | N2: Đã chia mục; N3: Script đã viết | Bạn review danh sách N2; chạy `n3:check` trên điện thoại |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video |
+
+⏱ Còn khoảng **23,5 giờ** làm việc | Còn **8 giờ 25 phút** tới mốc 22:00 10/11 | **23 giờ 25 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C129 | 13:43 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+L-34 → Passed (AI xem ảnh). Họ Tên dài 57 ký tự, lời chào vẫn nằm trên một dòng, không đẩy lệch "Giỏ hàng" hay "Thoát". Hai điểm bạn cần biết khi review:
+Chỉ có ảnh W-06, chưa có ảnh navbar ở W-03 và W-04.
+Cửa sổ Chrome mở toàn màn hình, không phải 1366 x 768. -> Sao cái này bạn không thể chạy script à?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Count name length and locate patch points
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch5.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch5.py
+- Bash: Back up, patch N1 script with group H, syntax check
+
+**Output AI (nguyên văn):**
+
+````text
+Chạy được bằng script. Lần trước CL-34 không có trong lần chạy tự động vì hai lý do:
+
+1. **Script N1 xếp CL-34 vào mục "Cần nhìn":** Lúc viết script, tôi coi việc đánh giá "hiển thị gọn" là việc phải nhìn bằng mắt, nên để bạn làm tay.
+2. **Tôi không tự chạy được:** Chạy bất cứ thứ gì gọi tới `localhost` đều cần bạn cho phép. CL-34 còn phải đổi Họ Tên của test@eshop.com, mà phiên usability đang dùng chung DB.
+
+Ý (1) không còn đúng: Script đo được các tiêu chí đó và chụp ảnh để tôi xem lại. Vì vậy tôi vừa thêm **nhóm H** vào [n1_chrome_checklist.js](Homeworks/HW03/checklist/tools/n1_chrome_checklist.js); file đã qua `node --check`, chưa chạy.
+
+**Nhóm H làm gì:**
+- **Cửa sổ:** 1366 x 768, như các nhóm khác.
+- **Tên thử:** Đổi Họ Tên thành `Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly`, đúng 50 ký tự như ví dụ trong checklist. Tải lại trang để chắc tên đã lưu.
+- **Kiểm ở W-06, W-04, W-03 (đã đăng nhập):**
+  - Lời chào hiện đủ tên, không bị cắt, nằm mấy dòng.
+  - Các mục navbar không chồng nhau, vẫn thẳng một hàng, không mục nào tràn ra ngoài cửa sổ.
+  - Trang không có thanh cuộn ngang.
+- **Ảnh:** Chụp cả 3 màn hình kể cả khi Passed, đặt tên `CL-34_chrome_1.png` (W-06), `_2` (W-04), `_3` (W-03). Ảnh `CL-34_chrome.png` bạn chụp tay vẫn giữ nguyên.
+- **Trả lại dữ liệu:** Cuối nhóm, script trả Họ Tên cũ. Số điện thoại sẽ là `912345678`, vì trang chỉ lưu được với số này.
+- **Không ảnh hưởng lần chạy đầy đủ:** Nhóm H chỉ chạy khi gọi riêng `--only=H`.
+
+**Lệnh chạy** (chỉ chạy khi bạn cho phép):
+```
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n1_chrome_checklist.js --only=H --log=n1_cl34_log.txt
+```
+
+Nhóm này không cần reset DB. Chỉ cần test@eshop.com không đang bị khóa và không có phiên usability nào đang dùng tài khoản đó. Chạy xong, tôi xem 3 ảnh rồi cập nhật dòng CL-34 trong Excel, thay ghi chú "chỉ có ảnh W-06, cửa sổ toàn màn hình".
+````
+
+---
+
+### C130 | 13:44 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã sửa tên, đang chuẩn bị chạy script devtool. Nhưng tôi không hiểu sao task 1 lại bảo tôi chụp nhiều ảnh, trong khi bạn lại bảo tôi ít.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read Task 1 session's latest reply about screenshots
+- Bash: Reset and seed DB; list results of DevTools items
+
+**Output AI (nguyên văn):**
+
+````text
+Hai bên nói khác nhau vì dựa trên hai mức yêu cầu khác nhau. Đề chỉ đòi mức tối thiểu; phiên Task 1 đề xuất thêm để ảnh chứng minh rõ lỗi hơn.
+
+| | Yêu cầu | Nguồn |
+|---|---|---|
+| **Tối thiểu (tôi nói)** | Mỗi mục **Failed** có ít nhất một ảnh. Mục Passed **không cần ảnh** | Đề: "Attach screenshots for the Failed items **only**" |
+| **Phiên Task 1 đề xuất** | Ảnh phải **thấy được lỗi**. Ảnh script chụp tự động có khi chụp sau khi hộp thoại đã đóng, hoặc không thấy thuộc tính HTML, nên phiên này muốn chụp lại | Chất lượng bằng chứng, đề không bắt buộc |
+
+Với thời gian còn lại, nên chụp **phần bắt buộc** cộng **những ảnh rẻ mà chứng minh được nhiều mục**. Phần còn lại bỏ qua.
+
+## Nên chụp (khoảng 10 ảnh)
+
+| # | Ảnh | Vì sao |
+|---|---|---|
+| 1 | **CL-05**, **CL-105** | Mục Failed mà **chưa có ảnh nào**, bắt buộc |
+| 2 | **3 ảnh bảng kết quả của `devtools_check.js`** (`/login`, `/register`, `/profile` khi đã đăng nhập) | **Rẻ nhất, lợi nhất.** Một ảnh chứng minh cùng lúc nhiều mục Failed về thuộc tính HTML (CL-13, 14, 19, 44, 46, 54, 62, 76, 106). Ảnh script chụp hiện tại chỉ thấy trang, không thấy được lỗi của các mục này |
+| 3 | **CL-23**: Lighthouse, phần Contrast | Mục Failed, ảnh hiện tại không thấy được lỗi tương phản |
+| 4 | **4 ảnh tổng quan N1**: `overview_login`, `overview_register`, `overview_profile`, `overview_env` (trang `chrome://version`), lưu vào `cross_platform/screenshots/chrome/` | Task 3 đã chốt (D-07); hiện thư mục này còn trống |
+
+## Có thể bỏ qua
+
+- **Nhóm 6 của phiên Task 1:** Thêm ảnh cho CL-33, CL-34, CL-69 là mục **Passed** nên không cần. Ảnh CL-33, CL-34 bạn đã chụp thì cứ giữ, không sao.
+- **Nhóm 3 và 4:** Chụp lại lúc đang bấm Tab, rê chuột, mạng chậm, hộp thoại đang mở. Các mục này đã có ảnh của script, và Notes trong Excel đã mô tả lỗi. **Ngoại lệ:** Mục nào sẽ được báo bug lên GitHub Issues thì cần một ảnh thấy rõ lỗi, vì issue bắt buộc có ảnh. Ví dụ: Hộp thoại số điện thoại của CL-101 và CL-110, trang Đăng ký từ chối mật khẩu. Những ảnh này **chụp lúc làm bước `bugs`**, một ảnh dùng cho cả Excel lẫn issue.
+
+## Dữ liệu
+
+Tôi vừa **reset DB và seed lại (13:44)**, vì hồ sơ `test@eshop.com` đang có Họ Tên dài và số điện thoại `912345678` từ lần chạy trước. Ảnh `overview_profile` cần dữ liệu sạch. Nếu trang đang mở báo lỗi thì đăng nhập lại `test@eshop.com` / `Test1234!`.
+
+Chụp ảnh nhớ giữ Sticky Notes, và để thấy thanh địa chỉ `localhost:5173`.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ |
+|---|---|---|
+| Task 1 | Exec N1: Bổ sung ảnh | Khoảng 10 ảnh ở bảng trên → commit → `bugs` |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn của 7 người |
+| Task 3 | N2: Đã chia mục; N3: Script đã viết | Bạn review `firefox_triage.md`; chạy `n3:check` trên điện thoại |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video |
+
+⏱ Còn khoảng **23,5 giờ** làm việc | Còn **8 giờ 16 phút** tới mốc 22:00 10/11 | **23 giờ 16 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C131 | 13:48 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Nên chụp (khoảng 10 ảnh)
+#	Ảnh	Vì sao
+1	CL-05, CL-105	Mục Failed mà chưa có ảnh nào, bắt buộc
+2	3 ảnh bảng kết quả của devtools_check.js (/login, /register, /profile khi đã đăng nhập)	Rẻ nhất, lợi nhất. Một ảnh chứng minh cùng lúc nhiều mục Failed về thuộc tính HTML (CL-13, 14, 19, 44, 46, 54, 62, 76, 106). Ảnh script chụp hiện tại chỉ thấy trang, không thấy được lỗi của các mục này
+3	CL-23: Lighthouse, phần Contrast	Mục Failed, ảnh hiện tại không thấy được lỗi tương phản
+4	4 ảnh tổng quan N1: overview_login, overview_register, overview_profile, overview_env (trang chrome://version), lưu vào cross_platform/screenshots/chrome/	Task 3 đã chốt (D-07); hiện thư mục này còn trống
+
+
+Trong những phần này, còn ảnh nào tôi chưa chụp và bạn cần?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List new screenshots and cross_platform files
+- Bash: Check CL-68 files and group H log
+- Bash: Extract group H results from log
+- Bash: Fix MANUAL override in final table of both scripts
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-34_chrome_1.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-34_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-34_chrome_3.png
+- Bash: Compare CL-68 image files
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_c.py
+- PowerShell: Fill CL-34/CL-68, verify image refs, recalc
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_env_c.py
+- PowerShell: Update environment notes and recalc
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn **chưa chụp ảnh nào** trong bảng đó. Hiện còn thiếu cả 10 ảnh:
+
+| # | Ảnh | Lưu ở | Cần gì trước |
+|---|---|---|---|
+| 1 | **CL-05:** Hộp "Lỗi: Cannot cancel this order." khi còn đang mở | `checklist/screenshots/CL-05_chrome.png` | Mở `/profile` ở 2 tab. Hủy đơn #3 "Đã xác nhận" ở tab 1, rồi bấm Hủy đơn đó ở tab 2 |
+| 2 | **CL-105:** Thông báo khi mất mạng, ví dụ ở `/login` | `checklist/screenshots/CL-105_chrome.png` | F12 > Network > Offline, rồi bấm "Sign In" |
+| 3 | **devtools_check.js** ở `/login` | Đặt tên tạm `devtools_login.png` | Dán script vào Console, chụp lúc thấy bảng kết quả |
+| 4 | **devtools_check.js** ở `/register` | Đặt tên tạm `devtools_register.png` | Như trên. Bấm "Đăng Ký" với mật khẩu yếu trước để trang hiện thông báo (dùng cho CL-106) |
+| 5 | **devtools_check.js** ở `/profile` khi đã đăng nhập | Đặt tên tạm `devtools_profile.png` | Như trên |
+| 6 | **CL-23:** Lighthouse, mục Accessibility, phần Contrast | `checklist/screenshots/CL-23_chrome_2.png` | Không cần gì thêm |
+| 7 | **overview_login** | `cross_platform/screenshots/chrome/overview_login.png` | Không cần gì thêm |
+| 8 | **overview_register** | `cross_platform/screenshots/chrome/overview_register.png` | Không cần gì thêm |
+| 9 | **overview_profile** | `cross_platform/screenshots/chrome/overview_profile.png` | **Reset DB và seed** rồi đăng nhập test@eshop.com |
+| 10 | **overview_env:** Trang `chrome://version` | `cross_platform/screenshots/chrome/overview_env.png` | Không cần gì thêm |
+
+**Về thứ tự:** Chụp ảnh 9 ngay sau khi reset, trước ảnh 1. Ảnh 1 sẽ hủy đơn #3. Số điện thoại hiện là 912345678 (do script đặt) nên cũng chưa khớp dữ liệu seed. Khi xong ảnh 3 đến 5, tôi sẽ sao ra đúng tên cho từng mục CL-13, 14, 19, 44, 46, 54, 62, 76, 106.
+
+**Đã cập nhật Excel trong lượt này:**
+- **CL-34 → Passed:** Lấy từ kết quả nhóm H mà bạn đã chạy lúc 13:46, cửa sổ 1366 x 768. Ở cả 3 màn hình, lời chào 50 ký tự nằm trên 1 dòng, không chồng lấn, không tràn. Tôi đã xem 3 ảnh `CL-34_chrome_1` đến `_3` và thấy đúng như vậy.
+- **CL-68:** Sửa cột Ảnh và Notes theo tên mới bạn đặt (`_1` là ảnh script chụp, `_2` là ảnh giỏ hàng).
+- **Sheet Môi trường:** Thêm giờ chạy nhóm H và file log `n1_cl34_log.txt`.
+- **Kiểm tên ảnh:** Mọi tên ảnh ghi trong Excel đều có file thật. Chỉ còn CL-05 và CL-105 là mục Failed chưa có ảnh nào.
+- **NT1 vẫn là:** 51 Passed, 54 Failed, 7 Không chạy được, tỉ lệ 48,6%.
+
+**Lỗi script đã sửa:** Bảng cuối của script N1 ghi đè kết quả CL-34 thành "Chạy tay", nên log ghi sai dòng CL-34. Các dòng kết quả phía trên trong log vẫn đúng. Tôi đã sửa lỗi này trong cả script N1 và N3; cả hai qua `node --check`.
+
+Thư mục rỗng `checklist/screenshots/CL-33_` vẫn còn, bạn nên xóa.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/screenshots/CL-33_chrome_*.png checklist/screenshots/CL-34_chrome*.png checklist/screenshots/CL-68_chrome*.png checklist/tools/n1_chrome_checklist.js checklist/tools/n1_cl34_log.txt checklist/tools/n3_android_checklist.js checklist/tools/package.json
+git commit -m "[T1][exec] Add CL-33 and CL-34 results, group H script for CL-34, cart evidence for CL-68" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Lệnh này chỉ gom `CL-68_chrome*.png` theo mẫu tên. Nếu bạn đổi tên `CL-68_chrome.png` bằng tay chứ không qua `git mv`, chạy thêm `git add -A checklist/screenshots` để git ghi nhận file cũ đã mất.
+````
+
+---
+
+### C132 | 13:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Những cái đó có những cái nào có thể chạy script và tự chụp để tiết kiệm thời gian không? Nếu có thì bạn hãy làm đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check N1 log for CL-105/CL-88 and capture code
+- Bash: Locate setupPage and group H hooks
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch6.py
+- Bash: Patch N1 script with group I and syntax check
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã viết xong **nhóm I** trong [n1_chrome_checklist.js](Homeworks/HW03/checklist/tools/n1_chrome_checklist.js); file qua `node --check`. Tôi chưa chạy vì ảnh `overview_profile` phải chụp trên dữ liệu vừa reset và seed. Hiện số điện thoại của test@eshop.com vẫn là 912345678 do script đặt.
+
+**Script tự chụp được 6/10 ảnh:**
+
+| Ảnh | Nhóm I làm gì |
+|---|---|
+| `overview_env.png` | Mở `chrome://version` rồi chụp |
+| `overview_login.png`, `overview_register.png` | Chụp 2 trang khi chưa đăng nhập; trang dài hơn màn hình thì tự cuộn và đánh số `_1`, `_2` |
+| `overview_profile.png` | Đăng nhập test@eshop.com rồi chụp, **trước** mọi thao tác làm đổi dữ liệu |
+| `CL-105_chrome_1.png` | Ở W-03: Ngắt mạng, bấm "Sign In", chụp thông báo "Đăng nhập thất bại...". Request không gửi được nên không tính là một lần đăng nhập sai |
+| `CL-105_chrome_2.png` | Ở W-06: Ngắt mạng, bấm "Cập nhật", chụp lúc hộp "Lỗi cập nhật" **còn mở**, rồi mới đóng |
+| `CL-05_chrome.png` | Hủy đơn Đã xác nhận ở tab B, rồi bấm Hủy cùng đơn đó ở tab A. Chụp lúc hộp "Lỗi: Cannot cancel this order." còn mở |
+
+**Về thư mục lưu:** 4 ảnh tổng quan lưu vào `cross_platform/screenshots/chrome/`, 3 ảnh CL lưu vào `checklist/screenshots/`. Ảnh nào đã có thì script không ghi đè.
+
+**Ảnh chưa chắc chụp được:** Tôi cho rằng Chrome có giao diện sẽ hiện hộp thoại trên màn hình trong lúc script giữ nó mở, nhưng chưa thử. Nếu ảnh không có hộp thoại, tôi sẽ báo.
+
+**Bạn vẫn phải chụp tay 4 ảnh**, vì script không mở được giao diện DevTools và Lighthouse:
+- **3 ảnh bảng kết quả của devtools_check.js:** Ở `/login`, `/register` (bấm "Đăng Ký" với mật khẩu yếu trước để trang hiện thông báo), và `/profile` khi đã đăng nhập.
+- **CL-23:** Lighthouse, mục Accessibility, phần Contrast.
+
+**Cách chạy nhóm I:**
+1. Nhờ phiên điều phối **reset DB và seed**, kiểm Sticky Notes còn ghim ở góc màn hình.
+2. Báo tôi để tôi chạy, hoặc bạn tự chạy:
+   ```
+   cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+   node n1_chrome_checklist.js --only=I --log=n1_shots_log.txt
+   ```
+   Gõ `co` khi được hỏi. Chạy mất khoảng 1 phút và không dừng giữa chừng.
+3. Sau khi chạy, đơn Đã xác nhận đã bị hủy, nên phải reset và seed lại trước lần chạy tiếp (ví dụ N3).
+
+Chạy xong, tôi xem ảnh rồi điền cột Ảnh của CL-05 và CL-105 vào Excel. Bạn chụp xong 3 ảnh devtools thì tôi sao ra đúng tên cho từng mục.
+````
+
+---
+
+### C133 | 14:00 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Giúp tôi reset db để task 1 chạy script bổ sung ảnh.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset DB and seed orders for Task 1 screenshot run
+
+**Output AI (nguyên văn):**
+
+````text
+Đã reset DB và chạy `seed_orders.py` xong lúc 14:00. Phiên Task 1 chạy script bổ sung ảnh được rồi.
+
+Dữ liệu hiện tại:
+- 3 danh mục mẫu: Điện thoại, Laptop, Phụ kiện.
+- `test@eshop.com` có 5 đơn: #1 delivered, #2 shipping, #3 confirmed, #4 canceled, #5 pending.
+- `newuser@eshop.com` / `NewUser123!` không có đơn.
+
+Trước khi chạy:
+- Nếu Chrome đang mở sẵn ở trạng thái đăng nhập, đăng nhập lại `test@eshop.com` / `Test1234!`.
+- Bật Focus/Do Not Disturb.
+- Ghim Sticky Notes.
+
+Script sẽ hủy đơn và đổi số điện thoại. Chạy xong thì báo tôi để reset lại, trước khi chụp `overview_profile` hoặc chạy phiên usability.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ |
+|---|---|---|
+| Task 1 | Exec N1: Chạy script bổ sung ảnh | Xong thì commit → `bugs` |
+| Task 2 | Sẵn sàng P1 | Lịch hẹn của 7 người (không chạy trùng lúc script Task 1 đang chạy) |
+| Task 3 | N2: Đã chia mục; N3: Script đã viết | Bạn review `firefox_triage.md`; chạy `n3:check` trên điện thoại |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video |
+
+⏱ Còn khoảng **23,5 giờ** làm việc | Còn **8 giờ** tới mốc 22:00 10/11 | **23 giờ** tới deadline 13:00 11/11
+````
+
+---
+
+### C134 | 14:02 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong rồi. Cofn4 ảnh tôi vẫn phải chụp, thì nói rõ và hướng dẫn để tôi chụp cho đúng yêu cầu.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check group I log and produced images
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-05_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-105_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-105_chrome_1.png
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\overview_profile.png
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\overview_env.png
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_d.py
+- PowerShell: Fill CL-05/CL-105 image refs and recalc
+- Bash: Read DevTools-related item results and notes
+
+**Output AI (nguyên văn):**
+
+````text
+Nhóm I chạy đủ 7 ảnh. Tôi xem từng ảnh để chắc hộp thoại và dữ liệu đúng.
+
+Script đã chụp đủ 7 ảnh, tôi đã xem từng ảnh và tất cả đều đạt:
+- **CL-05:** Thấy hộp thoại "Lỗi: Cannot cancel this order." khi còn đang mở.
+- **CL-105:** `_1` là W-03 với thông báo đỏ "Đăng nhập thất bại...", `_2` là W-06 với hộp thoại "Lỗi cập nhật" còn đang mở.
+- **4 ảnh tổng quan** trong `cross_platform/screenshots/chrome/`: `overview_profile` đúng dữ liệu seed (Số điện thoại trống, đủ 5 đơn); `overview_env` thấy Chrome 156.0.8078.81 và Windows 11 26H2.
+
+Tôi đã điền cột Ảnh và Notes cho CL-05, CL-105 trong Excel. Giờ không còn mục Failed nào thiếu ảnh.
+
+## 4 ảnh bạn phải chụp tay
+
+**Yêu cầu chung cho cả 4 ảnh:**
+- Dùng Chrome thường của bạn.
+- Chụp toàn màn hình bằng `Win+PrtSc`; ảnh lưu vào `Pictures\Screenshots`.
+- Trong ảnh phải thấy thanh địa chỉ `localhost:5173/...`, ghi chú Sticky Notes và thanh tác vụ.
+- Mở DevTools gắn **bên trong** cửa sổ Chrome: F12, bấm ⋮ > Dock side > Dock to bottom, kéo cao khoảng nửa màn hình. Đừng tách DevTools ra cửa sổ riêng.
+- Ghi chú Sticky Notes không được che bảng kết quả.
+- Không cần reset dữ liệu.
+
+**Cách dán script** (dùng cho ảnh 1 đến 3): Mở [devtools_check.js](Homeworks/HW03/checklist/tools/devtools_check.js) trong VS Code, `Ctrl+A`, `Ctrl+C`. Trong DevTools, chọn tab **Console**, bấm `Ctrl+L` cho sạch, dán rồi Enter. Lần đầu Chrome bắt gõ `allow pasting` rồi Enter, sau đó dán lại.
+
+**Ảnh 1: `/login`** (dùng cho CL-13, 14, 19, 44, 46, 54, 62, 106)
+1. Chưa đăng nhập, mở `http://localhost:5173/login`.
+2. Nhập `test@eshop.com` và `Sai12345!`, bấm "Sign In" **đúng 1 lần** để hiện dòng đỏ "Đăng nhập thất bại..." (dùng cho CL-106). Không thử nhiều lần vì sai 3 lần là tài khoản bị khóa.
+3. Dán script. Chụp lúc thấy được dòng đỏ trên trang và bảng kết quả, đọc rõ cột **Mã** và **Đo được**.
+4. Bảng dài quá nửa màn hình thì chụp 2 ảnh, cuộn bảng giữa 2 lần chụp.
+5. Đặt tên `devtools_login.png` (2 ảnh thì `devtools_login_1.png`, `devtools_login_2.png`).
+
+**Ảnh 2: `/register`**
+1. Mở `/register`. Nhập Họ Tên `HW03 Test`, Email `devtools@eshop.com`, Mật khẩu `abcdefgh`, bấm "Đăng Ký". Trang hiện "Mật khẩu quá yếu!..." và không tạo tài khoản.
+2. Dán script và chụp như ảnh 1.
+3. Đặt tên `devtools_register.png`.
+
+**Ảnh 3: `/profile`** (dùng thêm cho CL-76)
+1. Đăng nhập `test@eshop.com` / `Test1234!`, mở `/profile`.
+2. Dán script và chụp. Bảng phải thấy dòng CL-76 (lời chào).
+3. Đặt tên `devtools_profile.png`.
+
+**Ảnh 4: CL-23, Lighthouse ở `/register`**
+Chọn `/register` vì trang này không cần đăng nhập. Lighthouse mặc định xóa dữ liệu trang trước khi chạy nên sẽ làm mất phiên đăng nhập ở `/profile`.
+1. Mở `/register`, F12, chọn tab **Lighthouse**. Không thấy tab này thì bấm `»` trên thanh tab của DevTools.
+2. Chọn Mode **Navigation**, Device **Desktop**, Categories chỉ tích **Accessibility**, rồi bấm **Analyze page load**.
+3. Trong báo cáo, cuộn tới nhóm **Contrast**. Bấm mở dòng "Background and foreground colors do not have a sufficient contrast ratio" để hiện danh sách phần tử lỗi (dòng hướng dẫn mật khẩu và nút "Đăng Ký").
+4. Chụp lúc thấy cả điểm Accessibility lẫn danh sách đó. Không vừa một ảnh thì chụp 2 ảnh.
+5. Đặt tên `CL-23_chrome_2.png` (2 ảnh thì `_2`, `_3`), vì `CL-23_chrome.png` đã có.
+
+Lưu cả 4 ảnh vào `checklist/screenshots/` rồi báo tôi. Tôi sẽ xem ảnh, sao 3 ảnh devtools ra đúng tên cho từng mục CL và điền cột Ảnh trong Excel.
+
+**Nhắc dữ liệu:** Lần chạy nhóm I đã hủy đơn #3. Trước khi chạy N3 cần nhờ phiên điều phối reset DB và seed lại.
+
+**Commit phần đã xong** (nhờ phiên điều phối xuất prompt log trước):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/screenshots/CL-05_chrome.png checklist/screenshots/CL-105_chrome_*.png cross_platform/screenshots/chrome checklist/tools/n1_chrome_checklist.js checklist/tools/n1_shots_log.txt
+git commit -m "[T1][exec] Add group I screenshots (CL-05, CL-105) and N1 overview images" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+````
+
+---
+
+### C135 | 14:16 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã bổ sung xong ảnh, hãy kiểm tra và điền thông tin nếu ảnh đã đáp ứng đủ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List newly added screenshots
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\devtools_login.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\devtools_register.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\devtools_profile.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-23_chrome_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-23_chrome_3.png
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_e.py
+- PowerShell: Distribute devtools shots, update Excel, recalc
+- Bash: Verify copies then remove temp devtools files
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sao xong và khớp từng byte với ảnh gốc. Ba file tên tạm `devtools_*.png` giờ là bản trùng, tôi xóa đi cho thư mục gọn.
+
+Cả 4 ảnh đều dùng được, và tôi đã điền xong vào Excel. Giờ **mọi mục Failed của NT1 đều có ảnh**, và mọi tên ảnh ghi trong Excel đều có file thật.
+
+**Kết quả kiểm từng ảnh:**
+- **`/register`:** Thấy cả thông báo "Mật khẩu quá yếu!" trên trang lẫn bảng kết quả của script. Đây là bằng chứng tốt nhất cho CL-106: Đang có thông báo mà không có `role="alert"` hay `aria-live`.
+- **`/profile`:** Có dòng CL-76: Lời chào là link tới `/profile`, tên đọc được chỉ là "Chào, Test ...".
+- **`/login`:** Đủ cho CL-13, 14, 19, 46 (`type="text"`), 54, 62. Dòng đỏ "Đăng nhập thất bại" nằm ngoài vùng trang đang hiện, nên tôi không dùng ảnh này cho CL-106.
+- **CL-23 (Lighthouse ở `/register`):** Điểm Accessibility 82. Mục Contrast liệt kê 3 phần tử: Dòng hướng dẫn mật khẩu, khung form, nút "Đăng Ký".
+
+**Đã làm với ảnh và Excel:**
+- **Đổi tên ảnh cũ:** Ảnh script chụp lúc 11:46 của 9 mục (CL-13, 14, 19, 44, 46, 54, 62, 76, 106) đổi thành `_1`, giống cách bạn đặt cho CL-23 và CL-68.
+- **Sao ảnh devtools:** Sao 3 ảnh thành `_2`, `_3`, `_4` theo trang mà mỗi mục bị Failed:
+
+  | Mục | Ảnh thêm |
+  |---|---|
+  | CL-13, 14, 19, 44, 54, 62 | `_2` W-03, `_3` W-04, `_4` W-06 |
+  | CL-46 | `_2` W-03 (W-04 đạt) |
+  | CL-76 | `_2` W-06 |
+  | CL-106 | `_2` W-04 |
+
+- **Xóa file tên tạm:** Sau khi so khớp từng byte với bản sao, tôi xóa 3 file `devtools_*.png`. Thư mục `CL-33_` bạn đã xóa.
+- **Excel:**
+  - Cột Ảnh cập nhật theo tên mới.
+  - Notes ghi thêm ảnh nào là bảng devtools_check.js ở trang nào.
+  - Notes của CL-23 ghi thêm kết quả Lighthouse.
+  - Kết quả NT1 không đổi: 51 Passed, 54 Failed, 7 Không chạy được, tỉ lệ 48,6%.
+
+**Có thể chụp thêm (không bắt buộc):** Bằng chứng của CL-54 là tên ô do script tự tính gần đúng. Checklist ghi cách kiểm là xem dòng Name trong phần Accessibility của DevTools. Nếu muốn chắc hơn, chụp thêm một ảnh: Chuột phải ô Username > Inspect > tab Accessibility, thấy Name rỗng.
+
+**Commit:** Có đổi tên ảnh nên dùng `-A` cho thư mục ảnh. Nhớ nhờ phiên điều phối xuất prompt log trước.
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T1][exec] Add DevTools and Lighthouse evidence for N1 Failed items" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Trước khi chạy N3, cần nhờ phiên điều phối reset DB và seed vì đơn #3 đã bị hủy.
+````
+
+---
+
+### C136 | 14:21 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1 đã xong N1, kiểm tra, xuất log và commit message.
+- Tôi có thể nhờ task 1 đẩy bugs lên luôn thay vì tạo html khong? Tôi xem sẵn trên đó, đỡ phải lòng vòng nhiều bước. Tôi sẽ cung cấp gh.
+- Khi chạy N3 thì tôi có thể chạy P1 không?
+- Sau trạng thái của mỗi task thêm giờ ước tính của task đó nữa, để tôi nắm task đó còn phải làm nhiêu thời gian.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check Task 1 completion, Excel images, bug rules in WORKFLOW and group README
+- Bash: Check CL-34 image references and new log files
+- Bash: Export log and update tracker estimates
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
