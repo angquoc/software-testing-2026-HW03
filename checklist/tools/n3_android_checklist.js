@@ -24,6 +24,11 @@
  *                                                 cờ chrome://flags, adb reverse, Samsung Notes. Không mở trang EShop,
  *                                                 không đổi dữ liệu; có đóng và mở lại Chrome trên điện thoại một lần.
  *   node n3_android_checklist.js --log=n3_run_log.txt     Lần chạy thật (kiểm điều kiện cần trước, thiếu thì dừng).
+ *   Nhóm H (thêm sau n3_run_log_2.txt): CL-34 Họ Tên dài, chỉ chạy khi gọi riêng: --only=H --log=n3_cl34_log.txt
+ *     (cần test@eshop.com đăng nhập được; script đổi Họ Tên rồi trả lại, chụp CL-34_1 W-06, _2 W-04, _3 W-03)
+ *   Nhóm I (thêm sau n3_run_log_2.txt): Ảnh cho CL-105 (mất kết nối), CL-05 (thông báo hủy đơn bị từ chối, 2 tab),
+ *     CL-06 (tiêu đề tab, chụp trang chrome://history). Chỉ chạy khi gọi riêng: --only=I --log=n3_extra_log.txt.
+ *     Cần reset DB và seed trước (CL-05 hủy 1 đơn).
  *   Chạy thử để gỡ lỗi: --dry-run (không dừng hỏi, không chụp, bỏ qua 2 bước chuẩn bị giỏ hàng). Chỉ một số nhóm: --only=A,B
  *   Nhiều thiết bị: --serial=<mã trong adb devices> hoặc biến ANDROID_SERIAL. adb không nằm trong PATH: biến ADB.
  *   Đổi địa chỉ: ESHOP_URL (frontend), ESHOP_API (backend). Hai cổng này được script đặt adb reverse nếu chưa có.
@@ -1762,6 +1767,166 @@ async function probeFlag() {
   }
 }
 
+// ---------------------------------------------------------------- H. CL-34: Họ Tên dài (chỉ chạy khi gọi --only=H)
+// Thêm sau lần chạy n3_run_log_2.txt (10/11/2026): Chuyển từ nhóm H của n1_chrome_checklist.js, cùng tên 50 ký tự và
+// cùng cách đo để so được N1 với N3. Khác N1: Vùng trang là khổ thật của điện thoại; ảnh chụp màn hình điện thoại.
+// Đổi Họ Tên của test@eshop.com thành tên 50 ký tự, xem navbar ở W-06, W-04, W-03 (đã đăng nhập), chụp cả 3 màn hình
+// (kể cả khi Passed, để sinh viên xem lại), rồi trả Họ Tên cũ. Số điện thoại đặt APP_OK_PHONE vì trang chỉ lưu được số này.
+const LONG_NAME = 'Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly'; // giống N1: 50 ký tự, chỉ chữ cái và khoảng trắng
+async function phaseLongName(page) {
+  console.log(`\n=== H. CL-34: Họ Tên dài ${LONG_NAME.length} ký tự trên navbar ===`);
+  if (!(await login(page, ACC.test))) return check('CL-34', 'W-06', 'Chạy tay', 'Không đăng nhập được test@eshop.com (tài khoản có thể đang bị khóa 30 giây)');
+  await go(page, '/profile');
+  const name0 = await val(await fieldH(page, RE.name));
+  await fillF(page, RE.name, LONG_NAME);
+  await fillF(page, RE.phone, APP_OK_PHONE);
+  const o = await observe(page, () => clickBtn(page, RE.submitProfile));
+  await go(page, '/profile');
+  const saved = await val(await fieldH(page, RE.name));
+  if (saved !== LONG_NAME) {
+    await check('CL-34', 'W-06', 'Chạy tay', `Không lưu được Họ Tên dài (sau khi tải lại ô Họ Tên là "${saved}"); thông báo ${msgText(o)}`);
+    return;
+  }
+  // Tên ảnh: CL-34_1 (W-06, thấy cả navbar và ô Họ Tên), CL-34_2 (W-04), CL-34_3 (W-03)
+  const screens = [['W-06', '/profile', 1], ['W-04', '/register', 2], ['W-03', '/login', 3]];
+  try {
+    for (const [scr, p, k] of screens) {
+      const sl = `${scr} (đăng nhập)`;
+      await T('CL-34', sl, page, async () => {
+        await go(page, p);
+        if (pathOf(page) !== p) return skip('CL-34', sl, `Trang tự chuyển sang ${pathOf(page)} khi đã đăng nhập`);
+        const r = await ev(page, () => {
+          const hw = window.__hw;
+          const nav = hw.navRoot();
+          const g = hw.navEl(/^chào,/i);
+          if (!nav || !g) return null;
+          const items = Array.from(nav.querySelectorAll('a, button, [role="button"]')).filter(hw.vis);
+          const rects = items.map((e) => ({ t: hw.norm(e.textContent).slice(0, 20), r: e.getBoundingClientRect() }));
+          const ov = [];
+          for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
+            const a = rects[i].r; const b = rects[j].r;
+            if (items[i].contains(items[j]) || items[j].contains(items[i])) continue;
+            if (Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1) ov.push(`"${rects[i].t}" chồng "${rects[j].t}"`);
+          }
+          const gr = g.getBoundingClientRect();
+          const lh = parseFloat(getComputedStyle(g).lineHeight) || parseFloat(getComputedStyle(g).fontSize) * 1.2;
+          const tops = rects.map((x) => Math.round(x.r.top + x.r.height / 2));
+          const de = document.documentElement;
+          return {
+            text: hw.norm(g.textContent), lines: Math.round(gr.height / lh), clipped: g.scrollWidth > g.clientWidth + 1,
+            ov, offRow: Math.max(...tops) - Math.min(...tops) > 4, outside: rects.filter((x) => x.r.right > innerWidth + 1 || x.r.left < -1).map((x) => x.t),
+            hScroll: Math.max(de.scrollWidth, document.body.scrollWidth) > de.clientWidth + 1, navH: Math.round(nav.getBoundingClientRect().height), w: innerWidth,
+          };
+        });
+        if (!r) return check('CL-34', sl, 'Chạy tay', 'Không tìm thấy navbar hoặc lời chào');
+        const bad = [];
+        if (!r.text.includes(LONG_NAME)) bad.push(`lời chào không hiện đủ tên ("${r.text}")`);
+        if (r.clipped) bad.push('lời chào bị cắt');
+        if (r.ov.length) bad.push(`chồng lấn: ${r.ov.join(', ')}`);
+        if (r.offRow) bad.push('các mục navbar không còn thẳng một hàng');
+        if (r.outside.length) bad.push(`mục tràn ra ngoài vùng trang: ${r.outside.join(', ')}`);
+        if (r.hScroll) bad.push('trang có thanh cuộn ngang');
+        const m = `Vùng trang rộng ${r.w} px; lời chào ${r.lines} dòng; navbar cao ${r.navH} px${bad.length ? `; ${bad.join('; ')}` : '; không tràn, không chồng lấn, các mục thẳng một hàng'}`;
+        await check('CL-34', sl, bad.length ? 'Failed' : 'Passed', m); // không truyền page: ảnh chụp riêng ở dưới
+        if (SHOTS_ON) {
+          await hideKb(page);
+          await ev(page, () => window.scrollTo(0, 0)); await sleep(800);
+          const f = await snap(`CL-34_${k}`);
+          if (!SHOTS.has('CL-34')) SHOTS.set('CL-34', { scr: sl, file: f });
+        }
+      });
+    }
+  } finally {
+    await go(page, '/profile');
+    await fillF(page, RE.name, name0);
+    await fillF(page, RE.phone, APP_OK_PHONE);
+    await clickBtn(page, RE.submitProfile); await sleep(WAIT);
+    console.log(`  (Đã trả Họ Tên về "${name0}"; Số điện thoại là ${APP_OK_PHONE})`);
+  }
+}
+
+// ---------------------------------------------------------------- I. Ảnh cho CL-105, CL-05, CL-06 (chỉ chạy khi gọi --only=I)
+// Thêm sau n3_run_log_2.txt: Ba mục này ở lần chạy đầy đủ ra "Chạy tay" nên không có ảnh. Nhóm này làm lại đúng thao tác
+// và LUÔN chụp ảnh (kể cả khi kết quả nháp không phải Failed) để sinh viên chốt.
+// Cần dữ liệu vừa reset và seed (CL-05 cần một đơn Chờ xác nhận hoặc Đã xác nhận). CL-05 hủy 1 đơn: chạy xong reset lại.
+async function phaseExtra(ctx, page) {
+  console.log('\n=== I. Ảnh cho CL-105, CL-05, CL-06 ===');
+  const NET_RE = /kết nối|mạng|network|offline|thử lại sau|máy chủ|server/i;
+  const EN_RE = /\b(cannot|can't|error|failed|invalid|not found|unauthorized|forbidden|network|order|fetch)\b/i;
+  const shotNow = async (name) => { await hideKb(page); await sleep(500); return snap(name); };
+  // CL-105 W-03: mất kết nối, bấm "Sign In" (thông báo của trang nằm trong trang, chụp lúc đang hiện)
+  await T('CL-105', 'W-03 (ảnh)', page, async () => {
+    await go(page, '/login');
+    if (await isLoggedIn(page)) { await logout(page); await go(page, '/login'); }
+    await fillF(page, RE.loginEmail, ACC.test.email);
+    await fillF(page, RE.password, ACC.test.pw);
+    await ctx.setOffline(true);
+    let o;
+    try {
+      o = await observe(page, () => clickBtn(page, RE.submitLogin), 3500);
+      await shotNow('CL-105_1');
+    } finally { await ctx.setOffline(false); }
+    const net = allText(o).some((t) => NET_RE.test(t));
+    await check('CL-105', 'W-03 (ảnh)', net ? 'Passed' : 'Failed', `Mất kết nối, bấm "Sign In": thông báo ${msgText(o)}${net ? '' : ' (không nói là mất kết nối / thử lại sau)'}; ảnh CL-105_1`);
+  });
+  if (!(await login(page, ACC.test))) throw new Error('Không đăng nhập được test@eshop.com; dừng nhóm I');
+  // CL-105 W-06: mất kết nối, bấm "Cập nhật" (thông báo là hộp thoại: lấy ảnh chụp lúc hộp thoại còn hiện)
+  await T('CL-105', 'W-06 (đăng nhập) (ảnh)', page, async () => {
+    await go(page, '/profile');
+    await fillF(page, RE.phone, APP_OK_PHONE);
+    await ctx.setOffline(true);
+    let o; let dlgShot = null;
+    try {
+      o = await observe(page, () => clickBtn(page, RE.submitProfile), 3500);
+      dlgShot = LAST_DLG;
+    } finally { await ctx.setOffline(false); }
+    if (dlgShot) { saveShot('CL-105_2', dlgShot.buf); console.log(`    (Ảnh chụp lúc hộp thoại "${dlgShot.msg.slice(0, 60)}" đang hiện)`); } else await shotNow('CL-105_2');
+    const net = allText(o).some((t) => NET_RE.test(t));
+    await check('CL-105', 'W-06 (đăng nhập) (ảnh)', net ? 'Passed' : 'Failed', `Mất kết nối, bấm "Cập nhật": thông báo ${msgText(o)}${net ? '' : ' (không nói là mất kết nối / thử lại sau)'}; ảnh CL-105_2`);
+  });
+  // CL-05: Hủy cùng một đơn ở 2 tab; tab A (chưa tải lại) nhận thông báo từ chối. Chụp lúc hộp thoại còn hiện.
+  await T('CL-05', 'W-06 (đăng nhập) 2 tab (ảnh)', page, async () => {
+    const H = async (p) => ev(p, () => window.__hw.history());
+    const idOf = async (p, k) => { const h = await H(p); if (!h) return null; const iSt = h.hdr.findIndex((x) => /trạng thái/i.test(x)); const iId = h.hdr.findIndex((x) => /^mã/i.test(x)); const r = h.rows.find((x) => x.cells[iSt] === STATUS_TEXT[k]); return r ? r.cells[iId] : null; };
+    const cancelBtn = async (p, id) => { const h = await p.evaluateHandle((x) => window.__hw.rowCancelBtn(x), id); return h.asElement(); };
+    await go(page, '/profile');
+    const id = (await idOf(page, 'pending')) || (await idOf(page, 'confirmed'));
+    if (!id) return check('CL-05', 'W-06 (đăng nhập) 2 tab (ảnh)', 'Chạy tay', 'Không có đơn Chờ xác nhận / Đã xác nhận: Reset DB và seed lại rồi chạy --only=I');
+    const pageB = setupPage(await ctx.newPage());
+    await go(pageB, '/profile');
+    const bB = await cancelBtn(pageB, id);
+    if (bB) { await bB.click(); await sleep(WAIT); }
+    await pageB.close();
+    await page.bringToFront(); await sleep(600);
+    const bA = await cancelBtn(page, id);
+    if (!bA) return check('CL-05', 'W-06 (đăng nhập) 2 tab (ảnh)', 'Chạy tay', 'Tab A không còn nút Hủy đơn (trang tự cập nhật)');
+    await bA.scrollIntoViewIfNeeded().catch(() => {});
+    const o = await observe(page, () => bA.click(), 3000);
+    const dlgShot = LAST_DLG;
+    if (dlgShot) { saveShot('CL-05', dlgShot.buf); console.log(`    (Ảnh chụp lúc hộp thoại "${dlgShot.msg.slice(0, 60)}" đang hiện)`); } else await shotNow('CL-05');
+    const en = allText(o).filter((t) => EN_RE.test(t));
+    await check('CL-05', 'W-06 (đăng nhập) 2 tab (ảnh)', en.length ? 'Failed' : 'Passed', `Đơn ${id}: tab B đã hủy; tab A bấm "Hủy đơn": thông báo ${msgText(o)}${en.length ? ` (có chữ tiếng Anh: "${en.join('", "')}")` : ''}; ảnh CL-05`);
+  });
+  // CL-06: Tiêu đề tab. Chrome trên điện thoại không hiện tiêu đề ở thanh trên; chụp trang Lịch sử của Chrome (chrome://history),
+  // nơi hiện tiêu đề và URL localhost của từng trang vừa mở, cùng cửa sổ nổi Samsung Notes.
+  await T('CL-06', 'Cả 3 (ảnh)', page, async () => {
+    const titles = {};
+    for (const [scr, p] of [['W-03', '/login'], ['W-04', '/register'], ['W-06', '/profile']]) { await go(page, p); titles[scr] = await page.title(); }
+    let shot = null;
+    try {
+      await page.goto('chrome://history', { timeout: 15000 }); await sleep(2000);
+      shot = await shotNow('CL-06');
+    } catch (e) {
+      console.log(`    (Không mở được chrome://history bằng script: ${String(e.message).split('\n')[0]}. Chụp tay: Mở danh sách tab của Chrome khi cửa sổ nổi Samsung Notes đang hiện, lưu CL-06.png)`);
+    }
+    await go(page, '/profile');
+    const vi = /[àáảãạăắằẳẵặâấầẩẫậđèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ]/i;
+    const bad = Object.entries(titles).filter(([, t]) => !vi.test(t || '') || /frontend|vite|react/i.test(t || ''));
+    await check('CL-06', 'Cả 3 (ảnh)', bad.length ? 'Failed' : 'Passed', `${Object.entries(titles).map(([k, t]) => `${k}: "${t}"`).join(' | ')}; ${shot ? 'ảnh CL-06 (trang Lịch sử của Chrome)' : 'chưa có ảnh, cần chụp tay'}`);
+  });
+  await logout(page);
+}
+
 // ---------------------------------------------------------------- kiểm điều kiện cần
 async function preflight() {
   const E = {};
@@ -1953,9 +2118,12 @@ async function main() {
     ['E', () => phaseNewUser(page)],
     ['F', () => phaseLockout(page)],
     ['G', () => crossPage(page)],
+    ['H', () => phaseLongName(page)], // chỉ chạy khi gọi riêng --only=H (như N1)
+    ['I', () => phaseExtra(ctx, page)], // chỉ chạy khi gọi riêng --only=I
   ];
   for (const [name, fn] of phases) {
     if (ONLY.length && !ONLY.includes(name)) continue;
+    if ((name === 'H' || name === 'I') && !ONLY.includes(name)) continue;
     console.log(`\n[${stamp()}] Bắt đầu nhóm ${name}`);
     await resetNet(page);
     await hideKb(page);
