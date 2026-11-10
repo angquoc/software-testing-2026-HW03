@@ -12857,11 +12857,107 @@ Kiểm tra lại trạng thái các task, những phần nào tôi chưa q
 - Bash: Start EShop web frontend on port 5173
 - Bash: Start EShop admin frontend on port 5174
 - Bash: Verify servers and export log
+- Bash: Update tracker statuses for Task 2
 
 **Output AI (nguyên văn):**
 
 ````text
 Server EShop đã tắt hết, tôi bật lại để sẵn cho P1.
+
+Tôi đã đọc lại các phiên. Hai việc gấp nhất: **Server EShop đã tắt hết** (tôi vừa bật lại lúc 20:58), và **Task 2 vẫn chưa chạy phiên nào**. Log đã xuất lại: 197 lượt.
+
+## Tiến trình
+
+| Phiên | Đã làm từ 17:00 | Đang ở |
+|---|---|---|
+| **Task 2** | Đã sửa G4 và cách kiểm D6 trong test plan, instruments. Đã tạo **issue #66** (tạo danh mục tên trống) bằng `gh`, có 2 ảnh `flow_12`, `flow_13` | **P1 đến P7 chưa chạy**: Hồ sơ chỉ có phiếu A, B |
+| **Task 3** | N3 đủ: Script chạy thêm nhóm I (CL-05, CL-105), ảnh CL-06 chụp tay. Bản nháp 112 mục ở `ai_raw/T3_android-chrome_manual_v3.md`: 45 Passed, 52 Failed, 8 N/A, 7 Không chạy được; mọi mục Failed đều có ảnh | **Phiên đang chép kết quả vào Excel** (cột NT3, sheet "Ma trận trạng thái", sheet "Môi trường") |
+| **Agent Skill** | Không có lượt mới | Chờ |
+| **Tổng hợp** | Không có lượt mới | Chờ bạn chốt các ô ⏳ |
+
+**Về ảnh CL-06 bị cắt:** Bạn giải thích là ảnh thật, chỉ lỡ bấm cắt khi phóng to, nên ảnh mất phần thanh trạng thái (có giờ chụp). Vẫn dùng được, nhưng nên ghi một câu vào Notes của CL-06 trong Excel: "Ảnh mất thanh trạng thái do thao tác phóng to khi chụp, không chỉnh nội dung". Sau này nếu có ai thắc mắc vì sao ảnh này khác kích thước các ảnh khác, đã có sẵn lời giải thích.
+
+## Quyết định bạn chưa chốt
+
+| # | Phiên | Quyết định |
+|---|---|---|
+| 1 | Task 3 | **D-16 đến D-19 chưa gửi phiên Task 3.** Gửi sau khi phiên đó chép Excel xong (câu gửi ở tin lúc 16:36) |
+| 2 | Agent Skill | "File tóm tắt kết quả ngoài Excel" ⏳: Trả lời **có**, là `checklist/03_results.md` |
+| 3 | Agent Skill | Màn hình hoặc luồng cho video demo (B hay C) |
+| 4 | Tổng hợp | Xác nhận "Không dùng công cụ AI nào khác" (AI-03, Appendix A) |
+| 5 | Tổng hợp | Đánh giá cho B02 (script trong `tools/`), B10 (bạn có sửa ô nào AI điền ở NT1 không), B12 (phiên điều phối) |
+| 6 | Tổng hợp | Phần bạn tự điền: Cấp độ AI, điểm tự chấm, kết luận Audit, ngày, chữ ký |
+| 7 | Tổng hợp | D10: Video các phiên đưa vào zip (nén, chia nhỏ) hay chỉ nộp một phần. Moodle cho tối đa 20 file, mỗi file 20 MB |
+
+## Lệnh commit
+
+**Không commit file Excel lúc này**, vì phiên Task 3 đang ghi vào đó.
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add bugs/bug_report.md usability/screenshots/flow_12_category_empty_name.png usability/screenshots/flow_13_category_empty_created.png
+git commit -m "[T2][bugs] Report empty category name bug found in pilot (#66)"
+git add usability/01_test_plan.md usability/03_instruments.md
+git commit -m "[T2][pilot] Confirm G4 and D6 check method from pilot"
+git add checklist/03_results.md
+git commit -m "[T1][exec] Summarize N1 results and bugs in 03_results.md"
+git add report.md README.md
+git commit -m "[report] Add report skeleton with Task 1 and README test summary"
+git add "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" "forms/[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md" "forms/[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md"
+git commit -m "[forms] Add AI-02, AI-03, AI-05 drafts in Markdown"
+git add checklist/tools/n3_android_checklist.js checklist/tools/n3_run_log.txt checklist/tools/n3_run_log_2.txt checklist/tools/n3_cl34_log.txt checklist/tools/n3_extra_log.txt cross_platform/screenshots/android-chrome cross_platform/ai_raw/T3_android-chrome_manual.md cross_platform/ai_raw/T3_android-chrome_manual_v2.md cross_platform/ai_raw/T3_android-chrome_manual_v3.md
+git commit -m "[T3][android-chrome] Run N3 with screenshots and AI draft results"
+git add tools/export_prompt_log.py prompt_log.md
+git commit -m "[setup] Add summary session to prompt log whitelist"
+git push
+```
+
+`bugs/bug_report.md` trong commit đầu gồm cả bug #66 của phiên Task 2 lẫn phần mục 5 tôi đã sửa.
+
+Commit sau:
+- **Excel và `firefox_triage.md`:** Khi phiên Task 3 chép Excel xong và ghi D-16 đến D-19.
+- **`usability/sessions/`:** Theo từng phiên.
+
+## ⚠ Thời gian
+
+Bây giờ là 21:00. **Mốc 22:00 tối nay không còn kịp.** Để kịp **deadline 13:00 ngày mai**, cần:
+1. **Task 2 (đường găng):** Chạy càng nhiều phiên tối nay càng tốt, phần còn lại sáng mai. Muộn nhất **khoảng 9:00 sáng mai** phải xong 7 phiên, để còn thời gian cho score, analysis, bugs, báo cáo và đóng gói. Server và DB đã sẵn cho P1 (danh mục sạch).
+2. **N2 trên cloud** (khoảng 30 phút trial): Làm sau khi xong các phiên, hoặc vào lúc không có người tham gia.
+3. **Video demo skill:** Nếu thiếu thời gian, làm ở mức ngắn (chạy skill trên một màn hình, quay khoảng 5 đến 10 phút).
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Bug #66 xong; **chưa chạy phiên nào** | Chạy P1 đến P7 (server sẵn) | ~6,5 giờ |
+| Task 3 | N3 xong; phiên đang chép vào Excel | Gửi D-16 đến D-19; N2 trên cloud; compare, bugs | ~2 giờ |
+| Agent Skill | Phần thiết kế, exec, bugs, pilot đã viết | Quyết định 2, 3; các bước sau của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Đã có bản nháp phần Task 1, README, 3 form | Quyết định 4 đến 7; phần Task 2, Task 3, Skill; docx, PDF, zip | ~2 giờ |
+
+⏱ Còn khoảng **12 giờ** làm việc | Còn **1 giờ 2 phút** tới mốc 22:00 10/11 | **16 giờ 2 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C198 | 21:03 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 3 đã chép xong, hãy kiểm tra, xuất log và đưa commit message cho tôi.
+- Gửi lại tin nhắn quyết định của task 3 mà tôi đã chốt với bạn để tôi gửi.
+- Đưa tôi tin nhắn quyết định tổng hợp luôn: Không dùng AI nào khác ngoài Claude, phần đánh giá B02 và B10, B12 đều có nhật ký tôi quyết định gì mà, không có sao? Cấp độ điểm tự chấm để sau khi đã hoàn thành hết. Video thì cứ nộp hết đi, khi nén có vấn đề gì thì chốt sau.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Validate Excel NT3 results, notes, image refs and environment sheet
+- Bash: Check commits, export log, update tracker
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
