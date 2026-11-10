@@ -81,6 +81,6 @@ Theo tin nhắn `03_instruments.md` mục I2.1. Ghi "Có" hoặc "Không" cho t�
 | P3 | | Trực tuyến | Đã chạy | |
 | P4 | | Trực tuyến | Đã hẹn | |
 | P5 | | Trực tuyến | Đã hẹn | |
-| P6 | | Trực tuyến | Đã hẹn | |
+| P6 | | Trực tuyến | Đã chạy | |
 | P7 | | Trực tuyến | Đã hẹn | |
 | PL | | Trực tuyến | Đã chạy | |
