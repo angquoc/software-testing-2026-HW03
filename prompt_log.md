@@ -12957,6 +12957,305 @@ Bây giờ là 21:00. **Mốc 22:00 tối nay không còn kịp.** Để kịp *
 **Output AI (nguyên văn):**
 
 ````text
+Phiên Task 3 chép cột NT3 vào Excel đúng và đủ. Log đã xuất lại: 198 lượt.
+
+## Kiểm tra cột NT3 trong Excel
+
+| Kiểm | Kết quả |
+|---|---|
+| Đủ 112 mục | 45 Passed, 52 Failed, 8 N/A, 7 Không chạy được (khớp bản nháp v3) |
+| Mục Failed, N/A, Không chạy được có Notes | Đủ |
+| Mục Failed có ảnh | Đủ; mọi tên ảnh trong Excel đều có file thật trong `android-chrome/` |
+| Sheet "Môi trường" cột NT3 | Đủ: Chrome 156 Android, Android 15, Samsung SM-G998B, độ phân giải, giờ chạy, người chạy, ghi chú "(AI xem ảnh)" |
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx prompt_log.md
+git commit -m "[T3][android-chrome] Record N3 results in Excel"
+git push
+```
+
+## Tin gửi phiên Task 3
+
+```text
+Quyết định review firefox_triage.md:
+- D-16: Để trống và ghi lý do ở Notes.
+- D-17: Phục vụ file script qua tunnel (mở server tạm trên máy, mở URL trong Firefox từ xa).
+- D-18: Giữ nguyên.
+- D-19: Không cần, CL-33 và CL-34 đã chạy trên Chrome (NT1 có kết quả và ảnh).
+Ghi vào bảng quyết định và bảng "Thay đổi so với bản AI", sửa các chỗ trong file còn ghi CL-33, CL-34 chưa chạy. Thêm vào Notes của CL-06 cột NT3: "Ảnh mất thanh trạng thái do thao tác phóng to khi chụp, không chỉnh nội dung".
+```
+
+## Tin gửi phiên Tổng hợp
+
+Về B02, B10, B12: Bạn nói đúng, các quyết định của bạn đều có trong prompt log, nên phiên Tổng hợp tự đọc lại và điền được. Tôi viết câu theo hướng đó, kèm yêu cầu ghi số lượt (C..) làm căn cứ, để bạn kiểm nhanh.
+
+```text
+Quyết định cho các ô ⏳:
+1. Công cụ AI: Chỉ dùng Claude (Claude Code), không dùng công cụ AI nào khác. Giữ câu này ở [AI-03] và Appendix A.
+2. Đánh giá B02, B10, B12: Các quyết định của tôi đều có trong prompt_log.md. Đọc lại các lượt liên quan và điền đánh giá theo đúng những gì tôi đã chấp nhận, sửa hoặc từ chối; mỗi đánh giá ghi số lượt (C..) làm căn cứ. Chỗ nào log không đủ để kết luận thì giữ ⏳ và nói tôi.
+   - B02: Các script trong tools/ (export_prompt_log.py, seed_orders.py, md_to_pdf.py, docx_to_md.py).
+   - B10: AI điền cột NT1 (và NT3) từ log và ảnh; xem các lượt tôi review, sửa tên ảnh, bổ sung ảnh.
+   - B12: Phiên điều phối 949bce7e.
+3. Cấp độ AI và điểm tự chấm: Để ⏳, điền sau khi hoàn thành hết.
+4. Video (D10): Nộp hết video các phiên; vấn đề nén hay giới hạn dung lượng chốt lúc đóng gói.
+Ngoài ra cập nhật report.md và README phần Task 3 với kết quả N3 (Excel cột NT3, sheet Môi trường). N2 và Task 2 vẫn để ⏳.
+```
+
+Phiên Agent Skill còn **"File tóm tắt kết quả ngoài Excel"** để mở. Bạn trả lời: "Có: `checklist/03_results.md`". Còn chọn màn hình demo (B hay C) thì để lúc quay video.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Bug #66 xong; **chưa chạy phiên nào** | Chạy P1 đến P7 (server và DB sẵn) | ~6,5 giờ |
+| Task 3 | N1, N3 xong và đã có trong Excel | Gửi D-16 đến D-19; N2 trên cloud; compare, bugs | ~2 giờ |
+| Agent Skill | Phần thiết kế, exec, bugs, pilot đã viết | Trả lời file tóm tắt; các bước sau của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Bản nháp phần Task 1, README, 3 form | Gửi tin trên; phần Task 2, Task 3, Skill; docx, PDF, zip; tự chấm để cuối | ~2 giờ |
+
+⏱ Còn khoảng **12 giờ** làm việc | Còn **57 phút** tới mốc 22:00 10/11 | **15 giờ 57 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C199 | 21:04 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Quyết định review firefox_triage.md:
+- D-16: Để trống và ghi lý do ở Notes.
+- D-17: Phục vụ file script qua tunnel (mở server tạm trên máy, mở URL trong Firefox từ xa).
+- D-18: Giữ nguyên.
+- D-19: Không cần, CL-33 và CL-34 đã chạy trên Chrome (NT1 có kết quả và ảnh).
+Ghi vào bảng quyết định và bảng "Thay đổi so với bản AI", sửa các chỗ trong file còn ghi CL-33, CL-34 chưa chạy. Thêm vào Notes của CL-06 cột NT3: "Ảnh mất thanh trạng thái do thao tác phóng to khi chụp, không chỉnh nội dung".
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find CL-33/34 and decision spots in triage file; read Excel values
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\cl06_note.py
+- Bash: Append CL-06 note in Excel and verify triage file
+
+**Output AI (nguyên văn):**
+
+````text
+Đã sửa xong file triage. Giờ tôi thêm câu bạn đưa vào Notes CL-06 của cột NT3 trong Excel, rồi kiểm lại cả hai file.
+
+Tôi đã ghi xong các quyết định review vào [firefox_triage.md](HW03/cross_platform/firefox_triage.md) và thêm ghi chú CL-06 vào Excel.
+
+**Trong `firefox_triage.md`**
+- **Bảng quyết định (mục 6):** Thêm cột "Đã chốt" và bỏ dấu ⏳ ở cả 4 quyết định:
+  - D-16: Để trống ô Kết quả, ghi lý do ở Notes.
+  - D-17: Phục vụ file script qua tunnel. Server tạm chạy trên máy bạn, Firefox từ xa mở URL của file.
+  - D-18: Giữ nguyên cách xem 32 mục từ ảnh tổng quan.
+  - D-19: Không cần chạy thêm, vì CL-33 và CL-34 đã có kết quả và ảnh ở NT1.
+- **Mục 4, 5 và 3.3:** Ghi rõ lựa chọn đã chọn cho D-16 và D-17. Lựa chọn còn lại vẫn giữ trong bảng nhưng ghi "(không chọn)" hoặc "để tham khảo".
+- **Các chỗ ghi CL-33, CL-34 "chưa chạy" đã được sửa:**
+  - Mục 2 giờ ghi: NT1 Passed cả hai, NT3 Failed cả hai, tức hai mục có kết quả khác nhau giữa nền tảng, đáng chạy trên Firefox.
+  - Bảng 112 mục: Cột kết quả Chrome của hai dòng này đổi từ "(trống)" thành "Passed", ghi chú thêm kết quả NT3.
+- **Bảng "Thay đổi so với bản AI":** Thêm 4 dòng "Quyết định của SV" cho D-16 đến D-19.
+
+Kiểm lại: File không còn dấu ⏳ nào, không còn chỗ ghi "Chrome chưa chạy".
+
+**Trong Excel, Notes của CL-06 cột NT3:** Đã nối thêm câu "Ảnh mất thanh trạng thái do thao tác phóng to khi chụp, không chỉnh nội dung" vào cuối ghi chú cũ. Dropdown vẫn nguyên và cột NT3 vẫn đủ 112 mục.
+
+Commit:
+```
+git add cross_platform/firefox_triage.md checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][firefox] Record triage review decisions D-16 to D-19"
+```
+````
+
+---
+
+### C200 | 21:05 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `c934f0c0`
+
+**Prompt (nguyên văn):**
+
+````text
+Quyết định cho các ô ⏳:
+1. Công cụ AI: Chỉ dùng Claude (Claude Code), không dùng công cụ AI nào khác. Giữ câu này ở [AI-03] và Appendix A.
+2. Đánh giá B02, B10, B12: Các quyết định của tôi đều có trong prompt_log.md. Đọc lại các lượt liên quan và điền đánh giá theo đúng những gì tôi đã chấp nhận, sửa hoặc từ chối; mỗi đánh giá ghi số lượt (C..) làm căn cứ. Chỗ nào log không đủ để kết luận thì giữ ⏳ và nói tôi.
+   - B02: Các script trong tools/ (export_prompt_log.py, seed_orders.py, md_to_pdf.py, docx_to_md.py).
+   - B10: AI điền cột NT1 (và NT3) từ log và ảnh; xem các lượt tôi review, sửa tên ảnh, bổ sung ảnh.
+   - B12: Phiên điều phối 949bce7e.
+3. Cấp độ AI và điểm tự chấm: Để ⏳, điền sau khi hoàn thành hết.
+4. Video (D10): Nộp hết video các phiên; vấn đề nén hay giới hạn dung lượng chốt lúc đóng gói.
+Ngoài ra cập nhật report.md và README phần Task 3 với kết quả N3 (Excel cột NT3, sheet Môi trường). N2 và Task 2 vẫn để ⏳.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check prompt log state and git status
+- Bash: Rebuild turn index and compare with previous
+- Bash: Read NT3 results, environment, and differences from NT1
+- Bash: Check Task 3 files, bug report T3 section, key NT3 notes
+- Bash: Find student prompts about tools scripts or prompt log
+- Bash: Find AI actions editing tools scripts
+- Bash: Find log-filter discussions and read C04 output
+- Bash: Search for script fixes and read C16 output
+- Bash: Read C155 and C145-C146 turns
+- Bash: List coordination session prompts
+- Bash: Read coordination outputs for disputed turns
+- Bash: Print outputs for selected coordination turns
+- Bash: List Task 3 turns and read C180, C182 outputs
+- Bash: Read NT3 review turns prompts and outputs
+- Bash: Verify N3 screenshots and T3 commits
+- Bash: Locate sections and rows in report
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Bash: Find which turn proposed pushing images to repo
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Read: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Bash: Read CL-11 and CL-24 definitions
+- Edit: D:\Dang\Test\Homeworks\HW03\report.md
+- Read: D:\Dang\Test\Homeworks\HW03\README.md
+- Edit: D:\Dang\Test\Homeworks\HW03\README.md
+- Edit: D:\Dang\Test\Homeworks\HW03\README.md
+- Bash: Sync AI-02 audit rows from report
+- Edit: D:\Dang\Test\Homeworks\HW03\forms\[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md
+- Edit: D:\Dang\Test\Homeworks\HW03\forms\[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md
+- Edit: D:\Dang\Test\Homeworks\HW03\forms\[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md
+- Edit: D:\Dang\Test\Homeworks\HW03\forms\[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md
+- Bash: Recheck tables, separators, pending markers
+- Bash: Check Excel modification time vs last commit
+- Bash: Diff Excel cell values against last commit
+- Bash: Show the changed CL-06 NT3 note
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu bằng việc xem prompt log hiện tại (có thể đã xuất lại) và cột NT3 trong Excel.
+
+Log đã xuất lại có thêm phiên Tổng hợp, nên mã C có thể bị dịch. Lập lại danh sách lượt và kiểm các mã đã dẫn.
+
+Mã C cũ không đổi. Giờ đọc cột NT3 và sheet Môi trường.
+
+Giờ tìm các lượt liên quan tới B02 (script trong `tools/`). Trước hết lọc prompt của SV có nhắc tới các script này hoặc tới prompt log.
+
+Tìm các lượt AI viết hoặc sửa các script này (theo thao tác và output).
+
+Xem C155 (SV xin lệnh reset và seed để tự chạy) để biết có lỗi nào liên quan `seed_orders.py` không.
+
+C146 cho thấy một lỗi của phiên điều phối (bật lại server làm mất dữ liệu đơn). Để đánh giá B12 cho đủ, lọc mọi prompt của phiên `949bce7e`.
+
+Đọc nhanh phản hồi của phiên điều phối ở các lượt SV phản bác (C05, C81, C130, C139, C148) để ghi đúng vào B12.
+
+Giờ tới B10: Xem các lượt điền NT3 ở phiên Task 3 (C169 đến C196).
+
+Đủ căn cứ cho B02, B10, B12. Kiểm thêm ảnh N3 (số file, mục Failed nào cũng có ảnh) trước khi ghi vào report.
+
+Giờ sửa `report.md`. Đọc lại các đoạn cần sửa (Task 3, Test Summary, Appendix A, B).
+
+Sửa các dòng B01, B02, B03, B10, B12 của Appendix B.
+
+Kiểm lại hai chi tiết vừa ghi ở B12: Đề xuất đẩy ảnh vào repo nằm ở lượt nào, và nội dung C82.
+
+Đúng C137. Chỉnh câu C82, C83 trong B12 cho sát nội dung gốc.
+
+Viết lại phần 4.2, 4.3 với kết quả N3, thêm ghi chú video (D10) ở 3.2, và cập nhật Test Summary.
+
+Kiểm nội dung mong đợi của CL-11 và CL-24 để câu so sánh không nói sai.
+
+Giờ cập nhật README (Test Summary của N3, ghi chú video).
+
+Đồng bộ bảng của [AI-02] với Appendix B vừa sửa (thay các dòng B01 đến B20).
+
+Cập nhật [AI-03] (mã phiên Tổng hợp) và [AI-05] (căn cứ đã thay đổi).
+
+Soát lại quy ước văn bản và cấu trúc bảng ở các file vừa sửa.
+
+Excel đang có thay đổi chưa commit mà tôi không ghi vào. Kiểm tra giờ sửa để biết do phiên nào.
+
+Tôi đã điền đánh giá B02, B10, B12 theo prompt log, đưa kết quả N3 vào `report.md` và README, rồi đồng bộ lại 3 form. Chưa commit.
+
+**Đánh giá trong Appendix B (đã chép sang [AI-02])**
+
+Mã C cũ không bị dịch sau khi log thêm phiên Tổng hợp: C01 đến C177 vẫn giữ số như trước.
+
+- **B02 (`export_prompt_log.py`, `seed_orders.py`): VALID.**
+  - Log được xuất trước mỗi lần commit và không lượt nào bạn yêu cầu sửa script. Các phiên được thêm vào danh sách trắng ở C14, C22, C69, C94, C181.
+  - `seed_orders.py` dùng cho mọi lần chạy N1, N3. Bạn tự dẫn nó cho phiên Task 1 (C55) và tự chạy theo lệnh AI đưa (C155).
+- **B03 (`md_to_pdf.py`, `docx_to_md.py`): Vẫn ⏳, log không đủ để kết luận.**
+  - Tôi tách 2 script này khỏi B02 vì không chung một kết luận được. Vì vậy B03 cũ (`seed_orders.py`) đã gộp vào B02.
+  - `md_to_pdf.py` chưa chạy lần nào trong HW03. Khi bạn xuất PDF, tôi điền tiếp dòng này.
+  - `docx_to_md.py` báo lỗi `UnicodeEncodeError` ở C179 khi in chữ tiếng Việt ra console, chạy lại với `PYTHONIOENCODING=utf-8` thì được.
+- **B10 (điền cột NT1, NT3): INCOMPLETE.**
+  - Log không ghi lần nào bạn đổi một kết quả Passed / Failed do AI điền (C196).
+  - Chỗ phải sửa đều nằm ở ảnh và cách chạy: Ảnh CL-109 phải chụp lại (C121); CL-34, CL-05, CL-105 chỉ được làm bằng script sau khi bạn hỏi lại (C129, C187); tên ảnh trong Excel bị lệch (C160); AI đòi ảnh CL-06 phải thấy URL dù danh sách tab của Chrome Android không hiện URL (C188).
+- **B12 (phiên điều phối, C12 đến C198): INCOMPLETE.**
+  - Ước tính thời gian dư (C81, C139).
+  - Cách tính thời gian phiên usability trái quyết định đã chốt (C82); mục I5 của `03_instruments.md` để người tham gia điền SUS trên máy của bạn (C83).
+  - Bảo bạn tự ghi thông tin máy đã có ở Task 1 (C102).
+  - Đề xuất đẩy ảnh vào repo nhóm để chèn vào issue (C137, C139).
+  - Kết luận sai là server đã tắt, bật thêm server làm mất dữ liệu đơn hàng (C146).
+  - Đưa lệnh commit cho thay đổi đã commit (C148).
+- **B01:** Tôi thêm mã lượt làm căn cứ: C02, C08, và C04 đến C06 (AI đề xuất đổi luồng FL-05, bạn giữ luồng).
+
+**Task 3: Kết quả N3**
+- **Tổng:** 97 mục đã chạy: 45 Passed, 52 Failed, 8 N/A, 7 Không chạy được. Mục Failed nào cũng có ảnh.
+- **Đã cập nhật:** `report.md` mục 4.2 (môi trường N3 lấy từ sheet Môi trường, bảng theo IA), mục 4.3 (bảng so sánh N1 với N3), mục 6, và Test Summary trong README. N2 và Task 2 vẫn để ⏳.
+- **So với N1, 13 mục có kết quả khác:** 8 mục thành N/A trên điện thoại (phím Tab, rê chuột, cửa sổ 1366 x 768). CL-11, CL-33, CL-34 từ Passed thành Failed; CL-24 từ Failed thành Passed.
+- **CL-11 và CL-24 chưa nên báo bug:** Hai mục này đổi ngược nhau, đều về định dạng số và ngày. Ở C180, phiên Task 3 đã lưu ý cần kiểm ngôn ngữ của Chrome ở N1 (chạy qua Playwright) trước khi kết luận. Tôi ghi là ⏳ trong report.
+
+**Các quyết định khác của bạn**
+- **Công cụ AI:** Câu "không dùng công cụ AI nào khác" vẫn giữ ở [AI-03] và Appendix A. [AI-03] nay ghi đủ mã phiên Tổng hợp `c934f0c0`.
+- **Video (D10):** Đã ghi vào report mục 3.2 và README: Nộp đủ video của pilot và P1 đến P7, cách nén chốt lúc đóng gói.
+- **Cấp độ AI và điểm tự chấm:** Vẫn để ⏳.
+
+**Một việc cần biết:** `checklist/HW03_T1_GUI_Checklist.xlsx` có một thay đổi chưa commit mà tôi không ghi vào. Ô Notes NT3 của CL-06 được thêm câu "Ảnh mất thanh trạng thái do thao tác phóng to khi chụp...", sửa lúc 21:05:53, sau commit `61ff99d` lúc 21:04. Nhiều khả năng do phiên Task 3, nên commit cùng tag `[T3]`.
+
+**Commit (sau khi phiên điều phối xuất lại log):**
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][android-chrome] Note cropped status bar on CL-06 evidence"
+git add report.md README.md "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" "forms/[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md" "forms/[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md"
+git commit -m "[report] Add N3 results, audit verdicts for B02, B10, B12 and video decision"
+```
+````
+
+---
+
+### C201 | 21:24 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Bỏ mốc deadline 22h đi nhé.
+- Kiểm tra trạng thái các task, xuất log, đưa commit message.
+- Còn phần nào tôi còn phải chốt không? Nếu không thì tôi tính để P1 -> P7 chạy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Update memory, check repo, DB and new session turns
+- Bash: Read the full latest reply of the summary session
+- Bash: Export prompt log
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
