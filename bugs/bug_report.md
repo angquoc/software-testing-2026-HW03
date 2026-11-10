@@ -93,6 +93,7 @@ Trang Issues đã lọc `author:angquoc label:"task: T1 checklist"`, đủ #33 �
 | Mã | Issue | Tiêu đề | Phát hiện ở | Căn cứ | Severity | IA | Ảnh |
 |---|---|---|---|---|---|---|---|
 | B-T2-01 | [#66](https://github.com/angquoc/software-testing-2026-HW03-group/issues/66) | [FL-05] Bấm "Thêm mới" khi chưa nhập tên vẫn tạo danh mục không tên | PL (pilot), mốc 00:29; SV tái hiện 10/11/2026 | FR-14 | medium | IA-02, IA-04 | `flow_12_category_empty_name.png`, `flow_13_category_empty_created.png` |
+| B-T2-02 | [#67](https://github.com/angquoc/software-testing-2026-HW03-group/issues/67) | [FL-05] Sau khi lưu ở form "Sửa", bảng sản phẩm hiện sai và lần sửa tiếp theo (chưa tải lại trang) ghi đè dữ liệu | P4, mốc 01:55 đến 02:18; SV tái hiện bằng script 11/11/2026 | FR-15 | critical | IA-02, IA-04 | `flow_14` đến `flow_18` (`flow_14_product_edit_list_wrong_names.png`, ...) |
 
 Issue Task 2 có label `bug`, `platform: admin`, `task: T2 usability`, được gán cho chính người báo.
 
@@ -107,3 +108,29 @@ Issue Task 2 có label `bug`, `platform: admin`, `task: T2 usability`, được 
 - **Severity:** `medium`. Theo câu hỏi ở README nhóm mục 4.3: Không lộ hay mất dữ liệu, không chặn luồng (câu 1: Không); người dùng tránh được bằng cách nhập tên, hoặc xoá dòng trống bằng nút "Xóa" (câu 2: Không); sai đặc tả FR-14 nhưng có cách đi vòng (câu 3: Có).
 - **IA:** IA-02 (form không chặn trường bắt buộc để trống), IA-04 (không có phản hồi lỗi).
 - **Ghi chú:** Phát hiện ở phiên pilot: Người pilot tưởng nút "Thêm mới" mở form tạo danh mục, bấm khi chưa nhập tên và hệ thống tạo ngay một dòng trống (`usability/pilot/notes.md` mục 5). Người pilot không tính vào 7 người; bug được SV tái hiện lại và chụp ảnh ngoài phiên.
+
+### B-T2-02: Chi tiết
+
+- **Điều kiện tiên quyết:** Đã reset DB; đăng nhập Admin `admin@eshop.com`; vào trang "Quản lý Sản phẩm" (bảng có 5 sản phẩm mẫu).
+- **Các bước tái hiện, trường hợp A (ghi đè tên sản phẩm khác):**
+  1. Bấm "Sửa" ở dòng "iPhone 15 Pro Max", đổi giá `30000000` thành `30000222`, bấm "Lưu sản phẩm". Hộp thoại báo "Cập nhật thành công!", bấm OK.
+  2. Không tải lại trang. Bảng lúc này hiện tên "iPhone 15 Pro Max" ở **mọi dòng**; cột Giá và Ảnh vẫn là giá trị cũ, kể cả ở dòng vừa sửa (`flow_14`, chụp ở trường hợp tương tự với "MacBook Pro M3").
+  3. Bấm "Sửa" ở dòng thứ hai (sản phẩm "Samsung Galaxy S24 Ultra"). Form điền sẵn tên "iPhone 15 Pro Max". Chỉ đổi giá thành `28000222`, bấm "Lưu sản phẩm", OK.
+  4. Tải lại trang, vào lại "Sản phẩm".
+- **Các bước tái hiện, trường hợp B (mất thay đổi của lần sửa trước, giống P4):**
+  1. Bấm "Sửa" ở dòng "Tai nghe AirPods Pro 2", đổi URL ảnh và danh mục, bấm "Lưu sản phẩm", OK (`flow_16`).
+  2. Không tải lại trang, bấm "Sửa" lại đúng dòng đó. Form hiện URL ảnh và danh mục **cũ** (`flow_17`).
+  3. Chỉ đổi mô tả, bấm "Lưu sản phẩm", OK.
+  4. Tải lại trang, vào lại "Sản phẩm", bấm "Sửa" dòng đó.
+- **Kết quả mong đợi:** FR-15: "Admin có thể Thêm / Xem / Sửa / Xóa sản phẩm." và "Khi Sửa một sản phẩm, chỉ sản phẩm đó bị thay đổi — các sản phẩm khác giữ nguyên." Sau khi lưu, bảng và form "Sửa" hiện đúng dữ liệu đã lưu; lần sửa sau không làm mất thay đổi của lần trước, không đổi sản phẩm khác.
+- **Kết quả thực tế:**
+  - A: Sau khi tải lại, sản phẩm thứ hai mang tên "iPhone 15 Pro Max" (`flow_15`): Tên của một sản phẩm khác bị ghi đè dù người dùng không sửa tên.
+  - B: Sau khi tải lại, URL ảnh và danh mục trở về giá trị trước lần sửa thứ nhất; chỉ mô tả của lần sửa thứ hai còn (`flow_18`).
+  - Cả hai lần lưu đều báo "Cập nhật thành công!". Nếu sửa một lần trên trang vừa tải lại thì mọi ô đều được lưu đúng (script, trường hợp E1 đến E6).
+- **Severity:** `critical` (AI đề xuất, SV chốt). Theo README nhóm mục 4.3, câu 1: Có làm mất dữ liệu: Thao tác sửa bình thường (sửa hai sản phẩm, hoặc sửa một sản phẩm hai lần mà không tải lại trang) ghi đè dữ liệu đã lưu, kể cả của sản phẩm khác, trong khi hệ thống vẫn báo thành công nên admin không biết để sửa lại.
+- **IA:** IA-04 (bảng hiện sai trạng thái sau khi lưu), IA-02 (form "Sửa" điền sẵn giá trị sai).
+- **Ghi chú:**
+  - Phát hiện ở phiên P4: P4 sửa URL ảnh và danh mục lúc 01:55, bảng vẫn hiện ảnh hỏng nên P4 sửa thêm hai lần (02:12, 02:18) trên trang chưa tải lại rồi bỏ cuộc (`usability/sessions/P4/notes.md` mục 5). Người điều phối kiểm D6 cũng trên trang chưa tải lại nên không nhận ra.
+  - Tái hiện bằng script `usability/tools/edit_product_check.js` (8 trường hợp E1 đến E8, lần chạy 01:24:21 ngày 11/11/2026; log `usability/tools/edit_check_log.txt`, ảnh gốc `usability/tools/edit_check_shots/`). Script tìm phần tử theo chữ nhìn thấy trên trang, không đọc mã nguồn.
+  - Related #9: Issue #9 báo trang thanh toán vẫn dùng giá cũ sau khi Admin đổi giá; nếu lần đổi giá trong #9 làm trên trang chưa tải lại sau một lần sửa khác, giá có thể đã không được lưu, tức cùng nguyên nhân với bug này.
+  - Ngoài lề (không báo riêng): Tải lại trang Admin khi đang ở "Sản phẩm" thì bị đưa về Dashboard (IA-03).

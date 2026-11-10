@@ -1,0 +1,244 @@
+
+===== Lần chạy 01:24:21 11/11/2026 | --log=edit_check_log.txt | http://localhost:5174
+  Đăng nhập: Tiêu đề thấy được sau khi bấm Login: EShop Admin | Dashboard
+
+=== E1: Chỉ đổi giá (sản phẩm mẫu) | sản phẩm "MacBook Pro M3"
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Bảng trước khi sửa (5 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000000 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://placehold.co/300x300/png?text=AirPods+Pro
+    5. "Bàn phím cơ Keychron Q1" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1" src=https://placehold.co/300x300/png?text=Keychron+Q1
+  Bấm "Sửa" dòng 3: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"MacBook Pro M3","price":"45000000","url":"https://placehold.co/300x300/png?text=Macbook+Pro","desc":"Laptop chuyên nghiệp mạnh mẽ","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E1_1_form_opened.png
+  Đổi: {"price":"45000111"}
+    Ảnh: usability\tools\edit_check_shots\E1_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E1_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "MacBook Pro M3"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "MacBook Pro M3"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "MacBook Pro M3"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1" -> "MacBook Pro M3"
+    Ảnh: usability\tools\edit_check_shots\E1_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Dòng 3: giá 45000000 ₫ -> 45000111 ₫
+    Ảnh: usability\tools\edit_check_shots\E1_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 3 sau khi tải lại: {"name":"MacBook Pro M3","price":"45000111","url":"https://placehold.co/300x300/png?text=Macbook+Pro","desc":"Laptop chuyên nghiệp mạnh mẽ","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E1_6_form_after_reload.png
+  Kết quả: {"price":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E2: Chỉ đổi tên (sản phẩm mẫu) | sản phẩm "Bàn phím cơ Keychron Q1"
+  Bảng trước khi sửa (5 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://placehold.co/300x300/png?text=AirPods+Pro
+    5. "Bàn phím cơ Keychron Q1" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1" src=https://placehold.co/300x300/png?text=Keychron+Q1
+  Bấm "Sửa" dòng 5: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"Bàn phím cơ Keychron Q1","price":"4000000","url":"https://placehold.co/300x300/png?text=Keychron+Q1","desc":"Gõ cực sướng, thiết kế kim loại","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E2_1_form_opened.png
+  Đổi: {"name":"Bàn phím cơ Keychron Q1 HW03 E2"}
+    Ảnh: usability\tools\edit_check_shots\E2_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E2_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+    Ảnh: usability\tools\edit_check_shots\E2_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Dòng 5: tên "Bàn phím cơ Keychron Q1" -> "Bàn phím cơ Keychron Q1 HW03 E2"
+    Ảnh: usability\tools\edit_check_shots\E2_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 5 sau khi tải lại: {"name":"Bàn phím cơ Keychron Q1 HW03 E2","price":"4000000","url":"https://placehold.co/300x300/png?text=Keychron+Q1","desc":"Gõ cực sướng, thiết kế kim loại","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E2_6_form_after_reload.png
+  Kết quả: {"name":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E3: Chỉ đổi URL ảnh (sản phẩm mẫu) | sản phẩm "Tai nghe AirPods Pro 2"
+  Bảng trước khi sửa (5 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://placehold.co/300x300/png?text=AirPods+Pro
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+  Bấm "Sửa" dòng 4: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"Tai nghe AirPods Pro 2","price":"6000000","url":"https://placehold.co/300x300/png?text=AirPods+Pro","desc":"Chống ồn chủ động xuất sắc","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E3_1_form_opened.png
+  Đổi: {"url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png"}
+    Ảnh: usability\tools\edit_check_shots\E3_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E3_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "Tai nghe AirPods Pro 2"
+    Ảnh: usability\tools\edit_check_shots\E3_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Dòng 4: ảnh https://placehold.co/300x300/png?text=AirPods+Pro -> https://cdn2.cellphones.com.vn/x/media/catalog/pro
+    Ảnh: usability\tools\edit_check_shots\E3_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 4 sau khi tải lại: {"name":"Tai nghe AirPods Pro 2","price":"6000000","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Chống ồn chủ động xuất sắc","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E3_6_form_after_reload.png
+  Kết quả: {"url":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E4: Chỉ đổi mô tả (sản phẩm mẫu) | sản phẩm "Samsung Galaxy S24 Ultra"
+  Bảng trước khi sửa (5 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+  Bấm "Sửa" dòng 2: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"Samsung Galaxy S24 Ultra","price":"28000000","url":"https://placehold.co/300x300/png?text=Samsung+S24","desc":"Màn hình hiển thị xuất sắc, camera siêu zoom","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E4_1_form_opened.png
+  Đổi: {"desc":"Mô tả sửa bởi HW03 E4 (mwb0rmje)"}
+    Ảnh: usability\tools\edit_check_shots\E4_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E4_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "Samsung Galaxy S24 Ultra"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "Samsung Galaxy S24 Ultra"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "Samsung Galaxy S24 Ultra"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "Samsung Galaxy S24 Ultra"
+    Ảnh: usability\tools\edit_check_shots\E4_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Bảng không đổi so với trước khi sửa
+    Ảnh: usability\tools\edit_check_shots\E4_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 2 sau khi tải lại: {"name":"Samsung Galaxy S24 Ultra","price":"28000000","url":"https://placehold.co/300x300/png?text=Samsung+S24","desc":"Mô tả sửa bởi HW03 E4 (mwb0rmje)","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E4_6_form_after_reload.png
+  Kết quả: {"desc":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E5: Chỉ đổi danh mục (sản phẩm mẫu) | sản phẩm "iPhone 15 Pro Max"
+  Bảng trước khi sửa (5 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+  Bấm "Sửa" dòng 1: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"iPhone 15 Pro Max","price":"30000000","url":"https://placehold.co/300x300/png?text=iPhone+15","desc":"Điện thoại cao cấp của Apple","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E5_1_form_opened.png
+  Đổi: {"cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E5_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E5_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "iPhone 15 Pro Max"
+    Ảnh: usability\tools\edit_check_shots\E5_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Bảng không đổi so với trước khi sửa
+    Ảnh: usability\tools\edit_check_shots\E5_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 1 sau khi tải lại: {"name":"iPhone 15 Pro Max","price":"30000000","url":"https://placehold.co/300x300/png?text=iPhone+15","desc":"Điện thoại cao cấp của Apple","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E5_6_form_after_reload.png
+  Kết quả: {"cat":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E6: Đổi cả 5 ô (sản phẩm mới tạo trong script) | sản phẩm "HW03 E6 sản phẩm thử"
+  Tạo sản phẩm "HW03 E6 sản phẩm thử" bằng form "Thêm sản phẩm mới" (nút "Lưu sản phẩm")
+  Bảng trước khi sửa (6 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+    6. "HW03 E6 sản phẩm thử" | 1000000 ₫ | ảnh alt="HW03 E6 sản phẩm thử" src=https://product.hstatic.net/200000420363/product/tinhocngoisao.com1__7
+  Bấm "Sửa" dòng 6: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"HW03 E6 sản phẩm thử","price":"1000000","url":"https://product.hstatic.net/200000420363/product/tinhocngoisao.com1__70__43ded99a314146faa022ee7a4be21884_master.png","desc":"Mô tả E6 ban đầu","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E6_1_form_opened.png
+  Đổi: {"name":"HW03 E6 sản phẩm thử (đã sửa)","price":"1234567","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Mô tả E6 đã sửa","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E6_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E6_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "HW03 E6 sản phẩm thử (đã sửa)"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "HW03 E6 sản phẩm thử (đã sửa)"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "HW03 E6 sản phẩm thử (đã sửa)"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "HW03 E6 sản phẩm thử (đã sửa)"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "HW03 E6 sản phẩm thử (đã sửa)"
+  Ngay sau khi lưu (chưa tải lại): Dòng 6: tên "HW03 E6 sản phẩm thử" -> "HW03 E6 sản phẩm thử (đã sửa)"
+    Ảnh: usability\tools\edit_check_shots\E6_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Dòng 6: tên "HW03 E6 sản phẩm thử" -> "HW03 E6 sản phẩm thử (đã sửa)"; giá 1000000 ₫ -> 1234567 ₫; ảnh https://product.hstatic.net/200000420363/product/t -> https://cdn2.cellphones.com.vn/x/media/catalog/pro
+    Ảnh: usability\tools\edit_check_shots\E6_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 6 sau khi tải lại: {"name":"HW03 E6 sản phẩm thử (đã sửa)","price":"1234567","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Mô tả E6 đã sửa","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E6_6_form_after_reload.png
+  Kết quả: {"name":"Đã lưu","price":"Đã lưu","url":"Đã lưu","desc":"Đã lưu","cat":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E7: Sửa giá hai sản phẩm liên tiếp, không tải lại trang giữa hai lần | sản phẩm "iPhone 15 Pro Max"
+  Bảng trước khi sửa (6 dòng):
+    1. "iPhone 15 Pro Max" | 30000000 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "Samsung Galaxy S24 Ultra" | 28000000 ₫ | ảnh alt="Samsung Galaxy S24 Ultra" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+    6. "HW03 E6 sản phẩm thử (đã sửa)" | 1234567 ₫ | ảnh alt="HW03 E6 sản phẩm thử (đã sửa)" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+  Bấm "Sửa" dòng 1: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"iPhone 15 Pro Max","price":"30000000","url":"https://placehold.co/300x300/png?text=iPhone+15","desc":"Điện thoại cao cấp của Apple","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E7_1_form_opened.png
+  Đổi: {"price":"30000222"}
+    Ảnh: usability\tools\edit_check_shots\E7_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E7_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Lần sửa thứ hai: Dòng 2 ("Samsung Galaxy S24 Ultra" trước khi sửa; bảng lúc này ghi "iPhone 15 Pro Max"), form vừa mở: {"name":"iPhone 15 Pro Max","price":"28000000","url":"https://placehold.co/300x300/png?text=Samsung+S24","desc":"Mô tả sửa bởi HW03 E4 (mwb0rmje)","cat":"Điện thoại"}; đổi: {"price":"28000222"}
+    Ảnh: usability\tools\edit_check_shots\E7_3b_dialog.png
+  Hộp thoại sau lần lưu thứ hai: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 4: tên "Tai nghe AirPods Pro 2" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "iPhone 15 Pro Max"
+  Ngay sau khi lưu (chưa tải lại): Dòng 6: tên "HW03 E6 sản phẩm thử (đã sửa)" -> "iPhone 15 Pro Max"
+    Ảnh: usability\tools\edit_check_shots\E7_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Dòng 1: giá 30000000 ₫ -> 30000222 ₫
+  Sau khi tải lại trang: Dòng 2: tên "Samsung Galaxy S24 Ultra" -> "iPhone 15 Pro Max"; giá 28000000 ₫ -> 28000222 ₫
+    Ảnh: usability\tools\edit_check_shots\E7_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 1 sau khi tải lại: {"name":"iPhone 15 Pro Max","price":"30000222","url":"https://placehold.co/300x300/png?text=iPhone+15","desc":"Điện thoại cao cấp của Apple","cat":"Laptop"}
+    Ảnh: usability\tools\edit_check_shots\E7_6_form_after_reload.png
+    Ảnh: usability\tools\edit_check_shots\E7_7_second_form_after_reload.png
+  Kết quả: {"price":"Đã lưu","giá lần 2":"Đã lưu","tên sản phẩm sửa lần 2 (không đổi tên)":"BỊ ĐỔI sau khi tải lại: \"Samsung Galaxy S24 Ultra\" -> \"iPhone 15 Pro Max\""}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+=== E8: Sửa cùng một sản phẩm hai lần liền, không tải lại trang (như P4) | sản phẩm "Tai nghe AirPods Pro 2"
+  Bảng trước khi sửa (6 dòng):
+    1. "iPhone 15 Pro Max" | 30000222 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=iPhone+15
+    2. "iPhone 15 Pro Max" | 28000222 ₫ | ảnh alt="iPhone 15 Pro Max" src=https://placehold.co/300x300/png?text=Samsung+S24
+    3. "MacBook Pro M3" | 45000111 ₫ | ảnh alt="MacBook Pro M3" src=https://placehold.co/300x300/png?text=Macbook+Pro
+    4. "Tai nghe AirPods Pro 2" | 6000000 ₫ | ảnh alt="Tai nghe AirPods Pro 2" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+    5. "Bàn phím cơ Keychron Q1 HW03 E2" | 4000000 ₫ | ảnh alt="Bàn phím cơ Keychron Q1 HW03 E2" src=https://placehold.co/300x300/png?text=Keychron+Q1
+    6. "HW03 E6 sản phẩm thử (đã sửa)" | 1234567 ₫ | ảnh alt="HW03 E6 sản phẩm thử (đã sửa)" src=https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_
+  Bấm "Sửa" dòng 4: Form ở form trên trang, tiêu đề "Sửa sản phẩm", nút lưu "Lưu sản phẩm"
+  Giá trị form vừa mở: {"name":"Tai nghe AirPods Pro 2","price":"6000000","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Chống ồn chủ động xuất sắc","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E8_1_form_opened.png
+  Đổi: {"url":"https://placehold.co/300x300/png?text=HW03+E8","cat":"Điện thoại"}
+    Ảnh: usability\tools\edit_check_shots\E8_2_form_changed.png
+    Ảnh: usability\tools\edit_check_shots\E8_3_dialog.png
+  Hộp thoại sau khi lưu: alert: "Cập nhật thành công!"
+  Bấm "Sửa" lại đúng dòng 4 (chưa tải lại): Form hiện {"name":"Tai nghe AirPods Pro 2","price":"6000000","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Chống ồn chủ động xuất sắc","cat":"Phụ kiện"}
+  Ô của lần 1 mà form lần 2 không hiện giá trị mới: url, cat
+    Ảnh: usability\tools\edit_check_shots\E8_3c_form_reopened.png
+  Lần 2 chỉ đổi mô tả: "Mô tả sửa lần 2 bởi HW03 E8 (mwb0rmje)"
+    Ảnh: usability\tools\edit_check_shots\E8_3d_dialog.png
+  Hộp thoại sau lần lưu thứ hai: alert: "Cập nhật thành công!"
+  Ngay sau khi lưu (chưa tải lại): Dòng 1: tên "iPhone 15 Pro Max" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 2: tên "iPhone 15 Pro Max" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 3: tên "MacBook Pro M3" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 5: tên "Bàn phím cơ Keychron Q1 HW03 E2" -> "Tai nghe AirPods Pro 2"
+  Ngay sau khi lưu (chưa tải lại): Dòng 6: tên "HW03 E6 sản phẩm thử (đã sửa)" -> "Tai nghe AirPods Pro 2"
+    Ảnh: usability\tools\edit_check_shots\E8_4_table_after_save.png
+  Sau khi tải lại trang: URL http://localhost:5174/, tiêu đề thấy được: EShop Admin | Dashboard
+  Sau khi tải lại trang: Bảng không đổi so với trước khi sửa
+    Ảnh: usability\tools\edit_check_shots\E8_5_table_after_reload.png
+  Bấm "Sửa" lại dòng 4 sau khi tải lại: {"name":"Tai nghe AirPods Pro 2","price":"6000000","url":"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png","desc":"Mô tả sửa lần 2 bởi HW03 E8 (mwb0rmje)","cat":"Phụ kiện"}
+    Ảnh: usability\tools\edit_check_shots\E8_6_form_after_reload.png
+  Kết quả: {"url":"Không lưu (form sau khi tải lại: \"https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png\")","cat":"Không lưu (form sau khi tải lại: \"Phụ kiện\")","desc2":"Đã lưu"}; dòng khác đổi ngay sau khi lưu: Có; dòng khác đổi sau khi tải lại: Không
+
+===== Tổng hợp (kết quả nháp, sinh viên xem ảnh để chốt)
+Mã	Trường hợp	Ô đã đổi: lưu hay không	Dòng khác đổi ngay sau lưu	Dòng khác đổi sau tải lại	Hộp thoại
+E1	Chỉ đổi giá (sản phẩm mẫu)	price: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E2	Chỉ đổi tên (sản phẩm mẫu)	name: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E3	Chỉ đổi URL ảnh (sản phẩm mẫu)	url: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E4	Chỉ đổi mô tả (sản phẩm mẫu)	desc: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E5	Chỉ đổi danh mục (sản phẩm mẫu)	cat: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E6	Đổi cả 5 ô (sản phẩm mới tạo trong script)	name: Đã lưu; price: Đã lưu; url: Đã lưu; desc: Đã lưu; cat: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+E7	Sửa giá hai sản phẩm liên tiếp, không tải lại trang giữa hai lần	price: Đã lưu; giá lần 2: Đã lưu; tên sản phẩm sửa lần 2 (không đổi tên): BỊ ĐỔI sau khi tải lại: "Samsung Galaxy S24 Ultra" -> "iPhone 15 Pro Max"	Có	Không	alert: "Cập nhật thành công!"
+E8	Sửa cùng một sản phẩm hai lần liền, không tải lại trang (như P4)	url: Không lưu (form sau khi tải lại: "https://cdn2.cellphones.com.vn/x/media/catalog/product/j/b/jbl_flip_6_5_1.png"); cat: Không lưu (form sau khi tải lại: "Phụ kiện"); desc2: Đã lưu	Có	Không	alert: "Cập nhật thành công!"
+Nhắc: Reset DB sau khi chạy (cd backend && node database.js).
