@@ -13256,6 +13256,508 @@ git commit -m "[report] Add N3 results, audit verdicts for B02, B10, B12 and vid
 **Output AI (nguyên văn):**
 
 ````text
+Đã bỏ mốc 22:00, từ giờ chỉ tính tới deadline 13:00 ngày 11/11. Log đã xuất lại: 201 lượt. **Không còn quyết định nào chặn P1, bạn chạy P1 đến P7 được rồi.** Server đang chạy, DB có danh mục sạch.
+
+## Tiến trình
+
+| Phiên | Đã làm | Đang ở |
+|---|---|---|
+| Task 3 | Đã ghi D-16 đến D-19 vào `firefox_triage.md` (không còn ⏳); thêm ghi chú về ảnh CL-06 vào Excel | Chờ chạy N2 trên cloud |
+| Tổng hợp | Đã điền đánh giá B02 (VALID), B10 và B12 (INCOMPLETE, có số lượt làm căn cứ); cập nhật report và README phần N3 (bảng so sánh N1 với N3); ghi quyết định nộp đủ video | Chờ Task 2, N2 |
+| Task 2, Agent Skill | Không có lượt mới | Chờ các phiên P1 đến P7 |
+
+## Còn để mở, không chặn P1 (làm sau các phiên)
+
+1. **Định dạng ngày và số (CL-24, CL-11) có thể phụ thuộc ngôn ngữ trình duyệt.** Hai nền tảng cho kết quả ngược nhau:
+   - N1 (Chrome do Playwright mở): Ngày dạng tháng/ngày/năm (Failed), số tiền có dấu phẩy (Passed).
+   - N3 (Android): Ngày dạng ngày/tháng/năm (Passed), số tiền Failed.
+
+   Nhiều khả năng trang định dạng theo ngôn ngữ của trình duyệt, và Chrome do Playwright mở đang chạy tiếng Anh. Nếu vậy thì **issue #53** ("Ngày hiển thị tháng/ngày/năm") đang mô tả chưa đúng gốc lỗi. Lỗi đúng là "định dạng không cố định theo tiếng Việt mà đổi theo ngôn ngữ trình duyệt", và đây lại là **bug chỉ xuất hiện trên một số nền tảng**, đúng thứ Task 3 cần.
+
+   Cách kiểm, khoảng 5 phút **sau khi xong các phiên usability**: Mở Chrome thường của bạn (tiếng Việt), đăng nhập `test@eshop.com`, xem `/profile`. Kiểm này cần DB có đơn, nên phải chạy lại `seed_orders.py` trước. Sau đó nhờ phiên Task 1 sửa #53 và Notes của CL-11, CL-24.
+2. **Agent Skill:** Trả lời "File tóm tắt kết quả: Có, `checklist/03_results.md`" (gửi lúc rảnh). Màn hình demo chọn lúc quay video.
+3. **Tổng hợp:**
+   - B03 (`md_to_pdf.py`, `docx_to_md.py`) điền sau khi xuất PDF.
+   - Cấp độ AI và điểm tự chấm điền cuối cùng.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add cross_platform/firefox_triage.md checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][firefox] Record triage review decisions D-16 to D-19"
+git add report.md README.md "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" "forms/[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.md" "forms/[AI-05] - FIT@HCMUS - AI Privacy Checklist_Vn.md"
+git commit -m "[report] Add N3 results, audit verdicts for B02, B10, B12 and video decision"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+File Excel trong commit đầu chỉ có ghi chú của CL-06 do phiên Task 3 thêm.
+
+## Chạy P1 đến P7
+
+- **Giữa hai phiên**, trong lúc người tham gia điền form SUS, reset DB bằng lệnh sau. Phiên usability không cần đơn hàng nên không cần chạy seed:
+  ```powershell
+  cd D:\Dang\Test\Homeworks\eshop-sut\backend; node database.js
+  ```
+- **Mỗi phiên xong**, commit hồ sơ của phiên đó: `[T2][P1] Run session P1`... Nếu muốn tôi kiểm hồ sơ trước khi commit, báo tôi.
+- Phiên Task 2 có thể giúp điền hồ sơ từ ghi chú tay của bạn (đã ẩn danh, chỉ dùng mã P<n>).
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | Sẵn sàng P1 (server, DB, hồ sơ trống) | Chạy P1 đến P7 → score, analysis, bugs | ~6,5 giờ |
+| Task 3 | N1, N3 xong; danh sách N2 đã chốt | Kiểm định dạng ngày và số (mục 1); N2 trên cloud; compare, bugs | ~2 giờ |
+| Agent Skill | Phần thiết kế, exec, bugs, pilot đã viết | Bước còn lại của Task 2; demo, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3; form có đánh giá | Phần Task 2, N2, Skill; docx, PDF, zip; tự chấm | ~2 giờ |
+
+⏱ Còn khoảng **12 giờ** làm việc | Còn **15 giờ 35 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C202 | 21:28 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+File tóm tắt kết quả: Có, checklist/03_results.md
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read checklist results summary file
+- Bash: Locate sections to edit for results summary
+- Read: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-exec.md
+- Read: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-bugs.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-bugs.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\step-bugs.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\rules.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\assets\templates\results.md
+- Bash: Locate template list and example row
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\SKILL.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\gui-checklist\references\example-hw03.md
+- Bash: Check format and remaining open items
+
+**Output AI (nguyên văn):**
+
+````text
+Đang hoàn tất: Thêm mẫu `results.md` vào danh sách tài nguyên, thêm vào ví dụ, rồi chạy kiểm định dạng.
+
+Mình đã đưa `checklist/03_results.md` vào skill, dựa trên file thật (cập nhật lúc 16:30). Quyết định mở cuối cùng của bước `exec` đã đóng, nên `step-exec.md` và `step-bugs.md` không còn mục ⏳ nào. Kiểm định dạng các file của skill không có lỗi.
+
+- **[step-exec.md](Homeworks/HW03/skills/gui-checklist/references/step-exec.md)** có mục mới "Tóm tắt kết quả `03_results.md`":
+  - File chỉ tóm tắt; kết quả từng mục vẫn nằm trong Excel.
+  - Phần kết quả viết ở bước `exec`, phần issue điền khi xong bước `bugs`.
+  - Có 6 phần như file thật: Môi trường (kể cả cách chốt kết quả), tổng hợp theo IA và theo nguồn, mục Failed chính, danh sách đủ mục Failed theo IA, mục Không chạy được, bug kèm câu đối chiếu.
+  - Mọi con số đếm từ Excel và `bug_report.md`, không đếm tay. Phần tự kiểm có thêm bước so số liệu với Excel.
+- **[step-bugs.md](Homeworks/HW03/skills/gui-checklist/references/step-bugs.md):** Sau khi chụp danh sách issue, hoàn thiện phần issue của `03_results.md`. Phần tự kiểm có thêm bước so số issue với `03_results.md`.
+- **Mẫu mới [results.md](Homeworks/HW03/skills/gui-checklist/assets/templates/results.md):** Có cùng 6 phần như file thật.
+- **SKILL.md, rules.md:** Thêm `03_results.md` vào đầu ra của `exec` và `bugs`, cây thư mục, danh sách mẫu và mục rà bước trước.
+- **[example-hw03.md](Homeworks/HW03/skills/gui-checklist/references/example-hw03.md):** Thêm số liệu của lần đầu:
+  - Tỉ lệ Passed trên số mục đã thực thi là 48,6%; thấp nhất là IA-04 với 37,5%.
+  - Cả 5 mục sinh viên thêm đều Failed.
+  - Đối chiếu 54 mục Failed: 43 mục trong 33 issue, 3 mục trong 2 bình luận, 8 mục không báo.
+
+Commit (chạy từ `Homeworks/HW03`):
+
+```
+git add skills/gui-checklist
+git commit -m "[skill] Add results summary to exec step"
+```
+````
+
+---
+
+### C203 | 22:08 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+P1 đã chạy xong, đây là các note tôi ghi lại được:
+- Khi mới đọc xong đề: "Là sao? Đề nói gì vậy? Chưa hiểu lắm, thôi để đăng nhập" -> Do chưa thấy giao diện nên chưa hình dung ra hướng làm.
+- Đăng nhập xong thì vào danh mục sau đó cũng bấm thêm mới ngay: "Cái này xài sao, nhấn rồi có gì đâu. Ủa sao tạo luôn ở đây, sao không cho chỉnh." Xong bạn đã tạo mới và xóa phần trắng đi.
+- Qua sản phẩm, mình thấy P1 có nhập sai số tiền, nên có gợi ý mở sao họ không copy thông tin từ phiếu nhưng họ bảo nhập tay dễ hơn (nhưng rồi họ không nhận ra bản thân đã thiếu 1 số 0 ở cuối). Họ bấm tạo mà không chọn danh mục sản phẩm. Mình cũng gợi ý check lại nhưng họ bảo đã check ok.
+
+Các mốc thời gian: Đọc đề xong: 00:16; Thêm xong Danh mục: 01:10; Tạo xong sản phẩm: 01:43; Kiểm tra xong: 01:57 (họ có bấm vào sửa để check nhưng không nhận ra chưa chọn danh mục loa và sai giá tiền, họ chỉ check tên, hình ảnh, mô tả, có điền đầy đủ các mục). Hô xong: 02:01
+
+Về điểm chấm trong google form: Điểm lần lượt là: "5","5","5","5","5","3","3","2","4","5", Đã gửi 21:43 10/11/26
+
+Điền vào trong các file của sessions P1 đi, thiếu thông tin gì thì hỏi tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List usability files (excluding media)
+- Bash: Show P1 session files and pilot files
+- Bash: List headings of instruments file
+- Bash: Read instruments I4 and I6 sections, plan metric definitions
+- Bash: Read scenario section 5 (interventions) and completion criteria
+- Bash: Read SUS items and task components
+- Bash: Fill P1 notes.md and scale.md with provided data
+
+**Output AI (nguyên văn):**
+
+````text
+Đang đọc mẫu I4 và I6 để biết P1 thuộc mã sự kiện nào. Tiếp theo tôi sẽ điền các mục đã đủ dữ liệu và đánh dấu ⏳ ở những chỗ còn thiếu.
+
+Tôi đã đọc xong mẫu I4, I6 và các quy tắc can thiệp ở mục 5, 6 của kịch bản. Bây giờ tôi điền những phần đã đủ dữ liệu.
+
+Tôi đã điền [notes.md](sessions/P1/notes.md) và [scale.md](sessions/P1/scale.md) của P1 theo cách bạn ghi ở pilot. Còn [probe.md](sessions/P1/probe.md) để trống, vì bạn chưa gửi câu trả lời phỏng vấn. Chỗ nào còn thiếu thông tin tôi đánh dấu ⏳.
+
+Nhầm lẫn của tôi: Tôi lỡ chạy `git diff --stat`, mà WORKFLOW cấm đọc git diff. Lệnh chỉ in ra tên 5 file trong `skills/gui-checklist/`, không liên quan đến Task 2. Tôi không đọc nội dung các file đó và sẽ không chạy lại.
+
+**Kết quả đã điền**
+- **Mốc thời gian:** T0 00:16, T2 01:10, T3 01:43, T4 02:01.
+- **Thời gian các chặng:** M3 mất 00:33. Toàn luồng mất 01:45, nhanh hơn chuẩn 02:18.75. Tự kiểm tra mất 00:18.
+- **Kết quả:** Không hoàn thành, vì giá sai và sản phẩm chưa chọn danh mục.
+- **Nhật ký sự kiện (8 dòng):**
+  - Lúc 00:16 P1 do dự (`DD`) khi đọc đề.
+  - Bấm "Thêm mới" tạo ra dòng trống (`La`, `Le`), cùng lỗi với #66. Sau đó P1 tự xóa dòng này (`TS`).
+  - Giá thiếu một chữ số 0 (`Ld`).
+  - Lưu sản phẩm khi chưa chọn danh mục (`Lc`).
+  - P1 có kiểm lại bằng form "Sửa" (`TK`) nhưng không thấy cả hai lỗi.
+  - Có hai dòng ghi hai lần bạn gợi ý.
+- **Ba điểm vướng (I4.7):** Nút "Thêm mới", giá thiếu số 0, danh mục chưa chọn. Hai lỗi đầu đã gặp ở cả PL lẫn P1.
+- **SUS:** 5, 5, 5, 5, 5, 3, 3, 2, 4, 5, gửi lúc 21:43 10/11/26. Tính theo Brooke ra **55 điểm**. Chi tiết cách tính sẽ ghi ở `04_scores.md`. Có một điểm lạ: P1 chọn 5 cho cả câu khen (1, 3, 5) lẫn câu chê (2, 4, 10), có thể đã đọc nhầm các câu phủ định. Tôi giữ nguyên số liệu, việc này để bàn khi phân tích.
+
+**Một quyết định cần bạn chốt:** Hai lần bạn gợi ý ("sao không copy từ phiếu", "check lại") không theo quy trình. Mục 6 của `02_scenario.md` ghi là không nhắc khi nhập giá sai hay chọn sai danh mục. Mục 5 chỉ cho can thiệp khi người tham gia bế tắc hẳn. Có hai cách ghi:
+- **A (tôi đề xuất):** Ghi là can thiệp mức 1 (`CT1`) và tính vào D4 (2 lần). Cách này trung thực hơn, vì lời gợi ý có thể đã khiến P1 bấm "Sửa" để kiểm lại.
+- **B:** Ghi là sai lệch quy trình, không tính vào D4, và nêu ở phần hạn chế.
+
+Chọn cách nào thì P1 vẫn là Không hoàn thành, vì P1 không sửa gì sau khi được gợi ý. Từ P2 đến P7 bạn nên giữ đúng quy tắc không nhắc. Hai lỗi giá và danh mục là phát hiện quan trọng, nên phải để người tham gia tự nhận ra.
+
+**Thông tin còn thiếu, bạn bổ sung giúp:**
+1. Giờ bắt đầu và kết thúc phiên.
+2. Mốc T1, lúc trang Dashboard hiện ra. Thiếu mốc này thì chưa tách được thời gian M1 và M2. Tạm thời tôi ghi M1 + M2 = 00:54, so với chuẩn cộng lại là 01:09.66.
+3. Mốc video của từng sự kiện:
+   - Bấm "Thêm mới" ra dòng trống.
+   - Xóa dòng trống.
+   - Lần gợi ý sao chép từ phiếu.
+   - Lần gợi ý kiểm lại: trước hay sau khi P1 bấm lưu?
+   - Bấm "Sửa".
+4. Câu bạn đã nói ở hai lần gợi ý, càng gần nguyên văn càng tốt.
+5. Kết quả kiểm D6:
+   - Giá thấy trong bảng sản phẩm. Có phải `299000 ₫` không?
+   - Sản phẩm đang thuộc danh mục nào. Có phải "Điện thoại" không?
+   - Xác nhận còn đúng một dòng "Loa Bluetooth", có sản phẩm và ảnh hiện được.
+6. Câu trả lời phỏng vấn: C1 đến C9, các câu theo tình huống (`Ld`, `Lc`, `TK`, có can thiệp) và I6.3 (hỏi lại điểm vướng của phiên). Câu nào bạn không hỏi thì ghi "(Không hỏi)".
+7. P1 có gõ đúng mã `P1` trong Google Form không?
+
+Status:
+- T2 P1: Đã điền notes và scale, còn chờ 7 mục thông tin trên và quyết định A hoặc B.
+- T2 P2 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 6 đến 8 giờ làm việc (6 phiên, mỗi phiên khoảng 30 phút kể cả ghi chép, cộng 3 đến 4 giờ phân tích). Còn khoảng 15 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C204 | 22:17 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Câu trả lời probe của P1: c1. đăng nhập sau đó vào danh mục thêm tên rồi vào sản phẩm điền theo mẫu
+c2. bên trái có tên danh mục
+c3. không
+c4. danh mục lỡ bấm thêm khi chưa điền tên và đã xóa phần lỗi
+c5. nhanh nhưng khó hiểu
+c6. nhìn danh sách bên dưới
+c7. không để ý lắm, tưởng có tên loa là được
+c8. tạo danh mục lẹ
+c9. cho sửa tên danh mục khi tạo nhầm
+
+Bắt đầu phiên lúc: 21:30 -> 22:15
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill P1 probe answers and session time
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền câu trả lời phỏng vấn của P1 vào [probe.md](sessions/P1/probe.md) và giờ phiên vào [notes.md](sessions/P1/notes.md) (bắt đầu 21:30, cả phiên 45 phút).
+
+**Trong câu trả lời có hai ý đáng chú ý cho phần phân tích:**
+- **C7:** "Tưởng sản phẩm có tên 'Loa' là được". Câu này giải thích vì sao P1 không chọn danh mục: P1 nghĩ tên sản phẩm có chữ "Loa" là đủ để sản phẩm vào danh mục Loa Bluetooth. Đây là lý do của lỗi `Lc`, nên ghi vào `05_findings.md`.
+- **C4:** P1 chỉ nhắc lỗi dòng trống ở danh mục, không nhắc giá hay danh mục của sản phẩm. Như vậy đến hết phiên P1 vẫn không biết mình sai hai chỗ đó. Tôi đã ghi điều này vào cột ý chính của C4.
+
+**Phiên 45 phút dài hơn kế hoạch:** Test plan mục 5 dự kiến 15 đến 25 phút. Bạn cho tôi biết phần nào kéo dài, ví dụ mở đầu, phỏng vấn hay phần khác. Nếu có lý do cụ thể, tôi sẽ ghi vào phần thời lượng của phiên. Nếu các phiên sau cũng dài như vậy thì cần sửa lại mục 5 của test plan.
+
+**Còn thiếu trước khi xong P1:**
+1. Cách tính hai lần bạn gợi ý: A (tôi đề xuất) là tính là can thiệp mức 1 (`CT1`), 2 lần trong D4. B là ghi là sai lệch quy trình, không tính vào D4.
+2. Mốc T1 (lúc trang Dashboard hiện ra) và mốc video của 6 sự kiện trong nhật ký.
+3. Câu bạn đã nói ở hai lần gợi ý.
+4. Kết quả kiểm D6: Giá đang hiện trong bảng (có phải `299000 ₫`?), sản phẩm đang thuộc danh mục nào (có phải "Điện thoại"?). Bạn cũng xác nhận các mục đã đạt: còn đúng một dòng "Loa Bluetooth", có sản phẩm, ảnh hiện được.
+5. Câu hỏi theo tình huống: Bạn có hỏi các câu dành cho lỗi giá, lỗi danh mục, việc P1 tự kiểm lại và hai lần gợi ý không? Câu nào không hỏi thì ghi "(Không hỏi)" và lý do.
+6. Phần hỏi lại điểm vướng của phiên: Tôi ghi là không hỏi, vì P1 đã tự nói về các điểm vướng ở C4, C7, C9. Bạn xác nhận giúp có đúng vậy không.
+7. P1 có gõ đúng mã `P1` trong Google Form không?
+
+Status:
+- T2 P1: Đã điền notes, probe và scale. Còn chờ 7 mục trên.
+- T2 P2 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 8 đến 9 giờ làm việc: 6 phiên, mỗi phiên khoảng 45 phút như P1, cộng 3 đến 4 giờ phân tích. Còn khoảng 14,5 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C205 | 22:21 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Một quyết định cần bạn chốt: Chọn A. Trang dashboard hiện: 00:30
+Bấm "Thêm mới" ra dòng trống: 00:48
+Xóa dòng trống: 01:04
+Lần gợi ý sao chép từ phiếu: 01:24
+Lần gợi ý kiểm lại: trước hay sau khi P1 bấm lưu?: Sau khi P1 lưu: 01:47
+Câu bạn đã nói ở hai lần gợi ý, càng gần nguyên văn càng tốt: Lần 1: Giá tiền sao không sao chép cho lẹ? và Kiểm tra cho kỹ đi nhá.
+
+Giá thấy trong bảng sản phẩm. Có phải 299000 ₫ không?
+Sản phẩm đang thuộc danh mục nào. Có phải "Điện thoại" không?
+Xác nhận còn đúng một dòng "Loa Bluetooth", có sản phẩm và ảnh hiện được.
+-> Đúng.
+P1 có gõ đúng mã P1 trong Google Form không? -> Có.
+Không hỏi gì ngoài C1 -> C9.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill remaining P1 timestamps, interventions and D6
+- Bash: Remove unconfirmed claim from scale note
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền xong ba file của phiên P1 ([notes.md](sessions/P1/notes.md), [probe.md](sessions/P1/probe.md), [scale.md](sessions/P1/scale.md)) và không còn chỗ nào đánh dấu ⏳.
+
+**Kết quả P1**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:14 | 00:21.09 | Tự hoàn thành |
+| M2 | 00:40 | 00:48.57 | Tự hoàn thành (tạo nhầm một dòng trống, tự xóa lúc 01:04) |
+| M3 | 00:33 | 01:00.84 | Không hoàn thành (giá `299000 ₫`, danh mục "Điện thoại") |
+| Toàn luồng | 01:45 | 02:18.75 | Không hoàn thành; 2 lần can thiệp mức 1 (`CT1`) |
+
+**Những gì tôi đã cập nhật**
+- **Nhật ký sự kiện:** Đã có đủ mốc thời gian. Tôi sửa lại thứ tự ở chặng M2: P1 xóa dòng trống lúc 01:04 rồi mới tạo "Loa Bluetooth" lúc 01:10. Lần ghi trước tôi để ngược thứ tự này.
+- **Lần gợi ý thứ hai (01:47):** Lần này diễn ra sau T3 (01:43), nên tôi ghi ở mục "Sau T3". Tôi cũng ghi rõ rằng P1 bấm "Sửa" để tự kiểm ngay sau lời gợi ý này. Khi phân tích D7 (người tham gia có tự kiểm tra kết quả không), lần tự kiểm của P1 cần tính là có người nhắc.
+- **Câu hỏi theo tình huống:** Tôi ghi "(Không hỏi)" và nêu lý do: Chỉ hỏi C1 đến C9.
+
+**Hai điểm bạn xem lại**
+1. Lần gợi ý thứ nhất ("Giá tiền sao không sao chép cho lẹ?") nhắc thẳng đến ô giá. Câu này gần với mức 2 (chỉ ra khu vực trên màn hình) hơn là mức 1 (nhắc lại mục tiêu). Tôi vẫn ghi mức 1 theo phương án A bạn đã chọn. Đổi sang mức 2 thì kết quả P1 vẫn không đổi, bạn muốn đổi thì báo tôi.
+2. Phiên kéo dài 45 phút, trong khi test plan mục 5 dự kiến 15 đến 25 phút. Nếu bạn biết phần nào kéo dài thì báo tôi để ghi vào notes.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P1/notes.md usability/sessions/P1/probe.md usability/sessions/P1/scale.md
+git commit -m "[T2][P1] Record P1 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1: Xong; còn 2 điểm xem lại ở trên, không bắt buộc.
+- T2 P2 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 8 đến 9 giờ làm việc: 6 phiên, mỗi phiên khoảng 45 phút như P1, cộng 3 đến 4 giờ phân tích. Còn khoảng 14 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C206 | 22:27 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Phiên kéo dài là do tôi tính từ lúc tôi cho họ làm, điền form, tôi take note lại xong tôi mới hỏi. Hay chỉ tính những lúc họ làm?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Add duration explanation to P1 notes
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn tính 45 phút là đúng. Khi nào người tham gia còn ngồi với bạn thì thời gian đó vẫn tính vào phiên, kể cả lúc họ ngồi chờ bạn ghi chú. Test plan mục 5 cũng tính thời lượng phiên gồm cả 5 phần: mở đầu, phiếu thông tin, làm nhiệm vụ, form SUS và câu hỏi mở. Thời gian chỉ làm nhiệm vụ đã có riêng ở mục 4 của notes: Toàn luồng 01:45, tính từ T0 đến T4.
+
+Chỉ không tính phần bạn làm sau khi người tham gia đã về, ví dụ ghi chép thêm hay reset DB.
+
+Tôi đã thêm lý do vào ô "Thời lượng cả phiên" trong [notes.md](sessions/P1/notes.md#L48): "tính cả thời gian người điều phối ghi chú sau form SUS, trước câu hỏi mở (người tham gia ngồi chờ)".
+
+Từ P2 trở đi, để phiên ngắn lại, bạn làm theo I5: Trong lúc người tham gia điền form SUS trên điện thoại, bạn kiểm kết quả (D6), ghi 3 điểm vướng (I4.7) và reset DB. Họ gửi form xong thì bạn hỏi phỏng vấn ngay. Nhật ký sự kiện chi tiết thì để sau phiên mới ghi lại. Làm như vậy thì phiên sẽ gần với mức 15 đến 25 phút như pilot (16 phút). Nếu các phiên sau vẫn dài hơn nhiều thì mới sửa test plan mục 5.
+
+Commit [notes.md](sessions/P1/notes.md) vẫn dùng lệnh ở lượt trước, vì file chỉ thêm dòng này.
+
+Status:
+- T2 P1: Xong.
+- T2 P2 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 6 đến 8 giờ làm việc: 6 phiên, mỗi phiên khoảng 25 đến 30 phút nếu làm song song như trên, cộng 3 đến 4 giờ phân tích. Còn khoảng 14 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C207 | 22:38 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã có P2. Đây là take note:
+- Đọc đề: Họ đọc đề rất kỹ, từng dòng 1, kể cả là phần form (00:34 mới xong đề)
+- Lúc di chuyển qua lại giữa đề và màn hình, họ bảo: "Chuột này khó xài thế" -> Này do họ không quen máy tôi (lúc 00:30)
+- Khi điền thông tin đăng nhập, họ bảo có thể copy được không. Tôi đã chỉ vào đề có rõ dòng cho copy (00:39)
+- Màn hình hiện trang dashboard (00:58)
+- Khi vào tới dashboard họ lại mở đề ra đọc lại lần nữa vì vẫn chưa hiểu bản thân nên làm gì.
+- Qua danh mục (01:18) và điền đúng (không dính lỗi PL và P1 vì đọc đề và thao tác kỹ), thêm xong lúc 01:35
+- Sau khi thêm xong "ủa rồi làm sao nữa, chưa hiểu lắm" (01:37), họ lại đọc đề và tự hiểu tạo sản phẩm nên qua sản phẩm (01:52)
+- Xong sản phẩm 02:45, đúng hết.
+- Họ không biết thấy xong là như nào nên đọc lại đề, thấy không có gì, đã hiển thị ảnh và sản phẩm có ở bảng dưới nên kết thúc. (02:53)
+
+Form: Đã gửi 22:29 10/11/26 và điểm theo thứ tự 5, 1, 4, 1, 4, 1, 5, 1, 2, 1.
+
+Câu hỏi: c1. đăng nhập -> thêm danh mục -> vào sản phẩm điền thông tin -> kết thúc
+c2. đập vào mắt là thấy ngay bên trái
+c3. không, có hết trong đề
+c4. không có
+c5. bình thường, giao diện lạ chưa quen
+c6. hiện ngay bên dưới
+c7. lúc tạo đã chọn vào loa bluetooth rồi mà
+c8. thấy chỗ nào cũng như nhau
+c9. giao diện hơi lỗi thời, nên cải tiến đẹp hơn
+
+Thiếu gì thì nói tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show P2 notes header and scale file
+- Bash: Check P1/P2 labels in P2 files
+- Bash: Fill P2 notes, probe and scale files
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã điền xong ba file của phiên P2. [notes.md](notes.md) là bản bạn chép từ P1 nên còn để "P1" ở 5 chỗ (tiêu đề, mã bước, ô Mã, dòng "Chỉ dùng mã"), tôi đã đổi hết thành "P2". [probe.md](probe.md) và [scale.md](scale.md) cũng đã điền.
+
+**Kết quả P2**
+
+| Chặng | Thời gian | Chuẩn | Kết quả |
+|---|---|---|---|
+| M1 | 00:24 | 00:21.09 | Tự hoàn thành, vượt chuẩn 3 giây |
+| M2 | 00:37 | 00:48.57 | Tự hoàn thành |
+| M3 | 01:10 | 01:00.84 | Tự hoàn thành, vượt chuẩn (gồm 15 giây đọc lại đề) |
+| Toàn luồng | 02:19 | 02:18.75 | **Tự hoàn thành**, 0 can thiệp |
+
+- **Can thiệp:** Lúc 00:39 bạn chỉ vào dòng "được sao chép" trong phiếu dữ liệu. Kịch bản cho phép trả lời câu hỏi về dữ liệu, nên tôi ghi mã `HO` (người tham gia hỏi), không tính là can thiệp.
+- **Toàn luồng:** Chỉ vượt chuẩn 0,25 giây. Mốc ghi theo giây nên chênh lệch này nhỏ hơn sai số đo. Tôi vẫn đánh dấu "vượt chuẩn" và ghi chú lý do ngay trong bảng.
+- **SUS:** Tính theo Brooke được **87,5 điểm**. Riêng câu 9 ("rất tự tin khi dùng") chỉ được 2 điểm. Điều này khớp với việc P2 ba lần phải đọc lại đề vì không biết làm gì tiếp.
+
+**Phát hiện mới so với PL và P1:** P2 không mắc lỗi nào, nhưng do dự (`DD`) ba lần: Ở Dashboard, sau khi tạo xong danh mục, và sau khi lưu sản phẩm. Như vậy giao diện không gợi ý bước tiếp theo, và cũng không cho biết khi nào là xong. Tôi đã ghi hai điểm này vào ba điểm vướng của phiên (I4.7).
+
+**Thông tin còn thiếu:**
+1. Giờ bắt đầu và kết thúc phiên.
+2. Mục 1 (phiếu thông tin) và mục 2 (thông tin phiên) có đúng là của P2 không? Bạn chép file từ P1, nhưng B6 đã đổi thành 4 nên tôi đoán bạn đã sửa lại. Bạn xác nhận giúp: P2 cũng không đồng ý ghi âm, video không có tiếng.
+3. Lúc kiểm kết quả, bạn có mở form "Sửa" để xem danh mục không, hay chỉ dựa vào câu trả lời C7? Tôi đang điền là danh mục "Loa Bluetooth" đạt.
+4. P2 sao chép giá từ phiếu hay tự gõ? Chi tiết này giúp giải thích vì sao P2 không bị sai giá như PL và P1.
+5. Câu P2 hỏi lúc 00:39, càng gần nguyên văn càng tốt (nếu bạn còn nhớ).
+6. Câu hỏi theo tình huống: Có phải bạn cũng chỉ hỏi C1 đến C9? Nếu đúng, tôi ghi "(Không hỏi)" cho cả phần hỏi lại hai lần P2 đọc lại đề.
+7. P2 có gõ đúng mã `P2` trong form không?
+
+Status:
+- T2 P1: Xong.
+- T2 P2: Đã điền, còn chờ 7 mục trên.
+- T2 P3 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 5,5 đến 7 giờ làm việc: 5 phiên, mỗi phiên khoảng 25 đến 30 phút, cộng 3 đến 4 giờ phân tích. Còn khoảng 14 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C208 | 22:45 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `de8fb2a8`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Bắt đầu lúc 22:21, kết thúc lúc 22:38
+2. Đúng của P2, do tôi copy để sửa 1 - 2 chỗ khác thôi cho lẹ thay vì cứ tick đi tick lại nên quên sửa.
+3. Có, tôi kiểm tra luôn mở form sửa.
+4. Sao chép giá
+5. "Không ấy lần sau mình cho ấy được không, gõ mệt"
+6. Chỉ hỏi C1-C9, nếu có câu hỏi nào khác, tôi sẽ ghi, còn mặc định là vậy.
+7. Đúng, mặc định đúng vì tôi đọc mã cho họ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill remaining P2 info
+- Bash: Remove misplaced D6 note from event log
+- Write: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\hw03-t2-session-defaults.md
+- Bash: Add memory index line
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên P2 đã ghi xong, cả ba file không còn mục nào để trống:
+- **Thời lượng:** 17 phút, từ 22:21 đến 22:38.
+- **Câu P2 hỏi lúc 00:39:** Đã chép nguyên văn vào nhật ký, có đánh dấu "(ghi tay)".
+- **Giá sản phẩm:** Đã ghi vào nhật ký là P2 sao chép giá từ phiếu.
+- **Kết quả (D6):** Đã ghi là kiểm bằng form "Sửa".
+- **Câu hỏi theo tình huống và câu hỏi về điểm vướng:** Ghi "(Không hỏi)", lý do là bạn chỉ hỏi C1 đến C9.
+- **Mã trong form:** Ghi là P2 gõ đúng mã `P2`, vì bạn đọc mã cho họ.
+
+Tôi đã lưu ba điều bạn dặn để áp dụng cho P3 đến P7: Chỉ hỏi C1 đến C9, mã trong form gõ đúng, kiểm D6 bằng form "Sửa". Từ phiên sau tôi sẽ không hỏi lại ba điều này, trừ khi bạn báo khác.
+
+So với hai phiên trước, lỗi giá có quy luật rõ: PL và P1 tự gõ giá và đều thiếu một chữ số 0. P2 sao chép giá từ phiếu nên không sai. Như vậy lỗi giá đến từ ô giá không có dấu phân cách hàng nghìn, nên số dài khó soát khi gõ tay. Khi phân tích ở `05_findings.md`, ta nên ghi cả cách nhập giá (tự gõ hay sao chép) của từng người.
+
+Lệnh commit:
+```
+cd Homeworks/HW03
+git add usability/sessions/P2/notes.md usability/sessions/P2/probe.md usability/sessions/P2/scale.md
+git commit -m "[T2][P2] Record P2 session notes, probe answers and SUS responses"
+```
+
+Status:
+- T2 P1, P2: Xong.
+- T2 P3 đến P7: Chưa chạy.
+- T2 phân tích (`04_scores.md`, `05_findings.md`): Chưa bắt đầu.
+
+Còn khoảng 5 đến 6,5 giờ làm việc: 5 phiên, mỗi phiên khoảng 20 đến 25 phút như P2, cộng 3 đến 4 giờ phân tích. Còn khoảng 14 giờ đến hạn 13:00 11/11.
+````
+
+---
+
+### C209 | 22:47 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã chạy được P1 và P2, xuất log, đưa commit message. Tôi nên chạy tới P7 rồi commit 1 lần tách phần hay là bảo bạn xuất log và đưa commit từng phần?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show time, repo status, recent commits, export prompt log
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
