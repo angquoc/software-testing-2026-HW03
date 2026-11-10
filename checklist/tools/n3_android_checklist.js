@@ -1748,7 +1748,7 @@ async function clearSite(page) {
 function printEnv(E, VP, how, t0, t1) {
   const f = (d) => d.toLocaleString('vi-VN');
   console.log('\n=== Môi trường N3 (điền sheet "Môi trường" sau khi xem lại) ===');
-  console.log(`Trình duyệt: Google Chrome ${E.chrome} cho Android (${how})`);
+  console.log(`Trình duyệt: Google Chrome ${E.chrome} cho Android${how ? ` (${how})` : ''}`);
   console.log(`OS: Android ${E.android} (SDK ${E.sdk}, bản dựng ${E.build})`);
   console.log(`Thiết bị: ${E.maker} ${E.model}`);
   console.log(`Độ phân giải: ${E.wm}; ${E.density}; cỡ chữ hệ thống ${E.fontScale}${VP ? `; vùng trang ${VP.w} x ${VP.h} px CSS, devicePixelRatio ${VP.dpr}` : ''}`);
