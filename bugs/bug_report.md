@@ -134,3 +134,7 @@ Issue Task 2 có label `bug`, `platform: admin`, `task: T2 usability`, được 
   - Tái hiện bằng script `usability/tools/edit_product_check.js` (8 trường hợp E1 đến E8, lần chạy 01:24:21 ngày 11/11/2026; log `usability/tools/edit_check_log.txt`, ảnh gốc `usability/tools/edit_check_shots/`). Script tìm phần tử theo chữ nhìn thấy trên trang, không đọc mã nguồn.
   - Related #9: Issue #9 báo trang thanh toán vẫn dùng giá cũ sau khi Admin đổi giá; nếu lần đổi giá trong #9 làm trên trang chưa tải lại sau một lần sửa khác, giá có thể đã không được lưu, tức cùng nguyên nhân với bug này.
   - Ngoài lề (không báo riêng): Tải lại trang Admin khi đang ở "Sản phẩm" thì bị đưa về Dashboard (IA-03).
+
+## 7. Ảnh danh sách issue (Task 2)
+
+Trang Issues đã lọc `author:angquoc label:"task: T2 usability"`, đủ #66 và #67: `bugs/screenshots/issues_list_T2.png` (WORKFLOW mục 5; một ảnh nên không có hậu tố).
