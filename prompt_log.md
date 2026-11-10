@@ -7649,6 +7649,159 @@ Nếu sau này còn chạy lại script (ví dụ cho Task 3), tôi có thể s�
 **Output AI (nguyên văn):**
 
 ````text
+**Không cần chạy lại script.** Lần chạy vừa rồi đã đi hết 112 mục trong 475 giây, không mục nào "Chưa chạy":
+
+| Passed | Failed | Không chạy được | Chạy tay | Tổng |
+|---|---|---|---|---|
+| 39 | 44 | 7 | 22 | 112 |
+
+Có 44 ảnh `CL-xx_chrome.png` cho 44 mục Failed. Nếu chạy lại, script sẽ tạo thêm một bộ ảnh trùng có hậu tố, và lại phải reset DB.
+
+Nên **xem nhanh 44 ảnh trước, rồi mới commit**. Đẩy lên GitHub rồi thì ảnh nằm trong lịch sử git, muốn gỡ thông tin cá nhân sẽ rất khó. Với mỗi ảnh, kiểm 3 điều:
+1. **Không lộ thông tin cá nhân:** Không có thông báo tin nhắn bật lên, không có cửa sổ `participants.md` hay ảnh tin nhắn đồng ý phía sau. Có thì xóa ảnh đó và chụp tay lại.
+2. **Có Sticky Notes và thanh địa chỉ `localhost:5173`.**
+3. **Ảnh đúng màn hình lỗi.** Lỗi hiện bằng hộp thoại alert sẽ không có trong ảnh, ví dụ CL-110 (số điện thoại có khoảng trắng). Mục nào như vậy thì chụp tay lại, lưu đè cùng tên.
+
+Tôi không mở ảnh giúp được, vì ảnh chụp toàn màn hình của bạn có thể lộ thông tin cá nhân, mà thông tin đó không được đưa cho AI.
+
+## Commit sau khi xem ảnh
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/screenshots/CL-*_chrome.png checklist/tools/n1_run_log.txt checklist/tools/n1_chrome_checklist.js prompt_log.md
+git commit -m "[T1][exec] Add N1 script run log and Failed screenshots (draft results)"
+git push
+```
+
+- `n1_run_log.txt` nên commit, vì đó là bằng chứng kết quả nháp của script. Phần AI Critique và Audit sẽ cần nó để so với kết quả bạn chốt.
+- `n1_chrome_checklist.js` có thay đổi nhỏ (17 dòng) sau lần chạy. Commit chung luôn.
+- Ba file `usability/0*.md` đang có thay đổi do phiên Task 2. Chưa commit chúng ở đây; khi phiên Task 2 sửa xong, tôi kiểm rồi đưa lệnh riêng.
+
+## Tiếp theo cho Task 1
+
+DB đã **reset và seed lại lúc 11:59**, vì script đã hủy đơn và đổi số điện thoại. Bạn làm tiếp các phần tay ngay được:
+1. **Chạy tay 22 mục "Chạy tay"**, xem cột lý do trong `n1_run_log.txt`. Các mục về trạng thái đơn (CL-07, CL-84) cần dữ liệu vừa seed.
+2. **Điền Excel cột NT1:** Chốt Passed / Failed sau khi xem lại từng mục Failed của script, ghi Notes và tên ảnh.
+3. **Ảnh cho Task 3 N1:** 3 ảnh tổng quan và `overview_env.png` vào `cross_platform/screenshots/chrome/`. Điền sheet "Môi trường" cột NT1.
+
+Commit phần này là commit thứ hai: `[T1][exec] Record N1 results in Excel`.
+
+⏱ Còn khoảng **26 giờ** làm việc | Còn **10 giờ 1 phút** tới mốc 22:00 10/11 | **25 giờ 1 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C123 | 12:02 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Xem ảnh và điền các thông tin có sẵn có thể có trong ảnh đi, tôi xem lại cho lẹ thay vì phải xem rồi điền tay, tôi chỉ review những gì bạn điền thôi. Yên tâm ảnh không có thông tin nào nhạy cảm hay cá nhân ngoại trừ thông tin sinh viên của tôi, cái này thì bạn đã biết rồi. Các phần nào tôi phải chạy tay để chụp thì nói tóm gọn lại cho tôi để tôi làm.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List screenshots, tools files and git status
+- Bash: Find Excel file and run markers in the log
+- Bash: Show log header, cart prompts, and final TSV table
+- Bash: Group identical screenshots by hash
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-13_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-19_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-15_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-111_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-37_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-45_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-47_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-57_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-58_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-79_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-70_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-68_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-78_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-74_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-109_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-97_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-88_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-89_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-91_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-96_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-106_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-112_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-20_chrome.png
+- Read: D:\Dang\Test\Homeworks\HW03\checklist\screenshots\CL-101_chrome.png
+- PowerShell: Read installed Chrome and Windows versions
+- Bash: Get full log lines for selected items
+- Bash: Get log lines for remaining form and feedback items
+- Bash: Get measured status colors from the log
+- Bash: Copy existing frames for items judged from images
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1.py
+- Bash: Fill NT1 results, environment and matrix into Excel
+- PowerShell: Recalculate workbook in Excel and read the NT1 summary
+
+**Output AI (nguyên văn):**
+
+````text
+32 khung hình khác nhau. Tôi xem lần lượt.
+
+Tôi đã điền xong cột NT1 trong [HW03_T1_GUI_Checklist.xlsx](Homeworks/HW03/checklist/HW03_T1_GUI_Checklist.xlsx). Sheet Tổng hợp tự đếm ra: 49 Passed, 54 Failed, 7 Không chạy được, 2 ô để trống (CL-33, CL-34), tỉ lệ Passed 47,6%. Đây vẫn là bản nháp để bạn review.
+
+**Đã điền gì:**
+- **Sheet Checklist, cột NT1** (Kết quả, Notes, Ảnh): Điền đủ 110/112 mục. Notes ghi thấy gì và ở màn hình nào, không dùng chữ kỹ thuật của script. Nguồn là file log, đối chiếu thêm với ảnh.
+- **Các mục cần nhìn:** Tôi tự xem ảnh để kết luận. Ô Notes của các mục này mở đầu bằng **"(AI xem ảnh)"**, đó là chỗ bạn cần review kỹ nhất: CL-01 đến 09, 25, 26, 27, 31, 35, 56, 66, 67, 84, 92, 105.
+- **Sheet Môi trường (NT1):** Chrome 156.0.8078.81, Windows 11 26H2 (build 26300.9818), màn hình 2560 x 1440, vùng trang 1366 x 768, zoom 100%, scale 150%, chạy ngày 10/11/2026 từ 11:46 đến 11:54. Phiên bản lấy từ máy, giờ chạy lấy từ log và đồng hồ trong ảnh. Ô Ghi chú nói rõ kết quả do AI điền, SV review.
+- **Sheet Ma trận trạng thái (NT1):** Chữ, màu nền nhãn và nút "Hủy đơn" của 5 trạng thái, lấy từ ảnh.
+- **Ảnh mới:** Tôi tạo thêm 9 ảnh cho các mục Failed mới (CL-01, 02, 06, 08, 25, 26 hai ảnh, 27, 66). Đó là bản sao của các khung hình đã có, chỉ đổi tên theo mã mục; không có ảnh nào bị chỉnh sửa.
+
+**Phát hiện mới khi xem ảnh:** Ô Mật khẩu ở trang đăng nhập **hiện rõ mật khẩu**, ví dụ thấy "Sai12345!" và "Test1234!" trong CL-47 và CL-89. Tôi đã ghi vào CL-46.
+
+**Việc bạn cần làm tay:**
+1. **Chạy hẳn bằng tay:** CL-33 (zoom 200%) và CL-34 (Họ Tên dài).
+2. **Xác nhận giỏ hàng:** CL-68, CL-69 Failed vì không thấy badge. Bạn có thật sự thêm sản phẩm vào giỏ khi script dừng chờ không? Nếu có, nên chụp thêm trang giỏ hàng có sản phẩm, kèm navbar không có badge.
+3. **Chụp DevTools**, vì ảnh màn hình không thấy thuộc tính HTML:
+   - CL-13: Đếm số thẻ `<h1>`.
+   - CL-19: Thuộc tính `lang`.
+   - CL-44: `type` của ô Email.
+   - CL-62: `autocomplete`.
+   - CL-54, CL-76: Dòng Name trong phần Accessibility.
+   - CL-106: Phần tử thông báo không có `role`.
+   - CL-23: Kết quả Lighthouse hoặc axe phần tương phản.
+4. **Chụp lúc đang thao tác**, vì ảnh tự chụp không bắt được trạng thái này:
+   - CL-15, 16, 57: Focus. Chụp lúc vừa bấm Tab lần đầu ở `/login` (focus nằm ở "Sign In"), và lúc focus còn ở nút gửi sau khi báo lỗi.
+   - CL-74, 107: Lúc đang rê chuột (logo "EShop", nút "Cập nhật", nút "Thoát").
+   - CL-94, 96: Lúc mạng chậm và đang chờ.
+   - CL-112: Tab Network thấy 3 request.
+   - CL-108: Bước Clear site data rồi hộp thoại "Cập nhật thành công!".
+5. **Chụp lúc hộp thoại còn mở**, vì script tự đóng nên ảnh không có hộp thoại:
+   - CL-05: "Lỗi: Cannot cancel this order." (xuất hiện ở tình huống 2 tab của CL-88).
+   - CL-101, 110, 52, 102: "Số điện thoại không hợp lệ...".
+   - CL-105: Thông báo khi mất mạng.
+
+Ảnh đè lên đúng tên file cũ, ví dụ `CL-13_chrome.png`. Nếu một mục cần nhiều ảnh thì đặt hậu tố `_1`, `_2`. Các bước ở mục 5 và CL-94, 96, 108 cần dữ liệu sạch, nên nhờ phiên điều phối reset DB và seed trước.
+````
+
+---
+
+### C124 | 12:40 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Task 1 và task 2 đã xong, kiểm tra, xuất log và đưa commit message.
+- Ở dưới mỗi tin nhắn cũng hay cho tôi biết trạng thái từng task, đang ở bước nào để có thể nắm được.
+- Đồng thời tôi muốn hỏi nhất thiết phải chạy tay những phần kia sao? Bám vào đề, nhưng cũng cân nhắc thời gian có hạn để trả lời, đừng quá ôm đồm. Đồng thời liệu tôi có thể hỏi ở task 3 chạy trên android thì có xài script được không? Tôi ưu tiên nền tảng có thể chạy script để tiết kiệm thời gian, chỉ trừ chạy CLOUD thì tôi sẽ chạy tay (nhưng chỉ chạy những phần quan trọng vì cũng có giới hạn trial)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show status, recent commits and diff stats
+- Bash: Validate Excel NT1 results, notes and image references
+- Bash: Show Task 2 post-pilot changes
+- Write: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\time-estimate-footer.md
+- Bash: Update memory index, export log, update tracker statuses and estimates
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 

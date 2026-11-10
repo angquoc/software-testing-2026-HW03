@@ -50,6 +50,7 @@ Lấy từ `01_test_plan.md` mục 6, 7 và `02_scenario.md` mục 3. Đánh d�
 | 11 | Có sẵn I2 đến I7 (bản in hoặc file) và đồng hồ hiển thị giờ để đối chiếu mốc video | ☐ |
 | 12 | Link Google Form SUS (I5) mở được, đang nhận câu trả lời; tin nhắn chứa link soạn sẵn để gửi ngay sau T4; nhớ mã P<n> của phiên này để đọc cho người tham gia | ☐ |
 | 13 | Ghi môi trường vào I4: Trình duyệt và phiên bản, OS, độ phân giải, hình thức phiên | ☐ |
+| 14 | Bộ gõ tiếng Việt đặt về chế độ tiếng Anh; biết cách chuyển bộ gõ trên máy để nói cho người tham gia (`02_scenario.md` mục 3, 7) | ☐ |
 
 ---
 
@@ -63,7 +64,7 @@ Gửi qua kênh liên lạc đã dùng khi tuyển (Zalo, Messenger...), áp d�
 
 > Chào bạn, mình là [tên người điều phối], sinh viên môn Kiểm thử phần mềm. Cảm ơn bạn đã nhận lời tham gia buổi thử trang quản trị bán hàng EShop vào [ngày giờ], [trực tiếp tại ... / qua cuộc gọi video].
 >
-> Buổi thử khoảng 30 đến 40 phút. Mình kiểm tra trang web, không kiểm tra bạn. Bạn có thể dừng bất cứ lúc nào mà không cần nói lý do.
+> Buổi thử khoảng 15 đến 30 phút. Mình kiểm tra trang web, không kiểm tra bạn. Bạn có thể dừng bất cứ lúc nào mà không cần nói lý do.
 >
 > Để mình xem lại sau, mình xin phép:
 > 1. **Quay lại màn hình máy tính** trong lúc bạn làm (không quay mặt bạn).
@@ -176,14 +177,14 @@ Theo `02_scenario.md` mục 4.5. Ghi theo mốc trong video (`mm:ss`).
 
 ### I4.3 Kết quả theo chặng
 
-Thời gian chuẩn lấy từ `02_scenario.md` mục 4.4 (nếu chỉnh sau pilot thì dùng số mới).
+Thời gian chuẩn lấy từ `02_scenario.md` mục 4.4, cột "Sau pilot" (×3, cố định cho P1 đến P7).
 
 | Chặng | Thời gian (tính từ mốc) | Thời gian chuẩn | Vượt chuẩn | Kết quả |
 |---|---|---|---|---|
-| M1 | T1 − T0 = | 00:35.15 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
-| M2 | T2 − T1 = | 01:20.95 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
-| M3 | T3 − T2 = | 01:41.40 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
-| Toàn luồng | T4 − T0 = | 03:51.25 | ☐ | |
+| M1 | T1 − T0 = | 00:21.09 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
+| M2 | T2 − T1 = | 00:48.57 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
+| M3 | T3 − T2 = | 01:00.84 | ☐ | ☐ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
+| Toàn luồng | T4 − T0 = | 02:18.75 | ☐ | |
 | Tự kiểm tra | T4 − T3 = | | | |
 
 HT: Hoàn thành.
@@ -361,6 +362,8 @@ Với mỗi điểm ở I4.7 chưa được hỏi qua I6.1, I6.2, và mỗi đo�
 
 ## 8. Cần kiểm ở pilot
 
+Pilot đã chạy ngày 2026-11-10; kết quả từng điểm ở `pilot/notes.md` mục 8.2. Các thay đổi sau pilot ghi ở bảng "Thay đổi so với bản AI" (căn cứ: pilot).
+
 | Điểm cần kiểm | Vì sao |
 |---|---|
 | Câu chữ bản dịch SUS có câu nào người pilot hỏi lại hoặc hiểu sai không | Bản dịch của AI, chưa kiểm |
@@ -405,5 +408,9 @@ Với mỗi điểm ở I4.7 chưa được hỏi qua I6.1, I6.2, và mỗi đo�
 | Mục I6.3 | Thêm việc hỏi lại các đoạn im lặng lâu để bù think-aloud ít | Thiếu | Giới hạn model: Như dòng I2.4 | I2.4 |
 | Mục I1 | Dòng 1 mới (đã có tin nhắn đồng ý); dòng 10: Thu micro chỉ khi người tham gia đồng ý ghi âm | Thiếu | Prompt: Khi AI viết, chưa có QĐ-I1 | QĐ-I1 |
 | Mục 8 | Bỏ dòng về UEQ-S; thêm kiểm tin nhắn đồng ý, ngưỡng nhắc think-aloud, Google Form | Quyết định của SV | | QĐ5, QĐ-I1, QĐ-I3, I2.4 |
+| Mục I4.3 | Thời gian chuẩn đổi từ ×5 sang ×3: M1 00:21.09, M2 00:48.57, M3 01:00.84, toàn luồng 02:18.75 | Quyết định của SV | | Pilot: SV giảm bội số sau khi người pilot làm toàn luồng 01:24 (`02_scenario.md` mục 4.4; `pilot/notes.md` mục 4) |
+| Mục I1 dòng 14 | Thêm việc đặt bộ gõ tiếng Việt về chế độ tiếng Anh trước phiên | Quyết định của SV | | Pilot: Bộ gõ đang bật làm người pilot gõ sai email ở M1 (`pilot/notes.md` mục 5, 8.1) |
+| Mục I2.1 | Thời lượng buổi thử trong tin nhắn đổi từ "30 đến 40 phút" thành "15 đến 30 phút" | Quyết định của SV | | Pilot: Cả phiên 16 phút (`pilot/notes.md` mục 2, 8.2); test plan mục 5 đổi thành 15 đến 25 phút, cộng thời gian chuẩn bị và trò chuyện |
+| Mục 8 | Thêm dòng dẫn tới kết quả pilot | Quyết định của SV | | Pilot đã chạy (`pilot/notes.md` mục 8.2) |
 | Mục I5, I1 dòng 12, mục 8 | Bỏ link điền sẵn mã; người điều phối đọc mã P<n> cho người tham gia tự gõ, kiểm lại mã trong tab câu trả lời sau khi gửi | Quyết định của SV | | SV chọn cách đơn giản hơn; không phải tạo 8 link riêng |
 | Mục I5, I4.6, I7, I1 dòng 12, mục 8, 9 | Phiên trực tiếp: Gửi link form qua tin nhắn, người tham gia điền trên điện thoại của mình (thay cho đưa máy của người điều phối); trong lúc đó người điều phối kiểm D6, ghi I4.7, reset DB | Quyết định của SV | | Máy của người điều phối không bị chiếm, nên phần kiểm và reset chạy song song với việc điền form, rút ngắn thời gian giữa hai phiên |

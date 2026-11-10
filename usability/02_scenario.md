@@ -43,6 +43,10 @@ Dùng từ **"danh mục"** (QĐ2a, SV chốt phương án A): Đây là từ ng
 
 ### 2.2 Phiếu dữ liệu
 
+Câu đầu phiếu (người tham gia thấy):
+
+> Bạn có thể sao chép (copy) thông tin trong phiếu này để dán vào trang.
+
 | Thông tin | Giá trị |
 |---|---|
 | Trang quản trị | Đã mở sẵn trên trình duyệt |
@@ -59,7 +63,7 @@ Ghi chú về dữ liệu:
 - Tên danh mục "Loa Bluetooth" không trùng 3 danh mục mẫu "Điện thoại", "Laptop", "Phụ kiện" (`flow_03`). Cũng không dùng "Bàn phím", vì SV đã dùng tên này khi chụp ảnh khảo sát.
 - Giá ghi `2990000`, không có dấu phân cách (QĐ2b, SV chốt). Lý do: SV đã thử ô "Giá tiền"; khi gõ `2.990.000` thì ô tự đổi thành `2.990000` và không sửa thành dấu khác được. Nếu phiếu ghi có dấu chấm, gần như mọi người sẽ vấp cùng một chỗ và làm lu mờ các vấn đề khác của luồng. Nếu người tham gia vẫn tự gõ dấu chấm theo thói quen thì ghi lại (mục 6).
 - URL ảnh do SV chọn: Một ảnh thật của sản phẩm. Trước mỗi ngày chạy phiên, kiểm lại URL mở được và ảnh hiện được trong bảng sản phẩm của Admin (như dòng cuối `flow_11`).
-- URL ảnh dài, gõ tay thì mất thời gian và dễ sai mà không nói lên gì về giao diện. Người bán thật thường sao chép rồi dán URL, nên phiếu được đưa ở dạng sao chép được (QĐ2c).
+- URL ảnh dài, gõ tay thì mất thời gian và dễ sai mà không nói lên gì về giao diện. Người bán thật thường sao chép rồi dán URL, nên phiếu được đưa ở dạng sao chép được (QĐ2c). Sau pilot, phiếu ghi rõ ở câu đầu là được sao chép, vì người pilot dừng lại hỏi có được sao chép Mô tả và URL ảnh không (`pilot/notes.md` mục 5, mốc 00:58).
 
 Cách đưa kịch bản và phiếu dữ liệu (QĐ2c, SV chốt phương án B):
 
@@ -82,6 +86,7 @@ Cách đưa kịch bản và phiếu dữ liệu (QĐ2c, SV chốt phương án 
 | File kịch bản và phiếu dữ liệu | Phiên trực tiếp: Đã mở sẵn trong một cửa sổ riêng, không che trình duyệt. Phiên từ xa: Sẵn sàng để gửi qua tin nhắn |
 | Mật khẩu đã lưu | **Không có.** `flow_02` cho thấy trình duyệt của SV có biểu tượng quản lý mật khẩu; nếu trình duyệt tự điền mật khẩu admin thì M1 không còn ý nghĩa. Dùng một hồ sơ trình duyệt riêng (hoặc chế độ khách) không lưu mật khẩu cho các phiên |
 | Tiện ích trình duyệt | Tắt các tiện ích có thể tự dịch trang hoặc chèn gợi ý (ví dụ dịch tự động) |
+| Bộ gõ tiếng Việt | Đặt về chế độ tiếng Anh (gõ không dấu) trước phiên; khi đưa kịch bản, nói cho người tham gia cách bật lại nếu cần gõ tiếng Việt (mục 7). Lý do: Ở pilot, bộ gõ đang bật làm người pilot gõ sai email ở M1 và không biết tắt ở đâu (`pilot/notes.md` mục 5, mốc 00:04) |
 | Ảnh sản phẩm | URL ảnh đã kiểm mở được trong ngày chạy phiên |
 | Quay màn hình | Đã bật trước khi người tham gia đọc kịch bản |
 
@@ -107,7 +112,7 @@ Theo slide S13 "Task components". Người tham gia chỉ thấy kịch bản v�
 | Trạng thái ban đầu | Mục 3 |
 | Tiêu chí hoàn thành | M1, M2, M3 đều đạt, và người tham gia đã nói "Tôi làm xong rồi" |
 | Thời gian chuẩn | Mục 4.4, tính từ T0 (đọc xong kịch bản) tới T4 (nói "Tôi làm xong rồi") |
-| Thời gian tối đa | 15 phút (khớp thời lượng làm nhiệm vụ trong test plan mục 5). Hết 15 phút thì dừng, các chặng chưa đạt tính là "Không hoàn thành" |
+| Thời gian tối đa | 15 phút (test plan mục 5). Hết 15 phút thì dừng, các chặng chưa đạt tính là "Không hoàn thành" |
 
 ### 4.3 Cách xếp kết quả
 
@@ -121,7 +126,7 @@ Tự hoàn thành nhưng vượt thời gian chuẩn vẫn là "Tự hoàn thàn
 
 ### 4.4 Thời gian chuẩn
 
-QĐ2d: SV đã đo sau khi file này chốt và chọn bội số ×5 (bảng dưới). Con số còn được chỉnh một lần sau pilot (bước 3), rồi giữ cố định cho P1 đến P7. Cách làm:
+QĐ2d: SV đã đo sau khi file này chốt và chọn bội số ×5 (bảng dưới). Sau pilot, SV giảm bội số xuống **×3**; cột "Sau pilot" là thời gian chuẩn **dùng cố định cho P1 đến P7**. Cách làm:
 
 1. SV tự làm toàn bộ luồng với đúng phiếu dữ liệu ở mục 2.2, sau khi reset, bấm giờ từng chặng (thời gian của người đã biết giao diện).
 2. Đặt thời gian chuẩn bằng một bội số của thời gian đó để tính tới người dùng mới; SV chọn bội số và ghi lý do.
@@ -133,12 +138,25 @@ Bản AI có đề xuất ban đầu (M1 1 phút, M2 2 phút, M3 4 phút, toàn 
 
 | Chặng | Thời gian SV tự làm | Bội số | Thời gian chuẩn | Sau pilot |
 |---|---|---|---|---|
-| M1 | 00:07.03 | ×5 | 00:35.15 | |
-| M2 | 00:16.19 | ×5 | 01:20.95 | |
-| M3 | 00:20.28 | ×5 | 01:41.40 | |
-| Toàn luồng | 00:46.25 | ×5 | 03:51.25 | |
+| M1 | 00:07.03 | ×5 | 00:35.15 | ×3: **00:21.09** |
+| M2 | 00:16.19 | ×5 | 01:20.95 | ×3: **00:48.57** |
+| M3 | 00:20.28 | ×5 | 01:41.40 | ×3: **01:00.84** |
+| Toàn luồng | 00:46.25 | ×5 | 03:51.25 | ×3: **02:18.75** |
 
-Bội số ×5 (SV chọn): Đủ chỗ cho người dùng mới tìm menu và đọc form lần đầu, nhưng vẫn đủ chặt để thấy chặng nào làm người dùng vướng. Các phương án đã xét: ×3 (toàn luồng 02:18.75, quá chặt với người chưa từng thấy giao diện) và ×10 (toàn luồng 07:42.50, chỉ những chỗ vướng rất lâu mới vượt chuẩn). Cột "Sau pilot" điền sau phiên pilot.
+Bội số ×5 (SV chọn trước pilot): Đủ chỗ cho người dùng mới tìm menu và đọc form lần đầu, nhưng vẫn đủ chặt để thấy chặng nào làm người dùng vướng. Các phương án đã xét lúc đó: ×3 (toàn luồng 02:18.75) và ×10 (toàn luồng 07:42.50).
+
+Sau pilot (SV chốt ×3). Số đo của người pilot (`pilot/notes.md` mục 4):
+
+| Chặng | Pilot | So với thời gian SV tự làm | Chuẩn ×5 cũ | Chuẩn ×3 mới |
+|---|---|---|---|---|
+| M1 | 00:16 | ×2,3 | 00:35.15 | 00:21.09 |
+| M2 | 00:18 | ×1,1 | 01:20.95 | 00:48.57 |
+| M3 | 00:40 | ×2,0 | 01:41.40 | 01:00.84 |
+| Toàn luồng | 01:24 | ×1,8 | 03:51.25 | 02:18.75 |
+
+Lý do chọn ×3: Người pilot nhanh hơn chuẩn ×5 rất nhiều ở mọi chặng (toàn luồng chỉ bằng khoảng 36% chuẩn), nên chuẩn ×5 gần như không phân biệt được chặng nào làm người dùng vướng. Với ×3, người pilot vẫn nằm trong chuẩn ở mọi chặng, và còn chỗ cho người chậm hơn người pilot. Các phương án đã xét: ×2 (toàn luồng 01:32.50; M1 của người pilot đã vượt chuẩn, M3 vừa đủ, quá sát một người đo) và ×4 (toàn luồng 03:05.00, gần với ×5 cũ).
+
+Hạn chế: Chỉ có số đo của một người pilot (nhóm tuổi 18 đến 24, tự đánh giá mức quen dùng máy tính 4/5), có thể nhanh hơn 7 người tham gia. Mốc M1 của người pilot tính từ đầu video vì người pilot đăng nhập trước khi đọc kịch bản (`pilot/notes.md` mục 3); mục 7 đã thêm lời dặn để P1 đến P7 không lặp lại.
 
 Ghi chú: Tổng ba chặng là 00:43.50, ít hơn toàn luồng 00:02.75. Phần chênh là khoảng T3 đến T4 (từ lúc bấm "Lưu sản phẩm" tới lúc nói "Tôi làm xong rồi"), vì chặng M1 bắt đầu ngay tại T0.
 
@@ -158,11 +176,11 @@ Khoảng T3 đến T4 là thời gian người tham gia dành để tự kiểm 
 
 ## 5. Can thiệp
 
-Định nghĩa "bế tắc hẳn" và câu can thiệp chuẩn (QĐ4, SV đồng ý đề xuất của AI; chỉnh lại sau pilot nếu cần).
+Định nghĩa "bế tắc hẳn" và câu can thiệp chuẩn (QĐ4, SV đồng ý đề xuất của AI; sau pilot giảm ngưỡng thời gian từ 3 phút xuống 2 phút).
 
 **Bế tắc hẳn** khi có ít nhất một trong các dấu hiệu sau:
 
-- Không tiến triển ở cùng một chặng trong khoảng 3 phút (chỉ đi lại giữa các trang đã xem, hoặc ngồi im);
+- Không tiến triển ở cùng một chặng trong khoảng 2 phút (chỉ đi lại giữa các trang đã xem, hoặc ngồi im). Lý do giảm từ 3 phút: Với chuẩn ×3, chặng dài nhất (M3) có chuẩn 01:00.84; 2 phút đã gần gấp đôi chuẩn này. Người pilot không bị bế tắc lần nào nên ngưỡng chưa được thử trực tiếp;
 - Người tham gia hỏi người điều phối cách làm từ lần thứ hai trở đi;
 - Người tham gia nói muốn bỏ cuộc.
 
@@ -201,8 +219,8 @@ Người điều phối không can thiệp trong các tình huống dưới đâ
 
 ## 7. Trình tự đưa kịch bản trong phiên
 
-1. Sau phần mở đầu và phiếu thông tin trước phiên (test plan mục 5), chỉ cho người tham gia cửa sổ file kịch bản đã mở sẵn (phiên trực tiếp) hoặc gửi kịch bản và phiếu dữ liệu qua tin nhắn (phiên từ xa).
-2. Nhờ người tham gia **đọc to** kịch bản.
+1. Sau phần mở đầu và phiếu thông tin trước phiên (test plan mục 5), chỉ cho người tham gia cửa sổ file kịch bản đã mở sẵn (phiên trực tiếp) hoặc gửi kịch bản và phiếu dữ liệu qua tin nhắn (phiên từ xa). Nói thêm: "Bộ gõ đang để chế độ tiếng Anh. Nếu cần gõ tiếng Việt, bạn bấm [cách chuyển bộ gõ trên máy này]." (mục 3)
+2. Nhờ người tham gia **đọc to hết** kịch bản trước khi chạm vào chuột hay bàn phím: "Bạn đọc to giúp mình hết phần nhiệm vụ này nhé. Đọc xong rồi bạn hẵng bắt đầu làm." Lý do: Ở pilot, người pilot đăng nhập trước rồi mới đọc kịch bản, làm mốc T1 rơi trước T0 (`pilot/notes.md` mục 3).
 3. Hỏi: "Bạn có câu hỏi gì về nhiệm vụ không?" Chỉ giải thích về mục tiêu, không nói gì về giao diện.
 4. Ghi mốc T0, người tham gia bắt đầu.
 5. File kịch bản và phiếu dữ liệu để nguyên trong suốt phiên; người tham gia tự chuyển qua lại giữa file và trình duyệt.
@@ -223,6 +241,8 @@ Câu hỏi mở "Làm sao bạn biết sản phẩm đã vào đúng danh mục 
 
 ## 9. Cần kiểm ở pilot
 
+Pilot đã chạy ngày 2026-11-10; kết quả từng điểm ở `pilot/notes.md` mục 8.1. Các thay đổi sau pilot ghi ở bảng "Thay đổi so với bản AI" (căn cứ: pilot).
+
 | Điểm cần kiểm | Vì sao |
 |---|---|
 | URL ảnh hiện được trong bảng sản phẩm | Tránh lỗi môi trường làm hỏng M3 |
@@ -242,9 +262,9 @@ Câu hỏi mở "Làm sao bạn biết sản phẩm đã vào đúng danh mục 
 | QĐ1 | Có thêm chặng M4 "tự kiểm tra kết quả" không | Đã chốt: B, chỉ quan sát. Câu hỏi mở liên quan: C7 trong `03_instruments.md` |
 | QĐ2a | Dùng từ "danh mục" hay "nhóm hàng" | Đã chốt: A, "danh mục" |
 | QĐ2b | Cách ghi giá trên phiếu | Đã chốt: `2990000` |
-| QĐ2c | Đưa phiếu dữ liệu bằng giấy hay file | Đã chốt: B, toàn bộ trong file văn bản mở sẵn (trực tiếp); gửi qua tin nhắn (từ xa) |
-| QĐ2d | Thời gian chuẩn từng chặng và toàn luồng | Đã chốt: Thời gian SV tự làm ×5 (mục 4.4); toàn luồng 03:51.25. ⏳ Chỉnh lại sau `pilot` |
-| QĐ4 | Định nghĩa "bế tắc hẳn", các mức can thiệp và câu can thiệp chuẩn | Đã chốt: Theo đề xuất của AI (mục 5), chỉnh sau pilot nếu cần |
+| QĐ2c | Đưa phiếu dữ liệu bằng giấy hay file | Đã chốt: B, toàn bộ trong file văn bản mở sẵn (trực tiếp); gửi qua tin nhắn (từ xa). Sau pilot: Phiếu ghi rõ được sao chép |
+| QĐ2d | Thời gian chuẩn từng chặng và toàn luồng | Đã chốt sau pilot: Thời gian SV tự làm ×3 (mục 4.4); toàn luồng 02:18.75; cố định cho P1 đến P7 |
+| QĐ4 | Định nghĩa "bế tắc hẳn", các mức can thiệp và câu can thiệp chuẩn | Đã chốt: Theo đề xuất của AI (mục 5); sau pilot giảm ngưỡng thời gian xuống 2 phút |
 
 ---
 
@@ -263,4 +283,11 @@ Câu hỏi mở "Làm sao bạn biết sản phẩm đã vào đúng danh mục 
 | Mục 6 | Tách dòng "Nhập giá sai" thành hai dòng: Sai số chữ số 0, và tự gõ dấu chấm dù phiếu ghi `2990000` | Thiếu | Prompt: AI chưa biết hành vi của ô giá khi gõ dấu chấm | Kết quả SV thử ô giá; QĐ2b |
 | Mục 8 (QĐ1) | Chốt phương án B: Không thêm M4, chỉ quan sát; việc có hỏi "Làm sao bạn biết..." chuyển sang bước `instruments` (để mở) | Quyết định của SV | | SV chọn B theo gợi ý của AI |
 | Mục 9 | Bỏ dòng "Ô giá nhận 2.990.000 như thế nào" | Thừa | | Đã biết qua lần SV thử; phiếu không còn ghi dấu chấm |
+| Mục 4.4, 10 (QĐ2d) | Điền cột "Sau pilot": Giảm bội số từ ×5 xuống ×3 (M1 00:21.09, M2 00:48.57, M3 01:00.84, toàn luồng 02:18.75), cố định cho P1 đến P7; thêm bảng số đo pilot, lý do và hạn chế | Quyết định của SV | | Pilot: Người pilot làm toàn luồng 01:24, chỉ bằng ×1,8 thời gian SV tự làm (`pilot/notes.md` mục 4, 8.1). SV quyết giảm ×5 và chọn ×3 trong ba phương án ×2, ×3, ×4 |
+| Mục 5, 10 (QĐ4) | Giảm ngưỡng "bế tắc hẳn" từ khoảng 3 phút xuống khoảng 2 phút | Quyết định của SV | | Pilot (`pilot/notes.md` mục 8.1); chuẩn ×3 của M3 chỉ còn 01:00.84 |
+| Mục 7, bước 2 | Dặn người tham gia đọc to hết kịch bản rồi mới chạm chuột, bàn phím | Quyết định của SV | | Pilot: Người pilot đăng nhập trước khi đọc kịch bản, mốc T1 rơi trước T0 (`pilot/notes.md` mục 3, 8.1) |
+| Mục 3, mục 7 bước 1 | Thêm dòng "Bộ gõ tiếng Việt" vào trạng thái ban đầu: Để chế độ tiếng Anh; khi đưa kịch bản, nói cách bật lại | Quyết định của SV | | Pilot: Bộ gõ đang bật làm người pilot gõ sai email và không biết tắt (`pilot/notes.md` mục 5, 8.1) |
+| Mục 2.2, 10 (QĐ2c) | Thêm câu đầu phiếu dữ liệu "Bạn có thể sao chép (copy) thông tin trong phiếu này để dán vào trang." | Quyết định của SV | | Pilot: Người pilot dừng lại hỏi có được sao chép Mô tả và URL ảnh không (`pilot/notes.md` mục 5, 8.1) |
+| Mục 4.2 | Bỏ cụm "khớp thời lượng làm nhiệm vụ" ở dòng thời gian tối đa, chỉ dẫn tới test plan mục 5 | Quyết định của SV | | Pilot: Test plan mục 5 đổi thời lượng làm nhiệm vụ theo số đo pilot; thời gian tối đa vẫn là 15 phút |
+| Mục 9 | Thêm dòng dẫn tới kết quả pilot | Quyết định của SV | | Pilot đã chạy (`pilot/notes.md` mục 8.1) |
 | Mục 9 | Thêm dòng kiểm việc chuyển qua lại giữa file phiếu và trình duyệt, và dòng kiểm cách kiểm danh mục cho D6 | Thiếu | Prompt: QĐ2c chưa chốt khi AI viết; prompt không nhắc rằng D6 có hai cách kiểm và form "Sửa" chưa có ảnh | QĐ2c; `01_test_plan.md` mục 8.1 (D6) |
