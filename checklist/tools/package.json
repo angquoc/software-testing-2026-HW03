@@ -1,0 +1,12 @@
+{
+  "name": "hw03-checklist-tools",
+  "private": true,
+  "description": "HW03 Task 1: Công cụ hỗ trợ bước exec (kết quả nháp, sinh viên chốt)",
+  "scripts": {
+    "n1": "node n1_chrome_checklist.js"
+  },
+  "dependencies": {
+    "axe-core": "4.14.0",
+    "playwright-core": "1.65.0"
+  }
+}
