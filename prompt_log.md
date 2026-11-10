@@ -16071,6 +16071,671 @@ git push
 
 ````text
 Đã đọc xong lượt mới nhất của phiên Task 1 và Task 3. Giờ xuất log và kiểm git.
+
+Tối nay dừng sau N2 được: Tôi tính sáng mai còn khoảng 4 giờ việc, và từ 8:00 tới 13:00 có 5 giờ. Nhưng phiên Task 1 và Task 3 đang **đề xuất ngược nhau** về cách báo lỗi CL-11, nên cần bạn chốt trước khi chạy N2. Log đã xuất lại.
+
+## Task 1 và Task 3: Đều đang chờ bạn chốt, chưa sửa file nào
+
+**Cần chốt chung một cách, vì hai phiên đề xuất trùng nhau:**
+- Task 1 đề xuất **mở rộng #53** để gộp cả ngày (CL-24) lẫn tiền (CL-11).
+- Task 3 đề xuất **tạo issue T3 mới cho CL-11**, vì Android Chrome hiện `10.000.000 ₫`, sai so với SRS.
+
+Làm theo cả hai thì CL-11 bị báo hai lần. Tôi đề xuất: **#53 chỉ giữ phần ngày** và thêm nguyên nhân (Task 1 chọn phương án b). **CL-11 thành issue T3 mới** (Task 3 chọn cách A). Như vậy Task 3 có đúng một bug chỉ xuất hiện trên một số nền tảng, và không trùng với #53.
+
+**Tin gửi phiên Task 1:**
+```
+Quyết định 1: Chọn (b). #53 chỉ về ngày (CL-24), thêm nguyên nhân là đổi theo ngôn ngữ trình duyệt. Phần tiền (CL-11) phiên Task 3 báo thành issue T3 riêng, nên #53 không gộp CL-11, chỉ ghi "Xem thêm issue T3 về CL-11" sau khi issue đó được tạo.
+Quyết định 2: Không chụp lại. Ảnh đã có và đã commit (b07b2c3): cross_platform/screenshots/chrome/CL-24_locale_1.png (Chrome tiếng Anh), _2 (Chrome --lang=vi), _3 và _4 (Console cho thấy locale 'en-US' và 'vi'). Dùng các ảnh này cho #53 và cột Ảnh của CL-24; nếu cần đặt tên theo quy ước của checklist/screenshots thì đề xuất cách, đừng chụp mới.
+Notes của CL-11, CL-24 và sheet Môi trường: Theo đề xuất của bạn. Làm luôn: Sửa #53, đăng bình luận, sửa Excel, sửa B-21 trong bug_report.md.
+```
+
+**Tin gửi phiên Task 3** (các ô ⏳ là chỗ bạn tự điền):
+```
+Ngôn ngữ Chrome trên điện thoại N3: ⏳ (bạn điền: Tiếng Việt hay không).
+D-20: (b) Ghi thêm ngôn ngữ vào Ghi chú của NT1, NT3 và Notes CL-24 ở NT3.
+D-21: (a) Bỏ hẳn việc ngày bị lùi.
+D-22: Cách A. Issue T3 mới cho CL-11 (Android Chrome); bình luận vào #53 kèm ảnh. Phiên Task 1 giữ #53 chỉ về ngày. Chưa tạo issue, để sau N2 tạo cùng các bug khác.
+D-23: Không đổi Firefox sang tiếng Việt. Khi chạy N2 chỉ chạy dòng Console ghi ngôn ngữ.
+D-24: Sửa sau N2.
+Giờ tôi chạy N2. Đưa tôi bản tóm tắt các bước N2 (nhóm A Console, nhóm B tay, cách đặt tên ảnh) để tôi làm theo.
+```
+
+Ở D-21, tôi chọn (a) vì bạn đã chốt không báo riêng việc lùi ngày. Muốn ghi lại một dòng "quan sát ngoài phạm vi" thì đổi thành (b).
+
+## Agent Skill không cần chờ Task 3
+
+Phạm vi skill đã chốt ở D9: `gui-checklist` chỉ đi tới nền tảng thứ nhất, nên cross-platform không thuộc skill. Phần còn thiếu là `usability-evaluation`: Các bước participants, phiên thật, score, analysis, bugs mới có khung. Tin gửi phiên Agent Skill:
+
+```
+Task 2 đã xong. Hãy hoàn thiện các bước còn để khung của usability-evaluation (participants, phiên thật, score, analysis, bugs) theo cách đã làm thật, chỉ đọc các file sau:
+- usability/04_scores.md, usability/ai_raw/T2_score.md, usability/tools/score_t2.py
+- usability/05_findings.md, usability/ai_raw/T2_analysis.md
+- usability/03_instruments.md, usability/02_scenario.md (phần sửa sau pilot)
+- bugs/bug_report.md mục Task 2 (B-T2-01 #66, B-T2-02 #67), usability/tools/edit_product_check.js (mẫu script tái hiện bug theo chữ trên giao diện)
+Không đọc usability/sessions/, participants.md, video.
+Học từ bảng "Thay đổi so với bản AI" của 04_scores.md và 05_findings.md để đưa vào lessons.md.
+Xong thì chép cả hai skill sang D:\Dang\Test\.claude\skills\ và kiểm bằng diff -r. Màn hình hoặc luồng để quay demo: Đề xuất 2 phương án, tôi chốt sáng mai.
+```
+
+Phiên Agent Skill không dùng DB, nên bạn gửi tin này trước rồi chạy N2 cùng lúc được.
+
+## Report: Tôi viết một lần vào sáng mai
+
+Tôi sẽ viết từ các file kết quả trong repo, `_NOTES.md` và log, rồi bạn kiểm. Tôi đã từng đọc mã nguồn EShop, nên report chỉ ghi những gì có trong file kết quả và ảnh, **không thêm nhận định nào suy ra từ mã nguồn**. Phần này mất khoảng 45 phút.
+
+## Kế hoạch
+
+**Tối nay:**
+1. Gửi 3 tin trên.
+2. Chạy N2.
+3. Commit kết quả N2 và log.
+
+Không cần reset DB sau N2, vì N2 chỉ xem trang.
+
+**Sáng mai 8:00:**
+
+| Giờ | Việc |
+|---|---|
+| 8:00 đến 9:30 | Task 3: Compare, bugs. Task 1: Sửa #53 nếu tối nay chưa xong |
+| 8:00 đến 9:30, song song | Agent Skill: Duyệt phần đã hoàn thiện, chốt màn hình demo |
+| 9:30 đến 10:30 | Quay video demo và tải lên YouTube |
+| Trong lúc video đang tải lên | Tôi viết report |
+| 10:30 đến 11:30 | Bạn kiểm report; docx, PDF, zip; tự chấm |
+| 11:30 đến 13:00 | Dự phòng |
+
+**Lưu ý khi tắt máy:** 3 server EShop đang chạy trong phiên này. Đóng VS Code hoặc tắt máy thì server tắt theo. Sáng mai nhắn tôi để tôi kiểm cổng rồi mở lại; không tự mở thêm backend, vì backend khởi động là khởi tạo lại DB.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong (phần report viết cùng Tổng hợp) | | 0 |
+| Task 3 | Đã có bằng chứng ngôn ngữ; D-20 đến D-24 đã có đề xuất | Bạn chốt → N2 (tối nay) → compare, bugs (sáng mai) | ~2 giờ |
+| Agent Skill | `gui-checklist` xong | Hoàn thiện `usability-evaluation`, chép sang `.claude/skills/`, video | ~1,5 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết một lần sáng mai; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **4,5 giờ** làm việc, gồm N2 tối nay | Còn **10 giờ 35 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C245 | 02:26 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Quyết định 1: Chọn (b). #53 chỉ về ngày (CL-24), thêm nguyên nhân là đổi theo ngôn ngữ trình duyệt. Phần tiền (CL-11) phiên Task 3 báo thành issue T3 riêng, nên #53 không gộp CL-11, chỉ ghi "Xem thêm issue T3 về CL-11" sau khi issue đó được tạo.
+Quyết định 2: Không chụp lại. Ảnh đã có và đã commit (b07b2c3): cross_platform/screenshots/chrome/CL-24_locale_1.png (Chrome tiếng Anh), _2 (Chrome --lang=vi), _3 và _4 (Console cho thấy locale 'en-US' và 'vi'). Dùng các ảnh này cho #53 và cột Ảnh của CL-24; nếu cần đặt tên theo quy ước của checklist/screenshots thì đề xuất cách, đừng chụp mới.
+Notes của CL-11, CL-24 và sheet Môi trường: Theo đề xuất của bạn. Làm luôn: Sửa #53, đăng bình luận, sửa Excel, sửa B-21 trong bug_report.md.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Make contact sheet of the four locale screenshots
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\locale_sheet.png
+- Bash: Check whether locale images were already uploaded
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fix53.py
+- Bash: Edit issue #53 text and post update comment
+- Bash: Debug headings in issue 53 body
+- Bash: Check characters of heading key in script
+- Bash: Test regex directly against body
+- Bash: Fix newline handling and apply #53 edit
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fix53.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fix53.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fix53.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fix53.py
+- Bash: Apply #53 edit and comment
+- Bash: Normalize line endings in issues 33-65 bodies
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\fill_n1_h.py
+- PowerShell: Update CL-11, CL-24, environment notes and recalc
+- Bash: Update B-21 title in bug report
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi xem 4 ảnh locale trước, để chắc chúng đủ yêu cầu dùng cho issue.
+
+Đã sửa #53 và đăng bình luận. Giờ chuẩn hóa xuống dòng cho 32 issue còn lại. Script so sánh chữ trước và sau, chỉ khác ký tự `\r` mới ghi.
+
+Xong cả 32 issue, không còn issue nào có xuống dòng thừa. Giờ sửa Excel và `bug_report.md`.
+
+Đã làm xong các việc bạn chốt. Chỉ còn ảnh của #53: Cần bạn tải 4 ảnh lên để tôi chèn.
+
+**Issue [#53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53)**
+- **Tiêu đề mới:** `[23120061][T1][W-06][Chrome] Ngày đặt hàng đổi định dạng theo ngôn ngữ trình duyệt: Chrome tiếng Anh hiện tháng/ngày/năm`
+- **Các mục đã sửa:** Môi trường (thêm locale `en-US` và lần kiểm thêm với `--lang=vi`), điều kiện tiên quyết, các bước tái hiện (thêm lệnh Console kiểm locale), kết quả mong đợi, kết quả thực tế (bảng so 2 ngôn ngữ), ghi chú về lần sửa.
+- **Giữ nguyên:** Chỉ nói về ngày (CL-24). Không có CL-11 và chưa có dòng "Xem thêm issue T3"; severity và label không đổi.
+- **[Bình luận](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53#issuecomment-6777140035):** Nói đã sửa những gì và báo ảnh so sánh sẽ bổ sung sau.
+
+**Đã sửa thêm một lỗi của tôi.** Lần chèn ảnh trước, tôi ghi nội dung issue ra file theo kiểu xuống dòng của Windows, nên 33 issue (#33 đến #65) bị thừa ký tự xuống dòng. Tôi đã chuẩn hóa lại cả 33 issue. Script so chữ trước và sau khi ghi, chỉ ký tự xuống dòng thay đổi, chữ không đổi.
+
+**Excel** (kết quả NT1 không đổi: 51 Passed, 54 Failed, 7 Không chạy được)
+- **CL-24 (Failed):** Notes thêm đoạn kiểm thêm ngày 11/11/2026 và dẫn tới issue #53. Cột Ảnh: `CL-24_chrome.png` cùng 4 ảnh `cross_platform/screenshots/chrome/CL-24_locale_1.png` đến `_4.png`.
+- **CL-11 (Passed):** Notes thêm đoạn kiểm thêm, ghi "phần này báo ở Task 3", kèm đường dẫn ảnh `_locale_1` và `_locale_2`.
+- **Sheet Môi trường:** Tôi không ghi thêm, vì ô Ghi chú đã có sẵn đoạn về ngôn ngữ giao diện Chrome và 4 ảnh locale (có thể được thêm ở commit b07b2c3). Đoạn đó đầy đủ hơn bản tôi đề xuất, ghi thêm thì sẽ bị trùng.
+
+**bug_report.md:** Dòng B-21 đã đổi theo tiêu đề mới, kèm "(sửa 11/11/2026)".
+
+**Để chèn ảnh vào #53:** Kéo 4 file `CL-24_locale_1.png` đến `_4.png` (trong `cross_platform/screenshots/chrome/`) vào ô bình luận, không bấm Comment. Dán thêm link vào cuối `bugs/image_links.txt`, rồi báo tôi. Tôi ghép theo nội dung ảnh như lần trước.
+
+**⏳ Quyết định về cách đặt tên ảnh trong Excel:**
+
+| Phương án | Cách làm |
+|---|---|
+| **(a) Đề xuất: Giữ như hiện tại** | Một bản ảnh duy nhất ở `cross_platform/screenshots/chrome/`, Excel ghi đường dẫn đầy đủ. Không có ảnh trùng; đúng bản chất đây là lần kiểm thêm theo cấu hình trình duyệt |
+| (b) Theo quy ước của `checklist/screenshots/` | Đổi `CL-24_chrome.png` thành `CL-24_chrome_1.png` và chép 4 ảnh locale thành `CL-24_chrome_2.png` đến `_5.png`. Tên đúng quy ước, nhưng có 4 ảnh trùng ở 2 thư mục |
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước):
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx bugs/bug_report.md
+git commit -m "[T1][bugs] Update #53 root cause (date format follows browser language) and CL-11, CL-24 notes" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+````
+
+---
+
+### C246 | 02:27 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Ngôn ngữ Chrome trên điện thoại N3: Tiếng Việt.
+D-20: (b) Ghi thêm ngôn ngữ vào Ghi chú của NT1, NT3 và Notes CL-24 ở NT3.
+D-21: (a) Bỏ hẳn việc ngày bị lùi.
+D-22: Cách A. Issue T3 mới cho CL-11 (Android Chrome); bình luận vào #53 kèm ảnh. Phiên Task 1 giữ #53 chỉ về ngày. Chưa tạo issue, để sau N2 tạo cùng các bug khác.
+D-23: Không đổi Firefox sang tiếng Việt. Khi chạy N2 chỉ chạy dòng Console ghi ngôn ngữ.
+D-24: Sửa sau N2.
+Giờ tôi chạy N2. Đưa tôi bản tóm tắt các bước N2 (nhóm A Console, nhóm B tay, cách đặt tên ảnh) để tôi làm theo.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Bash: Locate setup sections and decisions
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\01_setup.md
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\d20_lang.py
+- Bash: Write D-20 language notes into Excel
+- Bash: Search for the locale screenshots
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\CL-24_locale_1.png
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\CL-24_locale_2.png
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\CL-24_locale_3.png
+- Read: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\chrome\CL-24_locale_4.png
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\d20_fix.py
+- Bash: Fix screenshot paths in NT1 note
+
+**Output AI (nguyên văn):**
+
+````text
+Trước khi tóm tắt các bước N2, tôi ghi D-20 vào Excel (có backup trước).
+
+Hai ảnh CL-24_locale không có ở đường dẫn bạn ghi. Tôi đang tìm xem chúng nằm đâu.
+
+Ảnh nằm trong thư mục `chrome/` và có 4 ảnh chứ không phải 2. Tôi xem cả 4 để ghi đúng đường dẫn.
+
+Ảnh 3 và 4 có thêm kết quả Console (`en-US`, `vi`), nên đây là bằng chứng rõ hơn. Tôi sửa lại đường dẫn và ghi thêm giá trị đó vào Ghi chú NT1.
+
+Tôi đã ghi D-20 vào Excel và soạn sẵn các bước N2 bên dưới.
+
+**Đã sửa trong Excel (D-20)**
+- **Ghi chú NT1:** Chrome dùng tiếng Anh. Ghi thêm kết quả kiểm lại ngày 11/11: Ngày và tiền ở hai ngôn ngữ, và Console trả về `"en-US"` / `"vi"`.
+- **Ghi chú NT3:** Chrome trên điện thoại dùng tiếng Việt.
+- **Notes của CL-24 ở NT3:** Ngày hiện theo ngày / tháng / năm vì điện thoại dùng tiếng Việt; Chrome tiếng Anh hiện tháng / ngày / năm.
+- Ảnh không nằm ở `cross_platform/screenshots/` như bạn ghi mà ở `cross_platform/screenshots/chrome/`, và có 4 ảnh. Ảnh 1, 3 là tiếng Anh, ảnh 2, 4 là tiếng Việt; ảnh 3, 4 có kết quả Console. Tôi đã ghi đúng đường dẫn này vào Excel.
+- Dropdown giữ nguyên; cột NT3 vẫn đủ 112 mục, cột NT2 còn trống. Bản sao trước khi sửa: `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\HW03_T1_GUI_Checklist.before_D20.xlsx`
+
+Các quyết định D-21 đến D-24 chưa có file để ghi. Tôi sẽ ghi chúng khi viết `02_compare.md` và mục Task 3 của `bug_report.md`.
+
+---
+
+# Các bước N2 (Firefox trên BrowserStack)
+
+## 0. Trước khi bật tunnel (không tốn phút trial)
+
+1. Reset DB và seed lại (D-09). Chạy backend (cổng 3000) và web (cổng 5173).
+   - Lần N3 Vite chỉ nghe ở IPv6 và đã gây lỗi. Nên chạy web bằng `npm run dev -- --host ::`.
+   - Kiểm trên máy: Cả `http://127.0.0.1:5173` và `http://[::1]:5173` đều phải mở được.
+2. Chuẩn bị file script cho dự phòng D-17:
+   - Chép **riêng** `checklist/tools/devtools_check.js` vào một thư mục trống.
+   - Trong thư mục đó chạy `python -m http.server 8099`.
+3. Ghim Sticky Notes (MSSV, họ tên, email). Bật lại hiện thanh tác vụ.
+4. Mở sẵn hai thứ trên máy bạn:
+   - File `devtools_check.js`.
+   - Một Notepad để ghi nhanh kết quả theo mã mục.
+5. Chép sẵn dòng kiểm ngôn ngữ (D-23):
+   ```js
+   [navigator.language, Intl.DateTimeFormat().resolvedOptions().locale, Intl.NumberFormat().resolvedOptions().locale]
+   ```
+6. Chạy tunnel: `BrowserStackLocal.exe --key <ACCESS_KEY>` và chờ dòng báo đã kết nối. Không dán key vào file hay vào chat.
+
+## 1. Trong phiên (khoảng 20 đến 25 phút, AI ước lượng)
+
+Mở Firefox trên Windows 11. Chọn độ phân giải gần N1 nhất (2560 x 1440; không có thì lấy mức lớn nhất có sẵn và ghi lại). Mọi ảnh đều chụp toàn màn hình bằng `Win+PrtSc`.
+
+| # | Trang | Làm | Mục |
+|---|---|---|---|
+| 1 | `about:support` | Chụp ảnh môi trường (thấy cả thanh công cụ BrowserStack) | `overview_env_1` |
+| 2 | `/login` | F12, mở Console, gõ `allow pasting`, dán **dòng ngôn ngữ**, chụp. Bước này vừa thử dán được hay không, vừa ghi ngôn ngữ. Không dán được thì dùng cách D-17: Mở `http://localhost:8099/devtools_check.js` ở tab khác, chép rồi dán | `overview_env_2` |
+| 3 | `/login` | Đăng nhập `test@eshop.com`, xem navbar đổi trạng thái | CL-80 |
+| 4 | `/profile` | `Ctrl+Shift+M`, đặt 1366 x 768, dán script, chụp bảng kết quả | Nhóm A |
+| 5 | `/profile` | Đặt rộng 360, dán lại script, chụp | CL-109 |
+| 6 | `/profile` | Tắt `Ctrl+Shift+M`. Bấm Tab từ thanh địa chỉ qua hết trang | CL-15, 16, 17, 21 |
+| 7 | `/profile` | Chụp ảnh tổng quan; phải thấy rõ cột **Ngày đặt**, **Tổng tiền** và footer | `overview_profile_1`, `_2` |
+| 8 | `/profile` | Zoom 200% (`Ctrl` + `+` 6 lần: 110, 120, 133, 150, 170, 200), xem bố cục, chụp nếu lỗi, `Ctrl+0` để về 100% | CL-33 |
+| 9 | `/profile` | Bấm "Thoát" | CL-81, 82 |
+| 10 | `/profile` chưa đăng nhập | Dán script; xem có đường đi tới trang đăng nhập không; chụp | Nhóm A, CL-78 |
+| 11 | `/login` | Bấm Tab hết trang; chụp ảnh tổng quan | CL-15, 16, 21, `overview_login` |
+| 12 | `/login` | Nhập `abc` vào ô thứ nhất, mật khẩu bất kỳ, bấm "Sign In"; xem có bong bóng validate không | CL-45 |
+| 13 | `/login` (đang hiện lỗi) | Dán script ở 1366 x 768, rồi ở rộng 360 | Nhóm A, CL-32, 106, 109 |
+| 14 | `/login` | Zoom 200% rồi về 100% | CL-33 |
+| 15 | `/register` | Bấm Tab hết trang; chụp ảnh tổng quan | CL-15, 16, 21, `overview_register` |
+| 16 | `/register` | Bấm "Đăng Ký" với mật khẩu yếu; dán script ở 1366 x 768 và ở rộng 360; zoom 200% | Nhóm A, CL-106, CL-33 |
+| 17 | `/login` sang `/register` | Bấm "Đăng ký ngay" rồi Back. Đăng nhập, bấm lời chào để tới `/profile`, rồi Back | CL-77 |
+| 18 | `/profile` | **Chỉ làm nếu còn phút:** Đổi Họ Tên thành `Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly` (giống N3), xem navbar ở 3 trang | CL-34 |
+
+- Nếu đồng hồ trial đã qua khoảng 25 phút: Bỏ bước 17, 18 và đóng phiên.
+- Kết quả của N1 để đối chiếu nhanh trong phiên:
+  - Failed: CL-15, 16, 45, 78.
+  - Passed: CL-17, 21, 33, 34, 77, 80, 81, 82.
+  - CL-33 và CL-34 Failed ở N3.
+
+## 2. Tên ảnh
+
+Ảnh lưu trong `cross_platform/screenshots/firefox/`:
+
+| Ảnh | Tên |
+|---|---|
+| Ảnh môi trường | `overview_env_1.png` (`about:support`), `overview_env_2.png` (Console ngôn ngữ) |
+| Ảnh tổng quan | `overview_profile_1.png`, `_2`... ; `overview_login.png`; `overview_register.png` (chỉ có một ảnh thì không thêm hậu tố) |
+| Mục Failed | `CL-xx.png`; nhiều ảnh thì `CL-xx_1.png`, `CL-xx_2.png`. Một ảnh làm bằng chứng cho nhiều mục thì lưu thêm một bản cho mỗi mã |
+
+- **Trong phiên không cần đổi tên:** Ảnh tự lưu vào `Pictures\Screenshots`, đổi tên sau sẽ tiết kiệm phút. Chỉ cần ghi vào Notepad dạng "ảnh số 7: bước 7, overview_profile".
+- Ảnh nháp không làm bằng chứng cho mục Failed nào thì không đưa vào repo.
+
+## 3. Sau phiên (không tốn phút)
+
+Gửi tôi các ảnh và ghi chú Notepad. Tôi sẽ làm tiếp như với N3:
+1. Đổi tên ảnh.
+2. Viết bản nháp `ai_raw/T3_firefox_manual.md`, chốt 32 mục B-ảnh từ ảnh tổng quan và nhóm A từ bảng kết quả script.
+3. Bạn review xong thì tôi ghi vào cột NT2. 51 mục nhóm C để trống ô Kết quả, Notes ghi lý do (D-16).
+4. Sau đó mới đến D-24 (sửa `firefox_triage.md`), các bug và `02_compare.md`.
+
+---
+
+Commit cho phần Excel và 4 ảnh kiểm ngôn ngữ, nếu bạn muốn commit ngay:
+```
+git add checklist/HW03_T1_GUI_Checklist.xlsx cross_platform/screenshots/chrome/CL-24_locale_1.png cross_platform/screenshots/chrome/CL-24_locale_2.png cross_platform/screenshots/chrome/CL-24_locale_3.png cross_platform/screenshots/chrome/CL-24_locale_4.png
+git commit -m "[T3][compare] Record browser language check for CL-11 and CL-24"
+```
+````
+
+---
+
+### C247 | 02:28 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `a498e700`
+
+**Prompt (nguyên văn):**
+
+````text
+Task 2 đã xong. Hãy hoàn thiện các bước còn để khung của usability-evaluation (participants, phiên thật, score, analysis, bugs) theo cách đã làm thật, chỉ đọc các file sau:
+- usability/04_scores.md, usability/ai_raw/T2_score.md, usability/tools/score_t2.py
+- usability/05_findings.md, usability/ai_raw/T2_analysis.md
+- usability/03_instruments.md, usability/02_scenario.md (phần sửa sau pilot)
+- bugs/bug_report.md mục Task 2 (B-T2-01 #66, B-T2-02 #67), usability/tools/edit_product_check.js (mẫu script tái hiện bug theo chữ trên giao diện)
+Không đọc usability/sessions/, participants.md, video.
+Học từ bảng "Thay đổi so với bản AI" của 04_scores.md và 05_findings.md để đưa vào lessons.md.
+Xong thì chép cả hai skill sang D:\Dang\Test\.claude\skills\ và kiểm bằng diff -r. Màn hình hoặc luồng để quay demo: Đề xuất 2 phương án, tôi chốt sáng mai.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Size allowed Task 2 files and read session memory
+- Read: D:\Dang\Test\Homeworks\HW03\usability\04_scores.md
+- Read: D:\Dang\Test\Homeworks\HW03\usability\tools\score_t2.py
+- Bash: Compare AI score draft with reviewed version
+- Read: D:\Dang\Test\Homeworks\HW03\usability\05_findings.md
+- Bash: Compare AI analysis draft and find Task 2 bug section
+- Bash: Read Task 2 bug section and reproduction script header
+- Bash: Check later updates to scenario and instruments
+- Bash: Read latest instruments changes
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-participants.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-sessions.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-score.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-analysis.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-bugs.md
+- Edit: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\references\step-bugs.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\scores.md
+- Write: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\assets\templates\findings.md
+- Read: D:\Dang\Test\Homeworks\HW03\skills\usability-evaluation\SKILL.md
+- Bash: Apply SKILL.md updates and remove old skeleton file
+- Bash: Locate rules sections to update
+- Bash: Show folder tree in rules
+- Bash: Update usability rules for remaining steps
+- Bash: Show end of usability lessons
+- Bash: Append lessons and update usability example
+- Bash: Reorder example rows and run checks
+- Bash: Copy both skills to .claude/skills and diff
+- Bash: Read skill sync memory
+- Bash: Extend skill sync memory to HW03 skills
+- Edit: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\skill-sync-duty.md
+- Edit: C:\Users\Lenovo\.claude\projects\d--Dang-Test\memory\MEMORY.md
+
+**Output AI (nguyên văn):**
+
+````text
+Đang đọc phần bug Task 2 và script tái hiện bug, rồi sẽ viết các bước còn lại của skill usability.
+
+Giờ cập nhật SKILL.md, rules.md, lessons.md và ví dụ của skill usability.
+
+Đang thêm bài học cho các bước phiên, score, analysis, bugs vào `lessons.md`, rồi sẽ cập nhật ví dụ và chép hai skill sang `.claude/skills/`.
+
+Kiểm định dạng và riêng tư đều không có lỗi. Giờ chép hai skill sang `.claude/skills/` và so bằng `diff -r`.
+
+Description replacement didn't match; fix it and the index line with Edit.
+
+Mình đã viết đầy đủ năm bước còn để khung của `usability-evaluation` theo cách đã làm thật, rồi chép cả hai skill sang `.claude/skills/`. `diff -r` cho thấy hai bản giống hệt nhau (42 file). Kiểm định dạng và riêng tư không có lỗi. Mình không đọc `sessions/`, `participants.md` hay video.
+
+## Các bước mới của `usability-evaluation`
+
+| Bước | File | Nội dung chính |
+|---|---|---|
+| `participants` | [step-participants.md](Homeworks/HW03/skills/usability-evaluation/references/step-participants.md) | Bạn lập danh sách. AI chỉ đưa mẫu trống và không đọc file này |
+| Từng phiên | [step-sessions.md](Homeworks/HW03/skills/usability-evaluation/references/step-sessions.md) | AI chép ghi chú đã ẩn danh của bạn vào `notes.md`, `scale.md`, `probe.md`; chỗ thiếu thì hỏi; không tính điểm SUS. Có các mặc định bạn đã chốt (chỉ hỏi C1 đến C9, D6 kiểm bằng form "Sửa", thời lượng tính từ lúc bật quay). Sai lệch quy trình của người điều phối ghi đúng như đã xảy ra |
+| `score` | [step-score.md](Homeworks/HW03/skills/usability-evaluation/references/step-score.md) | Script in bảng SUS, thời gian, đếm mã sự kiện; các bảng D1, D4, D6, D7 tổng hợp tay; 11 phần như `04_scores.md`; các cách báo số liệu để thành `QĐ-Sn` |
+| `analysis` | [step-analysis.md](Homeworks/HW03/skills/usability-evaluation/references/step-analysis.md) | Hỏi thang severity và quy tắc ưu tiên **trước** khi chấm; chỉ là bug khi chỉ ra được câu SRS bị làm sai; 9 phần như `05_findings.md` |
+| `bugs` | [step-bugs.md](Homeworks/HW03/skills/usability-evaluation/references/step-bugs.md) | Tái hiện bug ngoài phiên, bằng tay hoặc bằng script; script phóng to cửa sổ Chrome rồi mới chụp để không lọt cửa sổ khác; mục Task 2 của bug report; phần dùng `gh` dẫn sang `gui-checklist` |
+
+Các thay đổi đi kèm:
+- **Mẫu mới:** `scores.md`, `findings.md`.
+- **`rules.md`:** Thêm cây thư mục đầy đủ, mã `Fn`, `B-T2-nn`, `QĐ-Sn`, cách commit và mục rà cho từng bước.
+- **Đã xóa:** `step-later.md`, vì không còn bước nào để khung.
+- **Quy tắc "dữ liệu người thật":** Thêm ý cho phép AI **chép** ghi chú đã ẩn danh của bạn, không được thêm gì ngoài ghi chú. Đây là cách đã làm ở 7 phiên.
+- **Script:** Theo lựa chọn trước của bạn cho Task 1, `score_t2.py` và `edit_product_check.js` không đưa vào `scripts/` của skill; `example-fl05.md` chỉ trỏ tới hai script này làm ví dụ.
+
+## Bài học thêm vào `lessons.md`
+
+Bảng thay đổi của `04_scores.md` và `05_findings.md` chỉ có dòng "Quyết định của SV". Vì vậy phần bài học lấy cả từ các quyết định đó lẫn từ nội dung hai file:
+
+- **Thang severity:** Bản AI chấm theo Nielsen, bạn chọn thang 4 mức của nhóm, nên phải chấm lại cả bảng. Từ nay hỏi thang trước khi chấm.
+- **Thứ tự ưu tiên:** Bug mất dữ liệu chỉ 1/7 người gặp nên criticality thấp; bạn chọn đưa lên đầu. Từ nay hỏi quy tắc ưu tiên trước.
+- **Tính nhẩm SUS:** Lúc ghi phiên P5, AI tính nhẩm ra 55, đúng là 52,5.
+- **Người bỏ cuộc:** Script tính P4 tự kiểm tra 00:00, làm trung bình thành 00:10 thay vì 00:12.
+- **Cách kiểm D6:** Kiểm bằng form "Sửa" trên trang chưa tải lại bị bug #67 làm sai.
+- **Ranh giới bug:** Ô danh mục chọn sẵn mặc định là nguyên nhân chính làm M3 thất bại, nhưng không sai câu nào của SRS, nên là vấn đề thiết kế.
+- **Lời nói và hành vi:** P1, P5 trả lời "không có ô nào không chắc" vì không thấy ô danh mục.
+- **Phần do cách làm bài:** Kịch bản ở file riêng làm tăng số lần mở lại kịch bản; phiếu cho sao chép làm giảm lỗi gõ giá.
+
+## Một đề xuất, chưa làm ⏳
+
+Phép tính SUS không gắn với EShop. Nếu bạn muốn, mình thêm lệnh `sus` vào `check_usability.py` để tránh tính nhẩm sai như ở P5. Lệnh chỉ tính từ dòng câu trả lời của `scale.md`.
+
+## Ghi nhớ đã cập nhật
+
+Mình đã thêm vào ghi nhớ "Skill sync duty": Sau khi sửa skill trong `Homeworks/HW03/skills/`, mình sẽ tự chép sang `.claude/skills/` và kiểm bằng `diff -r`.
+
+## Màn hình và luồng cho video demo (bạn chốt sáng mai)
+
+Luồng C mà bạn chọn trước đây (Đăng ký → Cập nhật hồ sơ) hiện bị chặn bởi hai bug: #33 (trang Đăng ký từ chối mọi mật khẩu hợp lệ) và #36 (số điện thoại hợp lệ bị từ chối). Vì vậy mình đưa thêm một luồng thay thế.
+
+| | Phương án 1 (mình nghiêng về) | Phương án 2 |
+|---|---|---|
+| `gui-checklist` | Admin "Quản lý Danh mục" | Admin "Quản lý Danh mục" |
+| `usability-evaluation` | Admin: Đổi trạng thái một đơn hàng (FR-18) | Web: Đăng ký → Cập nhật hồ sơ (như trước) |
+| Ưu | Dữ liệu có sẵn: `tools/seed_orders.py` tạo 5 đơn ở 5 trạng thái. Theo bảng phân công chưa ai nhận luồng này. Không bị bug đã biết chặn | Đã chọn từ trước; ảnh `survey_*` dùng được một phần |
+| Nhược | Chưa có ảnh trang quản lý đơn, phải chụp mới | Luồng bị #33 và #36 chặn. Demo chỉ đi tới `instruments` thì vẫn quay được, nhưng kịch bản sẽ phải ghi rủi ro "không hoàn thành được" |
+
+Với cả hai phương án, video quay như sau:
+- **Checklist:** Đi từ `survey` tới `excel`. `exec` và `bugs` thêm nếu còn thời gian.
+- **Usability:** Đi từ ảnh luồng → `plan` → `scenario` → `instruments`, rồi cho thấy skill dừng ở các bước cần người thật.
+
+## Commit
+
+Lệnh chạy từ `Homeworks/HW03`. Chỉ commit bản trong `Homeworks/HW03/skills/`, không commit bản trong `.claude/skills/`.
+
+```
+git add skills/usability-evaluation
+git commit -m "[skill] Add participants, sessions, score, analysis and bugs steps to usability skill"
+```
+````
+
+---
+
+### C248 | 02:29 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+N2 để sang sáng mai được chứ? 
+Phần quay video demo bằng skill có thể tối giản không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find the assignment's requirement for the skill demo video
+- Bash: Find skill demo video requirement in tracker and workflow
+- Bash: Locate the assignment spec file mentioning YouTube
+- Bash: Extract the video requirement from the assignment PDF
+
+**Output AI (nguyên văn):**
+
+````text
+N2 để sáng mai được, nhưng lịch sẽ sát hơn: Còn khoảng 45 phút dự phòng thay vì 1,5 giờ. Video demo cũng làm gọn được, chỉ cần một video cho một skill.
+
+## N2 sang sáng mai
+
+Để bù thời gian, **trước khi ngủ, gửi luôn 3 tin nhắn ở lượt trước** (cho Task 1, Task 3, Agent Skill). Mỗi phiên tự làm xong lượt của nó trong lúc bạn ngủ, không cần bạn ngồi chờ:
+- Task 1 sửa #53, Excel và bug report.
+- Task 3 ghi các quyết định và soạn sẵn các bước N2.
+- Agent Skill hoàn thiện `usability-evaluation` và chép sang `.claude/skills/`.
+
+Sáng mai bạn chỉ còn đọc lại và commit.
+
+Ở tin cho Task 3, sửa câu cuối thành: "N2 tôi chạy sáng mai 8:00. Đưa tôi bản tóm tắt các bước N2 để sáng mai làm theo."
+
+Nếu còn 5 phút tối nay, tạo tài khoản BrowserStack trước. Tạo tài khoản chưa tốn phút dùng thử, và sáng mai không bị kẹt ở bước xác nhận email.
+
+**Lịch sáng mai:**
+
+| Giờ | Bạn làm | Song song |
+|---|---|---|
+| 8:00 đến 8:15 | Đọc kết quả 3 phiên chạy đêm, commit | Tôi kiểm server và DB |
+| 8:15 đến 9:15 | N2 trên BrowserStack | Tôi viết report phần Task 1, 2, Skill |
+| 9:15 đến 10:00 | Duyệt compare và bugs của Task 3, tạo issue | Tôi viết phần Task 3 khi có `02_compare.md` |
+| 10:00 đến 10:45 | Quay video demo, tải lên YouTube | |
+| 10:45 đến 12:00 | Kiểm report; docx, PDF, zip; tự chấm | |
+| 12:00 đến 13:00 | Dự phòng, nộp Moodle | |
+
+## Video demo: Làm gọn được
+
+Đề §7 viết: *"demonstration videos (YouTube links) that show, end to end, how you used the skills on a complete screen or flow"*. Đề chỉ đòi chạy trọn trên **một màn hình hoặc một luồng**, không đòi chạy trên nhiều màn hình. Phần Agent Skill là 10 điểm, và đề chỉ ghi "encouraged".
+
+**Cách tối giản tôi đề xuất:**
+- **Một video, một skill:** `gui-checklist` trên **một màn hình nhỏ**, ít thành phần, ngoài phạm vi HW03 (theo `demo/README.md`). Phiên Agent Skill sẽ đề xuất màn hình nào.
+- **Chạy hết các bước** từ đầu đến cuối, kết quả lưu vào `demo/gui-checklist/`. Ở mỗi điểm dừng review, bạn duyệt nhanh ("OK, bước tiếp"). Bước exec chạy tay vài mục là đủ; không có bug thì skill ghi là không có.
+- **Không cần lồng tiếng:** Quay màn hình bằng Xbox Game Bar (Win+Alt+R). Cắt hoặc tua nhanh đoạn chờ AI nếu muốn; không cắt cũng được.
+- Tải lên YouTube ở chế độ **Unlisted**, rồi gửi link cho tôi để ghi vào README.
+
+**Phần còn để mở:**
+- ⏳ **Có quay thêm video cho `usability-evaluation` không.** Đề ghi "videos" số nhiều, nên một video vẫn có rủi ro bị trừ điểm. Nếu sáng mai còn dư giờ dự phòng, quay thêm một video ngắn: Skill chạy plan → scenario → instruments cho một luồng khác (phần không cần người thật). Video này không chạy trọn luồng, nên chỉ là phụ. Quyết định lúc 10:45 tùy thời gian còn lại.
+- ⏳ **Màn hình demo:** Chốt sáng mai theo đề xuất của phiên Agent Skill.
+
+Ở tin cho phiên Agent Skill, thêm câu: "Video demo chỉ dùng gui-checklist trên một màn hình nhỏ ngoài phạm vi HW03; đề xuất 2 màn hình và ước tính thời gian quay."
+
+**Server:** Để máy và VS Code mở qua đêm thì sáng mai không phải mở lại, và DB vẫn ở trạng thái đã seed mà N2 cần. Nếu tắt máy, sáng mai nhắn tôi trước.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Có bằng chứng ngôn ngữ; D-20 đến D-24 đã có đề xuất | Tin nhắn tối nay → N2, compare, bugs sáng mai | ~2 giờ |
+| Agent Skill | `gui-checklist` xong | Phiên chạy đêm hoàn thiện `usability-evaluation`; video sáng mai | ~1 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết sáng mai; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **4 giờ** làm việc, tất cả để sáng mai | Còn **10 giờ 30 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C249 | 02:34 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã gửi tin nhắn rồi. Kiểm tra, xuất log, báo cho tôi các phần cần quyết và commit message nếu có.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo, export log, read latest replies of Task 1, Task 3 and Skill sessions
+- Bash: Verify both sessions' Excel edits survived for CL-11, CL-24 and environment notes
+- Bash: Read NT1 and NT3 notes for CL-11 and CL-24 and the NT3 environment note
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên Agent Skill vẫn đang chạy. Phiên Task 1 và Task 3 đều vừa sửa cùng file Excel, nên tôi kiểm xem lần ghi sau có đè lên lần ghi trước không.
+
+Cả hai lần sửa Excel đều còn nguyên, không lần nào đè lần nào. Ô của Task 1 (Notes NT1 của CL-11, CL-24, cột Ảnh của CL-24) và ô của Task 3 (Ghi chú ngôn ngữ của NT1, NT3, Notes NT3 của CL-24) đều có đủ. Log đã xuất lại.
+
+## Kết quả kiểm
+
+**Task 1:** Đã xong phần bạn chốt.
+- Đã đổi tiêu đề và nội dung #53 (chỉ về ngày, có nguyên nhân) và đăng bình luận.
+- Đã sửa Excel và dòng B-21.
+- Phiên cũng tự sửa một lỗi của chính nó: 33 issue (#33 đến #65) bị thừa ký tự xuống dòng kiểu Windows. Phiên đã chuẩn hóa lại và so chữ trước, sau; nội dung chữ không đổi.
+
+**Task 3:** Đã ghi D-20 vào Excel và soạn sẵn 18 bước N2.
+
+**Agent Skill:** **Vẫn đang chạy.** Phiên đã viết các bước participants, sessions, score, analysis, bugs và có vẻ đã chép skill sang `.claude/skills/`. Chưa commit phần này. Sáng mai đọc kết quả rồi commit.
+
+## Cần bạn quyết
+
+1. **⏳ Task 1, cách ghi ảnh trong Excel:** **Chọn (a)**, giữ như hiện tại. Excel dẫn thẳng tới 4 ảnh ở `cross_platform/screenshots/chrome/`, không phải chép ảnh trùng sang hai thư mục. Trả lời phiên Task 1: "Chọn (a)."
+2. **Task 3, sáng mai đừng reset và seed lại trước N2.** Bước 0 trong hướng dẫn N2 ghi "Reset DB và seed lại (D-09)". Nếu seed vào sáng 11/11 thì mọi đơn mang ngày `11/11/2026`, mà ngày này đọc theo kiểu nào cũng giống nhau, nên Firefox không còn cho thấy được thứ tự ngày tháng. DB **hiện tại** đã đúng trạng thái reset và seed (seed lúc 01:45, đơn hiện ngày 10/11), và từ đó tới giờ chỉ mở xem, chưa sửa gì. Giữ nguyên DB này cho N2. Gửi phiên Task 3:
+   ```
+   D-09 cho N2: Không reset và seed lại sáng mai. DB hiện tại là bản reset + seed lúc 01:45 ngày 11/11, chỉ mở xem từ đó, đơn hiện ngày 10/11 nên còn phân biệt được ngày/tháng. Seed vào ngày 11/11 sẽ cho "11/11/2026", không phân biệt được. Bước 18 (đổi Họ Tên) làm cuối cùng; reset DB sau N2.
+   ```
+3. **Việc tay cho #53, khoảng 2 phút, làm tối nay hoặc sáng mai đều được:**
+   1. Kéo 4 ảnh `CL-24_locale_1.png` đến `_4.png` vào ô bình luận trên GitHub, nhưng không bấm Comment.
+   2. Dán đoạn link GitHub tạo ra vào cuối `bugs/image_links.txt`.
+   3. Báo phiên Task 1 để nó chèn ảnh vào issue.
+
+**Về web server cho N2:** Hướng dẫn N2 ghi mở web bằng `npm run dev -- --host ::` để tunnel vào được. Sáng mai tôi sẽ mở lại web server theo cách đó; chỉ mở lại web (cổng 5173), không động tới backend, nên DB không bị khởi tạo lại.
+
+## Lệnh commit
+
+Excel trong commit này có cả phần Task 1 và phần D-20 của Task 3, vì cùng một file nên không tách được:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx bugs/bug_report.md
+git commit -m "[T1][bugs] Update #53 root cause and CL-11, CL-24 notes; add platform language notes (T3 D-20)"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Chưa commit `skills/` vì phiên Agent Skill còn đang chạy.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | D-20 đã ghi; hướng dẫn N2 sẵn sàng | Gửi tin D-09; N2 lúc 8:00 (giữ DB hiện tại) → compare, bugs | ~2 giờ |
+| Agent Skill | Phiên đang viết các bước còn lại | Sáng mai: Đọc, commit; video | ~1 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết sáng mai; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **4 giờ** làm việc | Còn **10 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C250 | 02:35 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Chọn a.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Đã ghi nhận phương án (a). Excel đang đúng như vậy rồi, nên không cần sửa thêm: Cột Ảnh của CL-24 ghi `CL-24_chrome.png` cùng 4 đường dẫn `cross_platform/screenshots/chrome/CL-24_locale_1.png` đến `_4.png`, và không chép ảnh sang `checklist/screenshots/`.
+
+Còn một việc đang chờ bạn: Tải 4 ảnh `CL-24_locale_1.png` đến `_4.png` vào ô bình luận (không bấm Comment), rồi dán thêm link vào cuối `bugs/image_links.txt`. Báo tôi khi xong, tôi sẽ chèn 4 ảnh vào mục "Ảnh chụp" của #53, ngay sau ảnh `CL-24_chrome.png`.
+````
+
+---
+
+### C251 | 02:38 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã bổ sung các ảnh để bạn chèn ảnh vào issue, link ảnh nằm ở cuối image_links.txt
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Download new links and match locale images
+- Bash: Show locale image URL mapping
+- Bash: Insert four locale images into issue 53
+
+**Output AI (nguyên văn):**
+
+````text
+Cả 4 link khớp đúng 4 ảnh locale. Giờ chèn vào mục "Ảnh chụp" của #53, ngay sau ảnh `CL-24_chrome.png` đang có.
+
+Đã chèn 4 ảnh vào mục "Ảnh chụp" của [#53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53), ngay sau ảnh `CL-24_chrome.png`. Tôi đã tải 4 link mới về và so từng byte: Đúng 4 file `CL-24_locale_1.png` đến `_4.png`.
+
+Thứ tự ảnh trong #53, mỗi ảnh có tên file và chú thích ngắn:
+1. `CL-24_chrome.png`: Ảnh N1 lúc chạy thật.
+2. `CL-24_locale_1.png`: Chrome giao diện tiếng Anh, "11/10/2026".
+3. `CL-24_locale_2.png`: Chrome mở bằng `--lang=vi`, "10/11/2026".
+4. `CL-24_locale_3.png`: Console của Chrome tiếng Anh, locale `en-US`.
+5. `CL-24_locale_4.png`: Console của Chrome `--lang=vi`, locale `vi`.
+
+Tôi đã mở lại #53 sau khi sửa: Nội dung không có xuống dòng thừa, các phần khác giữ nguyên. Bình luận lần trước đã báo ảnh so sánh sẽ được bổ sung, nên tôi không đăng thêm bình luận.
+
+Việc còn lại với #53: Khi phiên Task 3 tạo issue về CL-11, tôi thêm dòng "Xem thêm issue T3 về CL-11" vào mục Ghi chú của #53. Lệnh commit ở lượt trước vẫn dùng được, `bugs/image_links.txt` giờ có thêm 4 link.
+````
+
+---
+
+### C252 | 02:39 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Đã gửi và đã trả lời xong.
+2. Tôi tắt máy nên kiểu gì trạng thái cũng mất nên tôi không gửi tin đó.
+3. Đã làm
+4. Agent skill chạy xong rồi, kiểm tra, xuất log và commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo, export log, verify skill sync, read Skill session's final reply
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
