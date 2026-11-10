@@ -7380,11 +7380,78 @@ Mỗi thay đổi ghi vào bảng "Thay đổi so với bản AI" (Loại "Quy�
 - Read: D:\Dang\Test\Homeworks\HW03\usability\pilot\notes.md
 - AskUserQuestion
 - Read: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
+- Grep: ×5|03:51|3 phút|01:41|01:20\.95|00:35\.15|—|·
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
+- Edit: D:\Dang\Test\Homeworks\HW03\usability\01_test_plan.md
 
 **Output AI (nguyên văn):**
 
 ````text
 Bạn chọn ×3 và ngưỡng 2 phút. Tôi đọc lại `02_scenario.md` rồi sửa.
+
+`02_scenario.md` đã sửa xong. Giờ tới `03_instruments.md`. Mục I4.3 của file này còn đang ghi thời gian chuẩn ×5 cũ, nên tôi cũng đổi sang số ×3.
+
+Tôi rà lại cả ba file xem còn chỗ nào ghi số cũ (×5, 03:51, 3 phút).
+
+Tôi đã sửa xong theo các dòng "Cần sửa" ở `pilot/notes.md` mục 8, cùng hai điểm phát sinh bạn nhắc. Tôi không mở `participants.md` và video pilot.
+
+**[02_scenario.md](Homeworks/HW03/usability/02_scenario.md):**
+- **Thời gian chuẩn, mục 4.4:** Cột "Sau pilot" giờ là ×3: M1 00:21.09, M2 00:48.57, M3 01:00.84, toàn luồng 02:18.75, dùng cố định cho P1 đến P7. Thêm bảng so sánh số đo pilot với chuẩn ×5 cũ và ×3 mới, lý do chọn ×3, và một hạn chế: Số đo chỉ của một người pilot, M1 bị lệch mốc.
+- **Ngưỡng "bế tắc hẳn", mục 5:** Giảm từ 3 phút xuống 2 phút. Có ghi rõ người pilot không bị bế tắc lần nào, nên ngưỡng này chưa được thử trực tiếp.
+- **Đọc kịch bản, mục 7 bước 2:** Dặn người tham gia đọc to hết kịch bản rồi mới chạm chuột hay bàn phím.
+- **Bộ gõ tiếng Việt:** Thêm dòng vào trạng thái ban đầu (mục 3): Đặt bộ gõ về chế độ tiếng Anh. Khi đưa kịch bản (mục 7 bước 1), nói cho người tham gia cách bật lại.
+- **Sao chép từ phiếu, mục 2.2:** Câu đầu phiếu dữ liệu giờ là "Bạn có thể sao chép (copy) thông tin trong phiếu này để dán vào trang."
+
+**[03_instruments.md](Homeworks/HW03/usability/03_instruments.md):**
+- Mục I4.3 đổi sang thời gian chuẩn ×3. Chỗ này còn ghi số ×5; nếu không đổi thì phiếu ghi chú của P1 đến P7 sẽ so với chuẩn cũ.
+- I1 thêm dòng 14: Đặt bộ gõ về chế độ tiếng Anh trước phiên.
+- Tin nhắn I2.1 đổi "30 đến 40 phút" thành "15 đến 30 phút". Người nào đã nhận tin nhắn cũ thì chỉ là phiên ngắn hơn dự kiến.
+
+**[01_test_plan.md](Homeworks/HW03/usability/01_test_plan.md):**
+- Mục 5 chỉnh thời lượng: Mở đầu 2 đến 3 phút, phiếu thông tin 1 đến 2 phút, làm nhiệm vụ 2 đến 5 phút (tối đa 15 phút). Tổng 15 đến 25 phút, trước đây là 25 đến 40 phút. Có ghi kèm số đo pilot.
+- Mục 7 và mục 11 vẫn còn ghi ×5 và 3 phút, tôi sửa cho khớp luôn.
+
+Mỗi thay đổi đều có một dòng trong bảng "Thay đổi so với bản AI", Loại "Quyết định của SV", căn cứ là pilot.
+
+**Bạn cân nhắc thêm:**
+- **Có thể là bug thật:** Ở pilot, bấm "Thêm mới" khi ô tên trống thì hệ thống vẫn tạo một danh mục trống (`pilot/notes.md` mục 5, mốc 00:29). FR-14 yêu cầu "Tên danh mục là bắt buộc, không được để trống", nên đây có thể là bug để báo ở bước `bugs`. Bạn nên tự chụp lại lỗi này khi không có người tham gia.
+- **G4 và cách kiểm D6:** Pilot đã xác nhận reset DB xoá dữ liệu mới, và bạn kiểm D6 bằng form "Sửa". Hai kết quả này chưa được cập nhật vào `01_test_plan.md` mục 10.1 (G4 vẫn ghi "đúng một phần") và `03_instruments.md` mục I4.6. Ở cột "Cần sửa" bạn để trống hai điểm này, nên tôi chưa sửa. Muốn hai file khớp thì báo tôi.
+
+**Commit** (bạn tự commit; nhớ nhờ phiên điều phối xuất prompt log trước). `PL_video.mp4` đã được `.gitignore` chặn. Nếu chưa commit hồ sơ pilot thì commit trước:
+
+```
+cd Homeworks/HW03
+git add usability/pilot/notes.md usability/pilot/scale.md usability/pilot/probe.md
+git commit -m "[T2][pilot] Record pilot session notes and scale answers"
+git add usability/02_scenario.md usability/03_instruments.md usability/01_test_plan.md
+git commit -m "[T2][pilot] Refine scenario and instruments after pilot"
+```
+
+Sau hai commit này là có thể chạy P1.
 ````
 
 ---
@@ -7408,11 +7475,181 @@ Task 2 đang chạy.
 - Bash: List Task 1 session tool calls around the capture test
 - Bash: Check whether script saves results and where it pauses
 - Bash: Export log and update tracker for pilot and Task 1 script
+- Bash: Fix audit note wording in tracker
 
 **Output AI (nguyên văn):**
 
 ````text
 Đang tổng hợp. Script Task 1 giờ tự chụp toàn màn hình mục Failed, và không chạm DB từ lần reset 11:18. Xuất log và cập nhật tracker.
+
+Task 1 sẵn sàng chạy thật: Server đang bật, DB sạch (reset và seed lúc 11:18, từ đó chưa ai đụng vào). Log đã xuất lại: 119 lượt từ 5 phiên.
+
+## Tình hình (11:40 10/11)
+
+| Task | Đã xong | Đang ở / đang chờ | Sau đó |
+|---|---|---|---|
+| **Task 1** | Thiết kế (112 mục), Excel, script Console, script Playwright (đã chạy thử 2 lần) | **Chờ bạn chạy thật N1** | Điền Excel cột NT1 → `bugs` |
+| **Task 2** | Plan, scenario, instruments, Google Form, participants, **pilot** (`262685e`) | Phiên Task 2 đang sửa scenario và instruments theo pilot | Bạn chốt bội số mới, rồi chạy P1 đến P7 |
+| **Task 3** | Setup | Chờ Task 1 xong N1 | Cài `adb`, thử S-03, rồi chạy N2, N3 |
+| **Agent Skill** | 2 skill phần thiết kế, ngoại lệ ai-draft, thư mục demo | Chờ các bước sau xong để bổ sung | Chốt màn hình demo, quay video |
+
+## Thay đổi mới trong script Task 1
+
+Script **không dừng chờ bạn chụp nữa**. Ở màn hình Failed đầu tiên của mỗi mục, nó đưa Chrome lên trước và **tự chụp toàn màn hình** bằng `capture_screen.ps1`, lưu thành `checklist/screenshots/CL-xx_chrome.png`. Ảnh vẫn là ảnh chụp thật, có thanh địa chỉ và taskbar. Tôi đã cập nhật phần Audit trong tracker.
+
+Script chỉ còn dừng ở 4 chỗ:
+- Lúc bắt đầu: Bạn gõ `co`.
+- Hai lần nhờ bạn **tự chuẩn bị giỏ hàng** (CL-68: 2 sản phẩm khác nhau, mỗi loại số lượng 1; CL-69: 1 sản phẩm số lượng 2).
+- Giữa các nhóm và lúc kết thúc: Bấm Enter.
+
+## Chuẩn bị trước khi chạy Task 1
+
+**Màn hình (vì script chụp toàn màn hình):**
+1. **Bật Focus hoặc Do Not Disturb của Windows**, tắt thông báo Zalo, Messenger. Nếu thông báo tin nhắn của người tham gia hiện lên lúc chụp, ảnh sẽ lộ thông tin cá nhân.
+2. Đóng hoặc thu nhỏ các cửa sổ có thông tin cá nhân, nhất là `participants.md` và ảnh tin nhắn đồng ý.
+3. Ghim Sticky Notes (MSSV, họ tên, email) **luôn nằm trên cùng**, ví dụ bằng PowerToys `Win+Ctrl+T`. Đặt ở góc không che vùng cửa sổ Chrome 1366 x 768.
+4. Thanh tác vụ luôn hiện.
+
+**Dữ liệu và server:**
+- Không có phiên usability nào chạy trong lúc này, vì dùng chung DB. Phiên Task 2 đang chỉ sửa file, không sao.
+- Đã sẵn sàng: Backend `3000` và web `5173` đang chạy, DB đã reset và seed.
+
+**Lệnh chạy** (lưu luôn bảng kết quả ra file để điền Excel, vì script chỉ in kết quả ra màn hình):
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n1_chrome_checklist.js | Tee-Object -FilePath n1_run_log.txt
+```
+
+Trong lúc script chạy, **đừng bấm chuột hay gõ phím vào cửa sổ Chrome**, trừ 2 lần chuẩn bị giỏ hàng.
+
+**Sau khi script chạy xong:**
+1. Mở `checklist/screenshots/`, xem từng ảnh `CL-xx_chrome.png`:
+   - Ảnh có thấy lỗi, thấy Sticky Notes và URL `localhost:5173` không.
+   - Lỗi hiện bằng hộp thoại alert (như lỗi số điện thoại) sẽ **không có trong ảnh**, vì hộp thoại đã tự đóng. Mục nào như vậy thì chụp tay lại.
+2. Điền Excel cột NT1 từ `n1_run_log.txt`. Đây là **kết quả nháp**: Bạn xem lại từng mục Failed rồi mới chốt.
+3. Chạy tay các mục cần nhìn: CL-01 đến 09, 25 đến 27, 31, 33 đến 35, 56, 66, 67, 84, 92. Thêm phần cần người xét của CL-105 và CL-58.
+4. Cho Task 3: Chụp 3 ảnh tổng quan (`/profile` khi đã đăng nhập, `/register`, `/login`) và `overview_env.png` (trang `chrome://version`) vào `cross_platform/screenshots/chrome/`. Điền sheet "Môi trường" cột NT1.
+5. Báo tôi để reset DB và seed lại, vì script để lại dữ liệu bẩn.
+
+`n1_run_log.txt` là bản nháp, có commit hay không thì chốt lúc commit `[T1][exec]`.
+
+## Lệnh commit (bây giờ)
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n1_chrome_checklist.js checklist/tools/capture_screen.ps1 prompt_log.md
+git commit -m "[T1][exec] Let N1 script capture full-screen shots of Failed items"
+git push
+```
+
+⏱ Còn khoảng **27 giờ** làm việc | Còn **10 giờ 20 phút** tới mốc 22:00 10/11 | **25 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C120 | 11:45 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+D:\Dang\Test\Homeworks\HW03>cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+
+D:\Dang\Test\Homeworks\HW03\checklist\tools>node n1_chrome_checklist.js | Tee-Object -FilePath n1_run_log.txt
+'Tee-Object' is not recognized as an internal or external command,
+operable program or batch file.
+
+
+Lệnh chạy không được nhỉ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\patch4.py
+- Bash: Apply log-file patch and syntax-check
+- Bash: Test log file writing by answering the start prompt with empty input
+
+**Output AI (nguyên văn):**
+
+````text
+Lệnh không chạy được vì `Tee-Object` là lệnh của PowerShell, còn bạn đang ở cmd: Dấu nhắc dạng `D:\...>` là của cmd.
+
+Chuyển sang PowerShell cũng không ổn. Khi đi qua pipe, các câu hỏi không có dấu xuống dòng ở cuối sẽ không hiện ra kịp. Đó là câu "Gõ co để bắt đầu" và 2 lần dừng chuẩn bị giỏ hàng (CL-68, CL-69), nên bạn sẽ không thấy chỗ cần gõ.
+
+Vì vậy tôi thêm cờ `--log=<file>` để script tự ghi log. Màn hình vẫn hiện đủ như bình thường, chạy được cả trong cmd lẫn PowerShell.
+
+Đã sửa xong. Tôi thử phần ghi log bằng cách trả lời trống ở câu "Gõ co": Script thoát ngay trước khi mở Chrome, không gọi tới EShop, và file log ghi đủ các dòng kể cả câu hỏi.
+
+Lệnh chạy, dùng được trong cmd lẫn PowerShell:
+
+```bat
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n1_chrome_checklist.js --log=n1_run_log.txt
+```
+
+- **Màn hình:** Vẫn hiện đầy đủ, kể cả câu hỏi "Gõ co" và 2 lần dừng chuẩn bị giỏ hàng.
+- **File `n1_run_log.txt`:** Ghi mọi dòng in ra, câu hỏi kèm câu trả lời của bạn, và bảng kết quả cuối (các cột cách nhau bằng Tab, dán vào Excel được). File ghi nối tiếp, nên chạy lại sẽ không mất log cũ.
+- **Nếu chữ tiếng Việt trong cmd bị lỗi font:** Gõ `chcp 65001` trước khi chạy, hoặc chạy trong PowerShell.
+
+Lần gõ lệnh vừa rồi gần như chắc chắn chưa làm đổi dữ liệu, vì script luôn dừng ở câu "Gõ co" trước khi mở Chrome. Nếu phiên điều phối đã reset và seed thì bạn chạy luôn được.
+
+Nếu muốn commit `n1_run_log.txt` làm bằng chứng thì giữ nguyên. Nếu không, thêm dòng `n1_run_log.txt` vào `checklist/tools/.gitignore`.
+````
+
+---
+
+### C121 | 11:57 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+CL-109 có 2 màn, trong đó màn bên profile chỉ có lịch sử đơn hàng nhưng khuất mất, có ảnh hưởng kết quả không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Không ảnh hưởng tới kết quả. Script không dựa vào ảnh để kết luận CL-109; nó đo trong trang. Ở khổ rộng 360 px, trang `/profile` có chiều rộng nội dung lớn hơn khung nhìn, tức là có thanh cuộn ngang, nên mục Failed. Hai lần chạy thử trước cũng ra đúng kết quả này ở W-06, còn W-03 và W-04 Passed.
+
+Ảnh thì có vấn đề, nên không dùng được làm bằng chứng. Tôi chưa xem ảnh; đây là nguyên nhân tôi suy ra từ cách script hoạt động:
+
+- **Ảnh có 2 cửa sổ:** CL-109 chạy trong một cửa sổ Chrome thứ hai, khung 360 px. Cửa sổ Chrome chính (1366 px) vẫn mở, nên ảnh toàn màn hình thấy cả hai.
+- **Cửa sổ 360 px bị che:** Hai cửa sổ thuộc cùng một tiến trình Chrome. File `capture_screen.ps1` đưa cửa sổ chính của tiến trình đó lên trước, nên cửa sổ 360 px có thể bị cửa sổ chính che mất một phần. Đây là lỗi của phần chụp, không phải của EShop.
+- **"Chỉ thấy lịch sử đơn hàng":** Ở 360 px, form hồ sơ và bảng lịch sử đơn có thể không xếp chồng lên nhau, nên một phần bị đẩy ra ngoài khung. Đó chính là thứ cần thấy trong ảnh, nhưng phải thấy rõ thì mới làm bằng chứng được.
+
+**Đề xuất:** Chụp bổ sung CL-109 bằng tay, đúng cách kiểm của checklist:
+1. Đăng nhập `test@eshop.com`, mở `/profile`.
+2. Mở DevTools, bật Device Toolbar, đặt rộng 360 px.
+3. Chụp màn hình sao cho thấy rõ thanh cuộn ngang, hoặc thấy bảng lịch sử đơn bị tràn ra ngoài khung.
+4. Lưu đè `checklist/screenshots/CL-109_chrome.png`.
+
+Nếu sau này còn chạy lại script (ví dụ cho Task 3), tôi có thể sửa phần chụp để đưa đúng cửa sổ đang Failed lên trước, hoặc đóng cửa sổ chính trong lúc chạy CL-109. Bạn muốn tôi sửa không?
+````
+
+---
+
+### C122 | 11:58 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy script 1 lần và có các ảnh, nên chạy tiếp script hay là commit lưu ảnh đã?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check screenshots produced and run log state
+- Bash: Decode run log tail and check script diff
+- Bash: Reset and seed DB for manual checks, export log
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 

@@ -31,6 +31,8 @@
  *   (WORKFLOW mục 5), rồi chạy tiếp, không dừng. Ảnh đã có thì không ghi đè: Lưu thêm hậu tố mã lần chạy.
  *   Các màn hình Failed sau của cùng mục chỉ ghi vào bảng cuối. Hộp thoại alert đã tự đóng nên không có trong ảnh.
  *   Tắt chụp: --no-shots. Chế độ --dry-run không chụp.
+ * Ghi log ra file (vẫn hiện đầy đủ trên màn hình, chạy được trong cmd và PowerShell): --log=n1_run_log.txt
+ *   File log ghi nối tiếp, không có mã màu; bảng cuối được ghi dạng các cột cách nhau bằng Tab.
  * Mục cần nhìn (ngôn ngữ, màu, chính tả, highlight, căn lề, kiểu viết hoa...) được ghi "Chạy tay".
  */
 const readline = require('readline');
@@ -44,6 +46,17 @@ const DRY = process.argv.includes('--dry-run');
 const SHOTS_ON = !DRY && !process.argv.includes('--no-shots');
 const SHOT_DIR = path.resolve(__dirname, '..', 'screenshots');
 let LAUNCH_MS = 0;
+// ---- ghi log ra file (cờ --log=<file>)
+const LOG_FILE = (process.argv.find((a) => a.startsWith('--log=')) || '').slice(6);
+const LOG_WS = LOG_FILE ? fs.createWriteStream(path.resolve(LOG_FILE), { flags: 'a', encoding: 'utf8' }) : null;
+const logw = (txt) => { if (LOG_WS) LOG_WS.write(String(txt).replace(/\x1b\[[0-9;]*m/g, '') + '\n'); };
+if (LOG_WS) {
+  for (const k of ['log', 'error', 'warn']) {
+    const orig = console[k].bind(console);
+    console[k] = (...a) => { orig(...a); logw(a.map((x) => (typeof x === 'string' ? x : require('util').inspect(x))).join(' ')); };
+  }
+  logw(`\n===== Lần chạy ${new Date().toLocaleString('vi-VN')} | ${process.argv.slice(2).join(' ')} =====`);
+}
 const ONLY = ((process.argv.find((a) => a.startsWith('--only=')) || '').split('=')[1] || '').toUpperCase().split(',').filter(Boolean);
 const T0 = Date.now();
 const stamp = () => `${((Date.now() - T0) / 1000).toFixed(0)}s`;
@@ -336,7 +349,7 @@ function pageLib() {
 
 // ---------------------------------------------------------------- ghi kết quả
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-const ask = (q) => new Promise((res) => rl.question(q, res));
+const ask = (q) => new Promise((res) => rl.question(q, (a) => { logw(`${q}${a}`); res(a); }));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const R = new Map(); // mã CL -> danh sách kết quả từng phần (theo màn hình)
 const NOTES = { messages: new Set(), titles: {}, statuses: [], colors: [], empty: '' };
@@ -1558,6 +1571,8 @@ function printFinal() {
   }
   console.log('\n=== KẾT QUẢ NHÁP N1 (Chrome trên Windows). Sinh viên chốt trong Excel; mục Failed cần ảnh ===');
   console.table(rows);
+  logw(['Mã CL', 'Kết quả nháp', 'Ảnh', 'Lý do'].join('\t'));
+  for (const r of rows) logw([r['Mã CL'], r['Kết quả nháp'], r['Ảnh'], r['Lý do']].join('\t'));
   const count = (r) => rows.filter((x) => x['Kết quả nháp'].startsWith(r)).length;
   if (SHOTS.size) console.log(`Ảnh mục Failed lưu ở ${SHOT_DIR} (${[...SHOTS.values()].filter((x) => x.file).length} ảnh). Xem lại từng ảnh; ảnh chụp lúc chưa đúng màn hình thì chụp bổ sung bằng tay.`);
   console.log(`Passed ${count('Passed')} | Failed ${count('Failed')} | Không chạy được ${count('Không chạy được')} | Chạy tay ${count('Chạy tay')} | Chưa chạy ${count('Chưa chạy')}`);
@@ -1607,6 +1622,7 @@ async function main() {
   if (!DRY) await ask('\nBấm Enter để đóng Chrome và kết thúc... ');
   await browser.close();
   rl.close();
+  if (LOG_WS) { console.log(`Log đã ghi vào ${path.resolve(LOG_FILE)}`); LOG_WS.end(); }
 }
 
 main().catch((e) => { console.error(e); rl.close(); process.exitCode = 1; });
