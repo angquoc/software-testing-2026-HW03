@@ -76,8 +76,8 @@ Theo tin nhắn `03_instruments.md` mục I2.1. Ghi "Có" hoặc "Không" cho t�
 
 | Mã | Ngày giờ | Hình thức (trực tiếp / từ xa) | Trạng thái (đã hẹn / đã chạy / huỷ) | Ghi chú |
 |---|---|---|---|---|
-| P1 | | Trực tuyến | Đã hẹn | |
-| P2 | | Trực tuyến | Đã hẹn | |
+| P1 | | Trực tuyến | Đã chạy | |
+| P2 | | Trực tuyến | Đã chạy | |
 | P3 | | Trực tuyến | Đã hẹn | |
 | P4 | | Trực tuyến | Đã hẹn | |
 | P5 | | Trực tuyến | Đã hẹn | |
