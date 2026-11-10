@@ -46,7 +46,7 @@
 | Đồng ý (theo tin nhắn I2.1, xác nhận lại ở I2.2) | ☑ Quay màn hình ☐ Ghi âm ☑ Gọi xác minh |
 | Video có âm thanh | ☐ Có ☑ Không (trích lời ghi tay, I2.4) |
 | Thời lượng cả phiên | 10 phút (00:30 đến 00:40 ngày 11/11), tính từ lúc bật quay |
-| Kết quả toàn luồng | ☐ Tự hoàn thành ☐ Hoàn thành nhờ can thiệp ☑ Không hoàn thành (ảnh sản phẩm không hiện; P4 bỏ cuộc sau lần cập nhật thứ ba) |
+| Kết quả toàn luồng | ☐ Tự hoàn thành ☐ Hoàn thành nhờ can thiệp ☑ Không hoàn thành (P4 bỏ cuộc sau lần cập nhật thứ ba vì bảng không hiện ảnh; ảnh và danh mục thật đã lưu không xác định được, xem mục 6) |
 | Số lần can thiệp (được tính) | 0 |
 
 ## 3. Mốc thời gian (I4.2)
@@ -69,7 +69,7 @@ Thời gian chuẩn ×3 sau pilot (`02_scenario.md` mục 4.4). "Vượt chuẩn
 |---|---|---|---|---|
 | M1 | T1 − T0 = 00:16 | 00:21.09 | ☐ | ☑ Tự HT ☐ HT nhờ can thiệp ☐ Không HT |
 | M2 | T2 − T1 = 00:22 | 00:48.57 | ☐ | ☑ Tự HT ☐ HT nhờ can thiệp ☐ Không HT (có tạo nhầm một dòng trống rồi tự xóa) |
-| M3 | T3 − T2 = 01:31 | 01:00.84 | ☑ | ☐ Tự HT ☐ HT nhờ can thiệp ☑ Không HT (ảnh không hiện) |
+| M3 | T3 − T2 = 01:31 | 01:00.84 | ☑ | ☐ Tự HT ☐ HT nhờ can thiệp ☑ Không HT (P4 bỏ cuộc) |
 | Toàn luồng | Dừng − T0 = 02:18 − 00:09 = 02:09 | 02:18.75 | ☐ | Không HT (bỏ cuộc) |
 | Tự kiểm tra | Không có T4 | | | Ba lần tự kiểm (01:41, 01:55, 02:12) bằng cách cuộn xem ảnh trong bảng rồi mở form "Sửa"; nhờ vậy phát hiện và sửa danh mục |
 
@@ -95,7 +95,7 @@ Mã theo bảng I4.5: `La`, `Lb`, `Lc`, `Ld`, `Le`, `DD`, `TS`, `TK`, `PN`, `KH`
 | 02:12 đến 02:18 | M3 | `TK`, `Le`, `PN` | Ảnh vẫn không hiện; mở "Sửa", sửa URL y như lần trước, cập nhật thành công (02:18) | "Cái gì ảnh mà sửa rồi sao không ăn vậy, lần cuối không được nữa là chịu đấy" (ghi tay) |
 | 02:18 | M3 | | Ảnh vẫn không hiện; P4 bỏ cuộc, dừng làm ngay sau lần cập nhật thứ ba | |
 
-Ghi chú: Ba lần cập nhật từ 01:55 đến 02:18 đều báo thành công nhưng P4 thấy URL ảnh không đổi. SV tái hiện ngoài phiên (11/11/2026): Form "Sửa" sản phẩm chỉ lưu thay đổi ở ô tên; thay đổi ở các ô khác đều không được lưu dù hệ thống báo cập nhật thành công. Vì vậy URL ảnh P4 sửa không bao giờ được lưu (bug, xem `bugs/bug_report.md`).
+Ghi chú: Ba lần cập nhật từ 01:55 đến 02:18 đều báo thành công nhưng P4 thấy URL ảnh không đổi. Tái hiện bằng script `usability/tools/edit_product_check.js` (lần chạy 01:14:01 ngày 11/11/2026): Sửa một lần từ trang vừa tải lại thì mọi ô đều được lưu. Nhưng sau khi lưu, bảng sản phẩm (chưa tải lại) hiện tên của sản phẩm vừa sửa ở mọi dòng, còn giá và ảnh vẫn là giá trị cũ, kể cả ở dòng vừa sửa. Vì vậy sau lần cập nhật 01:55, P4 vẫn thấy ảnh cũ (ảnh hỏng) trong bảng dù URL có thể đã được lưu. ⏳ Chờ trường hợp E8 (sửa cùng một sản phẩm hai lần liền, như P4) để biết form mở lại có hiện giá trị cũ không, và lần lưu sau có ghi đè danh mục "Loa Bluetooth" bằng giá trị cũ không.
 
 ## 6. Kiểm kết quả (D6, I4.6)
 
@@ -106,8 +106,10 @@ Phiên trực tiếp: Làm trong lúc người tham gia điền Google Form. Phi
 | Có đúng một danh mục "Loa Bluetooth" (đúng chính tả) | ☑ Đạt ☐ Không (dòng trống đã được P4 xóa) | Bảng "Quản lý Danh mục" |
 | Có sản phẩm "Loa Bluetooth JBL Flip 6" | ☑ Đạt ☐ Không | Bảng sản phẩm |
 | Giá hiện `2990000 ₫` | ☑ Đạt ☐ Không | Bảng sản phẩm |
-| Ảnh hiện được | ☐ Đạt ☑ Không (URL ảnh sai, có chữ "f" thay cho "g") | Bảng sản phẩm |
-| Sản phẩm thuộc danh mục "Loa Bluetooth" | ⏳ (P4 chọn lại "Loa Bluetooth" lúc 01:55, nhưng theo kết quả tái hiện, thay đổi danh mục trong form "Sửa" không được lưu; SV xem lại danh mục thấy lúc kiểm D6) | Form "Sửa" trong Admin |
+| Ảnh hiện được | ☐ Đạt ☐ Không: Không xác định được (bảng vẫn hiện ảnh cũ bị hỏng, nhưng bảng lúc đó chưa tải lại nên có thể không đúng với dữ liệu đã lưu; xem ghi chú dưới bảng) | Bảng sản phẩm |
+| Sản phẩm thuộc danh mục "Loa Bluetooth" | ☐ Đạt ☐ Không: Không xác định được (form "Sửa" mở trên trang chưa tải lại; xem ghi chú dưới bảng) | Form "Sửa" trong Admin |
+
+Ghi chú về D6 của P4: Người điều phối kiểm ngay trên trang P4 để lại, **không tải lại trang**: Kéo xuống dòng cuối (sản phẩm của P4), bấm "Sửa" và thấy form vẫn y như cũ, nên không nhận ra lỗi. Theo kết quả script (`usability/tools/edit_product_check.js`, lần chạy 01:14:01), sau khi lưu, bảng và form "Sửa" trên trang chưa tải lại có thể hiện giá trị cũ thay vì giá trị đã lưu. Vì vậy ảnh và danh mục ở D6 của P4 không xác định được; DB đã reset nên không kiểm lại được. Người điều phối cũng bị lỗi hiển thị này đánh lừa giống P4. Kết quả M3 vẫn là "Không HT" vì P4 bỏ cuộc (`02_scenario.md` mục 4.3). Các phiên khác không có lần lưu bằng form "Sửa" nên D6 không bị ảnh hưởng.
 
 ## 7. Ghi chú cuối phiên (I4.7)
 
