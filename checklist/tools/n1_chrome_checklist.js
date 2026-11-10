@@ -21,6 +21,7 @@
  *   Nhóm H (thêm sau lần chạy thật): CL-34 Họ Tên dài, chỉ chạy khi gọi riêng: --only=H --log=n1_cl34_log.txt
  *   Nhóm I (thêm sau lần chạy thật): Chụp ảnh bổ sung (tổng quan N1, CL-105, CL-05), cần reset và seed trước:
  *     --only=I --log=n1_shots_log.txt
+ *   Nhóm J (thêm khi viết bug report): Ảnh cho B-01, B-04, B-11, không đổi dữ liệu: --only=J --log=n1_bugshots_log.txt
  *
  * Script KHÔNG: Bật server, reset DB, chạy seed, có cấu hình webServer / globalSetup.
  * Script CÓ đổi dữ liệu (vì checklist yêu cầu thao tác thật): Tạo vài tài khoản hw03.n1.*@eshop.com,
@@ -1719,6 +1720,37 @@ async function phaseExtraShots(ctx, page) {
   console.log('  (Đơn Đã xác nhận đã bị hủy: Cần reset DB và seed trước lần chạy sau)');
 }
 
+// ---------------------------------------------------------------- J. Ảnh cho bug report (chỉ chạy khi gọi --only=J)
+// Thêm khi viết bug report: Chụp đúng lúc lỗi hiện, không ghi kết quả mới. Không đổi dữ liệu (cả 2 lần gửi đều bị từ chối).
+//   CL-65_chrome.png: W-04 đăng ký với mật khẩu hợp lệ theo UI-R03 (VALID_PW) bị báo "Mật khẩu quá yếu!"
+//   CL-101_chrome_2.png: W-06 cập nhật Số điện thoại 0912345678, hộp thoại từ chối đang mở
+//   CL-15_chrome_2.png: W-03 bấm Tab lần đầu, focus ở nút "Sign In" trước navbar và các ô
+async function phaseBugShots(ctx, page) {
+  console.log('\n=== J. Ảnh cho bug report: CL-65 (B-01), CL-101 (B-04), CL-15 (B-11) ===');
+  // B-01
+  await go(page, '/login');
+  if (await isLoggedIn(page)) await logout(page);
+  await fillRegister(page, { name: 'HW03 Test', email: newEmail('valid'), pw: VALID_PW });
+  const o1 = await observe(page, () => clickBtn(page, RE.submitRegister));
+  console.log(`  B-01: Mật khẩu "${VALID_PW}": trang ${o1.path}; thông báo ${msgText(o1)}`);
+  await capture(page, 'CL-65', 'CL-65_chrome');
+  // B-11 (chưa đăng nhập, trang vừa tải)
+  await go(page, '/login');
+  await page.bringToFront(); await sleep(300);
+  await page.keyboard.press('Tab'); await sleep(400);
+  const a = await ev(page, () => window.__hw.active());
+  console.log(`  B-11: Tab lần đầu, focus ở: ${a.body ? '(body)' : `"${a.text}"`}`);
+  await shotTo(SHOT_DIR, 'CL-15_chrome_2');
+  // B-04
+  if (!(await login(page, ACC.test))) { console.log('  Không đăng nhập được test@eshop.com: Bỏ qua B-04'); return; }
+  await go(page, '/profile');
+  await fillF(page, RE.phone, '0912345678');
+  const d = await dialogShot(/điện thoại|không hợp lệ/i, 'CL-101_chrome_2', () => clickBtn(page, RE.submitProfile));
+  console.log(`  B-04: ${d.file ? `đã chụp hộp thoại "${d.msg}"` : 'không thấy hộp thoại; chụp tay'}`);
+  await go(page, '/profile');
+  await logout(page);
+}
+
 // ---------------------------------------------------------------- in bảng cuối
 function printFinal() {
   for (const [code, why] of Object.entries(MANUAL)) {
@@ -1782,9 +1814,10 @@ async function main() {
     ['G', () => crossPage(page)],
     ['H', () => phaseLongName(page)],
     ['I', () => phaseExtraShots(ctx, page)],
+    ['J', () => phaseBugShots(ctx, page)],
   ];
   for (const [name, fn] of phases) {
-    if (ONLY.length ? !ONLY.includes(name) : ['H', 'I'].includes(name)) continue; // nhóm H, I chỉ chạy khi gọi --only=
+    if (ONLY.length ? !ONLY.includes(name) : ['H', 'I', 'J'].includes(name)) continue; // nhóm H, I, J chỉ chạy khi gọi --only=
     console.log(`\n[${stamp()}] Bắt đầu nhóm ${name}`);
     try { await fn(); } catch (e) {
       console.error(`\nNhóm ${name} dừng vì lỗi: ${String(e.stack || e).split('\n').slice(0, 3).join(' / ')}`);
