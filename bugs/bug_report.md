@@ -4,7 +4,7 @@
 - Repo Issues của nhóm: https://github.com/angquoc/software-testing-2026-HW03-group
 - Nguồn: Các mục Failed của `checklist/HW03_T1_GUI_Checklist.xlsx` (cột NT1), lần chạy `exec` ngày 10/11/2026
 - Môi trường: Chrome 156.0.8078.81, Windows 11 Home Single Language 26H2 (build 26300.9818), màn hình 2560 x 1440, cửa sổ 1366 x 768
-- Ảnh: `checklist/screenshots/` (tên ảnh ghi trong từng issue)
+- Ảnh: `checklist/screenshots/`; mỗi issue có ảnh trong mục "Ảnh chụp", tên file ghi ngay trên ảnh
 
 ## 1. Cách chọn bug
 
@@ -58,8 +58,8 @@ Mọi issue có label `bug`, `platform: web`, `task: T1 checklist`, được gá
 
 | Issue | Mục CL | Nội dung | Trạng thái |
 |---|---|---|---|
-| Related #18 (Link "Giỏ hàng" không có badge số lượng) | CL-68, CL-69 | Lỗi cũng xuất hiện ở navbar của W-03, W-04, W-06 khi đã đăng nhập | ⏳ Chờ chèn ảnh rồi bình luận |
-| Related #29 (Nút đăng xuất ghi "Thoát") | CL-70 | Lỗi cũng xuất hiện ở navbar của W-03, W-04, W-06 | ⏳ Chờ chèn ảnh rồi bình luận |
+| Related #18 (Link "Giỏ hàng" không có badge số lượng) | CL-68, CL-69 | Lỗi cũng xuất hiện ở navbar của W-03, W-04, W-06 khi đã đăng nhập; ảnh CL-68_chrome_1, CL-68_chrome_2, CL-69_chrome | Đã bình luận: [#18](https://github.com/angquoc/software-testing-2026-HW03-group/issues/18#issuecomment-6762778316) |
+| Related #29 (Nút đăng xuất ghi "Thoát") | CL-70 | Lỗi cũng xuất hiện ở navbar của W-03, W-04, W-06; ảnh CL-70_chrome | Đã bình luận: [#29](https://github.com/angquoc/software-testing-2026-HW03-group/issues/29#issuecomment-6762778772) |
 
 ## 4. Mục Failed không báo lên Issues
 

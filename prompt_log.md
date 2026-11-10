@@ -10353,6 +10353,76 @@ Về task 2: Sau khi chạy xong N3, tôi sẽ cho P1 -> P7 chạy dần, tron
 
 ````text
 Đã sửa WORKFLOW và tạo sẵn hồ sơ phiên cho P1 đến P7. Giờ cập nhật ước tính.
+
+Đã sửa WORKFLOW theo cách chụp danh sách issue. Excel đã khớp tên ảnh (tôi kiểm lại: 0 ảnh lệch). Log đã xuất lại: 163 lượt.
+
+## 2. Đã sửa WORKFLOW
+
+| Chỗ | Trước | Sau |
+|---|---|---|
+| §5, bảng tên ảnh | `issue_<số issue>.png` (mỗi issue một ảnh) | `issues_list_<task>_<số>.png`: Trang Issues đã lọc `author:angquoc label:"task: T1 checklist"`, chụp đủ mọi issue của task, ví dụ `issues_list_T1_1.png` |
+| §2, cây thư mục | "Ảnh trang issue" | "Ảnh danh sách issue trên GitHub" |
+| §6 | "chụp trang issue" | "chụp danh sách issue đã lọc (mục 5)" |
+
+Tôi cũng sửa mục 5 của `bugs/bug_report.md` cho khớp.
+
+## Task 2: Sau P1 đến P7 còn gì
+
+Bạn hỏi đúng: Tôi đã tính trùng. Phần "báo cáo usability" đã nằm trong mục Tổng hợp rồi. Tính lại thì **Task 2 còn khoảng 6,5 giờ**, trước đó tôi ghi 9 giờ:
+
+| Việc | Giờ | Làm gì |
+|---|---|---|
+| 7 phiên | 3 | Khoảng 25 phút mỗi phiên, kể cả reset giữa hai phiên |
+| Hoàn thiện hồ sơ phiên | 1,5 | Mỗi phiên khoảng 12 phút: Lấy mốc T0 đến T4 từ video, gõ lại ghi chép tay vào `notes.md` / `probe.md`, chép dòng SUS sang `scale.md` |
+| `score` | 0,5 | AI tính SUS từng người, trung bình, độ lệch, tỉ lệ hoàn thành, thời gian, số lỗi; bạn kiểm |
+| `analysis` | 1 | AI gom pain point, tách bug và vấn đề thiết kế, đề xuất severity (QĐ6 còn mở); bạn chốt |
+| `bugs` | 0,5 | Bug thật của luồng Admin (ví dụ "Thêm mới" tạo ngay dòng trống), cùng cách `gh` và kéo ảnh một lần như Task 1 |
+
+**Điền phiếu thông tin trong lúc chờ N3: Được.** Phần A, B (I3) không đụng tới trang web. Chỉ lưu ý 2 điều:
+- **Đừng để người tham gia nhìn thấy trang Admin** trước khi bắt đầu.
+- **Đừng reset DB** khi N3 còn đang chạy.
+
+**Để đỡ thời gian, tôi đã tạo sẵn hồ sơ trống** `usability/sessions/P1/` đến `P7/`, mỗi thư mục có `notes.md`, `scale.md`, `probe.md`:
+- Trình duyệt và OS đã điền sẵn (các phiên từ xa cũng điều khiển máy của bạn).
+- Bảng thời gian chuẩn đã đổi sang **×3**.
+- Có sẵn ghi chú "Vượt chuẩn là chậm hơn chuẩn".
+
+Mỗi phiên commit cùng hồ sơ của phiên đó: `[T2][P1] Run session P1`...
+
+## 3. Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add checklist/HW03_T1_GUI_Checklist.xlsx checklist/tools/n1_chrome_checklist.js checklist/tools/n1_bugshots_log.txt bugs/bug_report.md
+git commit -m "[T1][bugs] Report N1 bugs as issues #33 to #65"
+git add WORKFLOW.md
+git commit -m "[setup] Screenshot filtered issue list instead of each issue page"
+git add checklist/tools/n3_android_checklist.js
+git commit -m "[T3][android-chrome] Update N3 script"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Chưa commit những file sau:
+- `bugs/image_links.txt`: File làm việc, không cần commit.
+- `cross_platform/firefox_triage.md`: Chờ bạn review.
+- `usability/sessions/P*/`: Commit theo từng phiên.
+
+**Chưa có issue nào có ảnh.** Sau khi phiên Task 1 chèn ảnh, bình luận vào #18 và #29, và bạn chụp danh sách issue, sẽ có thêm một commit `[T1][bugs] Add issue list screenshots`.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: 33 issue đã tạo | Chèn ảnh; bình luận #18, #29; chụp danh sách issue | ~0,75 giờ |
+| Task 2 | Hồ sơ P1 đến P7 đã tạo sẵn | Chạy N3 xong → P1 đến P7 (điền phiếu A, B trong lúc chờ được) | ~6,5 giờ |
+| Task 3 | N3 sẵn sàng | `npm run n3` → phiên Task 3 điền NT3; review danh sách N2; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **16 giờ** làm việc | Còn **6 giờ 33 phút** tới mốc 22:00 10/11 | **21 giờ 33 phút** tới deadline 13:00 11/11
 ````
 
 ---
@@ -10369,6 +10439,211 @@ Tôi đã tải 30 ảnh và dán vào image_links rồi mà, sau hãy ki
 
 - Bash: Read pasted image links file
 - Bash: Download the 30 uploaded GitHub image assets
+- Bash: Match downloaded assets to local files by md5
+- Bash: Find which image was uploaded twice
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã kiểm xong `image_links.txt`. Có 2 vấn đề, và tôi chưa sửa issue nào.
+
+**1. Link không mang tên file.** GitHub ghi `alt="Image"` cho mọi ảnh, nên không ghép theo tên được. Tôi đã tải các ảnh đó từ GitHub về và so từng byte với file trong máy. 28 link khớp đúng với file của mình, không có link nào lạ.
+
+**2. Thiếu 2 ảnh, và 1 ảnh bị tải 2 lần.** Trong file có 29 link chứ không phải 30, và 2 link trong số đó là cùng một ảnh: Trang `/login` lúc 11:47. Ảnh này giống hệt các file `CL-42_chrome.png`, `CL-01_chrome.png`, `CL-44_chrome_1.png`. Có thể bạn đã chọn nhầm `CL-44_chrome_1.png` thay cho 2 ảnh dưới đây. Hai ảnh còn thiếu:
+
+| Ảnh thiếu | Nội dung | Issue cần ảnh này |
+|---|---|---|
+| `CL-44_chrome_3.png` | Bảng devtools_check.js ở `/register` | #40, #42, #51, #55, #57, #63 |
+| `CL-44_chrome_4.png` | Bảng devtools_check.js ở `/profile` | #40, #42, #51, #55, #57, #58 |
+
+**Cách bổ sung:** Kéo đúng 2 file đó (trong `checklist/screenshots/`) vào ô bình luận như lần trước, không bấm Comment. Chép 2 dòng link mới, **dán thêm vào cuối** `bugs/image_links.txt`, không cần xóa link cũ. Link thừa không ảnh hưởng gì vì tôi ghép theo nội dung ảnh.
+
+Xong thì báo tôi. Tôi sẽ:
+1. Chèn ảnh vào phần "Ảnh chụp" của cả 33 issue (#33 đến #65), mỗi ảnh ghi đúng tên ảnh của mục đó làm chữ thay thế.
+2. Đăng 2 bình luận vào #18 và #29.
+3. Cập nhật `bug_report.md`.
+````
+
+---
+
+### C164 | 15:31 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `f2487351`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã gắn bổ sung link.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Download new assets and rematch all images
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\insert_images.py
+- Bash: Insert images into issues and post two comments
+- Bash: Inspect raw body around Ảnh chụp heading
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\f2487351-0e33-45bc-9c36-5d86cc37bed3\scratchpad\insert_images.py
+- Bash: Rerun image insertion and comments
+- Bash: Verify inserted images and update bug report
+- Bash: Verify image sections on two issues
+
+**Output AI (nguyên văn):**
+
+````text
+Đủ cả 30 ảnh khớp với 30 file, không có link lạ. Giờ tôi chèn ảnh vào phần "Ảnh chụp" của 33 issue, rồi đăng 2 bình luận.
+
+Đã chèn ảnh vào đủ **33 issue (#33 đến #65)** và đăng **2 bình luận**. Không có issue nào bị ghi đè ngoài phần "Ảnh chụp" đang trống.
+
+**Kết quả:**
+- **Phần "Ảnh chụp" của mỗi issue:** Có tên file in đậm, ngay dưới là ảnh. Tên file cũng là chữ thay thế của ảnh, nên ảnh dùng chung link vẫn mang đúng tên của mục đó. Ví dụ #63 dùng chung ảnh với #40 nhưng vẫn ghi `CL-106_chrome_2.png`. Tôi đã mở #40 và #63 trên GitHub để kiểm lại.
+- **Bình luận [#18](https://github.com/angquoc/software-testing-2026-HW03-group/issues/18#issuecomment-6762778316):** CL-68, CL-69 ở W-03, W-04, W-06, kèm 3 ảnh và yêu cầu UI-R42.
+- **Bình luận [#29](https://github.com/angquoc/software-testing-2026-HW03-group/issues/29#issuecomment-6762778772):** CL-70 ở W-03, W-04, W-06, kèm 1 ảnh và yêu cầu UI-R43.
+- **[bug_report.md](Homeworks/HW03/bugs/bug_report.md):** Mục 3 đã có link 2 bình luận và tên ảnh.
+
+**Còn 1 việc ⏳:** Chụp trang từng issue, lưu ở `bugs/screenshots/issue_<số>.png` (WORKFLOW mục 5 và 6), tổng cộng 33 ảnh. Tôi có thể viết script mở lần lượt từng issue rồi tự chụp, giống các nhóm H, I, J, để bạn chạy. Trước khi viết, cần biết: Repo nhóm là public hay private? Nếu private, script phải đăng nhập GitHub. Hoặc bạn tự chụp tay nếu muốn.
+
+**Commit** (nhờ phiên điều phối xuất prompt log trước). Commit này gồm bug report, link ảnh, Excel và các ảnh đã đổi tên hay chụp mới:
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add -A checklist/screenshots
+git add bugs/bug_report.md bugs/image_links.txt checklist/HW03_T1_GUI_Checklist.xlsx checklist/tools/n1_chrome_checklist.js checklist/tools/n1_bugshots_log.txt
+git commit -m "[T1][bugs] Report GUI bugs (issues #33 to #65) with screenshots" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+````
+
+---
+
+### C165 | 15:31 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Chạy seed để tôi cho N3 chạy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Reset DB and seed orders for N3 run
+
+**Output AI (nguyên văn):**
+
+````text
+Đã reset DB và chạy `seed_orders.py` xong lúc 15:31. Tôi reset trước rồi mới seed để không bị trùng đơn. Bạn chạy N3 được rồi.
+
+Dữ liệu hiện tại:
+- 3 danh mục mẫu.
+- `test@eshop.com` có 5 đơn: #1 delivered, #2 shipping, #3 confirmed, #4 canceled, #5 pending.
+- `newuser@eshop.com` không có đơn.
+
+Web `5173` đang chạy. Lệnh chạy N3:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03\checklist\tools
+npm run n3
+```
+
+Trong lúc N3 chạy:
+- Không reset DB.
+- Không chạy script nào khác tới EShop. Phiên Task 1 tạo hay sửa issue bằng `gh` thì không sao.
+- Nếu P1 tới sớm thì cho điền phiếu A, B trước, nhưng đừng để P1 nhìn thấy trang Admin.
+
+Chạy xong thì báo tôi reset, rồi bắt đầu P1.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 1 | `bugs`: 33 issue đã tạo | Chèn ảnh; bình luận #18, #29; chụp danh sách issue | ~0,75 giờ |
+| Task 2 | Hồ sơ P1 đến P7 đã tạo sẵn | N3 xong → reset → P1 | ~6,5 giờ |
+| Task 3 | **Đang chạy N3** (DB sạch 15:31) | Phiên Task 3 điền NT3; review danh sách N2; N2 trên cloud | ~3,25 giờ |
+| Agent Skill | Phần thiết kế xong | Các bước sau xong mới bổ sung, demo, video | ~2 giờ |
+| Tổng hợp | Chưa bắt đầu | Các task xong | ~3,5 giờ |
+
+⏱ Còn khoảng **16 giờ** làm việc | Còn **6 giờ 29 phút** tới mốc 22:00 10/11 | **21 giờ 29 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C166 | 15:35 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi chạy script nhưng ở điện thoại bật thì báo localhost không gửi bất kỳ dữ liệu nào.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Check listening ports, adb reverse, and IPv4/IPv6 reachability
+- Bash: Check whether the failed run left screenshots or log
+
+**Output AI (nguyên văn):**
+
+````text
+Lỗi "localhost không gửi dữ liệu" trên điện thoại thường có nghĩa là `adb reverse` đã nối, nhưng phía máy tính không có gì trả lời ở cổng đó. Tôi kiểm tra xem cổng 5173 và 3000 trên máy tính đang được mở thế nào.
+
+Tôi đã tìm ra lỗi. Script dừng ngay ở lần mở trang đầu tiên, nên chưa đổi dữ liệu và chưa chụp ảnh nào: Dữ liệu seed vẫn còn, không cần reset lại.
+
+**Nguyên nhân**
+
+Trên máy tính, tôi kiểm thấy:
+
+| Địa chỉ | Kết quả |
+|---|---|
+| `127.0.0.1:3000` (backend) | Trả lời bình thường, server nghe ở mọi địa chỉ |
+| `[::1]:5173` (web, IPv6) | Trả lời bình thường |
+| `127.0.0.1:5173` (web, IPv4) | **Không kết nối được** |
+
+Server web (Vite) đang chỉ nghe ở địa chỉ IPv6 `::1`. `adb reverse` chuyển kết nối từ điện thoại về `127.0.0.1:5173` (IPv4) trên máy tính, ở đó không có gì trả lời, nên Chrome trên điện thoại báo "localhost không gửi bất kỳ dữ liệu nào" (`ERR_EMPTY_RESPONSE`). Trên máy tính thì Chrome tự thử `::1` nên vẫn mở được bình thường.
+
+**Cách sửa (chọn một)**
+
+*Cách 1: Chạy lại server web với địa chỉ IPv4.* Tắt cửa sổ đang chạy web (cổng 5173), rồi chạy lại trong thư mục `frontend-web` với tham số chọn địa chỉ:
+
+```
+cd /d D:\Dang\Test\Homeworks\eshop-sut\frontend-web
+npm run dev -- --host 127.0.0.1
+```
+
+Cách này chỉ thêm tham số dòng lệnh, không sửa mã của SUT. Tôi đoán lệnh chạy web là `npm run dev` vì SRS ghi frontend dùng Vite (tôi không đọc mã frontend). Nếu bạn hoặc phiên điều phối đang chạy web bằng lệnh khác, chỉ cần thêm `--host 127.0.0.1` vào lệnh đó. Trên máy tính, `http://localhost:5173` vẫn mở được như cũ.
+
+*Cách 2: Giữ nguyên server, thêm một cổng chuyển IPv4 sang IPv6.* Cách này cần mở cmd bằng quyền Administrator:
+
+```
+netsh interface portproxy add v4tov6 listenport=5173 listenaddress=127.0.0.1 connectport=5173 connectaddress=::1
+```
+
+Chạy xong N3 thì gỡ đi:
+
+```
+netsh interface portproxy delete v4tov6 listenport=5173 listenaddress=127.0.0.1
+```
+
+**Kiểm trước khi chạy lại script**
+
+Mở `http://127.0.0.1:5173/login` trên trình duyệt máy tính: Thấy trang đăng nhập là được. Sau đó chạy lại:
+
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+node n3_android_checklist.js --log=n3_run_log.txt
+```
+
+Nên ghi cách đã chọn (cách 1 hoặc 2) vào phần môi trường của N3 khi viết báo cáo.
+````
+
+---
+
+### C167 | 15:38 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra các task, xuất log, đưa commit message. Đã xong các issue thì chỉ chụp ảnh tổng thể các issue ở ngoài, tầm 2-3 ảnh thôi đúng không?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo state, N3 output, issue images and comments
+- Bash: Check N3 run log progress and bug report changes
+- Bash: Export log and update bugs status
 
 **Output AI (nguyên văn):**
 
