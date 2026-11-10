@@ -67,3 +67,58 @@ Rút từ các bảng "Thay đổi so với bản AI" của lần làm đầu (H
 - [ ] Con số sau pilot giống nhau ở cả test plan, kịch bản, bộ công cụ.
 - [ ] Lỗi chỉ lộ ra khi người điều phối kiểm kết quả sau phiên thì câu hỏi theo tình huống cho lỗi đó không hỏi được; ghi lại trong hồ sơ.
   *Đã gặp:* Người pilot lưu giá thiếu một chữ số 0 mà không nhận ra; lỗi chỉ thấy lúc kiểm kết quả sau phiên, khi câu hỏi mở đã xong.
+
+## `sessions` (P1 đến Pn)
+
+- [ ] Không tính điểm thang đo lúc ghi phiên; để `score` tính bằng script.
+  *Đã gặp:* Lúc ghi phiên P5, AI tính nhẩm điểm SUS ra 55; script cho 52,5. `04_scores.md` phải ghi đính chính.
+- [ ] Hồ sơ chép từ phiên trước không còn nhãn `P<n-1>`.
+- [ ] Sai lệch quy trình của người điều phối ghi đúng như đã xảy ra, kèm mốc.
+  *Đã gặp:* P1 nhận 2 gợi ý ngoài quy trình (tính là can thiệp mức 1); P7 bị dừng ở M1 thay vì can thiệp mức 1 theo kịch bản; P3 hỏi cách làm nhưng không được đáp bằng câu chuẩn. Cả ba được ghi vào hồ sơ và phần hạn chế.
+- [ ] Cách kiểm kết quả sau phiên không bị chính lỗi của hệ thống làm sai.
+  *Đã gặp:* Người điều phối kiểm danh mục của P4 bằng form "Sửa" trên trang chưa tải lại; do bug #67, form hiện giá trị cũ nên kết quả của P4 "không xác định được". Lần sau tải lại trang trước khi kiểm.
+- [ ] Quy trình thật của phiên khác test plan (mở đầu qua tin nhắn, phiếu thông tin trước khi quay) được ghi ở phần cách làm, và thời lượng phiên tính đúng theo quy trình thật.
+- [ ] Mặc định chỉ dùng khi sinh viên đã chốt; chi tiết không có trong ghi chú thì hỏi.
+
+## `score`
+
+Bảng thay đổi của `04_scores.md` chỉ có 2 dòng, đều là "Quyết định của SV": Bản AI đã để mở đúng hai chỗ có nhiều cách báo số liệu. Giữ cách làm này.
+
+- [ ] Chỗ có nhiều cách báo số liệu đưa thành `QĐ-Sn` có phương án.
+  *Đã gặp:* Thời gian báo theo mọi người tới được mốc cuối chặng hay chỉ người tự hoàn thành (chỉ 3 người); sinh viên chọn mọi người tới được mốc. Người chọn mức 5 cho cả câu khen lẫn câu chê của SUS; sinh viên chọn giữ trong trung bình và báo thêm trung bình khi bỏ người đó (chênh 1,25 điểm).
+- [ ] Người bỏ cuộc không được tính vào thời gian tự kiểm tra.
+  *Đã gặp:* Script tính P4 (bỏ cuộc, T4 trùng T3) là 00:00, cho trung bình 00:10; đúng là 00:12 trên 5 người. Bản AI ghi cả hai con số và lý do.
+- [ ] Vượt chuẩn nhỏ hơn độ chính xác của mốc thì ghi rõ.
+  *Đã gặp:* P2 vượt chuẩn toàn luồng 0,25 giây trong khi mốc ghi theo giây.
+- [ ] Tỷ lệ theo chặng ghi cả trên tổng người và trên số người tới được chặng.
+- [ ] Bảng nào do script, bảng nào tổng hợp tay được ghi ở phần cách làm.
+- [ ] Phần nhận xét chỉ mô tả số liệu; gom và xếp hạng để `analysis`.
+
+## `analysis`
+
+Bảng thay đổi của `05_findings.md` chỉ có "Quyết định của SV", nhưng một quyết định làm phải chấm lại cả bảng.
+
+- [ ] Hỏi thang severity **trước** khi chấm.
+  *Đã gặp:* Bản AI chấm theo Nielsen 0 đến 4; sinh viên chọn thang 4 mức của nhóm (cây câu hỏi dùng cho Issues), nên mọi dòng phải chấm lại, thêm cột "Lý do theo cây câu hỏi" và tính lại criticality.
+- [ ] Hỏi quy tắc ưu tiên khi criticality và hậu quả không cùng chiều.
+  *Đã gặp:* Bug làm mất dữ liệu chỉ 1/7 người gặp nên criticality thấp; sinh viên chọn đưa nó lên đầu danh sách.
+- [ ] Ghi giới hạn của thang: Cây câu hỏi dựng cho bug làm phần lớn vấn đề thiết kế cùng một mức.
+- [ ] Probability thấp vì ít người dùng tới tính năng thì nêu tỷ lệ trên số người đã dùng tính năng đó.
+- [ ] Chỉ là bug khi chỉ ra được câu SRS bị làm sai.
+  *Đã gặp:* Ô danh mục chọn sẵn mặc định là nguyên nhân chính làm M3 thất bại, nhưng hệ thống không sai câu "Danh mục: bắt buộc, phải chọn từ danh sách có sẵn", nên là vấn đề thiết kế, không lên Issues.
+- [ ] Tách phần do cách làm bài khỏi phần do giao diện.
+  *Đã gặp:* Kịch bản ở file riêng làm tăng số lần mở lại kịch bản; phiếu cho sao chép làm giảm lỗi gõ giá. Hai phát hiện ghi rõ có thể bị đánh giá lệch.
+- [ ] Đối chiếu lời nói với hành vi.
+  *Đã gặp:* P1, P5 trả lời "không có ô nào không chắc phải điền gì", nhưng thực ra không thấy ô danh mục.
+- [ ] Pilot chỉ là bằng chứng phụ, không tính vào số người gặp.
+
+## `bugs`
+
+- [ ] Ảnh issue chụp khi tái hiện ngoài phiên, không lấy từ video phiên.
+- [ ] Ảnh tự chụp bằng script không lọt cửa sổ khác.
+  *Đã gặp:* Script tái hiện bug #67 phóng to cửa sổ Chrome của script rồi mới chụp, để không lọt cửa sổ đang mở file có thông tin người tham gia; trước khi chạy, đóng file đó ở mọi cửa sổ.
+- [ ] Script tái hiện không tự kết luận; sinh viên xem ảnh và log rồi chốt.
+- [ ] Bug thấy ở pilot vẫn báo được (người pilot không tính vào số người, nhưng bug là thật).
+  *Đã gặp:* #66 phát hiện ở pilot, sinh viên tái hiện và chụp lại.
+- [ ] Ghi `Related #<số>` khi bug có thể cùng nguyên nhân với issue khác, kèm lý do.
+- [ ] Mỗi phát hiện loại bug có đúng một issue; vấn đề thiết kế không lên Issues.

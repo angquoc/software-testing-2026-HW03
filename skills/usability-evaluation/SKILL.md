@@ -1,11 +1,11 @@
 ---
 name: usability-evaluation
-description: Thiết kế usability evaluation có người điều phối (moderated) cho một luồng end-to-end, đi từng bước plan (test plan 9 phần theo slide S13, sau khi có ảnh khảo sát luồng), scenario (kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành, thời gian chuẩn, can thiệp), instruments (danh sách chuẩn bị, xin đồng ý, lời dặn think-aloud, phiếu thông tin, phiếu ghi chú quan sát có mã sự kiện, thang đo SUS hoặc UEQ-S, câu hỏi mở về clarity, error recovery, speed, trust), pilot (chuẩn bị hồ sơ phiên thử, đọc kết quả pilot đã ẩn danh, đề xuất và áp các chỗ sửa sau pilot vào kịch bản, bộ công cụ, test plan). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI". Bảo vệ riêng tư người tham gia, không bịa dữ liệu của người thật. Dùng khi người dùng nói "usability test", "usability evaluation", "đánh giá khả dụng", "test plan usability", "kịch bản nhiệm vụ", "task scenario", "SUS", "UEQ-S", "think-aloud", "câu hỏi probe", "làm plan (scenario, instruments) cho luồng", "pilot", "sửa sau pilot", kể cả khi chỉ đưa thư mục usability và bảo "làm bước tiếp theo". Các bước participants, phiên thật, score, analysis mới có khung. Không dùng cho GUI checklist (dùng skill gui-checklist).
+description: Thiết kế usability evaluation có người điều phối (moderated) cho một luồng end-to-end, đi từng bước plan (test plan 9 phần theo slide S13, sau khi có ảnh khảo sát luồng), scenario (kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành, thời gian chuẩn, can thiệp), instruments (danh sách chuẩn bị, xin đồng ý, lời dặn think-aloud, phiếu thông tin, phiếu ghi chú quan sát có mã sự kiện, thang đo SUS hoặc UEQ-S, câu hỏi mở về clarity, error recovery, speed, trust), pilot (chuẩn bị hồ sơ phiên thử, đọc kết quả pilot đã ẩn danh, đề xuất và áp các chỗ sửa sau pilot vào kịch bản, bộ công cụ, test plan), rồi hỗ trợ phần sau phiên: Ghi hồ sơ từng phiên từ ghi chú đã ẩn danh của sinh viên, score (script tính SUS, thời gian, đếm mã sự kiện), analysis (gom pain point, tách bug khỏi vấn đề thiết kế theo câu SRS, severity, criticality, đề xuất), bugs (tái hiện bug ngoài phiên, issue có ảnh). Lưu nguyên văn bản AI vào ai_raw/, dừng chờ sinh viên review, viết bản review có bảng "Thay đổi so với bản AI". Bảo vệ riêng tư người tham gia, không bịa dữ liệu của người thật. Dùng khi người dùng nói "usability test", "usability evaluation", "đánh giá khả dụng", "test plan usability", "kịch bản nhiệm vụ", "task scenario", "SUS", "UEQ-S", "think-aloud", "câu hỏi probe", "làm plan (scenario, instruments) cho luồng", "pilot", "sửa sau pilot", "ghi hồ sơ phiên P3", "tính điểm SUS", "phân tích phát hiện", "severity usability", kể cả khi chỉ đưa thư mục usability và bảo "làm bước tiếp theo". Không dùng cho GUI checklist (dùng skill gui-checklist).
 ---
 
 # Thiết kế usability evaluation
 
-Skill này dẫn AI đi qua phần thiết kế của một usability evaluation **từng bước một**: Test plan, kịch bản nhiệm vụ, bộ công cụ cho phiên. Sinh viên review và quyết định ở mọi bước; mọi output của AI được giữ nguyên văn cho AI Audit Report và AI Critique. Những gì do **người thật** làm (danh sách người tham gia, ghi chú quan sát, câu trả lời thang đo, câu trả lời phỏng vấn) AI không được tạo hay bịa.
+Skill này dẫn AI đi qua một usability evaluation **từng bước một**: Test plan, kịch bản nhiệm vụ, bộ công cụ, pilot, hồ sơ phiên, tính điểm, phân tích, báo bug. Sinh viên review và quyết định ở mọi bước; mọi output của AI được giữ nguyên văn cho AI Audit Report và AI Critique. Những gì do **người thật** làm (danh sách người tham gia, ghi chú quan sát, câu trả lời thang đo, câu trả lời phỏng vấn) AI không được tạo hay bịa.
 
 Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên EShop, luồng FL-05 (Web Admin): Đăng nhập Admin, tạo danh mục, thêm sản phẩm vào danh mục mới, 7 người tham gia là người bán hàng online. Những lỗi AI đã mắc ở lần đó được ghi trong `references/lessons.md`; đọc nó trước khi giao bất kỳ bước nào.
 
@@ -16,10 +16,12 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
 | `plan` | Pha 0: Ảnh khảo sát luồng. Test plan 9 phần: Mục đích, câu hỏi, mục tiêu và nhiệm vụ, chân dung người dùng, phương pháp, môi trường, vai trò người điều phối, số liệu, nội dung báo cáo | Sinh viên chụp ảnh; AI đề xuất, sinh viên review | Đầy đủ |
 | `scenario` | Kịch bản dạng mục tiêu, phiếu dữ liệu, trạng thái ban đầu, thành phần nhiệm vụ, thời gian chuẩn, can thiệp, tình huống đặc biệt | AI đề xuất, sinh viên review; sinh viên tự đo thời gian | Đầy đủ |
 | `instruments` | Danh sách chuẩn bị, xin đồng ý và lời dặn, phiếu thông tin, phiếu ghi chú, thang đo, câu hỏi mở, lời kết | AI đề xuất, sinh viên review | Đầy đủ |
-| `participants` | Bảng người tham gia | **Sinh viên**, không đưa vào AI | Khung, bổ sung sau |
+| `participants` | Bảng người tham gia | **Sinh viên**, không đưa vào AI; AI chỉ đưa mẫu trống | Đầy đủ |
 | `pilot` | Phiên thử; sửa kịch bản, công cụ, test plan theo kết quả | **Sinh viên** chạy và ghi; AI chuẩn bị mẫu trống, đọc hồ sơ đã ẩn danh, đề xuất sửa; sinh viên chốt | Đầy đủ |
-| `P1` đến `Pn` | Từng phiên | **Sinh viên** | Khung, bổ sung sau |
-| `score`, `analysis`, `bugs` | Tính điểm, gom phát hiện, báo bug | Sinh viên, AI hỗ trợ trên dữ liệu đã ẩn danh | Khung, bổ sung sau |
+| `P1` đến `Pn` | Chạy phiên; ghi hồ sơ phiên | **Sinh viên** chạy và ghi chú; AI chép ghi chú đã ẩn danh vào mẫu; sinh viên kiểm | Đầy đủ |
+| `score` | Điểm thang đo, số liệu hiệu suất | AI viết script và bản AI; sinh viên chốt cách báo số liệu | Đầy đủ |
+| `analysis` | Gom phát hiện, tách bug, severity, đề xuất | AI đề xuất; **sinh viên** chốt thang và severity | Đầy đủ |
+| `bugs` | Tái hiện bug ngoài phiên, issue có ảnh | Sinh viên tái hiện (tay hoặc script AI viết); AI soạn; sinh viên cho phép đăng | Đầy đủ |
 
 ## Bước 0: Xác định ngữ cảnh (đầu mỗi phiên)
 
@@ -45,7 +47,12 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
    | `03_instruments.md`, chưa có `pilot/` | `pilot` pha 1 (mẫu hồ sơ pilot) |
    | `pilot/` có mẫu, chưa điền | Chờ sinh viên chạy pilot |
    | `pilot/notes.md` đã điền, các mục "Cần kiểm ở pilot" chưa dẫn tới kết quả pilot | `pilot` pha 3 (đề xuất sửa) |
-   | Đã sửa sau pilot | Bước của người thật (`references/step-later.md`) |
+   | Đã sửa sau pilot, chưa đủ `sessions/P1/` đến `sessions/Pn/` | Phiên tiếp theo (`references/step-sessions.md`); danh sách người tham gia do sinh viên lập (`references/step-participants.md`) |
+   | Đủ hồ sơ phiên, chưa có `ai_raw/T2_score.md` | `score` |
+   | `ai_raw/T2_score.md`, chưa có `04_scores.md` | Chờ sinh viên chốt quyết định `QĐ-S` |
+   | `04_scores.md`, chưa có `ai_raw/T2_analysis.md` | `analysis` |
+   | `ai_raw/T2_analysis.md`, chưa có `05_findings.md` | Chờ sinh viên chốt thang và severity |
+   | `05_findings.md` có phát hiện loại bug chưa có issue | `bugs` |
 
 4. **Bắt đầu từ giữa chừng:** Rà các bản đã có theo mục "Rà bước trước" ở `references/rules.md`, báo cho sinh viên những gì thiếu, không tự viết lại.
 5. **Nạp tài liệu:** Luôn đọc `references/rules.md` và `references/lessons.md`; đọc `references/step-<bước>.md` của bước sắp làm.
@@ -55,7 +62,8 @@ Quy trình được rút từ lần làm thật đầu tiên: HW03 Task 2 trên 
 Chi tiết ở `references/rules.md`. Tóm tắt:
 
 - **Riêng tư người tham gia.** Không đọc file danh sách người tham gia, video, ghi âm, ảnh chưa che mặt. Mọi file AI viết hay đọc chỉ dùng mã `P1` đến `Pn` (và `PL` cho người pilot). Chạy `check_usability.py privacy` trước khi giao.
-- **Không bịa dữ liệu của người thật.** Danh sách người tham gia, ghi chú quan sát, câu trả lời thang đo và phỏng vấn, thời gian đo được, kết quả phiên chỉ đến từ sinh viên. AI chỉ đưa mẫu trống.
+- **Không bịa dữ liệu của người thật.** Danh sách người tham gia, ghi chú quan sát, câu trả lời thang đo và phỏng vấn, thời gian đo được, kết quả phiên chỉ đến từ sinh viên. AI chỉ đưa mẫu trống, hoặc **chép** ghi chú đã ẩn danh của sinh viên vào mẫu; thiếu thì hỏi, không tự thêm.
+- **Severity do sinh viên chốt**; AI chỉ đề xuất kèm lý do. Đăng ra ngoài (issue, bình luận) chỉ khi sinh viên đã duyệt và cho phép.
 - **Hộp đen.** Căn cứ là đặc tả, ảnh luồng do sinh viên chụp và những gì sinh viên tự thử rồi mô tả. Không đọc mã nguồn, không tự mở giao diện.
 - **Có ảnh luồng trước khi viết plan.** Thiếu ảnh thì liệt kê ảnh cần chụp và dừng.
 - **Mỗi lượt một bước**, xong thì dừng chờ sinh viên.
@@ -84,7 +92,11 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 | `scenario` | Kịch bản mục tiêu, phiếu dữ liệu, trạng thái ban đầu, thành phần nhiệm vụ, cách đo thời gian chuẩn, mốc `Tn`, can thiệp, tình huống đặc biệt, trình tự | `ai_raw/T2_scenario.md`, `02_scenario.md` | `references/step-scenario.md` |
 | `instruments` | `I1` đến `I7`: Chuẩn bị, đồng ý và lời dặn, phiếu thông tin, phiếu ghi chú và mã sự kiện, thang đo, câu hỏi mở `Cn`, lời kết | `ai_raw/T2_instruments.md`, `03_instruments.md` | `references/step-instruments.md` |
 | `pilot` | Mẫu hồ sơ pilot có bảng "Kết quả kiểm bộ công cụ"; sinh viên chạy và ghi; AI kiểm hồ sơ, đề xuất sửa có tính sẵn con số; áp vào 3 bản review | `pilot/notes.md`, `probe.md`, `scale.md`; cập nhật `01`, `02`, `03` | `references/step-pilot.md` |
-| Các bước còn lại | Khung, bổ sung sau | | `references/step-later.md` |
+| `participants` | Sinh viên lập danh sách; AI chỉ đưa mẫu trống, không đọc file | File danh sách người tham gia | `references/step-participants.md` |
+| `P1` đến `Pn` | Chép ghi chú đã ẩn danh của sinh viên vào `notes.md`, `scale.md`, `probe.md`; hỏi chỗ thiếu; không tính điểm | `sessions/P<n>/` | `references/step-sessions.md` |
+| `score` | Script in bảng SUS, thời gian, đếm mã; bảng tổng hợp tay; quyết định cách báo số liệu `QĐ-Sn` | Script, `ai_raw/T2_score.md`, `04_scores.md` | `references/step-score.md` |
+| `analysis` | Phát hiện `Fn`, bug theo câu SRS, severity theo thang đã chốt, criticality, chi tiết, điểm tích cực, trả lời `Qn`, đề xuất, hạn chế | `ai_raw/T2_analysis.md`, `05_findings.md` | `references/step-analysis.md` |
+| `bugs` | Tái hiện ngoài phiên (tay hoặc script), issue có ảnh, mục Task 2 của bug report | `bugs/bug_report.md`, issue, `screenshots/flow_*.png` | `references/step-bugs.md` |
 
 ## Điểm dừng chờ sinh viên
 
@@ -93,16 +105,18 @@ Chi tiết ở `references/rules.md`. Tóm tắt:
 - Sau bản AI của mỗi bước; sau bản review của mỗi bước.
 - Khi một số liệu cần sinh viên tự đo hoặc tự thử (thời gian chuẩn, hành vi của một ô nhập).
 - `pilot`: Sau khi chuẩn bị mẫu (chờ sinh viên chạy); sau bảng đề xuất sửa (chờ chốt); sau khi cập nhật 3 bản review.
-- Mọi bước của người thật.
+- `P1` đến `Pn`: Sau mỗi phiên (chờ sinh viên kiểm hồ sơ).
+- `score`, `analysis`: Trước khi viết (thang severity, quy tắc ưu tiên); sau bản AI (chờ chốt `QĐ`); sau bản review.
+- `bugs`: Trước khi tái hiện (sinh viên chạy); trước mỗi lệnh đăng ra ngoài; sau khi viết bug report.
+- Mọi việc của người thật (tuyển người, chạy phiên).
 
 ## Tài nguyên
 
 - `references/rules.md`: Nguồn được đọc và không được đọc, riêng tư, hộp đen, tên file và mã, `ai_raw/`, bản review, bảng thay đổi, quyết định để mở, commit, định dạng, rà bước trước.
 - `references/lessons.md`: Checklist tự kiểm theo từng bước, rút từ lỗi đã gặp.
-- `references/step-plan.md`, `step-scenario.md`, `step-instruments.md`, `step-pilot.md`: Hướng dẫn chi tiết.
-- `references/step-later.md`: Khung các bước của người thật và quyết định còn mở.
+- `references/step-plan.md`, `step-scenario.md`, `step-instruments.md`, `step-pilot.md`, `step-participants.md`, `step-sessions.md`, `step-score.md`, `step-analysis.md`, `step-bugs.md`: Hướng dẫn chi tiết.
 - `references/example-fl05.md`: Ví dụ rút gọn từ lần làm đầu.
-- `assets/templates/`: Mẫu `ai_raw_header.md`, `plan.md`, `scenario.md`, `instruments.md`, `changes_table.md`.
+- `assets/templates/`: Mẫu `ai_raw_header.md`, `plan.md`, `scenario.md`, `instruments.md`, `scores.md`, `findings.md`, `changes_table.md`.
 - `scripts/check_usability.py`: Kiểm tra máy móc (không đánh giá nội dung). Cách dùng:
 
   ```bash

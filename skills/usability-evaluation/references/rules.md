@@ -42,7 +42,7 @@ Liệt kê thư mục để biết tên file không phải là đọc nội dung
 
 ## 3. Dữ liệu của người thật
 
-AI **không** tạo, bịa, đoán hay "điền mẫu cho có" những thứ sau: Danh sách người tham gia; ghi chú quan sát; thời gian đo được; câu trả lời thang đo; câu trả lời câu hỏi mở; kết quả hoàn thành; ảnh chụp. AI chỉ đưa **mẫu trống** và cách ghi.
+AI **không** tạo, bịa, đoán hay "điền mẫu cho có" những thứ sau: Danh sách người tham gia; ghi chú quan sát; thời gian đo được; câu trả lời thang đo; câu trả lời câu hỏi mở; kết quả hoàn thành; ảnh chụp. AI chỉ đưa **mẫu trống** và cách ghi, hoặc **chép** ghi chú đã ẩn danh mà sinh viên đưa (ví dụ ghi chú tay sau phiên) vào đúng mẫu. Khi chép: Không thêm quan sát, lời nói, mốc hay câu trả lời mà ghi chú không có; chỗ thiếu thì hỏi, hoặc dùng mặc định mà sinh viên đã chốt cho dự án (`step-sessions.md`); không tự tính điểm thang đo lúc chép.
 
 Ví dụ minh họa cách ghi (nếu cần) ghi rõ "ví dụ minh họa, không phải dữ liệu thật" và không dùng mã người tham gia thật.
 
@@ -59,11 +59,20 @@ Ví dụ minh họa cách ghi (nếu cần) ghi rõ "ví dụ minh họa, không
 ├── 01_test_plan.md               plan: Bản review
 ├── 02_scenario.md                scenario: Bản review
 ├── 03_instruments.md             instruments: Bản review
+├── 04_scores.md                  score: Bản review
+├── 05_findings.md                analysis: Bản review
+├── participants.md               participants: Sinh viên giữ, AI không đọc
+├── pilot/                        pilot: notes.md, probe.md, scale.md (mã PL)
+├── sessions/P1/ ... Pn/          từng phiên: notes.md, scale.md, probe.md, P<n>_<số>_<nội dung>.png
+├── tools/                        score: Script tính điểm; bugs: Script tái hiện bug và log
 ├── ai_raw/
 │   ├── T2_plan.md
 │   ├── T2_scenario.md
-│   └── T2_instruments.md
-└── screenshots/                  flow_<số>_<nội dung>.png (khảo sát luồng, sinh viên chụp)
+│   ├── T2_instruments.md
+│   ├── T2_score.md
+│   └── T2_analysis.md
+└── screenshots/                  flow_<số>_<nội dung>.png (khảo sát luồng và ảnh tái hiện bug, sinh viên chụp)
+bugs/bug_report.md                cạnh thư mục làm việc; mục Task 2
 ```
 
 Nhiều ảnh cho cùng một nội dung: Hậu tố `_1`, `_2` (`flow_06_product_list_1.png`).
@@ -78,7 +87,9 @@ Nhiều ảnh cho cùng một nội dung: Hậu tố `_1`, `_2` (`flow_06_produc
 | `Tn` | Mốc thời gian trong phiên | `scenario` |
 | `In`, `In.m` | Công cụ của phiên và mục con | `instruments` |
 | `Cn` | Câu hỏi mở bắt buộc | `instruments` |
-| `QĐn`, `QĐna`, `QĐ-In` | Quyết định cần sinh viên chốt | Mọi bước |
+| `QĐn`, `QĐna`, `QĐ-In`, `QĐ-Sn`, `QĐ-An` | Quyết định cần sinh viên chốt | Mọi bước |
+| `Fn` | Phát hiện usability | `analysis` |
+| `B-T2-nn` | Bug báo lên Issues từ phiên usability | `bugs` |
 
 Mã đã dùng thì không dùng lại cho thứ khác. Mục bổ sung đánh số tiếp.
 
@@ -123,6 +134,8 @@ Phần thân áp mọi quyết định, đổi `⏳` thành "Đã chốt: ..." �
 - Định dạng mặc định: `[T2][<bước>] <Verb> <nội dung>`, tiếng Anh, động từ mệnh lệnh, không dấu chấm cuối.
 - Mỗi bước thiết kế: (1) Bản AI (`... (AI draft)`); (2) bản review. Ảnh luồng: Một commit riêng. Bản `_vN`: `... (AI revision N)`.
 - `pilot`: Hồ sơ pilot và các chỗ sửa sau pilot (ví dụ `[T2][pilot] Run pilot session and refine scenario`); video không commit nếu dự án chặn.
+- `P1` đến `Pn`: **Mỗi phiên một commit** (ví dụ `[T2][P3] Record session P3 notes and SUS answers`).
+- `score`, `analysis`: (1) Bản AI (kèm script); (2) bản review. `bugs`: Mục Task 2 của bug report, ảnh tái hiện, script và log.
 
 ## 10. Định dạng văn bản
 
@@ -139,5 +152,9 @@ Phần thân áp mọi quyết định, đổi `⏳` thành "Đã chốt: ..." �
 | `plan` | Có ảnh luồng; đủ 9 phần; câu hỏi gắn chặng và khía cạnh probe; số liệu liên kết với câu hỏi; giả định đã đối chiếu ảnh; quyết định có trạng thái; có bảng thay đổi |
 | `scenario` | Kịch bản không dùng nhãn nút; có phiếu dữ liệu, trạng thái ban đầu, tiêu chí hoàn thành theo cái người điều phối nhìn thấy, thời gian chuẩn có căn cứ đo; có can thiệp và tình huống đặc biệt; có mục "Cần kiểm ở pilot" |
 | `instruments` | Đủ công cụ của đề (thang đo, câu hỏi mở đủ khía cạnh); câu hỏi trung lập; phiếu ghi chú dùng mã của plan và kịch bản; không thu thông tin cá nhân |
+| `P1` đến `Pn` | Mỗi phiên có `notes.md`, `scale.md`, `probe.md`; chỉ dùng mã; mốc đúng thứ tự; sai lệch quy trình đã ghi |
+| `score` | Mọi con số lấy từ script hoặc bảng tổng hợp có dẫn mục; cách tính ghi ở mục 0; quyết định `QĐ-S` đã chốt |
+| `analysis` | Mọi phát hiện có quan sát dẫn mốc; bug có câu SRS; severity theo thang đã chốt và có lý do; có trả lời câu hỏi test plan và hạn chế |
+| `bugs` | Mỗi phát hiện loại bug có một issue có ảnh tái hiện ngoài phiên; không có issue cho vấn đề thiết kế |
 | `pilot` | Hồ sơ pilot đủ (I3, I4, I5, I6) và có bảng "Kết quả kiểm bộ công cụ"; mọi điểm "Cần kiểm ở pilot" có quan sát; mỗi chỗ sửa có dòng trong bảng thay đổi của file đó; con số giống nhau ở 3 file |
 | Mọi bước | `ai_raw/` có bản AI; tên file đúng; `check_usability.py format`, `changes`, `privacy` không lỗi |

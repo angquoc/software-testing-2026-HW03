@@ -12,6 +12,10 @@ Lần làm đầu, dùng để tra cách viết. Bản đầy đủ nằm ở th
 | Số liệu qua các bước | Plan: 10 câu hỏi, 5 mục tiêu, 3 chặng, 10 số liệu, 4 giả định đối chiếu ảnh. Kịch bản: 5 mốc, 4 mức can thiệp, 9 tình huống đặc biệt. Công cụ: I1 đến I7, 9 câu hỏi mở bắt buộc |
 | Bảng thay đổi (trước pilot) | Plan 15 dòng (10 Thiếu); kịch bản 12 dòng; công cụ 17 dòng |
 | Pilot | Phiên trực tiếp 16 phút, không ghi âm; toàn luồng 01:24, không hoàn thành (giá lưu thiếu một chữ số 0); sau pilot: Chuẩn x5 thành x3, ngưỡng "bế tắc hẳn" 3 phút thành 2 phút, thêm điều kiện bộ gõ, câu "được sao chép" trên phiếu, câu dặn đọc hết kịch bản, thời lượng phiên 15 đến 25 phút |
+| Phiên thật | 7 phiên trực tiếp, cùng một máy, không có âm thanh; thời lượng 2 đến 45 phút (tính từ lúc bật quay) |
+| `score` | Tự hoàn thành 3/7; M3 thất bại nhiều nhất (3 trên 6 người tới được); SUS n = 6, trung bình 61,25 (dưới mốc 68); 2 quyết định `QĐ-S1`, `QĐ-S2`. Script mẫu: `usability/tools/score_t2.py` (không kèm trong skill) |
+| `analysis` | 9 phát hiện F1 đến F9 (2 bug, 7 vấn đề thiết kế); thang 4 mức của nhóm; bug mất dữ liệu đưa lên đầu |
+| `bugs` | #66 (medium, từ pilot, tái hiện bằng tay), #67 (critical, từ P4, tái hiện bằng script `usability/tools/edit_product_check.js`, không kèm trong skill) |
 
 ## Một dòng "Kết quả kiểm bộ công cụ" của pilot
 
