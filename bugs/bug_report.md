@@ -38,7 +38,7 @@
 | B-18 | [#50](https://github.com/angquoc/software-testing-2026-HW03-group/issues/50) | [W-06] Lịch sử đơn trống không có icon và không gợi ý bước tiếp theo | CL-91, CL-93 | low | IA-04 | Related #15 |
 | B-19 | [#51](https://github.com/angquoc/software-testing-2026-HW03-group/issues/51) | [W-03, W-04, W-06] Thẻ <html> khai báo lang="en" cho giao diện tiếng Việt | CL-19 | low | IA-01 |  |
 | B-20 | [#52](https://github.com/angquoc/software-testing-2026-HW03-group/issues/52) | [W-03, W-04, W-06] Độ tương phản chữ dưới 4.5:1 ở link, dòng hướng dẫn mật khẩu, nút đỏ và lời chào | CL-23 | low | IA-01 | Related #23 |
-| B-21 | [#53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53) | [W-06] Ngày đặt hàng hiển thị theo tháng/ngày/năm | CL-24 | low | IA-01 |  |
+| B-21 | [#53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53) | [W-06] Ngày đặt hàng đổi định dạng theo ngôn ngữ trình duyệt: Chrome tiếng Anh hiện tháng/ngày/năm (sửa 11/11/2026) | CL-24 | low | IA-01 |  |
 | B-22 | [#54](https://github.com/angquoc/software-testing-2026-HW03-group/issues/54) | [W-03, W-04, W-06] Kiểu viết hoa của tiêu đề, nút và navbar không nhất quán | CL-26, CL-27 | low | IA-01 |  |
 | B-23 | [#55](https://github.com/angquoc/software-testing-2026-HW03-group/issues/55) | [W-03, W-04, W-06] Nhãn không gắn với ô nhập, ô không có tên đọc được | CL-54 | low | IA-02 | Related #24 |
 | B-24 | [#56](https://github.com/angquoc/software-testing-2026-HW03-group/issues/56) | [W-04, W-06] Ô bị lỗi trông giống hệt các ô khác | CL-58 | low | IA-02 |  |
