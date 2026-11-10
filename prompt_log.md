@@ -5770,11 +5770,103 @@ Không đọc mã nguồn EShop, _NOTES.md, prompt_log.md, usability/participant
 - Read: D:\Dang\Test\Homeworks\HW03\usability\02_scenario.md
 - Read: D:\Dang\Test\Homeworks\HW03\usability\03_instruments.md
 - Read: D:\Dang\Test\Homeworks\HW03\HW03_group\README.md
+- Bash: Peek at DevTools helper and ai_raw section headings
 
 **Output AI (nguyên văn):**
 
 ````text
 Checklist đã nắm xong (survey → oracle → ai-draft theo IA → review → add, cùng bảng "Thay đổi so với bản AI"). Giờ đọc phần usability.
+
+Mình đã đọc đề (mục 7 và các phần liên quan), WORKFLOW.md, README.md, README của repo nhóm, các file đã review và `ai_raw/` của `checklist/` và `usability/`, cùng cấu trúc skill `domain-testing-design`. Mình chưa viết file nào. Dưới đây là 3 quyết định cần bạn chọn; mỗi quyết định có một phương án mình nghiêng về, nhưng chưa chốt.
+
+Có hai điều mình thấy khi đọc, ảnh hưởng tới phương án:
+
+- **Usability mới làm thật tới `instruments`.** Phần mình được đọc chưa có `pilot/`, `04_scores.md`, `05_findings.md`. Vì vậy các bước sau `instruments` chưa có ví dụ thật để rút ra quy trình.
+- **Các bảng "Thay đổi so với bản AI" chỉ ra những lỗi lặp lại**, nên viết thành `references/lessons.md` của skill:
+  - Test plan viết trước khi có ảnh luồng, sinh ra 7 dòng "Thiếu, Prompt".
+  - Ảnh tĩnh không cho thấy lời chào trên navbar là link.
+  - Mục checklist lẫn logic chức năng (CH-05).
+  - Mục kiểm 2 điều trong một, hoặc ý ngôn ngữ lặp lại ở nhiều mục.
+  - Định nghĩa highlight so sai đối tượng.
+
+---
+
+## Quyết định 1: Một skill hay hai skill ⏳
+
+| Phương án | Nội dung | Ưu | Nhược |
+|---|---|---|---|
+| **A. Hai skill** (mình nghiêng về) | `gui-checklist` và `usability-evaluation`. Mỗi skill tự đủ, quy tắc chung (hộp đen, `ai_raw/`, bảng thay đổi, định dạng) chép vào `references/rules.md` của từng skill | Khớp với chữ "skills" và 2 hoạt động trong đề; skill nào được gọi đúng skill nấy; mỗi skill có một video demo riêng | Quy tắc chung bị lặp ở 2 nơi |
+| B. Một skill gộp | `gui-usability-testing` có 2 nhánh, quy tắc chung viết một lần | Không lặp | SKILL.md dài; dễ gọi nhầm nhánh; một video phải phủ cả hai |
+| C. Ba skill | A, thêm một skill nhỏ để soạn bug report / issue theo quy ước nhóm, dùng chung cho T1, T2, T3 | Tách hẳn phần báo bug | Tốn thêm thời gian; đề không đòi |
+
+## Quyết định 2: Các bước và điểm dừng chờ review ⏳
+
+Điểm chung của cả hai skill, theo cách `domain-testing-design` đang làm:
+
+- **Bước 0:** Đọc WORKFLOW của dự án và suy ra bước hiện tại từ các file đã có.
+- **Mỗi lượt:** Chỉ làm một bước, ghi `ai_raw/` nguyên văn, rồi dừng. Bản review luôn có bảng "Thay đổi so với bản AI".
+- **Hỏi trước khi viết:** Nếu có quyết định ảnh hưởng cấu trúc cả bản thì hỏi trước.
+
+### Skill `gui-checklist` (theo đúng quy trình đã làm)
+
+| Bước | AI làm | Dừng chờ SV |
+|---|---|---|
+| `survey` pha 1 | Bảng quan sát trống, danh sách ảnh cần chụp theo từng trạng thái; nhắc rê chuột hoặc bấm thử những chữ có thể là link | Dừng: Chờ ảnh và bảng |
+| `survey` pha 3 | Kiểm ảnh đã đủ chưa (thiếu thì dừng, liệt kê ảnh cần chụp), đối chiếu, sửa chỗ ghi nhầm | Dừng |
+| `oracle` | Trích nguyên văn SRS, gán `UI-Rxx`, IA, cột Áp dụng (4 giá trị), câu hỏi CH, giả định GĐ, điểm ngoài SRS. Hỏi nguyên tắc "GUI không kiểm logic" ngay ở bước này | Dừng sau bản AI; dừng sau bản review |
+| `ai-draft` | Mỗi lượt một IA: Điều kiện ĐK, mục `AI-xx-nn`, truy vết, ý đã loại, câu hỏi CHD | ⏳ 2a |
+| `review` | AI lọc trước (mục kiểm nhiều điều, mơ hồ, trùng, nguồn yếu, lệch oracle) thành bảng đề xuất; SV quyết; AI viết `02_checklist.md` (mã `CL-xx`, cột Nguồn, mục đã bỏ, tổng hợp, truy vết) | Dừng 2 lần: Sau bảng đề xuất; sau bản review |
+| `add` | **SV viết mục**. AI chỉ kiểm định dạng, nguồn, chỗ trùng, cột "Vì sao AI bỏ sót", và nhắc các mảng cần xét (a11y, RTL, dark mode), không viết mục thay SV | Dừng |
+| `excel`, `exec`, `bugs` | ⏳ 2b | |
+
+- **2a. Dừng ở `ai-draft`:**
+  - (i) Dừng sau mỗi IA (4 lần dừng).
+  - (ii) Dừng sau IA-01 để SV chỉnh hướng, rồi làm liền IA-02 đến IA-04, mỗi IA vẫn một file riêng.
+- **2b. Phạm vi sau bước `add`:**
+  - (i) Dừng ở `excel`.
+  - (ii) Thêm hỗ trợ `exec`: Sinh script DevTools nháp kiểu `checklist/tools/devtools_check.js`, mẫu `03_results.md`, quy ước tên ảnh mục Failed. Thêm soạn nội dung issue cho bước `bugs`. AI không tự ghi Passed / Failed.
+
+### Skill `usability-evaluation`
+
+| Bước | AI làm | Dừng chờ SV |
+|---|---|---|
+| `flow-survey` (bước mới, rút từ bài học) | Liệt kê ảnh cần chụp theo từng chặng, kể cả trạng thái sau khi lưu và dropdown đang mở | Dừng: Chờ ảnh |
+| `plan` | Test plan 9 phần (slide S13): câu hỏi Q, mục tiêu O, chặng M, số liệu D, quyết định QĐ ⏳ | Dừng sau bản AI; dừng sau bản review |
+| `scenario` | Kịch bản dạng mục tiêu (không dùng nhãn nút làm gợi ý), phiếu dữ liệu, trạng thái ban đầu, 4 thành phần nhiệm vụ, mốc T0 đến Tn, các mức can thiệp, tình huống đặc biệt. Thời gian chuẩn: AI chỉ đưa cách đo, SV tự bấm giờ | Như trên |
+| `instruments` | I1 đến I7: danh sách chuẩn bị, xin đồng ý, phiếu thông tin, phiếu ghi chú có mã sự kiện, SUS / UEQ-S, câu hỏi mở (bắt buộc và theo tình huống), lời kết | Như trên |
+| `participants`, `pilot`, `P1` đến `P7` | Chỉ đưa mẫu trống. Không đọc file có thông tin cá nhân, không bịa dữ liệu | Dừng: Người thật làm |
+| `score`, `analysis` | ⏳ 2c | |
+
+- **2c. Phạm vi sau `instruments`:**
+  - (i) Không đưa vào skill, vì chưa làm thật.
+  - (ii) Viết theo WORKFLOW (script tính SUS, gom pain point, tách bug khỏi vấn đề thiết kế, severity do SV chốt), ghi rõ "chưa kiểm chứng", rồi cập nhật sau khi bạn làm thật.
+- **2d. Ai điền bảng quan sát ở `survey` (cả hai skill):** Thực tế ở T1, AI đã điền từ ảnh theo yêu cầu của bạn, rồi bạn kiểm lại. Có hai cách viết vào skill:
+  - (i) Mặc định SV điền.
+  - (ii) Hỏi SV đầu bước: Tự điền, hay để AI điền từ ảnh rồi SV kiểm.
+
+## Quyết định 3: Màn hình / luồng cho video demo ⏳
+
+Các màn hình đã có người nhận: W-01, W-02, W-07, W-08 (Hương), W-03, W-04, W-06 (bạn). Các luồng đã có người nhận: FL-01, FL-05.
+
+**Màn hình cho checklist:**
+
+| Phương án | Ưu | Rủi ro |
+|---|---|---|
+| **A. Quên mật khẩu (Web, form 2 bước)** (mình nghiêng về) | Có oracle giao diện riêng mà bài thật đã ghi "Không áp dụng" (UI-R11 Step Indicator, UI-R12 nút Quay lại đăng nhập, UI-R40), nên thấy rõ skill dùng lại được trên màn hình mới; màn hình nhỏ, demo gọn; không trùng ai | Cần lấy được OTP để chụp ảnh bước 2. Mình không biết môi trường demo trả OTP thế nào (không được đọc mã nguồn), bạn cần thử trước |
+| B. Admin Quản lý Danh mục | Đã có ảnh `flow_03` đến `flow_05`, demo nhanh nhất | Màn hình đã nằm trong luồng FL-05 nên kém thuyết phục là "màn hình mới"; FR-14 có ít ý giao diện |
+| C. Admin Quản lý Mã giảm giá (FR-17) | Form có nhiều loại ô, mới hoàn toàn | Chưa có ảnh; tốn thời gian khảo sát nhất |
+
+**Luồng cho usability** (video chỉ đi qua `flow-survey` → `plan` → `scenario` → `instruments`, rồi cho thấy skill dừng ở bước người thật, không bịa phiên):
+
+| Phương án | Ưu | Rủi ro |
+|---|---|---|
+| **A. Web: Quên mật khẩu → Đặt lại mật khẩu → Đăng nhập lại** (mình nghiêng về) | Đi cặp với checklist A, dùng chung ảnh; người dùng mục tiêu khác FL-05 (khách mua hàng thay vì người bán) | Cùng rủi ro OTP |
+| B. Admin: Tạo mã giảm giá mới | Không phụ thuộc OTP | Gần giống FL-05 (cùng Admin, cùng kiểu tạo mới), ít cho thấy skill dùng được rộng |
+| C. Web: Đăng ký → Cập nhật hồ sơ | Ảnh gần như có sẵn | Chồng lên màn hình Task 1 của bạn |
+
+---
+
+Bạn trả lời theo dạng ví dụ `1A, 2a(ii), 2b(i), 2c(i), 2d(ii), 3A/A`. Nếu chọn phương án A cho demo, bạn nên thử trước xem lấy OTP được không. Sau khi bạn chốt, mình sẽ viết skill vào `Homeworks/HW03/skills/` (SKILL.md, `references/`, `assets/templates/`, script kiểm tra), chưa cài vào `.claude/skills/`.
 ````
 
 ---
@@ -5794,11 +5886,85 @@ Checklist đã nắm xong (survey → oracle → ai-draft theo IA → review →
 - Bash: Identify new skill session and check forbidden reads; size up script
 - Read: D:\Dang\Test\Homeworks\HW03\checklist\tools\devtools_check.js
 - Bash: Check sessions for forbidden reads, whitelist skill session, export log
+- Bash: Record skill session, audit note for script in tracker
 
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Script của Task 1 dùng được và commit được. Log đã xuất lại: 94 lượt từ **5 phiên**. Tôi đã thêm phiên Agent Skill (`a498e700`) vào danh sách trắng. Cả 4 phiên thiết kế đều không đọc file bị cấm.
+
+## Kiểm tra `checklist/tools/devtools_check.js`
+
+Tôi chỉ kiểm cách script chạy, không đánh giá kết quả mong đợi của từng mục.
+
+| Kiểm | Kết quả |
+|---|---|
+| Chỉ đọc trang (không sửa DOM, không đổi focus, không gửi request) | ✅ Chỉ dùng `querySelector`, `getComputedStyle`, `getBoundingClientRect` |
+| Chạy được trên Chrome và Firefox | ✅ Chỉ dùng API chuẩn |
+| Hộp đen | ✅ Tìm phần tử theo chữ nhìn thấy (nhãn, chữ trên nút, tiêu đề theo `00_survey.md`) |
+| Mục được kiểm | 17 mục: CL-13, 14, 19, 22, 28 đến 32, 44, 46, 54, 62, 76, 83, 106, 109 |
+| Kết quả là nháp | ✅ Cột "Gợi ý" có thêm giá trị "Xem tay" cho mục không tự kết luận được, và nhắc rằng bạn chốt kết quả |
+
+Lưu ý khi dùng:
+- **Mỗi trang chạy 4 lần, mỗi lần ứng với một trạng thái:**
+  - `/login`.
+  - `/register`.
+  - `/profile` khi đã đăng nhập.
+  - `/profile` khi chưa đăng nhập.
+- **CL-32 và CL-109 cần đúng kích thước cửa sổ.** Lần chạy nào chưa đặt Device Toolbar 1366 x 768 hoặc 360 px thì script báo "Chưa đúng kích thước". Bạn đặt lại kích thước rồi chạy lại.
+- **CL-28 và CL-29** so sánh giữa 3 trang. Script in một dòng "Khóa so sánh" ở mỗi trang, bạn tự đối chiếu 3 dòng đó.
+- **CL-106** phải chạy lại đúng lúc thông báo đang hiện trên màn hình.
+- Lần dán đầu tiên, Chrome và Firefox bắt gõ `allow pasting`.
+
+Tôi đã ghi vào mục Audit trong tracker: "AI viết script, sinh viên chốt kết quả".
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/devtools_check.js
+git commit -m "[T1][exec] Add read-only DevTools console script for draft results"
+git add tools/export_prompt_log.py prompt_log.md
+git commit -m "[setup] Add Agent Skill session to prompt log whitelist"
+git push
+```
+
+`participants.md` vẫn không có trong lệnh.
+
+## Việc tiếp
+
+Task 1 đã sẵn sàng cho exec trên N1. Khi bạn muốn chạy, báo tôi để bật server, reset DB và chạy `seed_orders.py`. Lúc đó cũng nên thử ảnh S-05 (Sticky Notes) trước.
+
+Exec cần DB riêng khoảng 3,5 giờ. Nếu sáng nay chạy pilot, nên làm exec sau pilot hoặc vào giữa những phiên usability.
+
+⏱ Còn khoảng **29,5 giờ** làm việc | Còn **20 giờ 14 phút** tới mốc 22:00 10/11 | **35 giờ 14 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C95 | 09:35 10/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+- Tôi cần chạy web để cho pilot làm.
+- Tôi đã điền xong participants nên cần luôn commit message.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo status and whether EShop ports are in use
+- Bash: Reset EShop database to seed state
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Start EShop web frontend on port 5173
+- Bash: Wait for servers and verify ports and clean category data
+- Bash: Mark participants done in tracker and export log
+
+**Output AI (nguyên văn):**
+
+````text
+Server đã chạy, DB sạch (chỉ có 3 danh mục mẫu). Giờ cập nhật tracker và xuất log.
 ````
 
 
