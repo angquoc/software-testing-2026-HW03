@@ -76,4 +76,34 @@ Các mục CL-20, CL-25, CL-52, CL-101, CL-110 không có issue riêng vì đã 
 
 ## 5. Ảnh danh sách issue
 
-⏳ Sau khi chèn ảnh, chụp trang Issues đã lọc `author:angquoc label:"task: T1 checklist"`, đủ #33 đến #65, lưu ở `bugs/screenshots/issues_list_T1_<số>.png` (WORKFLOW mục 5).
+Trang Issues đã lọc `author:angquoc label:"task: T1 checklist"`, đủ #33 đến #65: `bugs/screenshots/issues_list_T1_1.png`, `bugs/screenshots/issues_list_T1_2.png` (WORKFLOW mục 5).
+
+---
+
+# Bug report: Task 2 (Usability Evaluation), luồng FL-05 trên Web Admin
+
+- Người báo: 23120061, Nguyễn Thị Ánh Ngọc
+- Nguồn: Phiên usability (pilot `PL` và P1 đến P7, hồ sơ ở `usability/pilot/`, `usability/sessions/`); SV tái hiện lại bug ngoài phiên để chụp ảnh
+- Môi trường: Chrome 156.0.8078.81, Windows 11 Home Single Language 26H2 (build 26300.9818)
+- Ảnh: `usability/screenshots/`
+- Chỉ đưa lên Issues **bug thật** (hệ thống sai so với đặc tả hoặc chặn người dùng); vấn đề thiết kế ghi ở `usability/05_findings.md` (README nhóm mục 4.1)
+
+## 6. Issue đã tạo (Task 2)
+
+| Mã | Issue | Tiêu đề | Phát hiện ở | Căn cứ | Severity | IA | Ảnh |
+|---|---|---|---|---|---|---|---|
+| B-T2-01 | [#66](https://github.com/angquoc/software-testing-2026-HW03-group/issues/66) | [FL-05] Bấm "Thêm mới" khi chưa nhập tên vẫn tạo danh mục không tên | PL (pilot), mốc 00:29; SV tái hiện 10/11/2026 | FR-14 | medium | IA-02, IA-04 | `flow_12_category_empty_name.png`, `flow_13_category_empty_created.png` |
+
+Issue Task 2 có label `bug`, `platform: admin`, `task: T2 usability`, được gán cho chính người báo.
+
+### B-T2-01: Chi tiết
+
+- **Điều kiện tiên quyết:** Đã reset DB; đăng nhập Admin `admin@eshop.com`; đang ở trang "Quản lý Danh mục" (bảng có 3 danh mục mẫu).
+- **Các bước tái hiện:**
+  1. Để trống ô "Tên danh mục mới".
+  2. Bấm "Thêm mới".
+- **Kết quả mong đợi:** FR-14: "Tên danh mục là bắt buộc, không được để trống." Hệ thống không tạo danh mục khi tên để trống.
+- **Kết quả thực tế:** Bảng danh mục có thêm dòng `#4` với cột "Tên Danh Mục" trống; không có thông báo lỗi nào.
+- **Severity:** `medium`. Theo câu hỏi ở README nhóm mục 4.3: Không lộ hay mất dữ liệu, không chặn luồng (câu 1: Không); người dùng tránh được bằng cách nhập tên, hoặc xoá dòng trống bằng nút "Xóa" (câu 2: Không); sai đặc tả FR-14 nhưng có cách đi vòng (câu 3: Có).
+- **IA:** IA-02 (form không chặn trường bắt buộc để trống), IA-04 (không có phản hồi lỗi).
+- **Ghi chú:** Phát hiện ở phiên pilot: Người pilot tưởng nút "Thêm mới" mở form tạo danh mục, bấm khi chưa nhập tên và hệ thống tạo ngay một dòng trống (`usability/pilot/notes.md` mục 5). Người pilot không tính vào 7 người; bug được SV tái hiện lại và chụp ảnh ngoài phiên.
