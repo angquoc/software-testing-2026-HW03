@@ -19860,6 +19860,115 @@ Kiểm tra, xuất log, viết commit message nếu có, đồng thời �
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Export log, show status, commits and N2 run log tail
+- Bash: Read the last two turns of the Task 3 session
+
+**Output AI (nguyên văn):**
+
+````text
+N2 đã xong và Excel đã ghi đủ cột NT2: 51 Passed, 53 Failed, 8 Không chạy được, 112 mục; mục Failed nào cũng có ảnh. So với N1 chỉ khác đúng CL-24 (Failed thành Không chạy được, theo D-25), nên Firefox không có bug riêng. Log đã xuất lại.
+
+## Kiểm commit
+
+- Commit demo cuối (`7ab1e9b`, 10:28) đã thành công.
+- Chưa commit:
+  - Phần report tôi viết lúc 10:43.
+  - Toàn bộ N2: Script, 4 log, 77 ảnh, bản nháp AI, Excel.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/tools/n2_firefox_checklist.js checklist/tools/capture_screen.ps1 checklist/tools/package.json checklist/tools/n2_run_log.txt checklist/tools/n2_cl34_log.txt checklist/tools/n2_extra_log.txt checklist/tools/n2_recheck_log.txt cross_platform/screenshots/firefox cross_platform/ai_raw/T3_firefox_manual.md
+git commit -m "[T3][firefox] Run checklist on Firefox and add AI result draft"
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][firefox] Record N2 results in checklist"
+git add report.md
+git commit -m "[report] Add demo summary, audit rows B20 and B21, AI Critique draft"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Tin nhắn gửi phiên Task 3
+
+Thời gian còn lại ít, nên gửi một tin để phiên làm hết phần còn lại trong một lượt:
+
+```
+Đã commit N2. Còn khoảng 1 giờ cho Task 3, làm gọn theo thứ tự sau trong một lượt:
+1. Bug Task 3 (D-22): Soạn issue CL-11 cho Android Chrome (tiền hiện "10.000.000 ₫", SRS ghi "300,000 ₫"; nguyên nhân: định dạng theo ngôn ngữ trình duyệt, Chrome điện thoại tiếng Việt), dùng ảnh N3 có sẵn và ảnh cross_platform/screenshots/chrome/CL-24_locale_1.png, _2.png. Liệt kê ảnh cần tải để tôi kéo vào GitHub lấy link; tạo issue bằng gh khi tôi gửi link. Soạn sẵn bình luận cho #53 (Android Chrome tiếng Việt hiện đúng ngày/tháng; xem issue CL-11). Firefox không có bug riêng (NT2 chỉ khác N1 ở CL-24), ghi rõ điều này.
+2. bugs/bug_report.md: Thêm mục Task 3 như mục Task 2.
+3. cross_platform/02_compare.md: Ngắn gọn. Bảng 3 nền tảng (đã chạy, Passed, Failed, N/A, Không chạy được, tỉ lệ), bảng các mục khác nhau giữa N1, N2, N3 kèm nguyên nhân (ngôn ngữ trình duyệt, khổ màn hình, thiết bị cảm ứng), giới hạn (N2 chạy trên máy vì trial; CL-24 trên N2), D-30 đến D-32.
+4. D-24: Sửa firefox_triage.md ngắn (bỏ D-16, N2 chạy đủ 112 mục trên máy).
+Không hỏi lại những gì đã chốt. Chỉ dừng để lấy link ảnh. Đưa lệnh commit chạy từ Homeworks/HW03.
+```
+
+Sau khi issue CL-11 được tạo: Nhắn phiên Task 1 thêm dòng "Xem thêm issue #<số> (CL-11, Task 3)" vào Ghi chú của #53, như đã hẹn.
+
+## Báo cáo
+
+Khi có `02_compare.md` và số issue, tôi viết mục 4.2 đến 4.4, các dòng N2 trong bảng, README, B18 và phần tổng kết Appendix B. Việc này mất khoảng 15 phút. Gửi link video bất cứ lúc nào; tôi ghi ngay.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | ✅ N1, N2, N3 xong; Excel đủ 3 cột | Issue CL-11, bug report, `02_compare.md`, sửa triage | ~0,75 giờ |
+| Agent Skill | ✅ Demo đã commit | Gửi link video | ~0,1 giờ |
+| Tổng hợp | Report đã có mọi phần trừ mục 4 sau N2 | Mục 4, link video, tổng kết; bạn đọc, tự chấm; PDF, zip, nộp | ~1,25 giờ |
+
+⏱ Còn khoảng **2,1 giờ** làm việc | Còn **1 giờ 40 phút** tới deadline 13:00 11/11
+
+Lịch không đủ cho tất cả. Từ **12:15**, chuyển sang xuất PDF và đóng gói, dù Task 3 xong tới đâu. Phần nào chưa xong lúc đó thì tôi ghi rõ trong report là chưa hoàn thành. Bạn có thể bắt đầu tự chấm và đọc report ngay trong lúc phiên Task 3 làm.
+````
+
+---
+
+### C299 | 11:20 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã commit N2. Còn khoảng 1 giờ cho Task 3, làm gọn theo thứ tự sau trong một lượt:
+1. Bug Task 3 (D-22): Soạn issue CL-11 cho Android Chrome (tiền hiện "10.000.000 ₫", SRS ghi "300,000 ₫"; nguyên nhân: định dạng theo ngôn ngữ trình duyệt, Chrome điện thoại tiếng Việt), dùng ảnh N3 có sẵn và ảnh cross_platform/screenshots/chrome/CL-24_locale_1.png, _2.png. Liệt kê ảnh cần tải để tôi kéo vào GitHub lấy link; tạo issue bằng gh khi tôi gửi link. Soạn sẵn bình luận cho #53 (Android Chrome tiếng Việt hiện đúng ngày/tháng; xem issue CL-11). Firefox không có bug riêng (NT2 chỉ khác N1 ở CL-24), ghi rõ điều này.
+2. bugs/bug_report.md: Thêm mục Task 3 như mục Task 2.
+3. cross_platform/02_compare.md: Ngắn gọn. Bảng 3 nền tảng (đã chạy, Passed, Failed, N/A, Không chạy được, tỉ lệ), bảng các mục khác nhau giữa N1, N2, N3 kèm nguyên nhân (ngôn ngữ trình duyệt, khổ màn hình, thiết bị cảm ứng), giới hạn (N2 chạy trên máy vì trial; CL-24 trên N2), D-30 đến D-32.
+4. D-24: Sửa firefox_triage.md ngắn (bỏ D-16, N2 chạy đủ 112 mục trên máy).
+Không hỏi lại những gì đã chốt. Chỉ dừng để lấy link ảnh.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: View issue #53 and repo labels
+- Bash: Read Task 2 section of bug report
+- Bash: Read rest of #53, image link notes, existing T3 issues
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-11.png
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\cmp_stats.py
+- Bash: Compute per-platform stats and differences
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi lấy thông tin cần cho cả 4 việc cùng lúc: Issue #53 làm mẫu, danh sách label, mục Task 2 trong bug report, và số liệu 3 cột của Excel.
+````
+
+---
+
+### C300 | 11:21 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+https://youtu.be/_7iWiIJfpMw
+
+Link video đây.
+
+Task 2 xong rồi thì bỏ ra trạng thái.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Add the demo video link to report and README, export log
 
 **Output AI (nguyên văn):**
 
