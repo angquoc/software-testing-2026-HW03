@@ -19307,6 +19307,127 @@ Kiểm tra, xuất log và đưa tôi phần trả lời cho task demo.
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Export log, show status and recent commits
+- Bash: Read demo session's latest reply
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên demo đã xong bước add (59 mục) và xuất Excel. Còn một chỗ: Dòng họ tên và MSSV trong sheet Hướng dẫn đang ghi "⏳ Họ tên (MSSV)". Log đã xuất lại.
+
+## Câu trả lời cho phiên demo
+
+```
+Họ tên (MSSV): Nguyễn Thị Ánh Ngọc (23120061). Chạy lại script xuất Excel với thông tin này.
+Demo dừng ở bước excel, không chạy exec (hết thời gian).
+Cập nhật Homeworks/HW03/demo/README.md, cột "Phạm vi demo":
+- gui-checklist: A-01 "Quản lý Danh mục" (Web Admin), từ survey tới excel, 59 mục (55 mục AI, 4 mục SV thêm).
+- usability-evaluation: Không demo.
+Đưa lệnh commit chạy từ Homeworks/HW03.
+```
+
+**⏳ Phần usability trong README:** Tôi ghi "Không demo" vì không còn thời gian. Nếu bạn muốn giữ phương án quay thêm phần usability khi còn dư giờ, đổi dòng đó thành "⏳ Quay nếu còn thời gian".
+
+## Lệnh commit
+
+Commit ngay phần add; file Excel đợi phiên demo xuất lại có họ tên rồi mới commit:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/gui-checklist/02_checklist.md
+git commit -m "[demo][add] Add items missed by AI with reasons"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+```
+
+Sau khi phiên demo xuất lại Excel và sửa README:
+
+```powershell
+git add demo/gui-checklist/DEMO_GUI_checklist_A-01.xlsx demo/README.md
+git commit -m "[demo][excel] Build Excel checklist and record demo scope"
+git push
+```
+
+## Ngay sau đó
+
+1. **Dừng quay** khi phiên demo xác nhận đã xuất lại Excel. Có thể quay thêm cảnh mở file Excel để video kết thúc ở sản phẩm cuối.
+2. **Chạy N2 ngay**: `node n2_firefox_checklist.js --log=n2_run_log.txt` (theo hướng dẫn của phiên Task 3). Trong lúc N2 chạy, đừng thao tác các cửa sổ khác, vì script tự chụp toàn màn hình.
+3. **Trong lúc chờ N2**, tải video lên YouTube ở chế độ Unlisted, rồi gửi tôi link. Tôi ghi link vào README, report và thêm dòng demo vào Appendix B.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng (112 mục), chưa chạy | Chạy N2 ngay → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo xong survey tới excel (59 mục) | Xuất lại Excel có họ tên; dừng quay; tải video lên YouTube | ~0,25 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3 giờ** làm việc | Còn **2 giờ 33 phút** tới deadline 13:00 11/11
+
+Việc còn lại vẫn nhiều hơn thời gian còn lại khoảng nửa giờ. Phương án cắt: Trong lúc N2 chạy, tôi viết sẵn khung mục 4 của report và AI Critique. Khi có kết quả N2, phiên Task 3 chỉ cần tạo issue CL-11 và các bug chỉ có trên Firefox; `02_compare.md` viết gọn.
+````
+
+---
+
+### C291 | 10:27 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Họ tên (MSSV): Nguyễn Thị Ánh Ngọc (23120061). Chạy lại script xuất Excel với thông tin này.
+Demo dừng ở bước excel, không chạy exec (hết thời gian).
+Cập nhật Homeworks/HW03/demo/README.md, cột "Phạm vi demo":
+- gui-checklist: A-01 "Quản lý Danh mục" (Web Admin), từ survey tới excel, 59 mục (55 mục AI, 4 mục SV thêm).
+- usability-evaluation: Không demo.
+Đưa lệnh commit chạy từ Homeworks/HW03.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Rebuild Excel with student info and update demo README
+
+**Output AI (nguyên văn):**
+
+````text
+Chạy lại script xuất Excel với họ tên và MSSV, rồi cập nhật `demo/README.md`.
+
+Đã cập nhật xong cả hai việc.
+
+- **Excel:** Đã chạy lại script. Sheet "Hướng dẫn" giờ ghi "Sinh viên: Nguyễn Thị Ánh Ngọc (23120061)". Nội dung vẫn là 59 mục, 8 điều kiện, 1 nhóm cột kết quả NT1. File chưa có kết quả chạy nên ghi đè không mất gì.
+- **[demo/README.md](Homeworks/HW03/demo/README.md):** Cột "Phạm vi demo" đã ghi như bạn đưa. Dòng `gui-checklist/` là A-01 "Quản lý Danh mục" (Web Admin), từ `survey` tới `excel`, 59 mục (55 mục AI, 4 mục SV thêm). Dòng `usability-evaluation/` là "Không demo". Kiểm tra định dạng báo 0 lỗi.
+
+Số 55 mục AI gồm 27 mục giữ nguyên và 28 mục bạn có sửa.
+
+**Một chỗ trong README chưa khớp với thực tế:** Câu cuối ghi "Phiên demo không đọc `checklist/`". Thực tế phiên này đã đọc riêng bảng môi trường trong `checklist/00_survey.md` khi bạn cho phép. Ngoại lệ đó đã ghi trong `demo/gui-checklist/00_survey.md` ("Ai điền phần nào" và mục 1). Tôi chưa sửa README; nếu muốn ghi ngoại lệ vào đó thì báo tôi.
+
+Bước `exec` không làm theo quyết định của bạn, nên Excel còn để trống cột kết quả NT1.
+
+**Commit** (chạy từ `Homeworks/HW03`):
+
+```
+git add demo/gui-checklist/DEMO_GUI_checklist_A-01.xlsx
+git commit -m "[demo][excel] Build Excel checklist"
+
+git add demo/README.md
+git commit -m "[demo] Record demo scope in README"
+```
+
+Nếu bạn đã commit file Excel bản trước (dòng sinh viên còn ghi "⏳"), commit đầu đổi message thành `[demo][excel] Add student info to Excel checklist`.
+````
+
+---
+
+### C292 | 10:28 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra, xuất log và đưa commit message tiếp.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status, recent commits and demo README
 
 **Output AI (nguyên văn):**
 
