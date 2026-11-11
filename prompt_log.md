@@ -19428,6 +19428,438 @@ Kiểm tra, xuất log và đưa commit message tiếp.
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Export log, show status, recent commits and demo README
+- Bash: Verify the demo Excel now has the student name and MSSV
+
+**Output AI (nguyên văn):**
+
+````text
+Excel đã xuất lại có họ tên và MSSV (`Nguyễn Thị Ánh Ngọc (23120061)`); sheet Checklist đủ 59 mục, không còn dấu ⏳. `demo/README.md` đã ghi phạm vi demo. Commit phần add (`5102331`) đã thành công. Log đã xuất lại.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/gui-checklist/DEMO_GUI_checklist_A-01.xlsx demo/README.md
+git commit -m "[demo][excel] Build Excel checklist and record demo scope"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Phần demo đến đây là đủ để commit. Vẫn không add các file của Task 3 (`n2_firefox_checklist.js`, `capture_screen.ps1`, `package.json`, `cross_platform/screenshots/firefox/`); phiên Task 3 sẽ đưa lệnh sau khi chạy N2.
+
+## Tiếp theo
+
+1. **Dừng quay.** Có thể mở file Excel vài giây trước khi dừng.
+2. **Chạy N2 ngay** theo lệnh của phiên Task 3. Trong lúc chạy, không thao tác các cửa sổ khác.
+3. **Trong lúc N2 chạy:** Tải video lên YouTube ở chế độ Unlisted, rồi gửi tôi link.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng (112 mục), chưa chạy | Chạy N2 ngay → compare, bugs | ~1,75 giờ |
+| Agent Skill | ✅ Demo xong survey tới excel (59 mục), chờ commit | Dừng quay; tải video lên YouTube, gửi link | ~0,2 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, dòng demo trong Appendix B, AI Critique; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **2,9 giờ** làm việc | Còn **2 giờ 31 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C293 | 10:40 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đang up video rồi, reset db để tôi chạy N2.
+Trong lúc đó, bạn có thể viết các report, nào video có thì tôi gửi link cho bạn.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Reset EShop database, seed test orders, verify servers
+- Bash: Verify servers respond and categories are clean
+- Bash: Export log and list turn codes of demo and summary sessions
+- Bash: Read summary-session prompts and count demo change-table rows
+- Bash: Check history of results summary, forms and report
+- Bash: Add demo details, rows B20 and B21, and disclosure note to the report
+- Bash: Insert an AI Critique draft and count its words
+- Bash: Check style, export log, show status and N2 progress
+
+**Output AI (nguyên văn):**
+
+````text
+Viết thêm vào report: Đoạn demo trong mục 5, dòng B20 (phiên Tổng hợp), B21 (phiên demo), ngày nộp, và bản nháp AI Critique.
+
+Đang viết bản nháp AI Critique (khoảng 250 từ, lấy từ các bảng thay đổi và log; bạn sửa giọng văn cho thành của mình).
+
+DB đã reset và seed lúc 10:41 như báo ở trên; N2 đang chạy (đã có `n2_run_log.txt` và 16 ảnh trong `firefox/`). Trong lúc đó tôi viết thêm vào `report.md`. Log đã xuất lại.
+
+## Đã viết thêm
+
+| Chỗ | Nội dung |
+|---|---|
+| Bảng đầu | Ngày nộp: 11/11/2026 |
+| Mục 5, Demo | Bảng 6 bước demo trên A-01 "Quản lý Danh mục": 60 mục AI thành 59 mục, CL-59 là mục AI bỏ sót; demo dừng ở `excel`, không demo usability |
+| Appendix B, B20 | Phiên Tổng hợp `c934f0c0` (C179, C200): **VALID** |
+| Appendix B, B21 | Phiên demo `d485f4ce` (C269 đến C291): **INCOMPLETE**, kèm số dòng của bảng thay đổi |
+| AI Critique | Bản nháp khoảng 330 âm tiết, hơi dài so với giới hạn 300 từ; bạn rút gọn và sửa giọng văn |
+| Mandatory Disclosure | Thêm một câu về phần demo |
+
+**Cần bạn đọc kỹ chỗ này:** Report ghi rõ ở mục 5, B21 và Mandatory Disclosure rằng **các câu trả lời CH, CHD, P và bản nháp 4 mục ở bước add của demo là do phiên điều phối soạn theo yêu cầu của bạn**, bạn đọc, sửa rồi gửi. Log cho thấy đúng như vậy, và đề §11 đòi khai báo trung thực phần AI làm. Nếu bạn đã sửa các bản nháp đó trước khi gửi, cứ ghi thêm vào đó.
+
+**Còn lại của report:**
+- Phần sau N2: Mục 4.2 đến 4.4, các dòng N2 trong bảng, B18.
+- Link video, ngay khi bạn gửi.
+- Tổng kết độ chính xác AI (đếm khi B18 có verdict).
+- Phần bạn tự làm: Tự chấm, cấp độ AI, đoạn "Kết luận: Khi nào nên dùng AI" (mẫu ghi sinh viên viết).
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add report.md
+git commit -m "[report] Add demo summary, audit rows B20 and B21, AI Critique draft"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Không add các file của N2 (`n2_firefox_checklist.js`, `n2_run_log.txt`, `capture_screen.ps1`, `package.json`, `firefox/`). Phiên Task 3 sẽ đưa lệnh sau khi kiểm kết quả.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | **N2 đang chạy** trên Firefox ở máy | Phiên Task 3 kiểm kết quả → compare, bug CL-11 và bug chỉ có trên Firefox | ~1,5 giờ |
+| Agent Skill | ✅ Demo xong và đã commit | Video đang tải lên → gửi link | ~0,1 giờ |
+| Tổng hợp | Report đã có mọi phần trừ mục 4 sau N2 | Mục 4, link video, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **2,6 giờ** làm việc | Còn **2 giờ 16 phút** tới deadline 13:00 11/11
+
+Lịch rất sát. Bắt đầu đóng gói lúc **12:15** dù Task 3 xong tới đâu. Những gì chưa xong lúc đó thì ghi rõ là chưa hoàn thành trong report, không để ⏳ trống.
+````
+
+---
+
+### C294 | 10:51 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong N2, kiểm tra các ảnh, và viết file.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List N2 logs, screenshots and drafts
+- Bash: Find run boundaries and summary in N2 log
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_run_log.txt
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_run_log.txt
+- Bash: Compare suspicious items with N1 and N3 logs
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-81.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-97.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-72.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-77.png
+- PowerShell: Check current time and screenshot count
+- Agent: Review N2 Firefox failure screenshots
+- Bash: Locate CL-81, CL-97 to CL-100 and CL-77 code
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\add_k.py
+- Bash: List N2 logs and newest screenshots
+- Bash: Read group I and H log details
+- Bash: Add group K to N2 script and syntax-check
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\fix_i.py
+- Bash: Patch group I and CL-33, then syntax-check
+- Bash: Compare CL-52/101/102 with N1 and N3, locate code
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\add_k2.py
+- Bash: Add CL-101/52/102 recheck and syntax-check
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đang đọc log và danh sách ảnh của N2.
+
+Chỉ có log của lần 1 (`n2_run_log.txt`). Chưa có log nhóm H, nhóm I và chưa có ảnh tổng quan. Tôi đọc log trước.
+
+Lần chạy 1 (nhóm A đến G) xong không lỗi. Có vài mục cho kết quả khác N1 nên tôi đối chiếu với log N1 và N3.
+
+Bây giờ là 10:58, còn khoảng 2 giờ tới hạn 13:00. Tôi giao việc kiểm 52 ảnh cho một agent chạy song song.
+
+Bạn báo đã chạy thêm các phần khác. Trước khi thêm nhóm K, tôi xem lại log và ảnh mới.
+
+Script đã sửa xong và qua kiểm cú pháp. Agent vẫn đang kiểm 52 ảnh Failed. Trong lúc chờ, bạn chạy bù 2 lần sau nhé (mỗi lần khoảng 3 đến 5 phút).
+
+## N2 còn thiếu
+
+| Thiếu | Vì sao |
+|---|---|
+| `overview_env_1` (`about:support`) | Firefox của Playwright không cho script mở trang `about:`, quá 30 giây thì bỏ |
+| `overview_profile`, `CL-105_2`, `CL-05` | Sau bước mất mạng CL-105 ở trang Đăng nhập, script không đăng nhập lại được nên dừng nhóm I |
+| CL-33 (zoom 200%) | Mục này phải làm tay, lần 1 chưa làm |
+| Kiểm lại 7 mục: CL-72, CL-77, CL-81, CL-82, CL-97, CL-99, CL-100 | Cả N1 lẫn N3 đều Passed, nhưng ảnh N2 cho thấy cú bấm của script không có tác dụng: Bấm "Thoát" vẫn còn đăng nhập, bấm "Hủy đơn" đơn #5 vẫn "Chờ xác nhận", bấm logo vẫn ở `/profile`. Nhiều khả năng do script, không phải lỗi của trang |
+
+Phần đã đủ: Nhóm A đến G, nhóm H (CL-34 Passed cả 3 màn hình), và `overview_env_2`, `overview_login`, `overview_register`, `CL-105_1`.
+
+## Đã sửa trong script
+
+- **Nhóm K mới:**
+  - **CL-33:** Bạn tự zoom 200% bằng `Ctrl` và `+`, script chụp 3 màn hình.
+  - **7 mục nghi ngờ:** **Bạn tự bấm** trong cửa sổ Firefox, script chỉ đọc kết quả và chụp ảnh nếu Failed. Ảnh cũ của các mục này được chuyển ra thư mục tạm (không xóa), để ảnh mới mang đúng tên.
+- **Nhóm I chạy lại được:**
+  - Ảnh nào đã có thì bỏ qua.
+  - `about:support` do bạn tự gõ vào thanh địa chỉ.
+  - Bước mất mạng chuyển xuống cuối, để không làm hỏng bước đăng nhập.
+
+## Lệnh
+
+Trong cmd, ở thư mục `D:\Dang\Test\Homeworks\HW03\checklist\tools`, gõ `co` khi được hỏi:
+
+1. `node n2_firefox_checklist.js --only=K --log=n2_recheck_log.txt`
+   - Không cần reset trước, vì đơn #5 vẫn đang "Chờ xác nhận".
+   - Script sẽ dừng nhiều lần, mỗi lần nhắc bạn làm một thao tác trong Firefox, làm xong quay lại cmd bấm Enter.
+2. **Reset DB và seed lại**, vì nhóm K có hủy 1 đơn và ảnh `overview_profile` cần dữ liệu mới.
+3. `node n2_firefox_checklist.js --only=I --log=n2_extra_log.txt`
+   - Script dừng 1 lần để bạn gõ `about:support` vào thanh địa chỉ.
+   - Không phải dán dòng Console nữa, vì ảnh `overview_env_2` đã có.
+
+Chạy xong báo tôi. Khi đó tôi gộp kết quả kiểm ảnh của agent với log nhóm K, I và viết bản nháp `ai_raw/T3_firefox_manual.md`.
+
+Agent đã kiểm xong ảnh và chỉ ra thêm ba điều cần xử lý:
+- **CL-101, CL-52, CL-102** có cùng dấu hiệu bấm "Cập nhật" không ăn: Không có thông báo nào, dữ liệu không được lưu.
+- **Ảnh CL-34_1** cho thấy `test@eshop.com` "chưa có đơn hàng nào". Tức là DB đã được reset mà chưa seed, nên nhóm K bây giờ sẽ không có đơn để hủy.
+- **Một vài ảnh yếu:** CL-46 (ô mật khẩu trống) và CL-109 (cửa sổ 360 px che mất một phần URL).
+
+Tôi xem cách script kiểm 3 mục kia để thêm vào nhóm K.
+
+Script đã có thêm CL-101, CL-52, CL-102 trong nhóm K và qua kiểm cú pháp. Với 3 mục này, script điền sẵn form, bạn chỉ cần bấm nút "Cập nhật".
+
+## Kết quả kiểm 52 ảnh (agent)
+
+- **Yêu cầu ảnh:** Mọi ảnh đều thấy cửa sổ Firefox, thanh địa chỉ `localhost:5173` và Sticky Notes đủ MSSV, họ tên, email.
+  - Riêng **CL-109**: Cửa sổ 360 px nằm đè lên cửa sổ lớn, nên chỉ thấy `http://localhost:5...`, không thấy `/profile`. Bằng chứng tiêu đề bảng bị cắt vẫn thấy được.
+- **10 mục nghi script bấm không ăn:** Ảnh cho thấy trang không đổi trạng thái sau khi bấm. Gồm 7 mục đã biết (CL-72, CL-77, CL-81, CL-82, CL-97, CL-99, CL-100) và 3 mục mới (CL-101, CL-52, CL-102). Cả 10 mục nằm trong nhóm K để bạn bấm tay.
+- **Ảnh yếu nhưng kết quả vẫn đúng** (tôi sẽ nêu trong bản nháp để bạn quyết):
+  - CL-46: Ô mật khẩu trống nên không thấy mật khẩu hiện chữ. Ảnh CL-47 thấy rõ "Sai12345!".
+  - CL-96, CL-112, CL-94: Ảnh chụp sau sự kiện.
+- **DB đang ở trạng thái reset mà chưa seed:** Ảnh CL-34_1 cho thấy `test@eshop.com` không có đơn nào.
+
+## Lệnh chạy (thứ tự mới)
+
+| Bước | Làm |
+|---|---|
+| 1 | **Reset DB và seed lại**: `node database.js` trong backend, rồi `python tools/seed_orders.py` |
+| 2 | `node n2_firefox_checklist.js --only=I --log=n2_extra_log.txt`. Script dừng 1 lần để bạn gõ `about:support` vào thanh địa chỉ Firefox. Nhóm I chỉ hủy đơn "Đã xác nhận", nên đơn "Chờ xác nhận" vẫn còn cho bước 3 |
+| 3 | `node n2_firefox_checklist.js --only=K --log=n2_recheck_log.txt`. Script dừng nhiều lần, mỗi lần nhắc một việc |
+
+Ở bước 3, bạn sẽ được nhắc làm lần lượt:
+1. **CL-33:** Zoom 200% (`Ctrl` và `+` 6 lần), cuối cùng `Ctrl+0`.
+2. **CL-72:** Bấm logo "EShop".
+3. **CL-77:** Bấm "Đăng ký ngay", rồi bấm nút Back của Firefox.
+4. **CL-81, CL-82:** Bấm "Thoát".
+5. **CL-97 đến CL-100:** Bấm "Hủy đơn" ở đơn Chờ xác nhận. Nếu có hộp xác nhận, script sẽ nhắc bấm thêm lần nữa.
+6. **CL-101, CL-52, CL-102:** Bấm "Cập nhật" 3 lần.
+
+Sau mỗi việc, quay lại cmd bấm Enter.
+
+Chạy xong cả hai lệnh thì báo tôi. Tôi sẽ đọc log và ảnh mới, rồi viết bản nháp `ai_raw/T3_firefox_manual.md` cho cột NT2.
+````
+
+---
+
+### C295 | 11:06 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã chạy xong 2 script mới. Script 1 dừng vì lỗi ngay lập tức, kiểm tra đi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Show second run of group I log
+- Bash: Read group K log
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\fix_k3.py
+- Bash: Patch K, syntax-check, list affected images
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\overview_profile.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\overview_env_1.png
+
+**Output AI (nguyên văn):**
+
+````text
+Lần chạy nhóm I đã có `overview_env_1`, `overview_profile` và `CL-05`, nhưng vẫn thiếu `CL-105_2`. Còn lỗi bạn gặp là ở nhóm K (chạy lúc 11:03), tôi xem log.
+
+Không ảnh nào bị mất. Tôi xem nhanh hai ảnh tổng quan mới để chắc dữ liệu đúng là dữ liệu vừa seed.
+
+Nhóm I lần này đã đủ ảnh:
+- **`overview_profile`:** Đúng dữ liệu vừa seed, có đủ 5 đơn ở 5 trạng thái.
+- **`overview_env_1`:** Thấy Name "Firefox", Version 159.0, OS Windows 10.0 26300, và đường dẫn chương trình nằm trong thư mục `ms-playwright`. Trang này ghi tên bản dựng là "Nightly", tôi sẽ ghi rõ ở phần môi trường.
+- **`CL-05`:** Chụp được hộp thoại "Lỗi: Cannot cancel this order."
+
+Chỉ còn thiếu `CL-105_2`: Script bấm "Cập nhật" lúc mất mạng nhưng không ăn, giống lần trước.
+
+## Đã sửa nhóm K
+
+- **Lỗi lúc nãy:** Script dùng lệnh đổi tên để chuyển ảnh cũ từ ổ D sang thư mục tạm ở ổ C, nhưng Windows không cho đổi tên qua hai ổ đĩa. Giờ script chép sang rồi mới xóa bản cũ. Lần lỗi trước chưa chuyển được ảnh nào nên không mất ảnh.
+- **Thêm bước chụp `CL-105_2`:** Script ngắt mạng của Firefox, bạn bấm "Cập nhật", script chụp hộp thoại lỗi.
+
+## Chạy lại nhóm K
+
+Không cần reset. Nhóm I chỉ hủy đơn #3 (Đã xác nhận), đơn #5 vẫn "Chờ xác nhận".
+
+```
+node n2_firefox_checklist.js --only=K --log=n2_recheck_log.txt
+```
+
+Script sẽ nhắc bạn làm lần lượt trong cửa sổ Firefox, mỗi việc xong quay lại cmd bấm Enter:
+1. **CL-33:** Zoom 200% (`Ctrl` và `+` 6 lần), sau đó `Ctrl+0`.
+2. **CL-72:** Bấm logo "EShop".
+3. **CL-77:** Bấm "Đăng ký ngay", rồi bấm nút Back của Firefox.
+4. **CL-81, CL-82:** Bấm "Thoát".
+5. **CL-97 đến CL-100:** Bấm "Hủy đơn" ở đơn #5.
+6. **CL-105:** Bấm "Cập nhật" khi script đã ngắt mạng.
+7. **CL-101, CL-52, CL-102:** Bấm "Cập nhật" 3 lần.
+
+Chạy xong báo tôi để tôi viết bản nháp.
+````
+
+---
+
+### C296 | 11:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã xong.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read the latest group K run log
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_1.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_2.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_3.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\overview_login.png
+- Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\overview_register.png
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\peek_nt.py
+- Bash: Show NT1 and NT3 results for manual items
+- Bash: Show N3 draft structure
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\n2_draft.py
+- Bash: Copy overview images and generate N2 draft
+- Bash: Spot-check draft rows and formatting
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi chép ảnh tổng quan thành ảnh bằng chứng cho các mục Failed xem từ ảnh, như đã làm ở N3, rồi tạo bản nháp 112 mục từ log.
+
+Tôi đã kiểm tra xong N2: Đủ ảnh, đủ log, và đã viết bản nháp [ai_raw/T3_firefox_manual.md](cross_platform/ai_raw/T3_firefox_manual.md) cho cột NT2. Excel chưa sửa, chờ bạn review.
+
+## Kết quả N2
+
+| Kết quả | Số mục |
+|---|---|
+| Failed | 53 |
+| Passed | 51 |
+| Không chạy được | 8 |
+| **Tổng** | **112** |
+
+Mục Failed nào cũng đã có ảnh. Ảnh tổng quan đã được chép thành ảnh bằng chứng cho 8 mục Failed xem từ ảnh: CL-01, 02, 06, 08, 25, 26, 27, 66.
+
+## Những điểm chính
+
+- **Nhóm K xác nhận lỗi lần 1 là do script.** Khi bạn bấm tay, cả 10 mục nghi ngờ đều cho kết quả giống N1:
+  - Passed: CL-72, CL-77, CL-81, CL-82, CL-99, CL-100.
+  - Failed: CL-97, CL-101, CL-52, CL-102.
+
+  Notes của các mục đổi kết quả có ghi "Lần chạy 1 script bấm không có tác dụng". Ảnh cũ của lần 1 nằm ở `C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d`, không đưa vào repo.
+- **CL-33 Passed (giống N1).** Ở zoom 200%, trang chuyển sang bố cục một cột, không bị cắt, không cuộn ngang. Script báo "chưa đủ 200%" là báo sai: Firefox của Playwright không đổi `devicePixelRatio` khi zoom, trong khi vùng trang đúng còn một nửa (683 px).
+- **CL-34 Passed:** Họ Tên 50 ký tự vẫn nằm trên 1 dòng, giống N1.
+- **CL-24 "Không chạy được"** theo D-25. Notes ghi bằng chứng gián tiếp: Firefox en-US, ngày mẫu hiện "11/9/2026", tiền "10,000,000 ₫".
+- **So với N1, NT2 chỉ khác ở CL-24.** Các khác biệt với N3 đều do ngôn ngữ trình duyệt (CL-11), khổ màn hình (CL-33, CL-34) hoặc điện thoại không có phím Tab và chuột (các mục N/A ở N3). Mục 5 của bản nháp có bảng này, dùng cho `02_compare.md`.
+
+## Cần bạn quyết khi review (mục 6 bản nháp)
+
+- ⏳ **D-30, ảnh CL-46:** Ảnh chụp lúc ô mật khẩu còn trống.
+  - Giữ ảnh này và dẫn thêm `CL-47.png` / `CL-89.png` trong Notes (bản nháp đang làm vậy).
+  - Hoặc chép ảnh `CL-47.png` thành `CL-46_2.png`.
+- ⏳ **D-31, ảnh CL-109:** Cửa sổ 360 px che một phần URL, chỉ thấy `localhost:5...`. Giữ, hay chụp tay lại?
+- ⏳ **D-32, 10 mục của nhóm K:**
+  - Lấy kết quả bạn bấm tay, Notes ghi chú lần 1 (bản nháp đang làm vậy).
+  - Hoặc ghi cả hai kết quả.
+
+Review xong thì báo tôi để ghi vào cột NT2 và sheet "Môi trường". Sau đó còn D-24 (sửa `firefox_triage.md`), các bug và `02_compare.md`.
+````
+
+---
+
+### C297 | 11:17 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Giữ ảnh này và dẫn thêm CL-47.png / CL-89.png trong Notes (bản nháp đang làm vậy).
+D-31, ảnh CL-109: Giữ
+D-32, 10 mục của nhóm K:
+Lấy kết quả bạn bấm tay, Notes ghi chú lần 1 (bản nháp đang làm vậy).
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\peek_sheets.py
+- Bash: Locate NT2 columns in Excel sheets
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\write_n2_excel.py
+- Bash: Write N2 results into Excel and verify
+
+**Output AI (nguyên văn):**
+
+````text
+Cả ba quyết định trùng với cách bản nháp đang làm. Tôi ghi NT2 vào Excel: Trước hết kiểm vị trí cột NT2 ở các sheet.
+
+Đã ghi N2 vào Excel và kiểm lại sau khi lưu:
+- **Cột NT2:** 53 Failed, 51 Passed, 8 Không chạy được, đủ 112 mục. Mục Failed nào cũng có tên ảnh, và mọi ảnh ghi trong cột Ảnh đều có thật trong thư mục `firefox/`. Dropdown giữ nguyên.
+- **Notes:** Đầu Notes ghi nguồn kết quả, như cách đã làm ở N3: "(AI xem ảnh)", "(SV bấm tay)" cho 10 mục của nhóm K, và "(SV làm tay, AI xem ảnh)" cho CL-33. Mục do script đo thì không có tiền tố.
+- **Sheet "Môi trường", cột NT2:** Tên ngắn "Firefox Windows", Firefox 159.0 bản của Playwright, cùng máy và màn hình với N1, ngày giờ các lần chạy. Phần ghi chú nêu lý do không dùng cloud, 10 mục phải kiểm lại bằng tay và CL-24 theo D-25.
+- **Sheet "Ma trận trạng thái", cột NT2:** Đã điền 5 trạng thái; cả 5 giống N3.
+- **Bản sao trước khi ghi:** `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\HW03_T1_GUI_Checklist.before_N2.xlsx`
+
+Quyết định D-30 đến D-32 giữ đúng như bản nháp. Tôi sẽ ghi chúng vào `02_compare.md` khi viết phần so sánh.
+
+**Commit** (nhớ xuất prompt log trước khi commit):
+```
+git add checklist/tools/n2_firefox_checklist.js checklist/tools/capture_screen.ps1 checklist/tools/package.json checklist/tools/n2_run_log.txt checklist/tools/n2_cl34_log.txt checklist/tools/n2_extra_log.txt checklist/tools/n2_recheck_log.txt cross_platform/screenshots/firefox cross_platform/ai_raw/T3_firefox_manual.md
+git commit -m "[T3][firefox] Run checklist on Firefox and add AI result draft"
+
+git add checklist/HW03_T1_GUI_Checklist.xlsx
+git commit -m "[T3][firefox] Record N2 results in checklist"
+```
+
+Còn lại cho Task 3:
+- D-24: Sửa `firefox_triage.md` (gồm cả việc bỏ D-16).
+- Báo bug Task 3: Issue CL-11 cho Android Chrome và bình luận vào #53, theo D-22.
+- Viết `02_compare.md`.
+````
+
+---
+
+### C298 | 11:19 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra, xuất log, viết commit message nếu có, đồng thời đưa tin nhắn gửi task 3.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status, commits and N2 run log tail
 
 **Output AI (nguyên văn):**
 
