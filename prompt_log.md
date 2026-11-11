@@ -20248,6 +20248,83 @@ Word bị dừng sau file đầu tiên; chạy lại từng file một.
 Ba PDF form đã có. Giờ xuất PDF cho các file Markdown nộp bài.
 
 Đang chuẩn bị đóng gói theo cách HW02 đã làm (thư mục `HW02_submit`). Tôi xem lại cách đó.
+
+Task 3 xong, mọi thứ đã sẵn sàng để nộp; chỉ còn **một quyết định về video phiên usability** trước khi đóng gói.
+
+## Đã làm
+
+- **Kiểm Task 3:** `02_compare.md` có bảng 3 nền tảng và các mục khác nhau kèm nguyên nhân. Issue **#104** (CL-11 trên Android Chrome, low) đã tạo, có ảnh danh sách issue `issues_list_T3.png`. `firefox_triage.md` đã sửa.
+- **Report:** Viết mục 4.2 đến 4.4 và B18; điền B03 sau khi đã chạy thử script xuất PDF. Phần tổng kết audit có 21 artifact: 5 VALID (23,8%), 0 INVALID, 16 INCOMPLETE (76,2%). Đoạn Kết luận viết theo ý bạn. Đã bỏ dòng ghi chú "bản nháp" của AI Critique.
+- **README:** Thêm dòng N2 (104 / 51 / 53 / 0 / 8), bug Task 3 và tự chấm 100.
+- **Ba form**, mỗi form có bản `.md`, `.docx` và `.pdf`:
+  - Chữ ký lấy từ form [AI-02] đã ký của HW02; ngày 11/11/2026; Cấp 4.
+  - [AI-05] tick 13 ô, để trống 2 ô giống HW02: "Không nhập dữ liệu cá nhân", "Không paste nguyên si tài liệu có bản quyền".
+  - Script tạo form: `tools/fill_ai02.py`, `tools/fill_ai03_05.py`, chép từ HW02.
+  - Đã xóa mục "Căn cứ để sinh viên đánh dấu" trong [AI-05] (mục đó ghi "xóa trước khi nộp").
+- **PDF:** Đã xuất 131 file Markdown nộp bài sang PDF; HW02 cũng commit PDF.
+- **`tools/package.py`:** Đóng gói giống HW02. Script xuất `git_log.txt`, gom mọi file git đang theo dõi vào thư mục `23120061_HW03_AI_GUIUsability_100/`, rồi cắt thành các phần 19 MB trong `HW03_submit/`.
+
+## Cần bạn quyết ngay: Video phiên usability
+
+Video pilot và P1 đến P7 nặng **1,7 GB**. Moodle chỉ nhận tối đa 20 file, mỗi file 20 MB, tức khoảng 400 MB; repo (không tính video) đã khoảng 150 MB. Máy cũng không có ffmpeg để nén. Vì vậy **không thể đưa video vào zip**.
+
+| Phương án | Làm gì |
+|---|---|
+| **(a) Đề xuất: Google Drive** | Tải lên ngay 8 video, chia sẻ "Bất kỳ ai có đường liên kết" (hoặc chỉ giảng viên), gửi tôi link để ghi vào README và report. Nếu tới 12:40 chưa tải lên xong thì chuyển sang (b) |
+| (b) Không nộp video | Ghi trong report: "Video lưu ngoài bản nộp vì giới hạn dung lượng Moodle, cung cấp khi được yêu cầu" |
+
+Đề chỉ ghi "screen recordings where available", nên (b) vẫn hợp lệ, nhưng (a) đầy đủ hơn. Video quay màn hình, không có âm thanh, và người tham gia đã đồng ý ghi hình. Nếu video có lọt khuôn mặt hay thông tin cá nhân thì chọn (b).
+
+## Thứ tự để nộp
+
+**1. Commit** (chạy ở `D:\Dang\Test\Homeworks\HW03`):
+```powershell
+git add cross_platform/02_compare.md cross_platform/ai_raw/T3_compare.md cross_platform/firefox_triage.md bugs/bug_report.md bugs/screenshots/issues_list_T3.png
+git commit -m "[T3][compare] Compare three platforms and report CL-11 as issue #104"
+git add report.md README.md forms tools/fill_ai02.py tools/fill_ai03_05.py
+git commit -m "[report] Add Task 3 results, audit summary, conclusion and signed forms"
+git add "*.pdf" tools/package.py
+git commit -m "[setup] Export Markdown files to PDF and add packaging script"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+**2. Chốt video** theo (a) hoặc (b) và báo tôi. Tôi ghi vào report, README, xuất lại PDF, xuất log lần cuối và đưa lệnh commit cuối cùng.
+
+**3. Đóng gói:** `python tools/package.py`, rồi nộp các file `.zip.001`, `.zip.002`, ... trong `HW03_submit/` lên Moodle.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 3 | ✅ Xong (N1, N2, N3; compare; issue #104) | Commit | 0 |
+| Tổng hợp | Report, README, 3 form (docx, pdf có chữ ký), PDF đều xong | Chốt video → commit cuối → `package.py` → nộp Moodle | ~0,5 giờ |
+
+⏱ Còn khoảng **0,5 giờ** làm việc | Còn **1 giờ 21 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C304 | 11:41 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là link folder chứa 8 video, các video đang được up lên: https://drive.google.com/drive/folders/1F3yh5FepAw1AIM6zg_cOZecwqOl_TKtI?usp=sharing
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate video lines in report and README and check commit status
+- Bash: Add the Google Drive video link to report and README
+- Bash: List remaining open marks in the report
+- PowerShell: Export log and refresh PDFs of report, README and log
+
+**Output AI (nguyên văn):**
+
+````text
+Những dấu ⏳ còn lại chỉ là chữ mô tả quy trình, không phải chỗ còn trống. Xuất lại PDF và log lần cuối.
 ````
 
 
