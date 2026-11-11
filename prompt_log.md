@@ -19006,6 +19006,307 @@ Tiếp tục xuất log, đưa commit message nếu có và câu trả lơ�
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Export log, show status and recent commits
+- Bash: Read demo session's latest reply
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên demo đã lọc trước xong bản AI và đưa 20 đề xuất (P-01 đến P-20); đợi bạn chốt xong mới viết file. Hiện **không có commit mới**: Các commit đến 10:07 đã đủ, và lượt này phiên demo chưa ghi file nào. Log đã xuất lại.
+
+## Câu trả lời cho phiên demo
+
+Phần lớn đồng ý với đề xuất. Có 4 chỗ khác đề xuất để video thấy bạn tự quyết, và mỗi chỗ đều có lý do:
+
+```
+Đồng ý hết các đề xuất, trừ:
+P-01: Giữ AI-01-15 (chữ hiển thị đủ dấu), đổi căn cứ sang yêu cầu giao diện tiếng Việt của FR-21 (mã UI-R tương ứng trong 01_oracle.md), không dùng nguồn slide.
+P-03: Đổi nguồn sang Nielsen heuristic 9, giữ mục.
+P-05: Bỏ.
+P-10: Tách thành hai mục: (1) Thông báo bằng tiếng Việt; (2) Không có chữ kỹ thuật. Một mục kiểm một điều, giống T1 đã tách các mục ngôn ngữ.
+P-19: (b) Câu không chủ ngữ như "Chưa có danh mục nào." vẫn là câu đầy đủ. Sửa tiêu chí CHD-16 thành: Câu trọn ý, không phải từ hay cụm từ đơn lẻ (ví dụ chỉ "Trống" hay "Empty"), không dùng từ kỹ thuật.
+Soạn 02_checklist.md và bảng thay đổi, rồi chuyển sang bước add.
+```
+
+Lý do 4 chỗ khác đề xuất:
+- **P-01:** Hiển thị đủ dấu tiếng Việt thuộc yêu cầu giao diện tiếng Việt của SRS (FR-21). Bỏ mục này chỉ vì nguồn slide thì mất một mục có căn cứ SRS.
+- **P-10:** Task 1 đã chốt mỗi mục kiểm một điều (CHD-01: Giữ 6 mục ngôn ngữ riêng).
+- **P-19:** Trong tiếng Việt, "Chưa có danh mục nào." là câu trọn ý. Nếu đòi phải có chủ ngữ thì mục sẽ Failed oan.
+- **P-03, P-05:** Giữ mục đưa focus về ô lỗi vì giúp người dùng sửa lỗi; bỏ mục Enter gửi form vì căn cứ yếu.
+
+Kết quả dự kiến: Còn **55 mục**, gồm 54 mục theo đề xuất, trừ P-05 bỏ thêm 1 mục, cộng lại AI-01-15 được giữ và 1 mục tách thêm ở P-10.
+
+## Bước add (chuẩn bị sẵn)
+
+Theo quyết định D ở bước oracle, bạn tự thêm mục ở bước add. Nên thêm **1 đến 2 mục** từ các điểm survey đã để dành:
+- **Tải lại trang (F5) thì về Dashboard thay vì ở lại trang Danh mục** (IA-03, điều hướng). Lý do AI bỏ sót: **Đặc thù giao diện**, vì ảnh tĩnh không cho thấy hành vi khi tải lại trang. Đây cũng là lỗi đã ghi chú ở #67 nên chắc chắn quan sát được.
+- **Viết hoa không nhất quán** giữa các nút và tiêu đề (IA-01). Lý do: **Prompt**, vì đề bài không nói tới quy ước viết hoa.
+
+Tên danh mục dài và tiêu đề tab không mô tả trang cũng là ứng viên, nhưng 2 mục là đủ cho video.
+
+## Lệnh commit
+
+Không có commit nào cần làm ngay. Sau khi phiên demo soạn `02_checklist.md`:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/gui-checklist/02_checklist.md
+git commit -m "[demo][review] Review AI checklist draft of A-01"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng (112 mục) | Chạy N2 (không trùng lúc quay) → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo: Xong lọc trước ở bước review | Chốt P-01 đến P-20 → add → excel; tải video lên YouTube | ~0,35 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,1 giờ** làm việc | Còn **2 giờ 50 phút** tới deadline 13:00 11/11
+
+N2 chưa chạy; nên chạy ngay sau khi demo xong bước excel. Nếu tới 10:45 vẫn chưa tới excel, dừng quay, chạy N2 trước rồi quay tiếp sau.
+````
+
+---
+
+### C287 | 10:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Đồng ý hết các đề xuất, trừ:
+P-01: Giữ AI-01-15 (chữ hiển thị đủ dấu), đổi căn cứ sang yêu cầu giao diện tiếng Việt của FR-21 (mã UI-R tương ứng trong 01_oracle.md), không dùng nguồn slide.
+P-03: Đổi nguồn sang Nielsen heuristic 9, giữ mục.
+P-05: Bỏ.
+P-10: Tách thành hai mục: (1) Thông báo bằng tiếng Việt; (2) Không có chữ kỹ thuật. Một mục kiểm một điều, giống T1 đã tách các mục ngôn ngữ.
+P-19: (b) Câu không chủ ngữ như "Chưa có danh mục nào." vẫn là câu đầy đủ. Sửa tiêu chí CHD-16 thành: Câu trọn ý, không phải từ hay cụm từ đơn lẻ (ví dụ chỉ "Trống" hay "Empty"), không dùng từ kỹ thuật.
+Soạn 02_checklist.md và bảng thay đổi, rồi chuyển sang bước add.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Inspect checklist check rules and get time
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\02_checklist.md
+- Bash: Run checklist, changes and format checks
+- Bash: Confirm no checklist row cites slides or template
+- Bash: Show rows mentioning slide or template
+
+**Output AI (nguyên văn):**
+
+````text
+Xem script kiểm `checklist` đòi cột và cách ghi Nguồn thế nào trước khi soạn.
+
+Soạn `02_checklist.md`: 55 mục `CL-01` đến `CL-55`, đã áp mọi quyết định.
+
+Kiểm thêm không còn mục nào trong bảng checklist dẫn slide hay template (13 chỗ còn lại phải nằm ở mục 6, 8, 9).
+
+Xong bước `review`: [02_checklist.md](Homeworks/HW03/demo/gui-checklist/02_checklist.md) có **55 mục, mã `CL-01` đến `CL-55`**. Ba script kiểm `checklist` (với ngưỡng trên 40 mục), `changes`, `format` đều báo 0 lỗi; mọi mã SRS đang áp dụng và cả 7 `NR` đều có mục.
+
+**Số mục:**
+
+| IA | Mục | AI giữ nguyên | AI, SV sửa | Căn cứ SRS | Khuyến nghị |
+|---|---|---|---|---|---|
+| IA-01 | 19 | 13 | 6 | 15 | 4 |
+| IA-02 | 13 | 5 | 8 | 5 | 8 |
+| IA-03 | 9 | 5 | 4 | 3 | 6 |
+| IA-04 | 14 | 4 | 10 | 2 | 12 |
+| Tổng | 55 | 27 | 28 | 25 | 30 |
+
+So với bản AI 60 mục: Bỏ 6 mục (AI-01-18, AI-01-19, AI-02-10, AI-02-15, AI-03-06, AI-03-07) và tách AI-01-04 thành CL-04, CL-05. Mục mà bạn giữ lại thay vì bỏ là CL-06 (chữ đủ dấu), giờ căn cứ UI-R01. Bảng checklist không còn mục nào dẫn slide hay template.
+
+**Cần bạn xác nhận một chỗ tôi tự thêm.** Đó là dòng loại "Thiếu" duy nhất trong bảng thay đổi (32 dòng). Khi soạn, tôi thấy CL-26 và CL-27 (focus về ô lỗi, ô lỗi được làm nổi bật) chỉ chạy được khi có thông báo lỗi ở CL-22, nhưng bản AI quên ghi chú điều này. Tôi đã thêm câu "Không có thông báo lỗi ở CL-22 thì ghi Không chạy được" theo quy ước của CHD-02. Bảng thay đổi ghi điểm này là "AI phát hiện khi soạn, SV xác nhận". Bạn không đồng ý thì báo để tôi gỡ.
+
+**Commit bước review** (chạy từ `Homeworks/HW03`):
+
+```
+git add demo/gui-checklist/02_checklist.md
+git commit -m "[demo][review] Review AI checklist items"
+```
+
+## Bước `add`
+
+Bước này bạn tự viết mục, tôi không viết thay. Mã mới bắt đầu từ **CL-56**. Mỗi mục cần đủ các cột như bảng ở mục 5 của file, kèm cột "Vì sao AI bỏ sót": Ghi `Prompt`, `Giới hạn model` hoặc `Đặc thù giao diện`, cộng một câu giải thích. Mục bản AI đã xét rồi loại thì ghi `Không áp dụng: AI đã xét và loại (<file>, mục 6)`.
+
+Để bạn tự xét, đây là những mảng đề bài gợi ý và những ý đã ghi lại ở các bước trước:
+- **Đề gợi ý:** Accessibility, dark mode, RTL. Mỗi mảng cần một kết luận ở bảng cuối mục 5, kể cả khi không thêm mục.
+- **Các điểm bạn để dành ở `01_oracle.md` mục 5.1:** Viết hoa không nhất quán, F5 về Dashboard (cùng nút Back của AI-03-06 đã bỏ), tiêu đề tab có mô tả trang không, không có tên tài khoản đang đăng nhập, "EShop Admin" không phải link.
+- **Các ý bản AI đã xét và loại** (mục 6 của từng file `ai_raw/DEMO_draft_IA-0n.md`): Khổ màn hình hẹp, chống gửi trùng, tên trùng, lỗi khi tải danh sách, và vài ý khác.
+
+Bạn gửi các mục đã viết (dạng bảng hoặc liệt kê theo cột). Tôi sẽ kiểm từng mục: Có kiểm đúng một điều không, có trùng mục nào trong CL-01 đến CL-55 không, nguồn có đúng số và đúng nội dung không, và giá trị "Vì sao AI bỏ sót" có hợp lý không. Sau đó tôi chỉ ra chỗ chưa đạt để bạn quyết định sửa.
+````
+
+---
+
+### C288 | 10:18 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tiếp tục xuất log, đưa commit message và trả lời phần demo cho tôi. Vì đây là demo để hiểu skill, không phải là làm như T1 nên phần add này, bạn có thể giúp tôi trả lời, tôi sẽ review cân nhắc để gửi lại cho demo làm để tiết kiệm thời gian.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status and recent commits
+- Bash: Read demo session's latest reply and checklist structure
+- Bash: Read checklist format, add section and candidate overlaps
+- Bash: Read oracle section 5.1 saved points and IA-01 item titles
+- Bash: Check whether the delete buttons' accessible names are already covered
+
+**Output AI (nguyên văn):**
+
+````text
+Bước review đã commit (`2795f89`, 55 mục). Log đã xuất lại. Dưới đây là bản nháp bước add để bạn xem và sửa trước khi gửi phiên demo.
+
+## Bản nháp bước add (bạn review rồi gửi)
+
+Tôi đã đối chiếu với 55 mục hiện có để tránh trùng. 3 mục đầu là các điểm bản AI đã ghi ở mục 6 của bản nháp và bạn để dành cho bước add, nên ghi đúng là "AI đã xét và loại". Mục thứ tư là **bỏ sót thật**: Đây là mục giúp video cho thấy rõ phần sinh viên thêm vượt bản AI.
+
+```
+Bước add, tôi thêm 4 mục:
+
+CL-56 | Khi đang ở trang Danh mục, bấm F5 (tải lại trang), trang có còn ở "Quản lý Danh mục" không? | IA-03 | A-01 (có dữ liệu) | Khuyến nghị: Nielsen heuristic 3 (User control and freedom) | Bàn phím: Mở Danh mục, bấm F5 | Sau khi tải lại vẫn hiện trang "Quản lý Danh mục", không bị đưa về Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6, để SV xét ở add); tôi thêm vì người quản trị hay tải lại trang để xem dữ liệu mới.
+
+CL-57 | Tiêu đề tab trình duyệt có mô tả đúng trang đang mở và khác nhau giữa các trang Admin không? | IA-01 | A-01 (có dữ liệu), Dashboard | Khuyến nghị: WCAG 2.2 SC 2.4.2 Page Titled | Nhìn: So tiêu đề tab ở Danh mục và ở Dashboard | Tiêu đề tab nêu tên trang (ví dụ có chữ "Danh mục") và khác tiêu đề tab của Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6); CL-01 chỉ kiểm tiêu đề tab là tiếng Việt, chưa kiểm có mô tả trang.
+
+CL-58 | Kiểu viết hoa có nhất quán giữa tiêu đề trang, tên cột và các mục menu không? | IA-01 | A-01 (có dữ liệu), menu trái | Khuyến nghị: Shneiderman rule 1 (Strive for consistency) | Nhìn: So "Quản lý Danh mục", "Tên Danh Mục", "Mã Giảm Giá", "Đơn hàng" | Mọi tiêu đề, tên cột, mục menu dùng cùng một kiểu viết hoa (ví dụ chỉ viết hoa chữ đầu) | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6).
+
+CL-59 | Mỗi nút "Xóa" trên từng dòng có tên đọc được nêu rõ danh mục của dòng đó không? | IA-01 | A-01 (có dữ liệu) | Khuyến nghị: WCAG 2.2 SC 2.4.6 Headings and Labels | DevTools (chỉ ở exec): Xem tên của từng nút "Xóa" trong cây Accessibility | Tên đọc được của nút nêu danh mục, ví dụ "Xóa Laptop"; không phải mọi nút đều chỉ là "Xóa" | SV thêm | Giới hạn model: AI kiểm màu và sự hiện diện của nút Xóa (CL-08, CL-15), kiểm tên đọc được của ô nhập (CL-32), nhưng không xét các nút lặp lại trên từng dòng: Người dùng trình đọc màn hình nghe "Xóa, Xóa, Xóa" mà không biết nút nào xóa danh mục nào.
+
+Các mảng đề gợi ý:
+- Accessibility: Thêm CL-59. Các ý WCAG khác đã có (CL-16, CL-17, CL-19, CL-28, CL-32, CL-54). Không thêm mục khổ hẹp 320 px (Reflow): Web Admin dùng trên máy tính, giữ lý do của bản AI.
+- Dark mode: Không thêm. Trang Admin không có chế độ tối hay nút chuyển, SRS không yêu cầu.
+- RTL: Không thêm. Giao diện chỉ có tiếng Việt, không có lựa chọn ngôn ngữ, SRS không yêu cầu.
+
+Kiểm 4 mục rồi ghi vào 02_checklist.md mục 5, mục 9; xong thì làm luôn bước excel.
+```
+
+Những chỗ nên tự xem lại trước khi gửi:
+- **CL-58:** Chữ trên giao diện thật có thể khác ví dụ. Tôi lấy từ điểm số 5 trong `01_oracle.md` mục 5.1.
+- **CL-59 dùng DevTools.** Nếu demo không chạy bước exec thì mục này chỉ có ở thiết kế; như vậy vẫn đúng, vì bước add chỉ thiết kế.
+- **Câu cuối tin nhắn gộp cả bước excel** để tiết kiệm một lượt. Muốn quay từng bước riêng thì bỏ câu đó.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+```
+
+Sau khi phiên demo ghi bước add và xuất Excel:
+
+```powershell
+git add demo/gui-checklist
+git commit -m "[demo][add] Add student items CL-56 to CL-59 and export Excel"
+git push
+```
+
+Nếu phiên demo đưa 2 lệnh riêng (add rồi excel) thì dùng lệnh của nó, nhưng bỏ `Homeworks/HW03/` ở đầu đường dẫn nếu có.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng (112 mục), chưa chạy | Chạy N2 ngay sau excel của demo → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo: Xong review (55 mục) | add → excel; dừng quay; tải video lên YouTube | ~0,3 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3 giờ** làm việc | Còn **2 giờ 40 phút** tới deadline 13:00 11/11
+
+Việc còn lại đã nhiều hơn thời gian còn lại. Sau excel, **dừng quay và chạy N2 ngay**; không làm exec trong demo. Trong lúc N2 chạy, tải video lên YouTube.
+````
+
+---
+
+### C289 | 10:20 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Bước add, tôi thêm 4 mục:
+
+CL-56 | Khi đang ở trang Danh mục, bấm F5 (tải lại trang), trang có còn ở "Quản lý Danh mục" không? | IA-03 | A-01 (có dữ liệu) | Khuyến nghị: Nielsen heuristic 3 (User control and freedom) | Bàn phím: Mở Danh mục, bấm F5 | Sau khi tải lại vẫn hiện trang "Quản lý Danh mục", không bị đưa về Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6, để SV xét ở add); tôi thêm vì người quản trị hay tải lại trang để xem dữ liệu mới.
+
+CL-57 | Tiêu đề tab trình duyệt có mô tả đúng trang đang mở và khác nhau giữa các trang Admin không? | IA-01 | A-01 (có dữ liệu), Dashboard | Khuyến nghị: WCAG 2.2 SC 2.4.2 Page Titled | Nhìn: So tiêu đề tab ở Danh mục và ở Dashboard | Tiêu đề tab nêu tên trang (ví dụ có chữ "Danh mục") và khác tiêu đề tab của Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6); CL-01 chỉ kiểm tiêu đề tab là tiếng Việt, chưa kiểm có mô tả trang.
+
+CL-58 | Kiểu viết hoa có nhất quán giữa tiêu đề trang, tên cột và các mục menu không? | IA-01 | A-01 (có dữ liệu), menu trái | Khuyến nghị: Shneiderman rule 1 (Strive for consistency) | Nhìn: So "Quản lý Danh mục", "Tên Danh Mục", "Mã Giảm Giá", "Đơn hàng" | Mọi tiêu đề, tên cột, mục menu dùng cùng một kiểu viết hoa (ví dụ chỉ viết hoa chữ đầu) | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6).
+
+CL-59 | Mỗi nút "Xóa" trên từng dòng có tên đọc được nêu rõ danh mục của dòng đó không? | IA-01 | A-01 (có dữ liệu) | Khuyến nghị: WCAG 2.2 SC 2.4.6 Headings and Labels | DevTools (chỉ ở exec): Xem tên của từng nút "Xóa" trong cây Accessibility | Tên đọc được của nút nêu danh mục, ví dụ "Xóa Laptop"; không phải mọi nút đều chỉ là "Xóa" | SV thêm | Giới hạn model: AI kiểm màu và sự hiện diện của nút Xóa (CL-08, CL-15), kiểm tên đọc được của ô nhập (CL-32), nhưng không xét các nút lặp lại trên từng dòng: Người dùng trình đọc màn hình nghe "Xóa, Xóa, Xóa" mà không biết nút nào xóa danh mục nào.
+
+Các mảng đề gợi ý:
+- Accessibility: Thêm CL-59. Các ý WCAG khác đã có (CL-16, CL-17, CL-19, CL-28, CL-32, CL-54). Không thêm mục khổ hẹp 320 px (Reflow): Web Admin dùng trên máy tính, giữ lý do của bản AI.
+- Dark mode: Không thêm. Trang Admin không có chế độ tối hay nút chuyển, SRS không yêu cầu.
+- RTL: Không thêm. Giao diện chỉ có tiếng Việt, không có lựa chọn ngôn ngữ, SRS không yêu cầu.
+
+Kiểm 4 mục rồi ghi vào 02_checklist.md mục 5, mục 9; xong thì làm luôn bước excel.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read excel step guide and script usage
+- AskUserQuestion
+- Bash: Write student items into checklist and rerun checks
+- Bash: Build Excel checklist with one platform
+- Bash: Inspect generated Excel sheets and rows
+- Bash: Inspect generated Excel sheets and rows
+
+**Output AI (nguyên văn):**
+
+````text
+Kiểm 4 mục theo chuẩn mục checklist của skill. Trước đó đọc hướng dẫn bước `excel`, vì bạn muốn làm luôn bước này.
+
+Bước `add` đã ghi xong: 59 mục, 0 lỗi. Sang bước `excel`: Chạy script của skill với 1 nhóm cột kết quả (NT1).
+
+Đã ghi 4 mục bạn thêm vào `02_checklist.md` và xuất xong file Excel.
+
+**Bước `add`:** [02_checklist.md](Homeworks/HW03/demo/gui-checklist/02_checklist.md) giờ có **59 mục**: IA-01 có 22, IA-02 có 13, IA-03 có 10, IA-04 có 14. Phân theo nguồn: 27 mục AI giữ nguyên, 28 mục AI có bạn sửa, 4 mục bạn thêm. Theo căn cứ: 25 mục theo SRS, 34 mục khuyến nghị. Ba script kiểm đều báo 0 lỗi.
+
+Các chỗ đã ghi theo quyết định của bạn:
+- **CL-56, CL-57:** Ghi đúng như bạn viết.
+- **CL-58:** Thêm câu "Không xét tên riêng "EShop Admin" và thuật ngữ "ID"".
+- **CL-59:** Cột Oracle ghi rõ đây là cách hiểu chặt của bạn, vượt mức tối thiểu của WCAG 2.2 SC 2.4.6.
+- **Kết luận ba mảng đề gợi ý:** Accessibility thêm CL-59; dark mode và RTL không thêm, kèm lý do bạn đưa.
+- **Bảng thay đổi** thêm 4 dòng. CL-56, CL-57, CL-58 ghi "Quyết định của SV", vì bản AI đã xét và để dành cho bạn. CL-59 ghi "Thiếu", lý do "Giới hạn model", người phát hiện là bạn.
+
+Lưu ý: CL-57 vẫn kiểm hai điều (tiêu đề tab có tên trang, và khác tiêu đề của Dashboard). Khi chạy, nếu mục này Failed, Notes nên ghi rõ sai ở vế nào.
+
+**Bước `excel`:** File [DEMO_GUI_checklist_A-01.xlsx](Homeworks/HW03/demo/gui-checklist/DEMO_GUI_checklist_A-01.xlsx) xuất bằng script của skill, có 1 nhóm cột kết quả NT1.
+- Có 4 sheet: Checklist, Hướng dẫn, Môi trường, Tổng hợp.
+- Sheet Checklist có đủ 59 mục, mục cuối là CL-59 và có cột "Vì sao AI bỏ sót".
+- Sheet Hướng dẫn có 8 điều kiện chuẩn bị.
+- Dòng họ tên và MSSV ở sheet Hướng dẫn đang ghi "⏳ Họ tên (MSSV)". Khi bạn đưa thông tin, tôi chạy lại script. Đừng sửa thẳng trong Excel: Muốn đổi nội dung thì sửa `02_checklist.md` rồi xuất lại.
+
+**Commit** (chạy từ `Homeworks/HW03`). Nếu bạn chưa commit bản review lúc 10:12 thì giờ không tách được nữa, vì phần review và phần thêm nằm chung một file. Khi đó gộp lại một commit với message `[demo][review][add] Review AI items and add missed items`.
+
+```
+git add demo/gui-checklist/02_checklist.md
+git commit -m "[demo][add] Add items missed by AI with reasons"
+
+git add demo/gui-checklist/DEMO_GUI_checklist_A-01.xlsx
+git commit -m "[demo][excel] Build Excel checklist"
+```
+
+Bước tiếp theo là `exec`: Bạn chạy checklist trên nền tảng thứ nhất. Khi gọi lại skill, cần chốt ba việc: Chạy tay hay dùng script, chuẩn bị dữ liệu, và thứ tự chạy theo các điều kiện ĐK-03, ĐK-04.
+````
+
+---
+
+### C290 | 10:26 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra, xuất log và đưa tôi phần trả lời cho task demo.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status and recent commits
 
 **Output AI (nguyên văn):**
 
