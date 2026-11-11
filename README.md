@@ -41,7 +41,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Số mục checklist thiết kế | 112 (IA-01: 36, IA-02: 31, IA-03: 19, IA-04: 26); nguồn: AI 58, AI có SV sửa 49, SV thêm 5 |
 | Số nền tảng (Task 3) | 3 (N1, N2, N3) |
 | Số người tham gia (Task 2) | 7 (P1 đến P7) và 1 người pilot |
-| Số bug | Task 1: 33 issue (#33 đến #65) và 2 bình luận vào issue đã có (#18, #29). Task 2: 2 issue (#66, #67). Task 3: ⏳ |
+| Số bug | Task 1: 33 issue (#33 đến #65) và 2 bình luận vào issue đã có (#18, #29). Task 2: 2 issue (#66, #67). Task 3: 1 issue (#104, CL-11 trên Android Chrome); #53 của Task 1 cập nhật nguyên nhân |
 
 ### Kết quả chạy checklist theo nền tảng
 
@@ -50,7 +50,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Nền tảng | Thiết kế | Đã chạy | Passed | Failed | N/A | Không chạy được |
 |---|---|---|---|---|---|---|
 | N1: Chrome 156, Windows 11 (Task 1) | 112 | 105 | 51 | 54 | 0 | 7 |
-| N2: Firefox, Windows 11 (máy cá nhân) | 112 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| N2: Firefox 159, Windows 11 (máy cá nhân) | 112 | 104 | 51 | 53 | 0 | 8 |
 | N3: Chrome 156 Android, Samsung SM-G998B (điện thoại thật) | 112 | 97 | 45 | 52 | 8 | 7 |
 
 ### Task 3 theo IA (N3)
@@ -81,7 +81,7 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 |---|---|---|---|---|---|
 | Task 1 | 33 (#33 đến #65) | 1 | 2 | 9 | 21 |
 | Task 2 | 2 (#66, #67) | 1 | 0 | 1 | 0 |
-| Task 3 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| Task 3 | 1 (#104) | 0 | 0 | 0 | 1 |
 
 ### Task 2: Usability
 
@@ -104,8 +104,8 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 
 | No. | Criteria | Grade | Self-Assessed Grade |
 |---|---|---|---|
-| 1 | Task 1: GUI Checklist (design + execution + bug report) | 30 | ⏳ |
-| 2 | Task 2: Usability Evaluation (task scenario + 7 sessions + analysis) | 40 | ⏳ |
-| 3 | Task 3: Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | ⏳ |
-| 4 | Agent Skills | 10 | ⏳ |
-| | **Total** | **100** | ⏳ |
+| 1 | Task 1: GUI Checklist (design + execution + bug report) | 30 | 30 |
+| 2 | Task 2: Usability Evaluation (task scenario + 7 sessions + analysis) | 40 | 40 |
+| 3 | Task 3: Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | 20 |
+| 4 | Agent Skills | 10 | 10 |
+| | **Total** | **100** | **100** |

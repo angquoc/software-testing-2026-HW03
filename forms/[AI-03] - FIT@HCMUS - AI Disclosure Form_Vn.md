@@ -1,4 +1,4 @@
-> Bản text-based của `[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.docx` (bản binary: .docx / .pdf cùng tên). ⏳ Bản .docx và .pdf tạo sau khi điền xong và ký.
+> Bản text-based của `[AI-03] - FIT@HCMUS - AI Disclosure Form_Vn.docx` (bản binary: .docx / .pdf cùng tên).
 
 Khoa Công nghệ Thông tin (FIT) – Trường Đại học Khoa học Tự nhiên (HCMUS)
 
@@ -19,8 +19,8 @@ Tài liệu được biên soạn lại từ Med Kharbach, PhD (2026) — Mẫu 
 | Môn học: | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | Mã bài tập: | HW03-AI |
 | Tên bài tập: | GUI & Usability on EShop (GUI checklist cho W-06 Hồ sơ & lịch sử đơn hàng, W-04 Đăng ký, W-03 Đăng nhập; usability evaluation luồng FL-05 Web Admin với 7 người tham gia; chạy checklist trên 3 nền tảng) |
-| Cấp độ AI (1–5): | Cấp ⏳ |
-| Ngày: | ⏳ |
+| Cấp độ AI (1–5): | Cấp 4 – AI hỗ trợ sản xuất |
+| Ngày: | 11/11/2026 |
 | Họ tên sinh viên: | Nguyễn Thị Ánh Ngọc |
 |  |  |
 | MSSV: | 23120061 |
@@ -31,13 +31,13 @@ Tài liệu được biên soạn lại từ Med Kharbach, PhD (2026) — Mẫu 
 
 Liệt kê mọi công cụ AI dùng cho bài tập này (ví dụ AI Tool (e.g., ChatGPT, Claude, Gemini), ChatGPT, GitHub Copilot, Cursor, Gemini).
 
-Claude Code (Anthropic, claude-opus-5-5), chạy trong VS Code: 1 phiên điều phối (949bce7e), 1 phiên Task 1 (f2487351), 1 phiên Task 2 (de8fb2a8), 1 phiên Task 3 (99fcf7b9), 1 phiên Agent Skill (a498e700), 1 phiên Tổng hợp (c934f0c0). Không dùng công cụ AI nào khác. Công cụ không phải AI được đề §8 yêu cầu khai: BrowserStack Live (bản trial) cho nền tảng N2 của Task 3.
+Claude Code (Anthropic, claude-opus-5-5), chạy trong VS Code: 1 phiên điều phối (949bce7e), 1 phiên Task 1 (f2487351), 1 phiên Task 2 (de8fb2a8), 1 phiên Task 3 (99fcf7b9), 1 phiên Agent Skill (a498e700), 1 phiên Tổng hợp (c934f0c0), 1 phiên demo Agent Skill (d485f4ce). Không dùng công cụ AI nào khác. Công cụ không phải AI được đề §8 yêu cầu khai: BrowserStack Live và LambdaTest (bản trial) đã thử cho nền tảng N2 của Task 3 nhưng không đủ thời gian, nên N2 chạy trên Firefox cài trên máy.
 
 ### 2. Giai đoạn nào của bài tập có dùng AI:
 
-Tick tất cả: [x] brainstorm  [x] outline  [x] viết nháp  [x] phản hồi  [x] sửa chữa  [x] code  [⏳] phân tích dữ liệu  [ ] thiết kế đồ hoạ  [x] khác (ghi rõ).
+Tick tất cả: [x] brainstorm  [x] outline  [x] viết nháp  [x] phản hồi  [x] sửa chữa  [x] code  [x] phân tích dữ liệu  [ ] thiết kế đồ hoạ  [x] khác (ghi rõ).
 
-Khác: Dẫn AI qua từng bước của GUI checklist (khảo sát màn hình từ ảnh sinh viên chụp, trích yêu cầu giao diện từ SRS, sinh checklist theo từng IA; bản gốc của AI lưu trong `checklist/ai_raw/`); lọc trước các mục cần sửa theo tiêu chí sinh viên đặt; điền nháp kết quả chạy từ log và ảnh; soạn bug report, tạo issue và chèn ảnh bằng `gh`; điều phối nhiều phiên và soát thao tác bị cấm. Code: Script Console chỉ đọc trang và script Playwright cho lần chạy checklist, script tạo dữ liệu đơn hàng, script xuất prompt log, xuất PDF, Agent Skill. ⏳ Task 2, Task 3 (phân tích dữ liệu: Tính điểm SUS, gom finding trên dữ liệu đã ẩn danh).
+Khác: Dẫn AI qua từng bước của GUI checklist (khảo sát màn hình từ ảnh sinh viên chụp, trích yêu cầu giao diện từ SRS, sinh checklist theo từng IA; bản gốc của AI lưu trong `checklist/ai_raw/`); lọc trước các mục cần sửa theo tiêu chí sinh viên đặt; điền nháp kết quả chạy từ log và ảnh; soạn bug report, tạo issue và chèn ảnh bằng `gh`; điều phối nhiều phiên và soát thao tác bị cấm. Code: Script Console chỉ đọc trang và script Playwright cho lần chạy checklist, script tạo dữ liệu đơn hàng, script xuất prompt log, xuất PDF, Agent Skill. Task 2: Đề xuất test plan, kịch bản, bộ công cụ, chép ghi chú đã ẩn danh vào hồ sơ phiên, gom phát hiện và đề xuất severity. Task 3: Đề xuất nền tảng, phân loại mục cho N2, script Playwright cho N2, N3, điền nháp kết quả, so sánh nền tảng. Phân tích dữ liệu: Script tính điểm SUS, thời gian, đếm mã sự kiện trên dữ liệu đã ẩn danh; đếm bảng "Thay đổi so với bản AI".
 
 ### 3. Prompt / nhiệm vụ chính cho AI:
 
@@ -49,7 +49,6 @@ Dán nguyên văn 2–3 prompt quan trọng nhất. Để xem đầy đủ, đí
 
 (3) C147 – Claude Code – 14:52 10/11/2026 (báo bug): "gh đã đăng nhập (nếu lệnh gh không có trong PATH thì gọi "C:\Program Files\GitHub CLI\gh.exe"). Ảnh: Tạo issue trước, chưa có ảnh, phần "Ảnh chụp" để chỗ trống. In danh sách tên ảnh cần dùng. Tôi sẽ kéo cả loạt ảnh vào một ô bình luận trên GitHub và dán đoạn link sinh ra vào bugs/image_links.txt; sau đó bạn ghép theo thuộc tính alt (tên file) và dùng gh issue edit chèn ảnh vào từng issue."
 
-⏳ Có thể thay một prompt bằng prompt của Task 2 hoặc Task 3.
 
 Toàn bộ prompt có timestamp, nguyên văn: Phụ lục A (prompt_log.md).
 
@@ -57,15 +56,15 @@ Toàn bộ prompt có timestamp, nguyên văn: Phụ lục A (prompt_log.md).
 
 Càng cụ thể càng tốt. Ví dụ: 'AI sinh TC01–TC15 ở Mục 3.2; tôi viết lại TC04 và TC11; AI KHÔNG đóng góp vào Mục 1, 2, 4, hoặc AI Critique.'
 
-Task 1: AI viết bảng khảo sát và điền bảng quan sát từ ảnh tôi chụp (`00_survey.md`), bản gốc trích yêu cầu giao diện (`ai_raw/T1_oracle.md`, 50 mã UI-R), bản gốc 109 mục checklist (`ai_raw/T1_draft_IA-01.md` đến `IA-04.md`), bảng lọc đề xuất cho IA-02 đến IA-04, file `02_checklist.md` soạn theo quyết định của tôi (58 mục giữ nguyên của AI, 49 mục AI có tôi sửa), file Excel, script `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1`, nháp kết quả cột NT1 (ô "(AI xem ảnh)" là AI tự nhìn ảnh để kết luận), `bugs/bug_report.md`, nội dung 33 issue #33 đến #65 và việc tạo issue, chèn ảnh bằng `gh`, `checklist/03_results.md`. Task 2: ⏳. Task 3: ⏳. Agent Skill: ⏳. Chung: `WORKFLOW.md`, README và issue template của repo nhóm, `tools/` (xuất prompt log, xuất PDF, `seed_orders.py`), khung `report.md`, README, các form, Appendix B.
+Task 1: AI viết bảng khảo sát và điền bảng quan sát từ ảnh tôi chụp (`00_survey.md`), bản gốc trích yêu cầu giao diện (`ai_raw/T1_oracle.md`, 50 mã UI-R), bản gốc 109 mục checklist (`ai_raw/T1_draft_IA-01.md` đến `IA-04.md`), bảng lọc đề xuất cho IA-02 đến IA-04, file `02_checklist.md` soạn theo quyết định của tôi (58 mục giữ nguyên của AI, 49 mục AI có tôi sửa), file Excel, script `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1`, nháp kết quả cột NT1 (ô "(AI xem ảnh)" là AI tự nhìn ảnh để kết luận), `bugs/bug_report.md`, nội dung 33 issue #33 đến #65 và việc tạo issue, chèn ảnh bằng `gh`, `checklist/03_results.md`. Task 2: Bản gốc test plan, kịch bản, bộ công cụ (`usability/ai_raw/`), các chỗ sửa sau pilot, hồ sơ 7 phiên chép từ ghi chú đã ẩn danh của tôi, script `score_t2.py` và `04_scores.md`, bản gốc `05_findings.md` (9 phát hiện), script tái hiện bug `edit_product_check.js`, issue #66, #67. Task 3: `01_setup.md`, `firefox_triage.md`, script `n2_firefox_checklist.js`, `n3_android_checklist.js`, nháp cột NT2, NT3, `02_compare.md`, issue của Task 3. Agent Skill: Hai skill `gui-checklist`, `usability-evaluation`; ở video demo, câu trả lời cho câu hỏi của skill và bản nháp mục thêm ở bước add do phiên điều phối soạn theo yêu cầu của tôi, tôi đọc và sửa trước khi gửi. Chung: `WORKFLOW.md`, README và issue template của repo nhóm, `tools/` (xuất prompt log, xuất PDF, `seed_orders.py`), khung `report.md`, README, các form, Appendix B.
 
-AI KHÔNG đóng góp vào: Ảnh khảo sát và ảnh chụp tay (tôi chụp), nội dung 4 mục CL-109 đến CL-112 (tôi viết, AI chỉ kiểm định dạng và nguồn), các quyết định CH-01 đến CH-10, CHD-01 đến CHD-16 và giữ / sửa / bỏ từng mục, việc ngồi máy chạy checklist và chốt kết quả, việc tải ảnh lên GitHub. ⏳ Task 2: Danh sách 7 người tham gia, ghi chú quan sát, câu trả lời thang đo và câu hỏi mở, video phiên. ⏳ Task 3: Ảnh chụp các nền tảng. ⏳ AI Critique, phần Kết luận của Appendix B, điểm tự chấm. Chi tiết từng artifact: AI Audit Report (Appendix B của report.md).
+AI KHÔNG đóng góp vào: Ảnh khảo sát và ảnh chụp tay (tôi chụp), nội dung 4 mục CL-109 đến CL-112 (tôi viết, AI chỉ kiểm định dạng và nguồn), các quyết định CH-01 đến CH-10, CHD-01 đến CHD-16 và giữ / sửa / bỏ từng mục, việc ngồi máy chạy checklist và chốt kết quả, việc tải ảnh lên GitHub. Task 2: Tuyển và lập danh sách 7 người tham gia (không đưa vào AI), điều phối và ghi chú mọi phiên, đo thời gian chuẩn, video phiên; câu trả lời SUS và câu hỏi mở do người tham gia đưa ra; chốt thang severity và thứ tự ưu tiên. Task 3: Ngồi máy chạy N2, N3, ảnh chụp các nền tảng, kiểm ngôn ngữ trình duyệt. Ý chính của phần Kết luận ở Appendix B, điểm tự chấm. Chi tiết từng artifact: AI Audit Report (Appendix B của report.md).
 
 ### 5. Cách tôi rà soát / chỉnh sửa / xác minh đầu ra AI:
 
 Mô tả phương pháp xác minh (chạy test, kiểm tra spec, hỏi TA, tra RFC, đối chiếu ISTQB syllabus, v.v.).
 
-Mỗi bước review bản AI và ghi mọi chỗ sửa vào bảng "Thay đổi so với bản AI" (Loại: Sai, Thiếu, Thừa, Mơ hồ, Quyết định của SV; với Loại Thiếu ghi lý do AI bỏ sót: Prompt, Giới hạn model, Đặc thù giao diện); đối chiếu với SRS của EShop (mục 8, FR-21 đến FR-24 và các FR của 3 màn hình), slide S13 và slide GUI + Usability + Compatibility AI-First, WCAG 2.2, HTML Living Standard; bấm thử trên giao diện thật khi bản AI suy từ ảnh tĩnh (ví dụ lời chào là link tới hồ sơ); chạy checklist thật trên Chrome, xem từng ảnh mục Failed trước khi chốt; với script, cho chạy thử có giới hạn rồi tự chạy lần thật và xem log; duyệt danh sách bug và severity trước khi AI tạo issue. Một phiên Claude riêng làm điều phối, soát thao tác bị cấm (đọc mã nguồn, đọc ghi chú điều phối, đọc dữ liệu người tham gia). Toàn bộ prompt nằm trong prompt log. Kết quả rà soát: Appendix B (VALID, INCOMPLETE, INVALID). ⏳ Task 2, Task 3.
+Mỗi bước review bản AI và ghi mọi chỗ sửa vào bảng "Thay đổi so với bản AI" (Loại: Sai, Thiếu, Thừa, Mơ hồ, Quyết định của SV; với Loại Thiếu ghi lý do AI bỏ sót: Prompt, Giới hạn model, Đặc thù giao diện); đối chiếu với SRS của EShop (mục 8, FR-21 đến FR-24 và các FR của 3 màn hình), slide S13 và slide GUI + Usability + Compatibility AI-First, WCAG 2.2, HTML Living Standard; bấm thử trên giao diện thật khi bản AI suy từ ảnh tĩnh (ví dụ lời chào là link tới hồ sơ); chạy checklist thật trên Chrome, xem từng ảnh mục Failed trước khi chốt; với script, cho chạy thử có giới hạn rồi tự chạy lần thật và xem log; duyệt danh sách bug và severity trước khi AI tạo issue. Một phiên Claude riêng làm điều phối, soát thao tác bị cấm (đọc mã nguồn, đọc ghi chú điều phối, đọc dữ liệu người tham gia). Toàn bộ prompt nằm trong prompt log. Kết quả rà soát: Appendix B (VALID, INCOMPLETE, INVALID). Task 2: Đối chiếu số liệu với hồ sơ phiên, tự tái hiện bug #67 trước khi có script, chọn thang severity của nhóm. Task 3: Bấm tay lại 10 mục script N2 nghi sai, kiểm Chrome tiếng Việt để tìm nguyên nhân CL-11, CL-24.
 
 ### 6. Trích dẫn (nếu môn yêu cầu):
 
@@ -85,8 +84,8 @@ Bằng việc ký tên dưới đây, tôi cam đoan thông tin khai báo ở tr
 | Lớp / Khoá: | Kiểm thử phần mềm - CQ2023/3 |
 | Môn học: | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | Giảng viên: | Lâm Quang Vũ <br> Hồ Tuấn Thanh <br> Trương Phước Lộc |
-| Ngày: | ⏳ |
-| Chữ ký: | ⏳ |
+| Ngày: | 11/11/2026 |
+| Chữ ký: | *(Ảnh chữ ký: Xem bản PDF)* |
 
 ## Tham khảo
 

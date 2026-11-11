@@ -281,8 +281,8 @@ Chi tiết: [`cross_platform/01_setup.md`](cross_platform/01_setup.md).
 - Đáp ứng đề: Có Chrome, Firefox và Android Chrome (thay cho Safari), đủ 3 nền tảng. Công cụ cloud đề ưu tiên đã được thử cho N2 nhưng bản trial không đủ thời gian (xem dưới); N3 là thiết bị thật, đề cho phép.
 - Lớp chữ đè **chỉ** gồm MSSV, họ tên, email sinh viên (`23120061@student.hcmus.edu.vn`); thông số nền tảng được chụp từ chính hệ thống trong ảnh môi trường riêng (`overview_env`), vì nhãn tự gõ không chứng minh được ảnh chụp trên nền tảng đó.
 - Mỗi ảnh chụp toàn màn hình, thấy được trình duyệt, URL `localhost` và lớp chữ đè.
-- **N2 đổi từ cloud sang máy cá nhân (D-28).** Sáng 11/11/2026 sinh viên đăng ký trial: BrowserStack Live chỉ cho mỗi thiết bị tối đa 1 phút trong bản trial; LambdaTest Freemium chỉ có 2 phiên, mỗi phiên khoảng 2 phút, trong khi kế hoạch N2 cần 20 đến 25 phút. Bằng chứng: `cross_platform/screenshots/firefox/browserstack_trial_limit.png`, `lambdatest_trial_limit_1.png`, `_2.png`. ⏳ Phạm vi chạy N2 trên máy (D-29).
-- Kế hoạch N2 lập khi còn dự tính chạy trên cloud, nên không chạy lại cả 112 mục vì giới hạn phút của bản trial: Phiên Task 3 phân loại từng mục ([`cross_platform/firefox_triage.md`](cross_platform/firefox_triage.md)), 17 mục nhóm A kiểm bằng script Console, 44 mục nhóm B chạy tay, 51 mục nhóm C không chạy lại (để trống ô Kết quả, ghi lý do ở Notes theo D-16) vì kết quả do nội dung, dữ liệu hay logic của trang quyết định, ít phụ thuộc trình duyệt, hoặc tốn nhiều phút (khóa tài khoản, 2 tab, giả lập mạng).
+- **N2 đổi từ cloud sang máy cá nhân (D-28).** Sáng 11/11/2026 sinh viên đăng ký trial: BrowserStack Live chỉ cho mỗi thiết bị tối đa 1 phút trong bản trial; LambdaTest Freemium chỉ có 2 phiên, mỗi phiên khoảng 2 phút, trong khi kế hoạch N2 cần 20 đến 25 phút. Bằng chứng: `cross_platform/screenshots/firefox/browserstack_trial_limit.png`, `lambdatest_trial_limit_1.png`, `_2.png`. Khi chạy trên máy không còn giới hạn phút, nên sinh viên bỏ D-16 và chạy đủ 112 mục.
+- Trước khi biết trial không đủ, phiên Task 3 đã phân loại 112 mục cho N2 ([`cross_platform/firefox_triage.md`](cross_platform/firefox_triage.md)): 17 mục kiểm bằng script Console, 44 mục chạy tay, 51 mục không chạy lại. Bản phân loại này không còn dùng khi N2 chuyển sang máy cá nhân.
 
 ### 4.2 Kết quả từng nền tảng
 
@@ -291,7 +291,7 @@ Chi tiết: [`cross_platform/01_setup.md`](cross_platform/01_setup.md).
 | Nền tảng | Công cụ | Đã chạy | Passed | Failed | N/A | Không chạy được | Tỉ lệ Passed / đã chạy | Ảnh |
 |---|---|---|---|---|---|---|---|---|
 | N1: Chrome 156, Windows 11 | Máy cá nhân; Playwright, script Console, chạy tay | 105 | 51 | 54 | 0 | 7 | 48,6% | [`checklist/screenshots/`](checklist/screenshots/), [`cross_platform/screenshots/chrome/`](cross_platform/screenshots/chrome/) |
-| N2: Firefox, Windows 11 | Máy cá nhân | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| N2: Firefox 159 (bản của Playwright), Windows 11 | Máy cá nhân; Playwright, 10 mục SV bấm tay | 104 | 51 | 53 | 0 | 8 | 49,0% | [`cross_platform/screenshots/firefox/`](cross_platform/screenshots/firefox/) |
 | N3: Chrome 156 Android, Samsung SM-G998B | Điện thoại thật qua cáp USB; Playwright, chạy tay | 97 | 45 | 52 | 8 | 7 | 46,4% | [`cross_platform/screenshots/android-chrome/`](cross_platform/screenshots/android-chrome/) |
 
 **Môi trường N3** (sheet "Môi trường" của Excel, cột NT3):
@@ -317,29 +317,41 @@ N3 theo IA:
 | IA-04 | 26 | 9 | 14 | 1 | 2 |
 | **Tổng** | **112** | **45** | **52** | **8** | **7** |
 
+N2 cho kết quả giống N1 ở 111 trên 112 mục; chỉ CL-24 khác (Failed ở N1, Không chạy được ở N2 vì đơn seed ngày 11/11/2026 không phân biệt được ngày và tháng; bằng chứng gián tiếp ghi ở Notes). 10 mục ở lần chạy đầu của script N2 bấm không có tác dụng trên Firefox; sinh viên bấm tay lại và cả 10 mục cho kết quả giống N1. Mục Failed nào của N2 và N3 cũng có ảnh.
+
 Mục Failed nào của N3 cũng có ảnh trong `cross_platform/screenshots/android-chrome/`. 7 mục Không chạy được giống N1 (trang Đăng ký từ chối mật khẩu hợp lệ, không có ô Xác nhận mật khẩu, không có hộp xác nhận hủy đơn).
 
 ### 4.3 So sánh giữa các nền tảng
 
-⏳ So sánh đủ 3 nền tảng: `cross_platform/02_compare.md`.
+Chi tiết: [`cross_platform/02_compare.md`](cross_platform/02_compare.md).
 
-Khác biệt giữa N1 và N3 (13 trên 112 mục có kết quả khác nhau):
+| Mục | N1 Chrome Windows | N2 Firefox Windows | N3 Android Chrome | Nguyên nhân |
+|---|---|---|---|---|
+| CL-11 Tiền phân cách hàng nghìn bằng dấu phẩy | Passed | Passed | Failed | **Ngôn ngữ trình duyệt** (N3 tiếng Việt hiện `10.000.000 ₫`) |
+| CL-24 Ngày theo ngày / tháng / năm | Failed | Không chạy được | Passed | **Ngôn ngữ trình duyệt** (tiếng Anh hiện tháng / ngày / năm) |
+| CL-33 Zoom 200% vẫn dùng được | Passed | Passed | Failed | **Khổ màn hình**: Trên điện thoại navbar bị cắt, bảng đơn chỉ còn 2 cột |
+| CL-34 Họ Tên dài trên navbar | Passed | Passed | Failed | **Khổ màn hình**: Rộng 384 px, lời chào xuống 4 dòng, navbar cao gấp đôi |
+| CL-15, CL-16, CL-17, CL-21, CL-73 | Theo N1 | Giống N1 | N/A | **Thiết bị cảm ứng**: Không có phím Tab |
+| CL-74, CL-107 | Failed | Failed | N/A | **Thiết bị cảm ứng**: Không có con trỏ chuột |
+| CL-32 Cửa sổ 1366 x 768 | Passed | Passed | N/A | Mục riêng cho máy tính; điện thoại kiểm ở CL-109 |
 
-| Mục | N1 | N3 | Ghi chú của N3 |
-|---|---|---|---|
-| CL-15, CL-16, CL-17, CL-21, CL-73 | Failed (CL-15, CL-16), Passed (CL-17, CL-21, CL-73) | N/A | Điện thoại không có bàn phím vật lý, bàn phím ảo không có phím Tab |
-| CL-74, CL-107 | Failed | N/A | Màn hình cảm ứng không có trạng thái rê chuột |
-| CL-32 | Passed | N/A | Không đặt được cửa sổ 1366 x 768; khổ điện thoại kiểm ở CL-109 |
-| CL-11 | Passed | Failed | Tổng tiền phân cách hàng nghìn bằng dấu chấm (`10.000.000`); mong đợi theo UI-R33 là dấu phẩy, ví dụ `300,000` (CH-04) |
-| CL-24 | Failed | Passed | Ngày đặt hiện theo ngày / tháng / năm (`10/11/2026`) |
-| CL-33 | Passed | Failed | Zoom 200%: W-03 không thấy nút "Thoát", trang cuộn ngang; W-04 mục "Đăng nhập" trên navbar bị cắt; W-06 lời chào bị cắt, bảng chỉ thấy cột Mã ĐH và Ngày đặt |
-| CL-34 | Passed | Failed | Họ Tên 50 ký tự: Lời chào xuống 4 dòng, navbar cao gấp đôi, "Giỏ hàng" bị ép xuống 2 dòng ở cả 3 màn hình |
+Nhận xét:
 
-CL-11 và CL-24 đổi ngược nhau giữa hai nền tảng. Sinh viên kiểm thêm ngày 11/11/2026 trên cùng máy Windows: Chrome giao diện tiếng Anh hiện `11/10/2026` và `10,000,000 ₫`, Chrome mở bằng `--lang=vi` hiện `10/11/2026` và `10.000.000 ₫`; Console cho locale `en-US` và `vi` ([`cross_platform/screenshots/chrome/CL-24_locale_1.png`](cross_platform/screenshots/chrome/CL-24_locale_1.png) đến `_4.png`). Như vậy định dạng ngày và tiền **đổi theo ngôn ngữ của trình duyệt**: N1 chạy Chrome tiếng Anh, điện thoại N3 dùng tiếng Việt, và không ngôn ngữ nào đạt cả hai mục. Issue #53 (CL-24) đã sửa lại nguyên nhân và thêm 4 ảnh; CL-11 báo thành issue riêng của Task 3 (⏳ sau N2).
+- **Engine không gây khác biệt:** Chrome và Firefox trên cùng máy Windows cho kết quả giống nhau ở mọi mục có kết luận. Các khác biệt đến từ **ngôn ngữ trình duyệt**, **khổ màn hình** và **thiết bị cảm ứng**, không từ hệ điều hành hay engine hiển thị.
+- **Định dạng ngày và tiền đổi theo ngôn ngữ trình duyệt.** Sinh viên kiểm chéo trên cùng máy Windows ngày 11/11/2026: Chrome giao diện tiếng Anh hiện `11/10/2026` và `10,000,000 ₫`, Chrome mở bằng `--lang=vi` hiện `10/11/2026` và `10.000.000 ₫`; Console cho locale `en-US` và `vi` ([`cross_platform/screenshots/chrome/CL-24_locale_1.png`](cross_platform/screenshots/chrome/CL-24_locale_1.png) đến `_4.png`). Không ngôn ngữ nào đạt cả CL-11 lẫn CL-24.
+- **Giới hạn:** N2 chạy trên máy cá nhân thay vì cloud (mục 4.1); Firefox là bản do Playwright tải về; CL-24 trên N2 không kết luận được; N3 có 8 mục N/A nên tỉ lệ tính trên ít mục hơn.
 
 ### 4.4 Bug chỉ xuất hiện trên một số nền tảng
 
-⏳
+Chi tiết: [`bugs/bug_report.md`](bugs/bug_report.md) mục Task 3. Ảnh trang Issues đã lọc: [`bugs/screenshots/issues_list_T3.png`](bugs/screenshots/issues_list_T3.png).
+
+| Mã | Issue | Nội dung | Nền tảng lỗi | Severity |
+|---|---|---|---|---|
+| B-T3-01 | [#104](https://github.com/angquoc/software-testing-2026-HW03-group/issues/104) | Tổng tiền dùng dấu chấm phân cách hàng nghìn khi trình duyệt dùng tiếng Việt: `10.000.000 ₫` thay vì `10,000,000 ₫` như SRS (CL-11) | N3 Android Chrome (và mọi trình duyệt tiếng Việt) | low |
+
+- Issue #53 (Task 1, CL-24) đã sửa nguyên nhân thành "đổi theo ngôn ngữ trình duyệt", thêm 4 ảnh kiểm chéo và bình luận kết quả trên 3 nền tảng; #53 và #104 là hai mặt của cùng một hiện tượng.
+- CL-33, CL-34 chỉ Failed trên điện thoại nhưng không báo issue (D-33, sinh viên chốt).
+- Firefox không có bug riêng: N2 không có mục Failed nào khác N1.
 
 ---
 
@@ -386,14 +398,12 @@ Bảng đầy đủ ở [`README.md`](README.md).
 |---|---|---|---|---|---|---|
 | Task 1 (N1 Chrome Windows) | 3 màn hình | 112 mục | 105 (7 Không chạy được) | 51 | 54 | 33 issue (#33 đến #65), 2 bình luận |
 | Task 2 | 1 luồng (FL-05, 3 chặng), 7 người và 1 pilot | Kịch bản 1 nhiệm vụ, 10 câu hỏi, SUS, 9 câu hỏi mở | 7 phiên (P7 dừng ở M1) | 3 tự hoàn thành | 4 không hoàn thành | 2 issue (#66, #67); 9 phát hiện (2 bug, 7 vấn đề thiết kế); SUS trung bình 61,25 (n = 6) |
-| Task 3: N2 Firefox Windows | 3 màn hình | 112 mục | ⏳ | ⏳ | ⏳ | ⏳ |
-| Task 3: N3 Chrome Android | 3 màn hình | 112 mục | 97 (8 N/A, 7 Không chạy được) | 45 | 52 | ⏳ |
+| Task 3: N2 Firefox Windows | 3 màn hình | 112 mục | 104 (8 Không chạy được) | 51 | 53 | Không có bug riêng |
+| Task 3: N3 Chrome Android | 3 màn hình | 112 mục | 97 (8 N/A, 7 Không chạy được) | 45 | 52 | 1 issue (#104, CL-11) |
 
 ---
 
 ## AI Critique
-
-> Bản nháp do phiên điều phối viết từ các bảng "Thay đổi so với bản AI" và prompt log; sinh viên sửa lại (⏳).
 
 **AI sai, thiên lệch, thiếu ở đâu.** Ở Task 1, AI chỉ nhìn ảnh tĩnh nên cho rằng navbar không có mục dẫn tới `/profile`, trong khi lời chào là link; AI áp mẫu của môn học một cách máy móc (ô `readonly` không nhận focus, trái chuẩn HTML) và đòi "đơn có ngày lớn hơn 12" mà dữ liệu không tạo được. 19 dòng Thừa cho thấy AI hay trôi sang kiểm thử chức năng. Đáng chú ý nhất: Cả 5 mục sinh viên thêm đều Failed, tức AI bỏ sót đúng những chỗ có lỗi (khổ 360 px, khoảng trắng khi dán, chống gửi trùng). Ở Task 2, AI chấm severity theo thang Nielsen thay vì thang của nhóm, xếp bug mất dữ liệu sau vấn đề thiết kế vì chỉ nhìn tích severity và tần suất, và tính nhẩm SUS sai (P5: 55 thay vì 52,5). Ở Task 3, không phiên nào đoán trước định dạng ngày, tiền phụ thuộc ngôn ngữ trình duyệt, cũng không lường được bản trial chỉ cho 1 đến 2 phút.
 
@@ -413,11 +423,11 @@ Bảng đầy đủ ở [`README.md`](README.md).
 
 | No. | Criteria | Grade | Self-Assessed Grade |
 |---|---|---|---|
-| 1 | Task 1: GUI Checklist (design + execution + bug report) | 30 | ⏳ |
-| 2 | Task 2: Usability Evaluation (task scenario + 7 sessions + analysis) | 40 | ⏳ |
-| 3 | Task 3: Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | ⏳ |
-| 4 | Agent Skills | 10 | ⏳ |
-| | **Total** | **100** | ⏳ |
+| 1 | Task 1: GUI Checklist (design + execution + bug report) | 30 | 30 |
+| 2 | Task 2: Usability Evaluation (task scenario + 7 sessions + analysis) | 40 | 40 |
+| 3 | Task 3: Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | 20 |
+| 4 | Agent Skills | 10 | 10 |
+| | **Total** | **100** | **100** |
 
 ---
 
@@ -439,7 +449,7 @@ Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) l�
 |---|---|---|---|---|---|
 | B01: Phân tích đề, kế hoạch làm bài, tracker, `WORKFLOW.md`, README và issue template của repo nhóm | Claude Code, phiên điều phối `949bce7e`, C01 đến C11, 05/11/2026 đến 07/11/2026 | Tóm tắt yêu cầu của đề, danh sách việc và file nộp, quy trình từng task, quy tắc hộp đen, quy tắc `ai_raw/` và bảng thay đổi, quy ước commit và Issues của nhóm | **INCOMPLETE** | Kế hoạch ban đầu đã gợi ý sẵn nền tảng của Task 3 khi chưa tới bước đó (sinh viên hỏi lại ở C02); README nhóm có quy tắc mà đề không yêu cầu, "không dùng chung người tham gia giữa các thành viên" (sinh viên bỏ ở C08). AI đề xuất đổi luồng FL-05 vì chỉ 1 trong 7 người đã tuyển từng bán hàng (C04, C05); sinh viên giữ luồng và yêu cầu AI lập tiêu chí để tuyển lại (C06). Để kiểm tra màn hình và luồng có đi được không trước khi chọn gói, AI đã đọc mã nguồn EShop (web `App.jsx`, `Profile.jsx`, `Register.jsx`, `Login.jsx`, `Cart.jsx`; admin `App.jsx`; mobile `App.js`; `backend/database.js`), không dùng cho thiết kế checklist. README nhóm có câu "frontend web gọi API bằng `http://localhost:3000` ghi cố định" rút ra từ lần đọc này, phiên Task 3 dẫn lại ở `01_setup.md` mục 1 (không đổi lựa chọn nền tảng). AI cũng tải Google Sheet chia việc của nhóm để kiểm tra công thức | Sinh viên yêu cầu **để các lựa chọn của bước sau thành quyết định mở (⏳)** (C02), **bỏ quy tắc đề không yêu cầu** (C08), **giữ luồng FL-05** và tuyển người theo 6 tiêu chí (C06) |
 | B02: Script `tools/export_prompt_log.py`, `tools/seed_orders.py` | Phiên điều phối `949bce7e`: `export_prompt_log.py` tạo ở C04 (05/11/2026), thêm phiên vào danh sách trắng ở C14, C22, C69, C94, C181; `seed_orders.py` tạo ở C16 (08/11/2026) | `export_prompt_log.py`: Sửa từ bản HW02, chỉ đọc các phiên HW03 trong danh sách trắng, lọc ngữ cảnh do IDE và hệ thống tự chèn. `seed_orders.py`: Tạo qua API 5 đơn ở 5 trạng thái cho `test@eshop.com` và tài khoản `newuser@eshop.com` không có đơn | **VALID** | Log được xuất lại trước mỗi lần commit, sinh viên không yêu cầu sửa script; danh sách trắng có đủ 6 phiên HW03. `seed_orders.py` dùng cho mọi lần chạy N1, N3 (ĐK-01; ví dụ C104, C112, C133, C153, C165), ma trận trạng thái ở N1, N3 có đủ 5 trạng thái; sinh viên tự dẫn script này cho phiên Task 1 (C55) và tự chạy theo lệnh AI đưa (C155). Để viết script, AI đọc route backend (`server.js`, các route register, cart, checkout, cancel, admin status) theo yêu cầu của sinh viên (C16); không dùng cho thiết kế checklist | Giữ nguyên |
-| B03: Script `tools/md_to_pdf.py`, `tools/docx_to_md.py` | Phiên điều phối, C04, 05/11/2026 | `md_to_pdf.py`: Sửa từ bản HW02, bỏ qua thư mục nhóm khi xuất PDF. `docx_to_md.py`: Chép nguyên từ HW02 | ⏳ | `md_to_pdf.py` chưa chạy trong HW03 (bước xuất PDF chưa làm), log chưa đủ để kết luận. `docx_to_md.py` chạy ở phiên Tổng hợp (C179) để đọc mẫu form: Dừng với lỗi `UnicodeEncodeError` sau file đầu tiên khi in chữ tiếng Việt ra console cp1252; chạy lại với `PYTHONIOENCODING=utf-8` thì tạo đủ 3 file | ⏳ |
+| B03: Script `tools/md_to_pdf.py`, `tools/docx_to_md.py`, `tools/fill_ai02.py`, `tools/fill_ai03_05.py` | Phiên điều phối: `md_to_pdf.py`, `docx_to_md.py` ở C04 (05/11/2026); hai script điền form ở lượt cuối 11/11/2026 | `md_to_pdf.py`: Sửa từ bản HW02, bỏ qua thư mục nhóm khi xuất PDF. `docx_to_md.py`: Chép nguyên từ HW02. `fill_ai02.py`, `fill_ai03_05.py`: Chép từ HW02, đổi mã bài, ngày, nguồn ảnh chữ ký (form [AI-02] đã ký của HW02, sinh viên cho phép) | **INCOMPLETE** | `md_to_pdf.py` xuất PDF được ngay (README, report). `docx_to_md.py` (C179) và `fill_ai02.py` dừng với lỗi `UnicodeEncodeError` khi in chữ tiếng Việt ra console cp1252; chạy lại với `PYTHONIOENCODING=utf-8` thì chạy đủ | Sinh viên cho phép **dùng lại chữ ký** của HW02 và **đánh dấu [AI-05] giống HW01, HW02** |
 | B04: T1 `survey` | Phiên Task 1 `f2487351`, C13, C21, C26, C30, 07/11/2026 đến 09/11/2026 | `ai_raw/T1_survey.md` (bảng quan sát trống); bảng quan sát AI điền từ 7 ảnh theo yêu cầu của sinh viên | **INCOMPLETE** | Bản AI điền từ ảnh ghi navbar không có mục dẫn tới `/profile`; ảnh tĩnh không cho thấy lời chào là link. Giờ chụp sinh viên ghi chưa khớp đồng hồ trong ảnh | Sinh viên **chụp thêm `survey_08`** (lời chào là link), điền phần ảnh không thấy (tiêu đề tab, ô mật khẩu, ô Email bị khóa); sửa giờ chụp |
 | B05: T1 `oracle` | Phiên `f2487351`, C42, C44, C45, C48, 09/11/2026 | `ai_raw/T1_oracle.md`: 50 yêu cầu `UI-R01` đến `UI-R50`, ánh xạ IA và màn hình, 10 câu hỏi mở, 4 giả định | **INCOMPLETE** | 20 dòng thay đổi: 1 Sai (UI-R41, navbar không có mục cho `/profile`), 19 Quyết định của SV (CH-01 đến CH-10). Câu trả lời ban đầu của sinh viên dùng chữ "bắt buộc" cho mục ngoài SRS; AI đề xuất đổi thành khuyến nghị kèm nguồn, đúng WORKFLOW mục 1.1 | Sinh viên trả lời **CH-01 đến CH-10**, chốt **CH-05** (checklist GUI không kiểm logic), **NR-01, NR-02** là khuyến nghị; sửa UI-R41 theo `survey_08` |
 | B06: T1 `ai-draft` IA-01 đến IA-04 | Phiên `f2487351`, C50 (IA-01, 12:52), C56 (IA-02 đến IA-04, 15:03), 09/11/2026 | `ai_raw/T1_draft_IA-01.md` đến `IA-04.md`: 109 mục, CHD-01 đến CHD-16 | **INCOMPLETE** | 6 Sai (định nghĩa highlight; ô `readonly` theo template trái chuẩn HTML ở CL-22; điều kiện "ngày lớn hơn 12" không tạo được ở CL-24; CL-55, CL-56 trái UI-R08), 19 Thừa (ý chức năng, mục trùng), 14 Mơ hồ, 2 Thiếu (CL-109, CL-110). IA-02 đến IA-04 làm trong một lượt theo yêu cầu của sinh viên, khác WORKFLOW mục 3.1.2 (AI đã nhắc). Ở C56, sinh viên dán kết quả DevTools của ô Email trước khi có checklist; AI ghi rõ là kết quả quá sớm và mục AI-02-21 được viết sau khi đã thấy đoạn này | Bỏ hoặc gộp **5 mục**, tách **3 mục thành 6**, sửa **49 mục**; các sửa đổi ở `02_checklist.md` mục 9 |
@@ -454,7 +464,7 @@ Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) l�
 | B15: T2 `score`, `analysis`, `bugs` (#66, #67, script `edit_product_check.js`) | Phiên `de8fb2a8`: Bug #66 C189 đến C193 (10/11/2026); bug #67 và script C221 đến C231; `score`, `analysis` C232, C235, C239, C240 (11/11/2026) | `ai_raw/T2_score.md` và script `score_t2.py`; `ai_raw/T2_analysis.md` (9 phát hiện, severity theo Nielsen); script tái hiện 8 trường hợp E1 đến E8, issue #66, #67 | **INCOMPLETE** | `score`: Script tính trung bình thời gian tự kiểm tra có cả P4 với 00:00 (ra 00:10 thay vì 00:12); 2 Quyết định của SV (QĐ-S1, QĐ-S2). `analysis`: Bản AI chấm severity theo thang Nielsen 0 đến 4, sinh viên đổi sang thang 4 mức của nhóm nên phải chấm lại cả bảng (QĐ6); 4 dòng thay đổi đều là Quyết định của SV. Bug #67: Mô tả ban đầu hẹp hơn lỗi thật; sinh viên chỉ ra lỗi nghiêm trọng hơn và đề nghị viết script phủ các trường hợp (C222, C223); lần chạy đầu thiếu trường hợp, sinh viên bảo chạy lại có thêm E8 (C226) | Sinh viên **tự tái hiện** #67 trước khi có script (C221, C222), **đề nghị viết script** (C223), chốt **QĐ-S1** (a), **QĐ-S2** (b), **QĐ6** (thang của nhóm), **QĐ-A2** (F5 lên đầu) (C235, C239, C240), tải ảnh issue lên GitHub |
 | B16: T3 `setup`, `firefox_triage.md` | Phiên Task 3 `99fcf7b9`: `setup` C62, C72 đến C75, C77 (09/11/2026); triage C126, C199 (10/11/2026) | `ai_raw/` của `01_setup.md`: Phương án nền tảng, công cụ, lớp chữ đè, cách chụp, cách mở `localhost`; `firefox_triage.md`: 112 mục chia nhóm A (Console) 17, B (chạy tay) 44, C (không chạy lại) 51 | **INCOMPLETE** | `01_setup.md`: 26 dòng thay đổi, 5 Thiếu (lớp chữ đè cho điện thoại; cài `adb`; đặt tên khi cần nhiều ảnh dù quy tắc có sẵn ở WORKFLOW; các quyết định D-11 đến D-15), 21 Quyết định của SV. Bản AI chưa tính lớp chữ đè trên điện thoại (sinh viên chỉ ra ở C73). `firefox_triage.md`: 4 Quyết định của SV | Sinh viên chọn **N3 là điện thoại thật**, **không thêm nhãn nền tảng vào lớp chữ đè** (D-06b, C74), **BrowserStack Live** (D-03, C77), **lập triage trước khi đăng ký trial** (C126), chốt **D-16 đến D-19** (C199) |
 | B17: T3 script `n3_android_checklist.js` và lần chạy N3 | Phiên `99fcf7b9`: C156, C157, C159, C166, C169, C171, C173, C174, C180 đến C188, C191 (10/11/2026) | Script Playwright điều khiển Chrome trên điện thoại qua cáp USB, chia nhóm mục, tự chụp ảnh; nhóm H (CL-34), I (CL-05, CL-105) thêm sau | **INCOMPLETE** | Lần chạy đầu không chạy được: Kẹt ở bước bật cờ dòng lệnh (C157), điện thoại báo `localhost` không gửi dữ liệu vì web chỉ nghe IPv6 (C166), nhóm C dừng vì không đăng nhập được (C169). AI hướng dẫn chạy tay CL-05, CL-105 dù script làm được (C187); đòi ảnh CL-06 thấy URL dù danh sách tab của Chrome Android không hiện URL (C188) | Sinh viên **ngồi máy chạy mọi lần**, **reset DB** trước mỗi lần, yêu cầu **xóa bộ ảnh cũ và chạy lại** (C173, C174), **chụp tay** CL-33, CL-06 (C184, C195), **yêu cầu dùng script** cho CL-05, CL-105 (C187) |
-| B18: T3 N2, `compare`, `bugs` | Phiên `99fcf7b9`: Kiểm ngôn ngữ trình duyệt C241, C246 (11/11/2026); CL-24 cho N2 C255; ⏳ | Đề xuất cách ghi CL-11, CL-24 theo ngôn ngữ trình duyệt (D-20 đến D-26); ⏳ | ⏳ | ⏳ | Sinh viên **tự kiểm Chrome tiếng Việt** (`--lang=vi`) và chụp 4 ảnh, chốt **D-20 đến D-26**; ⏳ |
+| B18: T3 N2, `compare`, `bugs` (script `n2_firefox_checklist.js`, cột NT2, `02_compare.md`, issue #104) | Phiên `99fcf7b9`: Kiểm ngôn ngữ trình duyệt C241, C246; CL-24 cho N2 C255; N2, compare, bugs từ 09:00 đến 11:30 11/11/2026 | Đề xuất cách ghi CL-11, CL-24 (D-20 đến D-26); khi trial không đủ, đề xuất chạy N2 trên máy (D-28); script Playwright cho Firefox; nháp cột NT2 (`ai_raw/T3_firefox_manual.md`); `02_compare.md`; issue #104 | **INCOMPLETE** | Lần chạy đầu của script N2 có 10 mục bấm không có tác dụng trên Firefox, sinh viên phải bấm tay lại (nhóm K); script báo sai CL-33 "chưa đủ 200%" vì Firefox của Playwright không đổi `devicePixelRatio` khi zoom. Phiên mô tả sai nội dung một ảnh LambdaTest rồi tự đính chính. Kế hoạch N2 ban đầu dựa trên BrowserStack Live mà chưa kiểm giới hạn trial | Sinh viên **thử BrowserStack và LambdaTest** và chụp bằng chứng, chọn **chạy N2 trên máy** (D-28), **bỏ D-16** để chạy đủ 112 mục, **bấm tay 10 mục** nghi sai, chốt **D-30 đến D-33**, tải ảnh issue lên GitHub |
 | B19: Agent Skill `gui-checklist`, `usability-evaluation` | Phiên Agent Skill `a498e700`: C93, C97, C106 (10/11/2026); bổ sung bước sau C170, C176, C202 (10/11/2026), C247 (11/11/2026) | `skills/gui-checklist/`, `skills/usability-evaluation/`: `SKILL.md`, file từng bước, mẫu, script kiểm, `lessons.md`; chép sang `.claude/skills/` và kiểm `diff -r` | **INCOMPLETE** | Bản đầu viết cả các bước chưa làm thật; sinh viên giới hạn chỉ viết các bước đã xong, bước sau để khung (C97). Sinh viên quyết ngoại lệ "4 IA một lượt" ghi vào `SKILL.md` (C106), không đưa script riêng của EShop vào `scripts/` của skill (C176), thêm file tóm tắt `03_results.md` (C202). Các bước sau phiên của usability viết từ file thật của Task 2 ở C247, không đọc hồ sơ phiên | Sinh viên chốt **phạm vi 2 skill** (D9), **chỉ viết bước đã làm thật** (C97), **ngoại lệ ai-draft** (C106), **không đưa script EShop vào skill** (C176) |
 | B20: Tổng hợp: `checklist/03_results.md`, khung `report.md`, README, form | Phiên Tổng hợp `c934f0c0`, C179, C200, 10/11/2026 | Tóm tắt kết quả N1 và bug, khung báo cáo, Test Summary, bản `.md` của [AI-02], [AI-03], [AI-05]; điền verdict B02, B10, B12 từ log | **VALID** | Phần Task 1 và N3 lấy số từ Excel và `bug_report.md`, dùng nguyên; các ô cần sinh viên quyết được để ⏳ đúng như yêu cầu ở C179, không tự chọn thay. Ở C200 phiên giữ ⏳ cho B03 vì log chưa đủ để kết luận | Sinh viên chốt **chỉ dùng Claude Code**, **nộp đủ video**, **để cấp độ AI và điểm tự chấm tới cuối** (C200). Phần Task 2, Task 3, Skill của report do phiên điều phối viết tiếp (B12, C244) |
 | B21: Demo Agent Skill `gui-checklist` trên A-01 "Quản lý Danh mục" | Phiên demo `d485f4ce`, C269 đến C291, 11/11/2026 09:12 đến 10:28 | `demo/gui-checklist/`: Bảng khảo sát, oracle (32 mã, 7 NR), 4 file ai-draft (60 mục), bảng lọc 20 đề xuất, `02_checklist.md` (59 mục), file Excel | **INCOMPLETE** | Bảng thay đổi của `02_checklist.md` có 36 dòng: 2 Thiếu (CL-59 do sinh viên thêm; ghi chú "Không chạy được" cho CL-26, CL-27 do AI tự phát hiện khi soạn), 1 Thừa, 8 Mơ hồ, 25 Quyết định của SV; `01_oracle.md` 14 dòng đều là Quyết định của SV. Bản AI dẫn nguồn slide và template mà phiên chưa đọc, phải đổi sang Nielsen, WCAG hoặc bỏ (CHD-03). Skill chạy đúng quy trình: Mỗi bước dừng chờ, lưu `ai_raw/`, script kiểm báo 0 lỗi, nhắc sinh viên đường dẫn commit. **Câu trả lời CH-01 đến CH-11, CHD-01 đến CHD-16, P-01 đến P-20 và bản nháp 4 mục `add` do phiên điều phối `949bce7e` soạn theo yêu cầu của sinh viên** để kịp quay (C280 trở đi của phiên điều phối) | Sinh viên **chụp 4 ảnh khảo sát**, đọc và gửi các câu trả lời, chọn **giữ CL-06 (đủ dấu)**, **tách CL-04, CL-05**, **bỏ mục Enter gửi form**, **sửa tiêu chí câu đầy đủ** (P-01, P-05, P-10, P-19); dừng demo ở `excel` |
@@ -462,15 +472,15 @@ Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) l�
 
 ### Tổng kết độ chính xác AI
 
-⏳ Đếm khi bảng trên đủ dòng.
+Đếm từ cột (3) của bảng trên (21 artifact, B01 đến B21). Không artifact nào bị loại bỏ hoàn toàn; phần lớn được dùng sau khi sinh viên sửa hoặc chốt thêm.
 
 | Chỉ số | Số lượng | Tỉ lệ |
 |---|---|---|
-| Tổng artifact AI sinh đã audit | ⏳ | 100% |
-| VALID (đúng, dùng nguyên) | ⏳ | ⏳ |
-| INVALID (sai, loại bỏ) | ⏳ | ⏳ |
-| INCOMPLETE (chấp nhận sau khi sửa) | ⏳ | ⏳ |
+| Tổng artifact AI sinh đã audit | 21 | 100% |
+| VALID (đúng, dùng nguyên) | 5 | 23,8% |
+| INVALID (sai, loại bỏ) | 0 | 0,0% |
+| INCOMPLETE (chấp nhận sau khi sửa) | 16 | 76,2% |
 
 ### Kết luận: Khi nào nên, không nên dùng AI?
 
-⏳ 80 đến 150 chữ, sinh viên viết.
+AI mạnh ở phân tích (đọc đề, SRS và ảnh chụp để đề xuất checklist, kịch bản, cách đo), định hướng việc cần làm theo từng bước, và viết script tự động hóa những việc phải làm tay (chạy checklist trên 3 nền tảng, tính điểm SUS, tái hiện bug, tạo issue), nhờ đó tiết kiệm nhiều thời gian. AI chưa tốt ở hai điểm: Đôi khi làm phức tạp hóa vấn đề (thêm bước, thêm quy tắc, thêm câu hỏi không cần), và ước lượng thời gian thường sai vì tính theo kiểu người tự làm tay thay vì có AI hỗ trợ; ví dụ script viết và chạy rất nhanh nhưng AI lại ước lượng ngang thời gian chạy tay. Khuyến nghị: Dùng AI cho phân tích và tự động hóa, nhưng người làm giữ quyền quyết định phạm vi, tự ước lượng thời gian và kiểm mọi kết quả.
