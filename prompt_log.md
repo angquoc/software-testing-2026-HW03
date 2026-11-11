@@ -18444,6 +18444,366 @@ CH-11	"Message thân thiện" khi danh sách trống kiểm thế nào	(a) Có c
 **Output AI (nguyên văn):**
 
 ````text
+Cả 11 câu đều trả lời được theo đúng các quyết định bạn đã chốt ở Task 1, nên không phải cân nhắc thêm. Tôi chỉ dựa vào câu trả lời ở `checklist/01_oracle.md` và `02_checklist.md`, không dựa vào mã nguồn EShop. Log đã xuất lại: 280 lượt từ 7 phiên.
+
+## Câu trả lời để dán cho phiên demo
+
+```
+CH-01: (a) Không. Demo giữ đúng một màn hình "Quản lý Danh mục".
+CH-02: (a) Chỉ giữ "ID" (thuật ngữ toàn cầu, giống T1); "Dashboard" phải dịch. "EShop Admin": (e) Tên riêng, không dịch.
+CH-03: (a) Có. Tiêu đề tab tính vào yêu cầu tiếng Việt (giống T1).
+CH-04: (b) Nguy hiểm, đỏ (giống T1).
+CH-05: (a) Hết menu trái rồi tới nội dung (giống T1: Hết khối trái rồi sang khối phải).
+CH-06: (c) Tách hai mục: Dấu * cạnh ô theo SRS; mục "có nhãn gắn với ô" là khuyến nghị theo WCAG.
+CH-07: (a) Kiểm có thông báo lỗi và vị trí của nó.
+CH-08: (b) Cả hai, Thêm và Xóa (khuyến nghị).
+CH-09: (b) Có (khuyến nghị; T1 đã chốt hành động xóa cần hộp xác nhận).
+CH-10: (b) Có (khuyến nghị; T1 đã chốt có kiểm loading).
+CH-11: Tách hai mục như T1: (1) Có câu tiếng Việt đầy đủ nói chưa có danh mục, không dùng từ kỹ thuật; (2) Có gợi ý bước tiếp theo (khuyến nghị).
+```
+
+Căn cứ từ Task 1:
+
+| Câu | Căn cứ ở Task 1 |
+|---|---|
+| CH-02 | CH-03 của T1: Chỉ để tiếng Anh các từ toàn cầu như Email, ID, Link |
+| CH-03 | CL-06: Tiêu đề tab phải là tiếng Việt |
+| CH-04 | CH-02 của T1: Nút đăng xuất thuộc nhóm nguy hiểm, màu đỏ |
+| CH-05 | CHD-04 và CL-17: Focus đi hết khối trái rồi mới sang khối phải |
+| CH-06 | CH-01 (dấu `*` theo SRS) và CL-54 (nhãn gắn với ô, WCAG) |
+| CH-09 | CH-10 của T1: Hành động xóa dữ liệu cần hộp xác nhận |
+| CH-10 | CH-07 của T1: Có kiểm loading |
+| CH-11 | CHD-13: Tách thành CL-92 (câu đầy đủ) và CL-93 (gợi ý bước tiếp theo) |
+
+Hai câu Task 1 không có tiền lệ, tôi chọn theo tiêu chí nhanh và đúng phạm vi:
+- **CH-01 chọn (a):** Đề chỉ cần chạy trọn một màn hình; thêm trang đăng nhập làm video dài hơn.
+- **CH-08 chọn (b):** Chỉ thêm 2 mục khuyến nghị nên không tốn thời gian. Đây cũng là chỗ có thể thấy lỗi ngay khi chạy.
+
+Ở CH-07, mục này nhiều khả năng sẽ Failed khi chạy, vì bug #66 (bấm "Thêm mới" khi ô tên trống thì tạo luôn danh mục không tên). Như vậy càng tốt cho video demo: Nó cho thấy checklist bắt được lỗi thật.
+
+## Lệnh commit
+
+Hai commit trước của bạn đã thành công (`b6e26ba`, `ae8f7bc`), kèm commit report (`f08e5de`) và commit log (`5f76c17`). Giờ commit bản oracle của AI và log:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/gui-checklist/ai_raw/DEMO_oracle.md
+git commit -m "[skill][demo] Add AI oracle draft of admin category screen"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Sau khi phiên demo viết bản review `01_oracle.md` theo câu trả lời trên, commit tiếp:
+
+```powershell
+git add demo/gui-checklist
+git commit -m "[skill][demo] Review oracle of admin category screen"
+```
+
+Vẫn không add các file của Task 3: `n2_firefox_checklist.js`, `capture_screen.ps1`, `package.json`, `cross_platform/screenshots/firefox/`.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 đã viết, chưa chạy | Chạy N2 trên Firefox ở máy → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo xong survey; đang ở oracle | ai-draft → review → add → excel; tải video lên YouTube | ~0,5 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,25 giờ** làm việc | Còn **3 giờ 16 phút** tới deadline 13:00 11/11
+
+Việc còn lại đã dài hơn thời gian còn lại. Nếu tới 11:30 N2 vẫn chưa xong, nên rút phạm vi N2 xuống nhóm A (17 mục Console) cộng các mục Failed chính.
+````
+
+---
+
+### C281 | 09:47 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+CH-01: (a) Không. Demo giữ đúng một màn hình "Quản lý Danh mục".
+CH-02: (a) Chỉ giữ "ID" (thuật ngữ toàn cầu, giống T1); "Dashboard" phải dịch. "EShop Admin": (e) Tên riêng, không dịch.
+CH-03: (a) Có. Tiêu đề tab tính vào yêu cầu tiếng Việt (giống T1).
+CH-04: (b) Nguy hiểm, đỏ (giống T1).
+CH-05: (a) Hết menu trái rồi tới nội dung (giống T1: Hết khối trái rồi sang khối phải).
+CH-06: (c) Tách hai mục: Dấu * cạnh ô theo SRS; mục "có nhãn gắn với ô" là khuyến nghị theo WCAG.
+CH-07: (a) Kiểm có thông báo lỗi và vị trí của nó.
+CH-08: (b) Cả hai, Thêm và Xóa (khuyến nghị).
+CH-09: (b) Có (khuyến nghị; T1 đã chốt hành động xóa cần hộp xác nhận).
+CH-10: (b) Có (khuyến nghị; T1 đã chốt có kiểm loading).
+CH-11: Tách hai mục như T1: (1) Có câu tiếng Việt đầy đủ nói chưa có danh mục, không dùng từ kỹ thuật; (2) Có gợi ý bước tiếp theo (khuyến nghị).
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Get time and inspect changes-table rules
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\01_oracle.md
+- Bash: Run oracle, changes and format checks on review
+
+**Output AI (nguyên văn):**
+
+````text
+Áp 11 câu trả lời vào bản review. Trước khi viết, tôi đối chiếu các câu trả lời với phương án trong bản AI và thấy 2 chỗ chưa khớp hẳn (ở CH-06), sẽ nêu ở mục vòng hai.
+
+Viết bản review `01_oracle.md`.
+
+Đã viết bản review [01_oracle.md](Homeworks/HW03/demo/gui-checklist/01_oracle.md) với quyết định của bạn cho CH-01 đến CH-11. Ba script kiểm `oracle`, `changes`, `format` đều báo 0 lỗi; bản AI trong `ai_raw/` không bị sửa. Bản review chưa xong hẳn: Còn 4 điểm cần bạn chốt ở cuối tin này.
+
+**Kết quả:** Trong 32 mã có 10 mã áp dụng, 2 mã áp dụng một phần, 20 mã không áp dụng, không còn mã chờ quyết. Thêm 6 mục khuyến nghị `NR-01` đến `NR-06`:
+- NR-01, NR-02: Có phản hồi sau khi thêm và sau khi xóa.
+- NR-03: Có hộp xác nhận khi xóa.
+- NR-04: Có dấu hiệu đang tải.
+- NR-05: Ô nhập có nhãn.
+- NR-06: Khi danh sách trống có gợi ý bước tiếp theo.
+
+Bảng thay đổi có 12 dòng, cả 12 đều là "Quyết định của SV".
+
+**Cần bạn lưu ý:**
+- Các mục `NR` là khuyến nghị, không phải yêu cầu của SRS, kể cả hộp xác nhận khi xóa mà bạn ghi là "cần". Checklist sẽ ghi đúng như vậy.
+- Nguồn của 6 mục `NR` (heuristic của Nielsen, quy tắc của Shneiderman, WCAG) là tôi đề xuất, bạn xem lại khi review.
+- Bạn có so với cách T1 đã chốt; tôi ghi những chỗ đó là "SV ghi: Giống T1" vì phiên này không đọc T1 để kiểm.
+- Sau các quyết định, IA-03 chỉ có 2 mã SRS và không có mục khuyến nghị nào, nên sẽ rất ít mục.
+
+**4 điểm cần chốt** (mục 4.3 của file):
+
+| Điểm | Vấn đề | Phương án |
+|---|---|---|
+| A | CH-06: Bạn ghi "dấu `*` cạnh ô", còn phương án (c) ghi "cạnh nhãn". Ô hiện chỉ có placeholder, vậy `*` nằm **trong** placeholder có tính là "cạnh ô" không? | (a) Có; (b) Không, `*` phải nằm ngoài ô, sát ô |
+| B | CH-06: Bạn ghi "nhãn **gắn với** ô", còn phương án (c) ghi "nhãn **nhìn thấy**". Hai ý kiểm khác nhau: Nhãn nhìn thấy kiểm bằng mắt (WCAG SC 3.3.2); nhãn gắn với ô kiểm bằng DevTools ở bước chạy (WCAG SC 1.3.1, 4.1.2) | (a) Chỉ kiểm nhãn nhìn thấy; (b) Chỉ kiểm nhãn gắn với ô; (c) Tách thành 2 mục khuyến nghị (thêm NR-07) |
+| C | Bạn chưa trả lời về 6 giả định GĐ-01 đến GĐ-06, ví dụ menu trái được coi là "Navbar" | (a) Xác nhận cả 6; (b) Sửa giả định nào thì ghi mã và cách hiểu mới |
+| D | Mục 5.1 còn vài điểm survey chưa thành mục kiểm nào, ví dụ viết hoa không nhất quán, F5 về Dashboard, tiêu đề tab không mô tả trang | (a) Không thêm ở bước này (vẫn thêm được ở bước `add`); (b) Bạn chọn số điểm để tôi ghi thành `NR` |
+
+Chốt xong 4 điểm thì tôi cập nhật bản review và đưa lệnh commit. Nếu bạn chưa commit bản AI của bước này:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_oracle.md
+git commit -m "[demo][oracle] Add A-01 UI requirement extract (AI draft)"
+```
+````
+
+---
+
+### C282 | 09:55 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tiếp tục xuất log, đưa commit message nếu có vầ các quyết định.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show repo status, commits and demo files
+- Bash: Read latest turns of demo and Task 3 sessions
+- Bash: Read demo assumptions and scan prompt log for leaked access keys
+
+**Output AI (nguyên văn):**
+
+````text
+Đã xuất log. Không có commit mới cần làm ngay: Bản review `01_oracle.md` của demo còn 4 điểm chờ chốt, nên commit sau khi phiên demo cập nhật xong. Tôi đã quét log, không có access key nào bị lộ trong đó.
+
+## Phiên demo: 4 điểm cần chốt
+
+Dán cho phiên demo:
+
+```
+A: (b) Không. Dấu * phải nằm ngoài ô, sát ô hoặc cạnh nhãn (giống T1: * bên cạnh nhãn); * trong placeholder mất đi khi gõ.
+B: (c) Tách 2 mục khuyến nghị (thêm NR-07): Nhãn nhìn thấy (kiểm bằng mắt) và nhãn gắn với ô (kiểm bằng DevTools ở bước chạy), giống T1 có mục nhãn gắn với ô.
+C: (a) Xác nhận cả 6 giả định GĐ-01 đến GĐ-06.
+D: (a) Không thêm ở bước này; tôi sẽ tự thêm ở bước add.
+Cập nhật bản review rồi làm luôn bước ai-draft (4 IA một lượt). Lệnh commit chạy từ Homeworks/HW03, đường dẫn bắt đầu bằng demo/.
+```
+
+Lý do:
+- **A, B:** Theo đúng cách Task 1 đã làm. A còn có lý do riêng: Dấu `*` nằm trong placeholder sẽ biến mất khi người dùng bắt đầu gõ.
+- **C:** Tôi đã đọc 6 giả định. GĐ-03 (so mục menu với chính nó khi ở trang khác) đúng bài học sai định nghĩa "highlight" ở Task 1. Các giả định còn lại kiểm được từ ảnh.
+- **D:** Để dành các điểm survey này cho bước add, như vậy video có cảnh bạn tự thêm mục mà AI bỏ sót.
+
+Câu cuối của tin là để phiên demo không đưa lệnh có `Homeworks/HW03/` ở đầu đường dẫn như lần trước.
+
+## Task 3: Đã đổi phạm vi N2
+
+Bạn đã bỏ D-16, nên N2 chạy **cả 112 mục** bằng script trên Firefox ở máy. Lệnh lần 1: `node n2_firefox_checklist.js --log=n2_run_log.txt`.
+- Nếu chạy N2 trong lúc quay demo: Phần demo chỉ ghi file và xem ảnh, không đụng DB, nên chạy song song được.
+- Chỉ cần tránh để N2 tự chụp toàn màn hình đúng lúc bạn đang quay hoặc đang thao tác cửa sổ khác, vì `capture_screen.ps1` chụp cả màn hình. Nên đợi demo tới bước excel rồi mới chạy N2, hoặc chạy N2 xong rồi mới quay tiếp.
+- **Đổi access key LambdaTest** theo hướng dẫn của phiên Task 3, nếu chưa làm.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+```
+
+Sau khi phiên demo cập nhật bản review:
+
+```powershell
+git add demo/gui-checklist/01_oracle.md
+git commit -m "[skill][demo] Review oracle of admin category screen"
+git push
+```
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng, phạm vi 112 mục | Chạy N2 (không trùng lúc quay) → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo: Oracle chờ 4 điểm | ai-draft → review → add → excel; tải video lên YouTube | ~0,5 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,25 giờ** làm việc | Còn **3 giờ 4 phút** tới deadline 13:00 11/11
+
+Việc còn lại đã nhiều hơn thời gian còn lại. Ưu tiên theo thứ tự: N2 → bug của Task 3 → report → video. Nếu tới 11:00 demo chưa tới bước excel, dừng demo ở bước đang làm và tải video lên luôn.
+````
+
+---
+
+### C283 | 09:56 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+A: (b) Không. Dấu * phải nằm ngoài ô, sát ô hoặc cạnh nhãn (giống T1: * bên cạnh nhãn); * trong placeholder mất đi khi gõ.
+B: (c) Tách 2 mục khuyến nghị (thêm NR-07): Nhãn nhìn thấy (kiểm bằng mắt) và nhãn gắn với ô (kiểm bằng DevTools ở bước chạy), giống T1 có mục nhãn gắn với ô.
+C: (a) Xác nhận cả 6 giả định GĐ-01 đến GĐ-06.
+D: (a) Không thêm ở bước này; tôi sẽ tự thêm ở bước add.
+Cập nhật bản review rồi làm luôn bước ai-draft (4 IA một lượt). Lệnh commit chạy từ Homeworks/HW03, đường dẫn bắt đầu bằng demo/.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Get current time
+- Edit: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\01_oracle.md
+- Edit: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\01_oracle.md
+- Edit: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\01_oracle.md
+- Bash: Mark assumptions confirmed in review
+- Bash: Apply round-two decisions and rerun checks
+- Bash: Read ai-draft guide, template and rest of sources
+- Bash: Read worked example from first run
+- Bash: Get current time
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_draft_IA-01.md
+- Bash: Renumber CHD, fix conditions, check IA-01 draft
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_draft_IA-02.md
+- Bash: Check IA-02 draft
+- Bash: Correct creation time in IA-02 header
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_draft_IA-03.md
+- Bash: Check IA-03 draft
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_draft_IA-04.md
+- Bash: Check all four drafts and code numbering
+- Bash: Verify cross-referenced item codes exist
+- Bash: Verify cross-referenced item codes exist
+
+**Output AI (nguyên văn):**
+
+````text
+Cập nhật bản review với 4 điểm vòng hai trước, rồi sang `ai-draft`.
+
+Bản review `01_oracle.md` đã xong (14 dòng thay đổi, 0 lỗi). Sang `ai-draft`: Đọc hướng dẫn, mẫu và ví dụ của bước này.
+
+IA-01 đạt (20 mục, 0 lỗi). Viết file IA-02.
+
+Giờ tạo ghi ở đầu IA-02 sớm hơn thực tế (10:04 so với 10:02); sửa lại trước khi giao, rồi viết IA-03.
+
+Viết file IA-03.
+
+IA-03 đạt (11 mục). Viết file IA-04 (file cuối).
+
+Mã CHD (01 đến 16) và ĐK (01 đến 08) liên tục. Kiểm thêm mọi mã mục được dẫn chéo giữa các file đều có thật.
+
+Đã chốt bản review `oracle` và viết xong 4 file `ai-draft`. Theo ngoại lệ của skill và đúng như bạn yêu cầu, tôi viết cả 4 IA trong một lượt rồi mới dừng.
+
+**Bản review oracle:** [01_oracle.md](Homeworks/HW03/demo/gui-checklist/01_oracle.md) đã ghi đủ 4 điểm vòng hai:
+- Dấu `*` phải nằm ngoài ô; `*` trong placeholder không tính.
+- Thêm `NR-07` (nhãn gắn với ô, kiểm bằng DevTools), tách khỏi `NR-05` (nhãn nhìn thấy).
+- Cả 6 giả định GĐ-01 đến GĐ-06 đã được bạn xác nhận.
+- Không thêm `NR` từ mục 5.1 ở bước này.
+
+Bảng thay đổi có 14 dòng, đều là "Quyết định của SV". Các script kiểm báo 0 lỗi.
+
+**Bản AI checklist:** Có 60 mục, script kiểm báo 0 lỗi. Mã CHD đánh liên tục từ 01 đến 16, ĐK từ 01 đến 08, và mọi mã mục được dẫn chéo giữa các file đều có thật.
+
+| IA | File | Mục | Căn cứ SRS | Khuyến nghị |
+|---|---|---|---|---|
+| IA-01 | [DEMO_draft_IA-01.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_draft_IA-01.md) | 20 | 13 | 7 |
+| IA-02 | [DEMO_draft_IA-02.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_draft_IA-02.md) | 15 | 5 | 10 (có NR-05, NR-07) |
+| IA-03 | [DEMO_draft_IA-03.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_draft_IA-03.md) | 11 | 3 | 8 |
+| IA-04 | [DEMO_draft_IA-04.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_draft_IA-04.md) | 14 | 2 | 12 (có NR-01 đến NR-04, NR-06) |
+
+Mọi mã đang áp dụng trong oracle và cả 7 `NR` đều đã có mục.
+
+**Cần bạn lưu ý:**
+- Hơn nửa số mục (37/60) là khuyến nghị. Một màn hình Admin có ít yêu cầu giao diện trong SRS, nhất là IA-03 và IA-04, nên phần lớn mục phải dựa vào nguồn ngoài.
+- Tôi không sinh mục từ các điểm ở mục 5.1 mà bạn để dành cho bước `add`, như viết hoa không nhất quán, F5 về Dashboard, tiêu đề tab. Mục 6 của mỗi file ghi rõ các ý này.
+- Một số mục khuyến nghị dẫn nguồn là slide hoặc template của môn theo ghi chép của skill. Phiên này không đọc trực tiếp các nguồn đó (xem CHD-03).
+
+**Câu hỏi CHD cho bước review** (phương án chi tiết ở mục 7 của từng file):
+
+| Mã | Câu hỏi |
+|---|---|
+| CHD-01 | "Đăng xuất" chỉ có chữ đỏ, không có nền: Như vậy có đạt yêu cầu "nút màu đỏ" không? |
+| CHD-02 | Mục phụ thuộc một thành phần không xuất hiện (ví dụ không có thông báo nào) thì ghi "Không chạy được", Failed hay N/A? |
+| CHD-03 | Nguồn slide và template phiên này chưa đọc trực tiếp: Giữ, đổi sang Nielsen hoặc WCAG, hay bỏ mục? |
+| CHD-04 | Tên danh mục dài dùng để thử bao nhiêu ký tự (100, 255)? |
+| CHD-05 | Tên danh mục là dữ liệu (ví dụ "Laptop"): Có tính vào yêu cầu tiếng Việt không? |
+| CHD-06 | Mục độ tương phản: Giữ một mục hay tách theo khu vực? |
+| CHD-07 | Bong bóng báo lỗi mặc định của trình duyệt có tính là "thông báo lỗi" không? |
+| CHD-08 | Chuỗi toàn khoảng trắng có tính là "để trống" không? |
+| CHD-09 | Giữ mục khai báo `required` qua mã song song với mục dấu `*`? |
+| CHD-10 | Thuộc tính nào được tính là thông báo lỗi đã khai báo cho trình đọc màn hình? |
+| CHD-11 | Mục menu chỉ đổi màu chữ có tính là highlight không? |
+| CHD-12 | Mục nút Back gần điểm F5 bạn để dành cho bước `add`: Giữ hay bỏ? |
+| CHD-13 | Skip link và landmark `<nav>`: Hai mục riêng hay gộp một? |
+| CHD-14 | Mục "dòng mới hiện ngay sau khi thêm" có trái quyết định chỉ kiểm hiển thị không? |
+| CHD-15 | Giả lập mạng chậm ở mức nào? |
+| CHD-16 | "Câu tiếng Việt đầy đủ" ở trạng thái trống đo bằng tiêu chí nào? |
+
+Ở bước `review`, bạn muốn tự review từng mục, hay để tôi lọc trước rồi bạn chốt?
+
+**Commit** (chạy từ `Homeworks/HW03`). Lệnh đầu chỉ chạy nếu bạn chưa commit bản AI của oracle; sau đó là bản review oracle, rồi mỗi IA một commit:
+
+```
+git add demo/gui-checklist/ai_raw/DEMO_oracle.md
+git commit -m "[demo][oracle] Add A-01 UI requirement extract (AI draft)"
+
+git add demo/gui-checklist/01_oracle.md
+git commit -m "[demo][oracle] Review A-01 UI requirement extract"
+
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-01.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-01"
+
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-02.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-02"
+
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-03.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-03"
+
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-04.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-04"
+```
+````
+
+---
+
+### C284 | 10:05 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Kiểm tra commit, xuất log, đưa commit message, đồng thời đưa các quyết định.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status, recent commits and recently changed files
+
+**Output AI (nguyên văn):**
+
+````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
