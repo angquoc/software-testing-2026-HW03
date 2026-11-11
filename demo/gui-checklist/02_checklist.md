@@ -2,7 +2,7 @@
 
 Bước: `[demo][review]` (phần mục AI) và `[demo][add]` (phần mục SV thêm)
 Bản AI gốc: `ai_raw/DEMO_draft_IA-01.md` (09:59), `ai_raw/DEMO_draft_IA-02.md` (10:02), `ai_raw/DEMO_draft_IA-03.md` (10:03), `ai_raw/DEMO_draft_IA-04.md` (10:04), ngày 2026-11-11, UTC+7
-Cập nhật: 2026-11-11 10:12 (UTC+7) (bước `review`); bước `add`: ⏳ chưa làm
+Cập nhật: 2026-11-11 10:12 (UTC+7) (bước `review`), 2026-11-11 10:25 (UTC+7) (bước `add`)
 
 Ai làm phần nào:
 
@@ -133,7 +133,7 @@ Không có.
 
 ## 5. Mục sinh viên thêm (bước `add`)
 
-⏳ Chờ sinh viên viết.
+SV viết 4 mục CL-56 đến CL-59. AI kiểm và chỉ ra 3 điểm; SV quyết: CL-57 giữ nguyên (AI chỉ ra mục kiểm hai điều và cột Màn hình có Dashboard ngoài phạm vi); CL-58 thêm câu loại trừ "EShop Admin" và "ID"; CL-59 giữ nguồn WCAG 2.2 SC 2.4.6, ghi rõ là cách hiểu chặt của SV.
 
 Cách ghi:
 
@@ -143,14 +143,18 @@ Cách ghi:
 
 | Mã | Nội dung kiểm | IA | Màn hình | Oracle | Cách kiểm | Kết quả mong đợi | Nguồn | Vì sao AI bỏ sót |
 |---|---|---|---|---|---|---|---|---|
+| CL-56 | Khi đang ở trang Danh mục, bấm F5 (tải lại trang), trang có còn ở "Quản lý Danh mục" không? | IA-03 | A-01 (có dữ liệu) | Khuyến nghị: Nielsen heuristic 3 (User control and freedom) | Bàn phím: Mở Danh mục, bấm F5 | Sau khi tải lại vẫn hiện trang "Quản lý Danh mục", không bị đưa về Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6, để SV xét ở add); SV thêm vì người quản trị hay tải lại trang để xem dữ liệu mới |
+| CL-57 | Tiêu đề tab trình duyệt có mô tả đúng trang đang mở và khác nhau giữa các trang Admin không? | IA-01 | A-01 (có dữ liệu), Dashboard | Khuyến nghị: WCAG 2.2 SC 2.4.2 Page Titled | Nhìn: So tiêu đề tab ở Danh mục và ở Dashboard | Tiêu đề tab nêu tên trang (ví dụ có chữ "Danh mục") và khác tiêu đề tab của Dashboard | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6); CL-01 chỉ kiểm tiêu đề tab là tiếng Việt, chưa kiểm có mô tả trang |
+| CL-58 | Kiểu viết hoa có nhất quán giữa tiêu đề trang, tên cột và các mục menu không? | IA-01 | A-01 (có dữ liệu), menu trái | Khuyến nghị: Shneiderman rule 1 (Strive for consistency) | Nhìn: So "Quản lý Danh mục", "Tên Danh Mục", "Mã Giảm Giá", "Đơn hàng" | Mọi tiêu đề, tên cột, mục menu dùng cùng một kiểu viết hoa (ví dụ chỉ viết hoa chữ đầu). Không xét tên riêng "EShop Admin" và thuật ngữ "ID" | SV thêm | Không áp dụng: AI đã xét và loại (DEMO_draft_IA-01.md mục 6) |
+| CL-59 | Mỗi nút "Xóa" trên từng dòng có tên đọc được nêu rõ danh mục của dòng đó không? | IA-01 | A-01 (có dữ liệu) | Khuyến nghị: WCAG 2.2 SC 2.4.6 Headings and Labels (cách hiểu chặt của SV, vượt mức tối thiểu của SC 2.4.6: SC này không đòi các nút lặp trên từng dòng bảng có tên khác nhau) | DevTools (chỉ ở `exec`): Xem tên của từng nút "Xóa" trong cây Accessibility | Tên đọc được của nút nêu danh mục, ví dụ "Xóa Laptop"; không phải mọi nút đều chỉ là "Xóa" | SV thêm | Giới hạn model: AI kiểm màu và sự hiện diện của nút Xóa (CL-08, CL-15), kiểm tên đọc được của ô nhập (CL-32), nhưng không xét các nút lặp lại trên từng dòng: Người dùng trình đọc màn hình nghe "Xóa, Xóa, Xóa" mà không biết nút nào xóa danh mục nào |
 
 Các mảng đề gợi ý xét thêm:
 
 | Mảng | Kết luận |
 |---|---|
-| Accessibility | ⏳ Chờ sinh viên |
-| Dark mode | ⏳ Chờ sinh viên |
-| RTL | ⏳ Chờ sinh viên |
+| Accessibility | Thêm CL-59. Các ý WCAG khác đã có (CL-16, CL-17, CL-19, CL-28, CL-32, CL-54). Không thêm mục khổ hẹp 320 px (WCAG 2.2 SC 1.4.10 Reflow): Web Admin dùng trên máy tính, giữ lý do của bản AI (DEMO_draft_IA-01.md mục 6) |
+| Dark mode | Không thêm. Trang Admin không có chế độ tối hay nút chuyển; SRS không yêu cầu |
+| RTL | Không thêm. Giao diện chỉ có tiếng Việt, không có lựa chọn ngôn ngữ; SRS không yêu cầu |
 
 ---
 
@@ -173,13 +177,13 @@ Các mảng đề gợi ý xét thêm:
 
 | IA | Số mục | Nguồn AI | Nguồn AI, SV sửa | Nguồn SV thêm | Căn cứ SRS | Khuyến nghị |
 |---|---|---|---|---|---|---|
-| IA-01 | 19 | 13 | 6 | 0 | 15 | 4 |
+| IA-01 | 22 | 13 | 6 | 3 | 15 | 7 |
 | IA-02 | 13 | 5 | 8 | 0 | 5 | 8 |
-| IA-03 | 9 | 5 | 4 | 0 | 3 | 6 |
+| IA-03 | 10 | 5 | 4 | 1 | 3 | 7 |
 | IA-04 | 14 | 4 | 10 | 0 | 2 | 12 |
-| Tổng | 55 | 27 | 28 | 0 | 25 | 30 |
+| Tổng | 59 | 27 | 28 | 4 | 25 | 34 |
 
-Bản AI có 60 mục. Bỏ 6 mục (mục 6), tách 1 mục thành 2 (AI-01-04 thành CL-04, CL-05), thêm 0 mục từ câu trả lời CHD. Bước `add`: ⏳ chưa làm.
+Bản AI có 60 mục. Bỏ 6 mục (mục 6), tách 1 mục thành 2 (AI-01-04 thành CL-04, CL-05), thêm 0 mục từ câu trả lời CHD. Bước `add` thêm 4 mục (CL-56 đến CL-59).
 
 ### 7.2 Truy vết oracle
 
@@ -204,7 +208,7 @@ Bản AI có 60 mục. Bỏ 6 mục (mục 6), tách 1 mục thành 2 (AI-01-04 
 | NR-05 | CL-31 |
 | NR-06 | CL-44 |
 | NR-07 | CL-32 |
-| Khuyến nghị khác | CL-16 đến CL-19, CL-25 đến CL-30, CL-36 đến CL-41, CL-47, CL-50 đến CL-55 |
+| Khuyến nghị khác | CL-16 đến CL-19, CL-25 đến CL-30, CL-36 đến CL-41, CL-47, CL-50 đến CL-55, CL-56 đến CL-59 (SV thêm) |
 
 ---
 
@@ -269,3 +273,7 @@ Không có số CHD nào bị bỏ trước khi giao (CHD-01 đến CHD-16 đề
 | CL-55 (AI-04-14) | Bỏ phần nguồn slide, giữ Nielsen heuristic 1; bỏ câu dẫn CHD-14 | Quyết định của SV | | CHD-03, CHD-14. AI đề xuất (P-09), SV đồng ý |
 | ĐK-07 | Mức giả lập mạng: Preset "3G" (Slow 3G) | Quyết định của SV | | CHD-15 |
 | Mục 1 | Thêm quy ước "Không chạy được" và các định nghĩa đã chốt (highlight, thông báo lỗi, câu trọn ý, để trống, chữ của giao diện); nguồn khuyến nghị chỉ dùng Nielsen, Shneiderman, WCAG | Quyết định của SV | | CHD-02, CHD-03, CHD-05, CHD-07, CHD-08, CHD-11, P-19 |
+| CL-56 | SV thêm: F5 khi đang ở trang Danh mục vẫn ở trang Danh mục | Quyết định của SV | | Bản AI đã xét và để SV xét ở bước `add` (DEMO_draft_IA-01.md mục 6, DEMO_draft_IA-03.md mục 6; vòng hai điểm D ở `oracle`); SV thêm vì người quản trị hay tải lại trang để xem dữ liệu mới |
+| CL-57 | SV thêm: Tiêu đề tab mô tả đúng trang và khác giữa các trang Admin (WCAG 2.2 SC 2.4.2) | Quyết định của SV | | Bản AI đã xét và để SV xét ở bước `add` (DEMO_draft_IA-01.md mục 6). AI chỉ ra mục kiểm hai điều và cột Màn hình có Dashboard ngoài phạm vi A-01; SV giữ nguyên |
+| CL-58 | SV thêm: Kiểu viết hoa nhất quán (Shneiderman rule 1), không xét "EShop Admin" và "ID" | Quyết định của SV | | Bản AI đã xét và để SV xét ở bước `add` (DEMO_draft_IA-01.md mục 6). Câu loại trừ do AI chỉ ra, SV đồng ý |
+| CL-59 | SV thêm: Tên đọc được của từng nút "Xóa" nêu danh mục của dòng | Thiếu | Giới hạn model: AI đã có ảnh bảng với nhiều nút "Xóa" giống nhau và đã kiểm tên đọc được của ô nhập (CL-32) mà không xét tên của các nút lặp trên từng dòng | SV phát hiện. AI chỉ ra WCAG 2.2 SC 2.4.6 không đòi tên khác nhau cho nút lặp trong bảng; SV giữ nguồn, ghi rõ là cách hiểu chặt |
