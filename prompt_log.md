@@ -19945,11 +19945,60 @@ Không hỏi lại những gì đã chốt. Chỉ dừng để lấy link ảnh.
 - Read: d:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\android-chrome\CL-11.png
 - Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\cmp_stats.py
 - Bash: Compute per-platform stats and differences
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\issue_cl11.md
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\comment_53.md
+- Read: d:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+- Edit: d:\Dang\Test\Homeworks\HW03\bugs\bug_report.md
+- Write: d:\Dang\Test\Homeworks\HW03\cross_platform\02_compare.md
+- Bash: Read NT3 notes for CL-33 and CL-34
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\02_compare.md
+- Bash: Save AI copy of compare and check separators
+- Bash: Locate dash in bug report
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
+- Edit: d:\Dang\Test\Homeworks\HW03\cross_platform\firefox_triage.md
 
 **Output AI (nguyên văn):**
 
 ````text
 Tôi lấy thông tin cần cho cả 4 việc cùng lúc: Issue #53 làm mẫu, danh sách label, mục Task 2 trong bug report, và số liệu 3 cột của Excel.
+
+Phần issue đã sẵn sàng. Tiếp theo là mục Task 3 trong `bug_report.md`.
+
+Tiếp theo là `02_compare.md`, kèm bản AI lưu ở `ai_raw/`.
+
+Dấu "—" duy nhất nằm trong câu trích nguyên văn SRS ở mục Task 2, có từ trước, nên tôi giữ nguyên. Còn D-24: Sửa `firefox_triage.md`.
+
+Đã xong 3 trong 4 việc. Việc còn lại (tạo issue CL-11 và bình luận #53) đang chờ link ảnh.
+
+**Bạn cần tải lên GitHub đúng 1 ảnh:**
+- `cross_platform/screenshots/android-chrome/CL-11.png`
+
+Cách lấy link: Kéo ảnh vào ô bình luận của một issue bất kỳ trên repo nhóm (không cần bấm gửi), rồi copy link `https://github.com/user-attachments/assets/...` gửi tôi. Hai ảnh `CL-24_locale_1.png` và `_2.png` đã có link sẵn trong #53, tôi dùng lại.
+
+Có link rồi, tôi sẽ:
+1. **Tạo issue** bằng `gh`, label `bug`, `severity: low`, `platform: web`, `task: T3 cross-platform`, `ia: IA-01`, gán cho bạn. Tiêu đề: `[23120061][T3][W-06][Android Chrome] Tổng tiền dùng dấu chấm phân cách hàng nghìn khi trình duyệt dùng tiếng Việt: "10.000.000 ₫" thay vì "10,000,000 ₫"`.
+2. **Bình luận vào #53:** Bảng CL-24 trên 3 nền tảng (N1 Failed, N3 Android tiếng Việt hiện đúng "10/11/2026", N2 Không chạy được), kèm link tới issue mới.
+3. **Điền số issue** vào `bug_report.md`, `02_compare.md` và bản AI `ai_raw/T3_compare.md`.
+
+Nội dung issue và bình luận đã soạn sẵn ở `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\issue_cl11.md` và `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\comment_53.md`.
+
+**Đã làm:**
+- **[bugs/bug_report.md](bugs/bug_report.md):** Thêm mục Task 3 (mục 8 đến 11), làm giống mục Task 2:
+  - Issue B-T3-01 và phần chi tiết.
+  - Bình luận vào #53.
+  - Mục 10 ghi rõ **N2 Firefox không có bug riêng**: NT2 giống NT1 ở 111 / 112 mục, chỉ khác CL-24, mà CL-24 là do dữ liệu ngày 11/11 chứ không phải lỗi trang.
+  - Mục 11: Ảnh danh sách issue `issues_list_T3.png`, bạn chụp sau khi tạo issue.
+- **[cross_platform/02_compare.md](cross_platform/02_compare.md):** Bản AI lưu nguyên ở `ai_raw/T3_compare.md`. Gồm:
+  - Bảng 3 nền tảng.
+  - Bảng tổng hợp: N1 48,6%, N2 49,0%, N3 46,4% Passed trên số mục có kết luận.
+  - Bảng 12 mục khác nhau, chia theo nguyên nhân: Ngôn ngữ trình duyệt (CL-11, CL-24), khổ màn hình (CL-33, CL-34, CL-32), thiết bị cảm ứng (7 mục N/A).
+  - Phần giới hạn, và các quyết định D-28, D-30 đến D-32.
+- **[firefox_triage.md](cross_platform/firefox_triage.md) (D-24):** Thêm dòng cập nhật đầu file (N2 chạy trên máy, đủ 112 mục), đánh dấu D-16 đã bỏ, ghi kết quả CL-24, thêm 1 dòng vào bảng "Thay đổi so với bản AI".
+
+**Một điểm mới, chưa chốt:** ⏳ D-33, có báo issue cho CL-33 và CL-34 không. Hai mục này chỉ Failed trên điện thoại (zoom 200% và Họ Tên dài trên màn hình hẹp), tức cũng là bug "chỉ xuất hiện trên một số nền tảng". Tôi để mở trong `02_compare.md` và `bug_report.md`. Nếu muốn báo, bạn gửi kèm link các ảnh `android-chrome/CL-33_*.png` và `CL-34_*.png`.
 ````
 
 ---
@@ -19973,7 +20022,232 @@ Task 2 xong rồi thì bỏ ra trạng thái.
 **Output AI (nguyên văn):**
 
 ````text
-(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+Đã ghi link video vào mục 5 của `report.md` (dòng "Video demo") và vào bảng "Video demo" của `README.md`. Từ giờ bảng trạng thái không còn dòng Task 2. Log đã xuất lại.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add report.md README.md
+git commit -m "[report] Add Agent Skill demo video link"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Nếu lần trước bạn chưa commit `report.md` với message `[report] Add demo summary, audit rows B20 and B21, AI Critique draft`, thì lệnh trên gộp luôn phần đó; khi ấy đổi message thành `[report] Add demo summary, audit rows B20 and B21, AI Critique draft and video link`.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 3 | ✅ N1, N2, N3 xong; Excel đủ 3 cột | Gửi tin cho phiên Task 3: Issue CL-11, bug report, `02_compare.md`, sửa triage | ~0,75 giờ |
+| Agent Skill | ✅ Xong (skill, demo, video) | | 0 |
+| Tổng hợp | Report đã có mọi phần trừ mục 4 sau N2; đã có link video | Mục 4, tổng kết Appendix B; bạn đọc, tự chấm; PDF, zip, nộp | ~1,25 giờ |
+
+⏱ Còn khoảng **2 giờ** làm việc | Còn **1 giờ 38 phút** tới deadline 13:00 11/11
+
+Từ 12:15 chuyển sang xuất PDF và đóng gói. Trong lúc phiên Task 3 làm, bạn đọc report và điền tự chấm luôn.
+````
+
+---
+
+### C301 | 11:23 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Điểm tự chấm giống như các HW khác, đều full điểm vì làm đủ.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Fill full self-assessment grades and list open items in forms
+- Bash: List all open items in the three form files
+- Bash: Sync audit rows B01 to B21 from the report into the AI-02 form
+- Bash: Update tool declaration and disclosure paragraph in the AI-02 form
+- PowerShell: Export log and show status
+
+**Output AI (nguyên văn):**
+
+````text
+Đã điền tự chấm đủ điểm (30, 40, 20, 10, tổng **100**) vào `report.md` và `README.md`. Tôi cũng đồng bộ form [AI-02] với Appendix B: Cập nhật 20 dòng B01 đến B20, thêm dòng B21 (demo), điền ngày làm bài 05/11 đến 11/11/2026, sửa phần khai báo N2 và đoạn Mandatory Disclosure. Log đã xuất lại.
+
+Phiên Task 3 cũng đang ghi file (`02_compare.md`, `bug_report.md`, `firefox_triage.md`), nên commit phần của tôi tách riêng:
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add report.md README.md "forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md"
+git commit -m "[report] Fill self-assessment and sync AI-02 audit form with report"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Chưa add `02_compare.md`, `ai_raw/T3_compare.md`, `bug_report.md`, `firefox_triage.md`; chờ phiên Task 3 xong và đưa lệnh.
+
+## Các phần form chỉ bạn điền được
+
+| Form | Ô | Gợi ý |
+|---|---|---|
+| [AI-03] | Cấp độ AI (1 đến 5) | ⏳ HW01 và HW02 đều khai **Cấp 4** (AI hỗ trợ sản xuất). Nếu giữ như vậy, báo tôi để điền vào [AI-03], [AI-05] và report |
+| [AI-03] | Ô "phân tích dữ liệu" | Nên tick, vì AI viết script tính SUS và số liệu Task 2 |
+| [AI-03], [AI-02], [AI-05] | Ngày, chữ ký | 11/11/2026; chữ ký bạn tự ký trên bản docx hoặc PDF |
+| [AI-05] | 13 ô tự cam kết | Bạn tự tick. Một số ô bạn cần tự xác nhận, ví dụ "Dùng tài khoản Claude Pro tự chọn" |
+| Report, [AI-02] | "Kết luận: Khi nào nên dùng AI" (80 đến 150 chữ) | Mẫu ghi sinh viên viết |
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 3 | Phiên đang viết `02_compare.md`, bug report, sửa triage | Issue CL-11 (bạn kéo ảnh lấy link); commit | ~0,5 giờ |
+| Tổng hợp | Report và form [AI-02] đủ trừ mục 4 sau N2, B18, tổng kết; đã có tự chấm, link video | Cấp độ AI, ký form, Kết luận; mục 4; PDF, zip, nộp | ~1,25 giờ |
+
+⏱ Còn khoảng **1,75 giờ** làm việc | Còn **1 giờ 35 phút** tới deadline 13:00 11/11
+
+Việc vẫn nhiều hơn thời gian còn lại. Trả lời cấp độ AI và viết đoạn Kết luận trong lúc phiên Task 3 làm. Khi có `02_compare.md`, tôi viết mục 4 và tổng kết trong khoảng 10 phút; 12:15 bắt đầu đóng gói.
+````
+
+---
+
+### C302 | 11:26 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Link ảnh đây: <img width="1080" height="2400" alt="77036739-2d79-4610-acff-1fd4c1a6debd" src="https://github.com/user-attachments/assets/4c4ab361-1e5a-4ea8-8471-b908202e8c3f" />
+
+CL-33 và CL-34 không báo.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Create CL-11 issue on GitHub with gh
+- Bash: Comment on issue 53 and verify issue 104
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\fill_104.py
+- Bash: Fill issue number and D-33 into files
+
+**Output AI (nguyên văn):**
+
+````text
+Đã tạo issue #104. Giờ tôi thêm bình luận vào #53.
+
+Đã bình luận vào #53. Issue #104 có đủ 5 label và được gán cho tài khoản `angquoc`. Tôi điền số issue vào các file, và ghi D-33 là không báo.
+
+Tôi đã tạo issue #104 và bình luận vào #53, cả hai đã kiểm lại trên GitHub. Task 3 chỉ còn chụp ảnh danh sách issue và commit.
+
+**Trên GitHub**
+- **Issue [#104](https://github.com/angquoc/software-testing-2026-HW03-group/issues/104):** Ghi lỗi CL-11, tổng tiền hiện "10.000.000 ₫" khi trình duyệt dùng tiếng Việt.
+  - Có đủ 5 label: `bug`, `severity: low`, `platform: web`, `task: T3 cross-platform`, `ia: IA-01`.
+  - Đã gán cho `angquoc`.
+  - Có 3 ảnh: `CL-11.png` của N3 (link bạn gửi) và hai ảnh `CL-24_locale_1`, `_2` dùng lại link trong #53.
+- **[Bình luận ở #53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53#issuecomment-6787006335):** Bảng kết quả CL-24 trên 3 nền tảng, câu "chỉ lỗi khi trình duyệt tiếng Anh", link tới #104 và ảnh `CL-11.png`. Tiêu đề #53 giữ nguyên.
+
+**Trong file**
+- **`bug_report.md`:** Điền link #104 và link bình luận #53. Ghi CL-33, CL-34 không báo issue (D-33, quyết định của bạn).
+- **`02_compare.md`:**
+  - Cột Bug của CL-33, CL-34 ghi "Không (D-33)"; D-33 đã chốt nên không còn quyết định nào để mở.
+  - Bảng "Thay đổi so với bản AI" có 2 dòng: D-33, và việc điền số #104 sau khi viết bản AI.
+- **`ai_raw/T3_compare.md`:** Chỉ điền số #104. D-33 trong bản này vẫn để mở như lúc AI viết.
+
+**Bạn cần làm:** Chụp trang Issues đã lọc `author:angquoc label:"task: T3 cross-platform"` (có #104), lưu thành `bugs/screenshots/issues_list_T3.png`.
+
+**Commit** (nhớ xuất prompt log trước):
+```
+git add cross_platform/ai_raw/T3_compare.md
+git commit -m "[T3][compare] Add cross-platform comparison (AI draft)"
+
+git add cross_platform/02_compare.md
+git commit -m "[T3][compare] Review comparison with D-33 and issue number"
+
+git add cross_platform/firefox_triage.md
+git commit -m "[T3][firefox] Update triage after running N2 locally"
+
+git add bugs/bug_report.md bugs/screenshots/issues_list_T3.png
+git commit -m "[T3][bugs] Report CL-11 locale bug and comment on #53"
+```
+````
+
+---
+
+### C303 | 11:29 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Cấp độ AI giữ nguyên giống HW01 và 02
+Ô "phân tích dữ liệu": Tick
+Ngày, chữ ký: Lấy chữ ký của file HW01 và HW02, tôi cho phép.
+13 ô tự cam kết: Bạn tick giống HW01 và HW02, phần nào cần tôi quyết thì nói tôi. Tôi sẽ review lại.
+Report, [AI-02]: AI dùng để phân tích, định hướng việc làm, viết script tự động hóa các việc phải làm tay để tiết kiệm thời gian.
+Có phần AI không tốt không, có thì ghi: AI còn đang làm phức tạp hóa vài thứ, cân thời gian thường sai (vì tính theo kiểu người làm thay vì có AI hỗ trợ. Giống như script viết và chạy nhanh, nhưng AI lại đánh giá là thời gian ngang chạy tay)
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Find HW01 and HW02 AI-03 and AI-05 form files
+- Bash: Read HW02 form ticks, AI level, date and signature lines
+- Bash: Find the signature image in HW02 forms and check the PDF export script
+- Bash: Look for form-building scripts in earlier homework tools
+- Bash: Inspect HW02 form-filling scripts
+- Bash: Read rest of the AI-03 and AI-05 filling script
+- Bash: Read the AI-02 filling script
+- Bash: Read the HW03 AI-03 form answers
+- Bash: Read signature blocks and notes tables of the forms
+- Bash: Fill AI level, ticks, date, signature, conclusion and remaining form answers
+- Bash: Adapt and run the AI-02 docx filler for HW03
+- PowerShell: Export log, show status, commits and form files
+- Bash: Read the compare file tables and the Task 3 bug report additions
+- Bash: Get Task 3 issue severity and compare limitations
+- Bash: Write report sections 4.2 to 4.4, summary row, B18 and count audit verdicts
+- Bash: Read the B03 audit row
+- PowerShell: Test the Markdown to PDF export on README
+- Bash: Fill B03 verdict and AI accuracy summary in the report
+- Bash: Resolve remaining open items in report section 4 and AI Critique note
+- Bash: Fill README Task 3 numbers
+- Bash: Sync final audit rows, totals and disclosure into the AI-02 form markdown
+- Bash: Remove pending notes from form headers
+- Bash: Remove pending notes from all form headers
+- Bash: Create HW03 form filler for AI-03 and AI-05 and build all three docx forms
+- Write: d:\Dang\Test\Homeworks\HW03\tools\fill_ai03_05.py
+- Bash: Build AI-03, AI-05 and AI-02 docx forms and verify signature, ticks and blanks
+- Bash: Inspect paragraphs of the generated AI-03 docx
+- Bash: Fix answer parsing in AI-03 filler, rebuild and verify
+- Read: d:\Dang\Test\Homeworks\HW03\tools\fill_ai03_05.py
+- Edit: d:\Dang\Test\Homeworks\HW03\tools\fill_ai03_05.py
+- Bash: Rebuild AI-03 docx and verify all answers are present
+- PowerShell: Convert the three docx forms to PDF with Word
+- PowerShell: Export the AI-03 and AI-05 forms to PDF one at a time
+- PowerShell: Export prompt log and convert all submission Markdown files to PDF
+- Bash: Check whether PDFs are ignored and list pending changes
+- Bash: Check how HW02 handled PDFs and zip packaging
+- Bash: Read submission naming rules and HW01 package layout
+- Bash: Check packaging tools, repo size without videos and total video size
+- Bash: List HW03 top level, HW02 layout and gitignore
+- Bash: Inspect HW02 submission folder and packaging notes
+- Bash: Check HW02 git log format and zip content layout
+- Write: d:\Dang\Test\Homeworks\HW03\tools\package.py
+- Edit: d:\Dang\Test\Homeworks\HW03\tools\package.py
+- PowerShell: Re-export log and refresh PDFs of log, report and README
+
+**Output AI (nguyên văn):**
+
+````text
+Đang chép 2 script điền form docx của HW02 (`fill_ai02.py`, `fill_ai03_05.py`) sang HW03 và sửa cho HW03. Chữ ký lấy từ form đã ký của HW02, như bạn cho phép.
+
+Đang dựng bản `.docx` cho 3 form từ mẫu gốc, chữ ký lấy từ form [AI-02] đã ký của HW02.
+
+Script xuất PDF chạy được. Điền B03, tổng kết audit, rồi dựng form [AI-03], [AI-05] dạng docx.
+
+Report và README đã đủ số Task 3. Giờ đồng bộ form [AI-02] lần cuối và dựng 3 file docx có chữ ký.
+
+Dòng tick ở câu 2 và các câu 3 đến 6 bị thiếu trong bản docx [AI-03], do lỗi tách đoạn trong script. Tôi sửa rồi dựng lại.
+
+Word bị dừng sau file đầu tiên; chạy lại từng file một.
+
+Ba PDF form đã có. Giờ xuất PDF cho các file Markdown nộp bài.
+
+Đang chuẩn bị đóng gói theo cách HW02 đã làm (thư mục `HW02_submit`). Tôi xem lại cách đó.
 ````
 
 
