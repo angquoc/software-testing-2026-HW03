@@ -40,7 +40,7 @@ Theo bảng phân công của nhóm (không trùng màn hình chính và luồng
 |---|---|
 | Task 1: GUI Checklist | Màn hình chính W-06 Hồ sơ cá nhân & lịch sử đơn hàng (`/profile`); màn hình phụ W-04 Đăng ký (`/register`), W-03 Đăng nhập (`/login`). Web, `http://localhost:5173` |
 | Task 2: Usability Evaluation | Luồng FL-05 (Web Admin, `http://localhost:5174`): Đăng nhập Admin → Tạo danh mục → Thêm sản phẩm vào danh mục mới; 7 người tham gia và 1 người pilot |
-| Task 3: Cross-Browser / Cross-Platform | Chạy checklist của Task 1 trên 3 nền tảng: N1 Chrome trên Windows (chính là lần chạy của Task 1), N2 Firefox trên BrowserStack Live, N3 Chrome trên điện thoại Android thật. Chi tiết ở [`cross_platform/01_setup.md`](cross_platform/01_setup.md) |
+| Task 3: Cross-Browser / Cross-Platform | Chạy checklist của Task 1 trên 3 nền tảng: N1 Chrome trên Windows (chính là lần chạy của Task 1), N2 Firefox trên Windows (chạy trên máy sinh viên vì bản trial của BrowserStack, LambdaTest không đủ thời gian), N3 Chrome trên điện thoại Android thật. Chi tiết ở [`cross_platform/01_setup.md`](cross_platform/01_setup.md) |
 
 ### 1.2 Ánh xạ khía cạnh giao diện (IA) sang SRS
 
@@ -169,39 +169,98 @@ Thư mục: [`usability/`](usability/). Luồng FL-05 (Web Admin): Đăng nhập
 
 ### 3.1 Phase 1: Plan & prepare
 
-| Bước | Kết quả | File |
-|---|---|---|
-| Mục tiêu đánh giá (test plan 9 phần) | ⏳ | [`01_test_plan.md`](usability/01_test_plan.md) |
-| Kịch bản dạng mục tiêu, tiêu chí hoàn thành, thời gian chuẩn | ⏳ | [`02_scenario.md`](usability/02_scenario.md) |
-| Bộ công cụ: Thang đo, câu hỏi mở (clarity, error recovery, speed, trust), phiếu ghi chú, phiếu thông tin, lời dặn và lời xin đồng ý | ⏳ | [`03_instruments.md`](usability/03_instruments.md) |
-| 7 người tham gia (liên lạc che 4 số giữa) | ⏳ | [`participants.md`](usability/participants.md) |
-| Pilot và các điểm đã sửa sau pilot | ⏳ | [`pilot/`](usability/pilot/) |
+| Bước | Kết quả | Ai làm | File |
+|---|---|---|---|
+| `plan` | Test plan 9 phần theo slide S13. Loại test theo Rubin: **Assessment** (giao diện đã hoàn chỉnh, nhiệm vụ rõ, có số liệu định lượng). 10 câu hỏi Q1 đến Q10 gắn với 4 khía cạnh probe của đề (clarity, error recovery, speed, trust) và với ảnh khảo sát luồng `flow_01` đến `flow_11`; 5 mục tiêu O1 đến O5; luồng chia 3 chặng M1 Đăng nhập, M2 Tạo danh mục, M3 Đăng sản phẩm (người tham gia không thấy cách chia); số liệu D1 đến D10; chân dung: Chủ shop hoặc nhân viên đăng sản phẩm, đã từng tự đăng sản phẩm bán online, chưa từng dùng EShop, không học môn này | AI đề xuất, SV review | [`01_test_plan.md`](usability/01_test_plan.md) |
+| `scenario` | Kịch bản dạng mục tiêu, không đưa từng bước: "Tạo một danh mục mới tên là **Loa Bluetooth**, rồi đăng sản phẩm đầu tiên vào **đúng danh mục đó**"; phiếu dữ liệu cho sao chép; trạng thái ban đầu (reset DB); tiêu chí hoàn thành từng chặng; mốc T0 đến T4; mức can thiệp; tình huống đặc biệt. Thời gian chuẩn do SV tự làm và bấm giờ (toàn luồng 00:46.25), nhân bội số | AI đề xuất, **SV đo thời gian và chốt** | [`02_scenario.md`](usability/02_scenario.md) |
+| `instruments` | I1 danh sách chuẩn bị; I2 tin nhắn xin đồng ý (gửi trước ngày phiên), lời dặn, giới thiệu think-aloud; I3 phiếu thông tin; I4 phiếu ghi chú quan sát có bảng mã sự kiện (`La`, `Lb`, `Lc`, `Ld`, `Le` cho lỗi, `DD`, `HO`, `MT`, `TK`, `CT1`...); I5 thang đo **SUS** (Google Form, người tham gia điền trên điện thoại của mình và gõ mã P do người điều phối đọc); I6 câu hỏi mở C1 đến C9 theo 4 khía cạnh probe | AI đề xuất, SV review | [`03_instruments.md`](usability/03_instruments.md) |
+| `participants` | 7 người thật, ngoài lớp; liên lạc che 4 số giữa; cột đồng ý | **SV** (không đưa vào AI) | [`participants.md`](usability/participants.md) |
+| `pilot` | 1 phiên `PL` ngày 10/11/2026 (16 phút). Sửa sau pilot: Giảm bội số thời gian chuẩn từ ×5 xuống **×3** (toàn luồng 03:51.25 thành **02:18.75**, vì người pilot chỉ dùng khoảng 36% chuẩn ×5); ngưỡng "bế tắc hẳn" từ 3 xuống 2 phút; đặt bộ gõ về tiếng Anh trước phiên (`PL` gõ sai email vì bộ gõ tiếng Việt); nói rõ được sao chép từ phiếu; người tham gia chỉ chạm chuột sau khi đọc to xong kịch bản; chỉnh thời lượng phiên trong test plan theo số đo. Pilot cũng phát hiện bug #66 | **SV** chạy và ghi; AI chuẩn bị mẫu, đề xuất sửa | [`pilot/`](usability/pilot/) |
+
+Bảng "Thay đổi so với bản AI" của 3 bước thiết kế:
+
+| Bước | Số dòng | Sai | Thiếu | Thừa | Mơ hồ | Quyết định của SV |
+|---|---|---|---|---|---|---|
+| `plan` | 19 | 0 | 10 | 1 | 0 | 8 |
+| `scenario` | 19 | 1 | 3 | 1 | 0 | 14 |
+| `instruments` | 22 | 0 | 7 | 0 | 2 | 13 |
 
 ### 3.2 Phase 2: Các phiên
 
-| Phiên | Ngày giờ | Thời lượng | Hoàn thành nhiệm vụ | Số lần can thiệp | Hồ sơ |
-|---|---|---|---|---|---|
-| P1 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P1/`](usability/sessions/P1/) |
-| P2 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P2/`](usability/sessions/P2/) |
-| P3 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P3/`](usability/sessions/P3/) |
-| P4 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P4/`](usability/sessions/P4/) |
-| P5 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P5/`](usability/sessions/P5/) |
-| P6 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P6/`](usability/sessions/P6/) |
-| P7 | ⏳ | ⏳ | ⏳ | ⏳ | [`sessions/P7/`](usability/sessions/P7/) |
+Cả 7 phiên trực tiếp, cùng một máy (Chrome 156, Windows 11, chuột), cùng kịch bản, dữ liệu và trạng thái ban đầu (reset DB giữa hai phiên, trong lúc người tham gia điền form SUS). Không phiên nào có âm thanh; lời nói được ghi tay ngay lúc nghe.
+
+| Phiên | Ngày giờ bắt đầu | Thời lượng | Hoàn thành toàn luồng | Can thiệp được tính | SUS | Hồ sơ |
+|---|---|---|---|---|---|---|
+| P1 | 10/11/2026 21:30 | 45 phút | Không (giá thiếu một chữ số 0, sai danh mục) | 2 (`CT1`) | 55,0 | [`sessions/P1/`](usability/sessions/P1/) |
+| P2 | 10/11/2026 22:21 | 17 phút | **Tự hoàn thành** | 0 | 87,5 | [`sessions/P2/`](usability/sessions/P2/) |
+| P3 | 10/11/2026 22:39 | 21 phút | **Tự hoàn thành** | 0 | 62,5 | [`sessions/P3/`](usability/sessions/P3/) |
+| P4 | 11/11/2026 00:30 | 10 phút | Không (bỏ cuộc vì bug #67) | 0 | 45,0 | [`sessions/P4/`](usability/sessions/P4/) |
+| P5 | 10/11/2026 23:54 | 11 phút | Không (sai danh mục) | 0 | 52,5 | [`sessions/P5/`](usability/sessions/P5/) |
+| P6 | 10/11/2026 23:00 | 20 phút | **Tự hoàn thành** | 0 | 65,0 | [`sessions/P6/`](usability/sessions/P6/) |
+| P7 | 11/11/2026 00:07 | 2 phút | Không (không đăng nhập được, dừng ở M1) | 0 | Không có | [`sessions/P7/`](usability/sessions/P7/) |
+
+Người tham gia (phiếu thông tin I3, chỉ mã P): 6/7 là sinh viên 18 đến 24 tuổi, bán qua mạng xã hội, đã đăng dưới 50 sản phẩm, tự đánh giá quen máy tính mức 4 hoặc 5; P7 là nội trợ 25 đến 34 tuổi, bán cả trên sàn TMĐT, đã đăng 51 đến 200 sản phẩm, quen máy tính mức 3. Không ai từng dùng trang quản trị bán hàng.
+
+Mỗi phiên có `notes.md` (phiếu ghi chú, nhật ký sự kiện theo mốc video, kiểm kết quả D6), `scale.md` (câu trả lời SUS chép từ Google Form), `probe.md` (câu hỏi mở) và một commit riêng. Thời lượng tính từ lúc bật quay; P1 dài vì người tham gia ngồi chờ người điều phối ghi chú trước câu hỏi mở.
+
+Sai lệch quy trình của người điều phối, ghi đúng như đã xảy ra: P1 nhận 2 lần gợi ý ngoài quy trình (tính là `CT1`); P7 bị dừng sớm thay vì can thiệp mức 1 theo `02_scenario.md` mục 6; D6 của P4 không xác định được vì người điều phối kiểm bằng form "Sửa" trên trang chưa tải lại, đúng chỗ bug #67 làm sai.
 
 Video quay màn hình của mọi phiên (pilot và P1 đến P7) nộp kèm trong bản nộp, không commit lên git. Cách nén và chia file theo giới hạn dung lượng của Moodle chốt lúc đóng gói (⏳).
 
 ### 3.3 Phase 3: Điểm thang đo và số liệu hiệu suất
 
-⏳ Điểm từng người, trung bình, độ lệch; tỉ lệ hoàn thành, thời gian, số lỗi, số lần hỗ trợ; cách tính. File: `usability/04_scores.md`.
+Chi tiết: [`usability/04_scores.md`](usability/04_scores.md). SUS tính theo Brooke (1996) bằng [`usability/tools/score_t2.py`](usability/tools/score_t2.py) (câu lẻ trừ 1, câu chẵn lấy 5 trừ, tổng nhân 2,5); thời gian từ mốc video; lỗi đếm từ mã sự kiện.
+
+| Chỉ số | Kết quả |
+|---|---|
+| Tự hoàn thành toàn luồng | **3/7 (43%)**: P2, P3, P6. Không ai hoàn thành nhờ can thiệp |
+| Hoàn thành trong thời gian chuẩn (02:18.75) | 2/7 (29%): P3, P6. P2 vượt 0,25 giây (nhỏ hơn sai số của mốc ghi theo giây) |
+| Tự hoàn thành từng chặng | M1 6/7; M2 6/6 người tới được; **M3 3/6 người tới được** |
+| Thời gian trung bình (n = 6, người tới được mốc cuối chặng) | M1 00:16 (chuẩn 00:21.09); M2 00:30 (00:48.57); M3 00:54 (01:00.84); toàn luồng **01:50** (02:18.75), độ lệch chuẩn 22,2 giây |
+| Lỗi (17 lần, 5/7 người) | `La` bấm sai chỗ 3; `Lb` hệ thống báo lỗi 3 (đều của P7); `Lc` lưu sai danh mục 3; `Ld` giá sai 1; `Le` làm lại thao tác 7. Theo chặng: M1 5, M2 4, M3 8 |
+| Do dự | 13 lần ở 6/7 người, trong đó 11 lần là mở lại kịch bản đọc (nhiều nhất ở Dashboard và ngay sau khi tạo danh mục) |
+| Kết quả cuối trong hệ thống (D6) | Danh mục mới tạo đúng 6/6; sản phẩm vào đúng danh mục: 3/6 chắc chắn, 2/6 sai (P1, P5), 1/6 không xác định (P4) |
+| Tự kiểm tra kết quả (D7) | 6/6 người tới M3 có tự kiểm tra, nhưng chỉ nhìn tên và ảnh trong bảng; không ai chủ động kiểm danh mục (bảng không có cột danh mục) |
+| **SUS** (n = 6, P7 không điền) | Trung bình **61,25**, trung vị 58,75, độ lệch chuẩn 14,73, thấp nhất 45,0 (P4), cao nhất 87,5 (P2); 1/6 người từ 68 trở lên. Nhóm tự hoàn thành 71,7; nhóm không hoàn thành 50,8 |
+
+Sinh viên chốt 2 cách báo số liệu: Thời gian tính cho mọi người tới được mốc cuối chặng, không báo riêng nhóm tự hoàn thành (QĐ-S1); giữ P1 trong trung bình SUS dù P1 chọn 5 cho cả câu khen lẫn câu chê, báo thêm trung bình khi bỏ P1 (62,50) để so (QĐ-S2).
+
+Nhận xét: Thời gian không phải vấn đề chính, mọi chặng có trung bình dưới chuẩn; người làm nhanh lại hay sai (P1 nhanh nhất ở M3 nhưng sai giá và danh mục). Vấn đề nằm ở **độ đúng của kết quả ở M3** và việc người dùng không biết mình đã sai.
 
 ### 3.4 Phase 3: Pain point, bug đơn lẻ và vấn đề thiết kế theo severity
 
-⏳ Gom pain point, tách bug đơn lẻ và vấn đề thiết kế mang tính hệ thống, xếp severity, đề xuất. File: `usability/05_findings.md`.
+Chi tiết: [`usability/05_findings.md`](usability/05_findings.md). Tách bug và vấn đề thiết kế theo SRS: Hệ thống làm sai một câu cụ thể của SRS thì là **bug** (báo lên Issues), SRS không yêu cầu thì là **vấn đề thiết kế**. Severity theo thang 4 mức của nhóm (QĐ6, sinh viên chốt thay cho thang Nielsen của bản AI); criticality = severity quy đổi (critical 4 đến low 1) × probability (số người gặp / 7). Thứ tự: F5 đầu tiên vì làm mất dữ liệu (QĐ-A2), còn lại theo criticality.
+
+| Mã | Phát hiện | Người gặp | Loại | Severity | Criticality |
+|---|---|---|---|---|---|
+| F5 | Sau khi lưu ở form "Sửa", bảng hiện sai; lần sửa tiếp theo trên trang chưa tải lại ghi đè dữ liệu, kể cả của sản phẩm khác | P4 (1/7) | **Bug** #67 | critical | 0,57 |
+| F2 | Không biết bước tiếp theo và khi nào là xong: Không có thông báo sau khi tạo danh mục và sau khi lưu sản phẩm, form tự xoá trắng | 5/7 | Thiết kế (một phần do kịch bản ở file riêng) | medium | 1,43 |
+| F1 | Ô danh mục không nhãn, chọn sẵn "Điện thoại", bị bỏ qua; sản phẩm vào sai danh mục mà người dùng không biết | P1, P4, P5 (3/7) | Thiết kế | medium | 0,86 |
+| F3 | Đăng nhập: Không xem được mật khẩu, không cảnh báo Caps Lock, thông báo "Đăng nhập thất bại" chung chung | P5, P7 (2/7) | Thiết kế | medium | 0,57 |
+| F4 | Nút "Thêm mới" tạo ngay danh mục không tên khi ô tên trống | P1, P4 (2/7), cả người pilot | **Bug** #66 | medium | 0,57 |
+| F6 | Ô giá không có dấu phân cách hàng nghìn, gõ tay dễ thiếu chữ số 0 | P1 (1/7), cả người pilot | Thiết kế | medium | 0,29 |
+| F8 | Khối "Import sản phẩm từ CSV" ở đầu trang sản phẩm gây khó hiểu | P6 (1/7) | Thiết kế | medium | 0,29 |
+| F7 | Giao diện trông lỗi thời, "giống AI làm" | P2, P6 (2/7) | Thiết kế (thẩm mỹ) | low | 0,29 |
+| F9 | Nút "Xóa" xóa ngay, không hỏi xác nhận | P4 (1/7) | Thiết kế | low | 0,14 |
+
+Pain point lớn nhất theo chặng là **M3**: 3/6 người tới M3 không hoàn thành. F1 là nguyên nhân chính (P1, P5 lưu vào "Điện thoại"), nhưng vẫn là vấn đề thiết kế vì SRS FR-15 chỉ yêu cầu "phải chọn từ danh sách có sẵn" và hệ thống có chọn sẵn. Lời người tham gia khớp với hành vi: P1, P5 trả lời "không có ô nào không chắc phải điền gì" vì không thấy ô danh mục, P5 (C7): "Ủa có phần đó hả, chết, hình như quên bỏ rồi."
+
+Điểm tích cực: Menu bên trái dễ thấy (6/6 người tự tìm được "Danh mục", không ai vượt chuẩn ở M2); tạo danh mục nhanh khi đã nhập tên; người tham gia cảm nhận luồng nhanh.
+
+Đề xuất theo thứ tự ưu tiên: (1) Sửa #67, danh sách và form "Sửa" luôn lấy dữ liệu mới nhất; (2) thông báo sau khi tạo danh mục và lưu sản phẩm, có đường dẫn sang bước tiếp theo; (3) ô danh mục bắt chọn, có nhãn, bảng có cột danh mục; (4) nút hiện mật khẩu, cảnh báo Caps Lock, thông báo lỗi có gợi ý; (5) sửa #66 và làm rõ ô tên danh mục; (6) giá có dấu phân cách; (7) thu gọn khối CSV; (8) rà thẩm mỹ; (9) hỏi xác nhận trước khi xoá.
+
+Hạn chế: Mẫu nhỏ và đồng nhất (6/7 là sinh viên 18 đến 24 tuổi, bán qua mạng xã hội, quen máy tính); một người điều phối kiêm ghi chú, không có âm thanh; kịch bản ở file riêng làm tăng số lần mở lại kịch bản (F2) và giảm lỗi gõ giá (F6) vì người tham gia sao chép.
 
 ### 3.5 Bug của Task 2
 
-⏳ Issue trên repo nhóm và mục Task 2 trong [`bugs/bug_report.md`](bugs/bug_report.md).
+Chi tiết: [`bugs/bug_report.md`](bugs/bug_report.md) mục Task 2. Ảnh trang Issues đã lọc: [`bugs/screenshots/issues_list_T2.png`](bugs/screenshots/issues_list_T2.png).
+
+| Mã | Issue | Nội dung | Phát hiện ở | Severity |
+|---|---|---|---|---|
+| B-T2-01 | [#66](https://github.com/angquoc/software-testing-2026-HW03-group/issues/66) | Nút "Thêm mới" tạo danh mục có tên trống (sai FR-14) | Pilot, gặp lại ở P1, P4 | medium |
+| B-T2-02 | [#67](https://github.com/angquoc/software-testing-2026-HW03-group/issues/67) | Sau khi lưu ở form "Sửa", bảng sản phẩm hiện sai và lần sửa tiếp theo (chưa tải lại trang) ghi đè dữ liệu, kể cả tên của sản phẩm khác (sai FR-15); mọi lần đều báo "Cập nhật thành công!" | P4; sinh viên tái hiện ngoài phiên bằng script [`usability/tools/edit_product_check.js`](usability/tools/edit_product_check.js) (8 trường hợp, tìm phần tử theo chữ trên trang, có log và ảnh) | critical |
+
+Các vấn đề thiết kế F1, F2, F3, F6, F7, F8, F9 không báo lên Issues vì không sai câu cụ thể nào của SRS.
 
 ---
 
@@ -211,7 +270,19 @@ Thư mục: [`cross_platform/`](cross_platform/). Dùng đúng checklist 112 m�
 
 ### 4.1 Nền tảng, công cụ và lớp chữ đè
 
-⏳ Tóm tắt từ [`cross_platform/01_setup.md`](cross_platform/01_setup.md): Nền tảng, công cụ, cách mở `localhost`, lớp chữ đè (MSSV, họ tên, email sinh viên).
+Chi tiết: [`cross_platform/01_setup.md`](cross_platform/01_setup.md).
+
+| Nền tảng | Chạy ở đâu | Cách mở `localhost` | Lớp chữ đè |
+|---|---|---|---|
+| N1: Chrome trên Windows | Máy cá nhân; chính là lần chạy `exec` của Task 1 | Mở trực tiếp `http://localhost:5173` | Sticky Notes ghim nổi trên màn hình |
+| N2: Firefox trên Windows 11 | Máy cá nhân (D-28, đổi từ BrowserStack Live sáng 11/11/2026, xem dưới bảng) | Mở trực tiếp `http://localhost:5173` | Sticky Notes ghim nổi trên màn hình |
+| N3: Chrome trên điện thoại Android thật | Điện thoại của sinh viên, cắm USB | `adb reverse` cổng 5173 và 3000 | Samsung Notes dạng cửa sổ nổi |
+
+- Đáp ứng đề: Có Chrome, Firefox và Android Chrome (thay cho Safari), đủ 3 nền tảng. Công cụ cloud đề ưu tiên đã được thử cho N2 nhưng bản trial không đủ thời gian (xem dưới); N3 là thiết bị thật, đề cho phép.
+- Lớp chữ đè **chỉ** gồm MSSV, họ tên, email sinh viên (`23120061@student.hcmus.edu.vn`); thông số nền tảng được chụp từ chính hệ thống trong ảnh môi trường riêng (`overview_env`), vì nhãn tự gõ không chứng minh được ảnh chụp trên nền tảng đó.
+- Mỗi ảnh chụp toàn màn hình, thấy được trình duyệt, URL `localhost` và lớp chữ đè.
+- **N2 đổi từ cloud sang máy cá nhân (D-28).** Sáng 11/11/2026 sinh viên đăng ký trial: BrowserStack Live chỉ cho mỗi thiết bị tối đa 1 phút trong bản trial; LambdaTest Freemium chỉ có 2 phiên, mỗi phiên khoảng 2 phút, trong khi kế hoạch N2 cần 20 đến 25 phút. Bằng chứng: `cross_platform/screenshots/firefox/browserstack_trial_limit.png`, `lambdatest_trial_limit_1.png`, `_2.png`. ⏳ Phạm vi chạy N2 trên máy (D-29).
+- Kế hoạch N2 lập khi còn dự tính chạy trên cloud, nên không chạy lại cả 112 mục vì giới hạn phút của bản trial: Phiên Task 3 phân loại từng mục ([`cross_platform/firefox_triage.md`](cross_platform/firefox_triage.md)), 17 mục nhóm A kiểm bằng script Console, 44 mục nhóm B chạy tay, 51 mục nhóm C không chạy lại (để trống ô Kết quả, ghi lý do ở Notes theo D-16) vì kết quả do nội dung, dữ liệu hay logic của trang quyết định, ít phụ thuộc trình duyệt, hoặc tốn nhiều phút (khóa tài khoản, 2 tab, giả lập mạng).
 
 ### 4.2 Kết quả từng nền tảng
 
@@ -220,7 +291,7 @@ Thư mục: [`cross_platform/`](cross_platform/). Dùng đúng checklist 112 m�
 | Nền tảng | Công cụ | Đã chạy | Passed | Failed | N/A | Không chạy được | Tỉ lệ Passed / đã chạy | Ảnh |
 |---|---|---|---|---|---|---|---|---|
 | N1: Chrome 156, Windows 11 | Máy cá nhân; Playwright, script Console, chạy tay | 105 | 51 | 54 | 0 | 7 | 48,6% | [`checklist/screenshots/`](checklist/screenshots/), [`cross_platform/screenshots/chrome/`](cross_platform/screenshots/chrome/) |
-| N2: Firefox, Windows 11 | BrowserStack Live | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| N2: Firefox, Windows 11 | Máy cá nhân | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
 | N3: Chrome 156 Android, Samsung SM-G998B | Điện thoại thật qua cáp USB; Playwright, chạy tay | 97 | 45 | 52 | 8 | 7 | 46,4% | [`cross_platform/screenshots/android-chrome/`](cross_platform/screenshots/android-chrome/) |
 
 **Môi trường N3** (sheet "Môi trường" của Excel, cột NT3):
@@ -264,7 +335,7 @@ Khác biệt giữa N1 và N3 (13 trên 112 mục có kết quả khác nhau):
 | CL-33 | Passed | Failed | Zoom 200%: W-03 không thấy nút "Thoát", trang cuộn ngang; W-04 mục "Đăng nhập" trên navbar bị cắt; W-06 lời chào bị cắt, bảng chỉ thấy cột Mã ĐH và Ngày đặt |
 | CL-34 | Passed | Failed | Họ Tên 50 ký tự: Lời chào xuống 4 dòng, navbar cao gấp đôi, "Giỏ hàng" bị ép xuống 2 dòng ở cả 3 màn hình |
 
-CL-11 và CL-24 đổi ngược nhau giữa hai nền tảng, đều là định dạng số và ngày; phiên Task 3 lưu ý cần kiểm ngôn ngữ của Chrome ở N1 (chạy qua Playwright) trước khi kết luận và báo bug (⏳).
+CL-11 và CL-24 đổi ngược nhau giữa hai nền tảng. Sinh viên kiểm thêm ngày 11/11/2026 trên cùng máy Windows: Chrome giao diện tiếng Anh hiện `11/10/2026` và `10,000,000 ₫`, Chrome mở bằng `--lang=vi` hiện `10/11/2026` và `10.000.000 ₫`; Console cho locale `en-US` và `vi` ([`cross_platform/screenshots/chrome/CL-24_locale_1.png`](cross_platform/screenshots/chrome/CL-24_locale_1.png) đến `_4.png`). Như vậy định dạng ngày và tiền **đổi theo ngôn ngữ của trình duyệt**: N1 chạy Chrome tiếng Anh, điện thoại N3 dùng tiếng Việt, và không ngôn ngữ nào đạt cả hai mục. Issue #53 (CL-24) đã sửa lại nguyên nhân và thêm 4 ảnh; CL-11 báo thành issue riêng của Task 3 (⏳ sau N2).
 
 ### 4.4 Bug chỉ xuất hiện trên một số nền tảng
 
@@ -274,7 +345,23 @@ CL-11 và CL-24 đổi ngược nhau giữa hai nền tảng, đều là định
 
 ## 5. Agent Skill
 
-⏳ Thư mục: [`skills/`](skills/) (`gui-checklist`, `usability-evaluation`). Thành phần từng skill, cách dùng, kết quả chạy demo ở [`demo/`](demo/).
+Thư mục: [`skills/`](skills/). Hai skill viết lại từ chính quy trình đã làm tay ở Task 1 và Task 2, để dùng lại cho màn hình và luồng khác. Bản trong repo là nguồn chính; bản cài cho Claude Code ở `.claude/skills/` được chép từ đây và kiểm bằng `diff -r` (giống hệt nhau).
+
+| Skill | Các bước | Thành phần |
+|---|---|---|
+| [`gui-checklist`](skills/gui-checklist/SKILL.md) | `survey` → `oracle` → `ai-draft` (mỗi IA một file) → `review` → `add` → `excel` → `exec` (nền tảng thứ nhất, kèm tóm tắt `03_results.md`) → `bugs` | `SKILL.md` (bảng bước, cách nhận biết bước tiếp theo từ trạng thái thư mục, quy tắc chung); `references/` (một file cho mỗi bước, `rules.md`, `sources.md`, `lessons.md`, `example-hw03.md`); `assets/templates/` (mẫu bản AI, bảng thay đổi, oracle, checklist, kết quả); `scripts/build_checklist_xlsx.py` (xuất Excel), `scripts/check_checklist.py` (kiểm định dạng, mã, truy vết) |
+| [`usability-evaluation`](skills/usability-evaluation/SKILL.md) | `plan` → `scenario` → `instruments` → `participants` → `pilot` → các phiên P1 đến Pn → `score` → `analysis` → `bugs` | `SKILL.md`; `references/` (một file cho mỗi bước, `rules.md`, `lessons.md`, `example-fl05.md`); `assets/templates/` (mẫu test plan, kịch bản, bộ công cụ, điểm, phát hiện); `scripts/check_usability.py` (kiểm định dạng, bảng thay đổi, mã, quyết định còn mở, riêng tư) |
+
+Nguyên tắc chung của cả hai skill, lấy từ cách làm bài:
+
+- **Mỗi lượt một bước**, lưu nguyên văn bản AI vào `ai_raw/`, dừng chờ sinh viên review, rồi viết bản review có bảng "Thay đổi so với bản AI" (Loại: Sai, Thiếu, Thừa, Mơ hồ, Quyết định của SV; cột "Vì sao AI bỏ sót").
+- **Quyết định để mở:** Mỗi điểm cần sinh viên chọn có mã và dấu ⏳; AI không chọn thay.
+- **Hộp đen:** Không đọc mã nguồn, không tự mở giao diện ở bước thiết kế; kết quả chạy chỉ lấy từ lần chạy thật do sinh viên ngồi máy.
+- **Riêng tư (usability):** AI không đọc danh sách người tham gia và video; chỉ chép ghi chú đã ẩn danh theo mã P; không bịa dữ liệu của người thật.
+- **Bài học** từ bảng thay đổi của HW03 ghi trong `lessons.md` để lần sau AI tránh lại: Ví dụ ảnh tĩnh không cho thấy link (survey), áp template máy móc trái chuẩn HTML (ai-draft), phải hỏi thang severity và quy tắc ưu tiên trước khi chấm (analysis), AI tính nhẩm SUS sai ở P5 (sessions).
+- Script viết riêng cho EShop (`checklist/tools/`, `usability/tools/`) không đưa vào skill; skill chỉ mô tả cách làm và trỏ tới các script này làm ví dụ.
+
+Kết quả chạy demo trên màn hình khác phạm vi HW03 ở [`demo/`](demo/).
 
 **Video demo:** ⏳
 
@@ -287,8 +374,8 @@ Bảng đầy đủ ở [`README.md`](README.md).
 | Task | Phạm vi | Thiết kế | Đã chạy | Passed | Failed | Bug |
 |---|---|---|---|---|---|---|
 | Task 1 (N1 Chrome Windows) | 3 màn hình | 112 mục | 105 (7 Không chạy được) | 51 | 54 | 33 issue (#33 đến #65), 2 bình luận |
-| Task 2 | 1 luồng, 7 người | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
-| Task 3: N2 Firefox (BrowserStack Live) | 3 màn hình | 112 mục | ⏳ | ⏳ | ⏳ | ⏳ |
+| Task 2 | 1 luồng (FL-05, 3 chặng), 7 người và 1 pilot | Kịch bản 1 nhiệm vụ, 10 câu hỏi, SUS, 9 câu hỏi mở | 7 phiên (P7 dừng ở M1) | 3 tự hoàn thành | 4 không hoàn thành | 2 issue (#66, #67); 9 phát hiện (2 bug, 7 vấn đề thiết kế); SUS trung bình 61,25 (n = 6) |
+| Task 3: N2 Firefox Windows | 3 màn hình | 112 mục | ⏳ | ⏳ | ⏳ | ⏳ |
 | Task 3: N3 Chrome Android | 3 màn hình | 112 mục | 97 (8 N/A, 7 Không chạy được) | 45 | 52 | ⏳ |
 
 ---
@@ -301,7 +388,7 @@ Bảng đầy đủ ở [`README.md`](README.md).
 
 ## Mandatory Disclosure
 
-"Tôi dùng AI (Claude Code, Anthropic, claude-opus-5-5) cho các việc sau: Task 1: Lập bảng khảo sát và điền bảng quan sát từ ảnh tôi chụp, trích yêu cầu giao diện từ SRS, sinh bản đầu 109 mục checklist (bản gốc lưu nguyên văn trong `checklist/ai_raw/`), lọc trước các mục của IA-02 đến IA-04 theo tiêu chí tôi đặt, soạn `02_checklist.md` theo quyết định của tôi, kiểm định dạng và nguồn cho các mục tôi thêm, xuất file Excel, viết script Console chỉ đọc trang và script Playwright cho lần chạy, điền nháp kết quả từ log và ảnh, soạn bug report, tạo issue và chèn ảnh vào issue bằng `gh` theo danh sách tôi duyệt. Task 2: ⏳. Task 3: ⏳. Agent Skill: ⏳. Chung: Viết `WORKFLOW.md`, README và issue template của repo nhóm, các script trong `tools/`, khung báo cáo, README, các form và Appendix B. Một phiên Claude Code làm điều phối: Theo dõi tiến độ, chạy server EShop, reset và tạo dữ liệu, xuất prompt log, soát thao tác bị cấm. Tôi review và quyết định ở mọi bước (các bảng "Thay đổi so với bản AI" ghi đủ chỗ tôi sửa); tôi tự chụp ảnh khảo sát, tự viết các mục CL-109 đến CL-112, tự ngồi máy chạy checklist và chốt kết quả, tự tải ảnh lên GitHub, tự commit. ⏳ (Phần Task 2: Danh sách người tham gia, ghi chú quan sát, câu trả lời của người tham gia do tôi thực hiện, không đưa vào AI.) AI Audit Report chi tiết ở Appendix B."
+"Tôi dùng AI (Claude Code, Anthropic, claude-opus-5-5) cho các việc sau: Task 1: Lập bảng khảo sát và điền bảng quan sát từ ảnh tôi chụp, trích yêu cầu giao diện từ SRS, sinh bản đầu 109 mục checklist (bản gốc lưu nguyên văn trong `checklist/ai_raw/`), lọc trước các mục của IA-02 đến IA-04 theo tiêu chí tôi đặt, soạn `02_checklist.md` theo quyết định của tôi, kiểm định dạng và nguồn cho các mục tôi thêm, xuất file Excel, viết script Console chỉ đọc trang và script Playwright cho lần chạy, điền nháp kết quả từ log và ảnh, soạn bug report, tạo issue và chèn ảnh vào issue bằng `gh` theo danh sách tôi duyệt. Task 2: Đề xuất test plan, kịch bản, bộ công cụ (bản gốc trong `usability/ai_raw/`), chuẩn bị mẫu hồ sơ pilot và các phiên, đọc hồ sơ pilot đã ẩn danh và đề xuất các chỗ sửa sau pilot, chép ghi chú đã ẩn danh của tôi vào hồ sơ từng phiên, viết script tính SUS và số liệu, đề xuất gom phát hiện và severity, viết script tái hiện bug #67, soạn và tạo issue #66, #67. Task 3: Đề xuất nền tảng, công cụ và cách chụp ảnh, phân loại 112 mục cho N2, viết script Playwright cho N3, điền nháp kết quả N3 từ log và ảnh, đề xuất cách so sánh và báo bug. Agent Skill: Viết hai skill `gui-checklist`, `usability-evaluation` từ quy trình đã làm, theo phạm vi và quyết định của tôi. Chung: Viết `WORKFLOW.md`, README và issue template của repo nhóm, các script trong `tools/`, khung báo cáo, README, các form và Appendix B. Một phiên Claude Code làm điều phối: Theo dõi tiến độ, chạy server EShop, reset và tạo dữ liệu, xuất prompt log, soát thao tác bị cấm. Tôi review và quyết định ở mọi bước (các bảng "Thay đổi so với bản AI" ghi đủ chỗ tôi sửa); tôi tự chụp ảnh khảo sát, tự viết các mục CL-109 đến CL-112, tự ngồi máy chạy checklist và chốt kết quả, tự tải ảnh lên GitHub, tự commit. Ở Task 2, tôi tự tuyển 7 người tham gia và người pilot, tự lập danh sách người tham gia (không đưa vào AI), tự điều phối và ghi chú mọi phiên, tự đo thời gian chuẩn, chốt thang severity và thứ tự ưu tiên; câu trả lời SUS do người tham gia tự điền trên Google Form. Ở Task 3, tôi tự chạy N2, N3 trên BrowserStack và điện thoại của mình, tự chụp ảnh có lớp chữ đè và chốt kết quả. AI Audit Report chi tiết ở Appendix B."
 
 ---
 
@@ -327,7 +414,7 @@ Xem [`prompt_log.md`](prompt_log.md) (và `prompt_log.pdf`). Log xuất tự đ�
 
 > Theo mẫu [AI-02] (5 mục cho mỗi artifact). Nguyên văn prompt và output ở `prompt_log.md` (Appendix A, dẫn bằng mã `Cnn`); bản gốc của AI ở `ai_raw/` của từng task. Cột (4) dựa trên bảng "Thay đổi so với bản AI" của từng bước. Phần in đậm ở cột (5) là phần sinh viên thay đổi. Bản form: [`forms/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md`](forms/).
 
-Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) là công cụ AI duy nhất; BrowserStack Live (bản trial) cho nền tảng N2 của Task 3, ⏳ ngày dùng.
+Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) là công cụ AI duy nhất; BrowserStack Live và LambdaTest (bản trial) đã thử cho nền tảng N2 của Task 3 ngày 11/11/2026 nhưng không đủ thời gian chạy (ảnh trong `cross_platform/screenshots/firefox/`), nên N2 chạy trên Firefox cài trên máy sinh viên.
 
 "I use AI tools for the following tasks" (Tôi dùng công cụ AI cho các việc dưới đây):
 
@@ -344,14 +431,14 @@ Công cụ khai báo theo đề §8: Claude Code (Anthropic, claude-opus-5-5) l�
 | B09: T1 `exec`: Script `devtools_check.js`, `n1_chrome_checklist.js`, `capture_screen.ps1` | Phiên `f2487351`, C91, C99, C105 đến C117, C129, C132, C149, 10/11/2026 | Script Console chỉ đọc trang (17 mục), script Playwright có `--dry-run`, chia nhóm mục (thêm nhóm H, I, J khi chụp bổ sung), script tự chụp toàn màn hình ở màn hình Failed đầu tiên của mỗi mục | **INCOMPLETE** | Phải chạy thử 2 lần để sửa selector và thời gian chờ (sinh viên cho phép AI chạy thử trên localhost, kết quả chạy thử không ghi vào Excel). AI xếp CL-34 vào "chạy tay" dù đo được bằng script, sinh viên hỏi lại mới thêm nhóm H (C129). Ảnh CL-109 có 2 cửa sổ Chrome chồng nhau do cách chụp (C121). Ở C149, AI tự chạy nhóm J trong cửa sổ của nó nên sinh viên không theo dõi được log; 3 ảnh thiếu lớp chữ đè, phải xóa và sinh viên chạy lại; AI đổi tên 2 ảnh cũ sang `_1` làm lệch tên ảnh trong Excel | Sinh viên đổi **chỉ dừng ở màn hình Failed đầu tiên** (C114), **tự chụp toàn màn hình** (C117), yêu cầu **AI chỉ đưa lệnh, sinh viên tự chạy** (C151), **sửa tên ảnh trong Excel** (C160); lần chạy thật do sinh viên ngồi máy |
 | B10: Điền cột NT1 (T1 `exec`) và NT3 (T3 N3) | Phiên Task 1 `f2487351` (NT1): C121, C123, C127, C129, C131, C134, C135, C160; phiên Task 3 `99fcf7b9` (NT3): C180, C182, C184, C185, C187, C188, C191, C195, C196; 10/11/2026 | Kết quả, Notes, tên ảnh của 112 mục mỗi nền tảng từ log script và ảnh; ô ghi "(AI xem ảnh)" là AI tự nhìn ảnh để kết luận. NT3 qua 3 bản nháp `cross_platform/ai_raw/T3_android-chrome_manual.md`, `_v2`, `_v3`, rồi chép vào Excel cùng sheet Môi trường và Ma trận trạng thái | **INCOMPLETE** | Log không ghi lần nào sinh viên đổi một kết quả Passed / Failed do AI điền (NT3: Sinh viên review xong bản nháp và cho chép vào Excel ở C196). Các chỗ phải sửa nằm ở bằng chứng và cách chạy: Ảnh CL-109 của N1 có 2 cửa sổ chồng nhau, sinh viên hỏi lại và AI đề xuất chụp lại (C121); AI để CL-34 chạy tay dù đo được, sinh viên hỏi lại mới thêm nhóm H (C129); AI đổi tên 2 ảnh cũ làm lệch tên ảnh trong Excel, sinh viên phát hiện (C160); ở N3, AI hướng dẫn chạy tay CL-05, CL-105, sinh viên hỏi lại mới thêm nhóm I (C187); AI đòi ảnh CL-06 phải thấy URL dù danh sách tab của Chrome Android không hiện URL, sinh viên chỉ ra giới hạn này (C188). AI tự hỏi lại trước khi chốt CL-68, CL-69 (giỏ đã có hàng chưa, C180) và đề xuất CL-34 của N3 là Failed dù script đo W-03, W-04 là Passed, sinh viên chấp nhận (C184, C196) | Sinh viên **chụp bổ sung** 4 ảnh tay của N1 (C134, C135), 11 ảnh CL-33 và ảnh CL-06 của N3 (C184, C195), **kiểm tay CL-48** của N3, **yêu cầu dùng script** cho CL-34, CL-05, CL-105 (C129, C187), **sửa tên ảnh trong Excel** (C160), **xác nhận giỏ hàng** cho CL-68, CL-69 (C182), giữ ảnh CL-06 dù mất thanh trạng thái vì vẫn là ảnh thật (C196) |
 | B11: T1 `bugs`: Danh sách bug, `bug_report.md`, issue trên GitHub | Phiên `f2487351`, C147, C149, C152, C154, C163, C164, 10/11/2026 | Danh sách 33 bug gộp theo lỗi gốc, severity đề xuất, tìm trùng bằng `gh issue list`; AI tạo 33 issue (#33 đến #65) bằng `gh issue create`, chèn ảnh bằng `gh issue edit`, bình luận #18, #29 | **VALID** | AI dừng hỏi trước khi tạo issue vì issue trên repo nhóm không xóa được; tự chỉ ra 3 bug chưa có ảnh đúng lỗi. Sinh viên đồng ý cách gộp và severity đề xuất (C149, C154), không sửa | Sinh viên chọn **báo thêm mục khuyến nghị có ảnh thấy rõ lỗi** (C149), **tải ảnh lên GitHub** và dán link vào `bugs/image_links.txt`, chụp trang Issues đã lọc |
-| B12: Phiên điều phối: Theo dõi tiến độ, chạy server, reset và tạo dữ liệu, soạn tin nhắn, ước tính thời gian, soát thao tác bị cấm | Phiên `949bce7e`, C12 đến C198, 07/11/2026 đến 10/11/2026 | Bảng trạng thái từng task, lệnh commit, tin nhắn cho các phiên thiết kế, reset DB và seed, hồ sơ phiên trống P1 đến P7, ước tính giờ còn lại, kiểm tra các phiên thiết kế không đọc file bị cấm | **INCOMPLETE** | Soát được thao tác bị cấm của các phiên thiết kế (C69, C94) và thêm đủ phiên vào danh sách trắng. Nhưng: Ước tính dư (7 phiên usability 9 giờ ở C81; phần Tổng hợp 6 giờ ở C139), sinh viên hỏi lại mới tính lại; cách tính thời gian phiên usability trái quyết định đã chốt (tính cả phần xin đồng ý dù đã chốt xin qua tin nhắn; tính phần điền SUS nối tiếp dù người khác vẫn làm nhiệm vụ được trong lúc đó, C82); `03_instruments.md` mục I5 ghi người tham gia điền SUS trên máy của sinh viên nên máy bị chiếm (C83); bảo sinh viên tự ghi thông tin trình duyệt, OS đã có ở Task 1 (C102); hướng dẫn số ảnh cần chụp khác phiên Task 1 (C130); đề xuất đẩy ảnh vào repo nhóm để chèn vào issue, sinh viên chỉ ra issue của thành viên khác có ảnh mà không cần đẩy lên repo (C137, C139); kết luận sai là server đã tắt, bật thêm server làm mất dữ liệu đơn hàng (C146); đưa lệnh commit cho thay đổi đã commit và nhầm trạng thái N3 (C148) | Sinh viên yêu cầu **tính lại ước tính** (C81, C139), **sửa mục I5 của `03_instruments.md`** cho người tham gia điền SUS bằng link (C83), AI **tự điền thông tin máy** (C102), chuyển sang **kéo ảnh vào bình luận để lấy link** (C144, C147), xin **lệnh reset và seed để tự chạy** (C155) |
-| B13: T2 `plan`, `scenario`, `instruments` | Phiên Task 2 `de8fb2a8` | ⏳ | ⏳ | ⏳ | ⏳ |
-| B14: T2 `pilot`, phiên P1 đến P7 (phần AI hỗ trợ, dữ liệu đã ẩn danh) | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
-| B15: T2 `score`, `analysis`, `bugs` | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
-| B16: T3 `setup`, `firefox_triage.md` | Phiên Task 3 `99fcf7b9` | ⏳ | ⏳ | ⏳ | ⏳ |
-| B17: T3 script `n3_android_checklist.js` và lần chạy N3 | Phiên `f2487351`, `99fcf7b9` | ⏳ | ⏳ | ⏳ | ⏳ |
-| B18: T3 N2, `compare`, `bugs` | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
-| B19: Agent Skill `gui-checklist`, `usability-evaluation` | Phiên Agent Skill `a498e700` | ⏳ | ⏳ | ⏳ | ⏳ |
+| B12: Phiên điều phối: Theo dõi tiến độ, chạy server, reset và tạo dữ liệu, soạn tin nhắn, ước tính thời gian, soát thao tác bị cấm | Phiên `949bce7e`, từ C12, 07/11/2026 đến 11/11/2026 | Bảng trạng thái từng task, lệnh commit, tin nhắn cho các phiên thiết kế, reset DB và seed, hồ sơ phiên trống P1 đến P7, ước tính giờ còn lại, kiểm tra các phiên thiết kế không đọc file bị cấm | **INCOMPLETE** | Soát được thao tác bị cấm của các phiên thiết kế (C69, C94) và thêm đủ phiên vào danh sách trắng. Nhưng: Ước tính dư (7 phiên usability 9 giờ ở C81; phần Tổng hợp 6 giờ ở C139), sinh viên hỏi lại mới tính lại; cách tính thời gian phiên usability trái quyết định đã chốt (tính cả phần xin đồng ý dù đã chốt xin qua tin nhắn; tính phần điền SUS nối tiếp dù người khác vẫn làm nhiệm vụ được trong lúc đó, C82); `03_instruments.md` mục I5 ghi người tham gia điền SUS trên máy của sinh viên nên máy bị chiếm (C83); bảo sinh viên tự ghi thông tin trình duyệt, OS đã có ở Task 1 (C102); hướng dẫn số ảnh cần chụp khác phiên Task 1 (C130); đề xuất đẩy ảnh vào repo nhóm để chèn vào issue, sinh viên chỉ ra issue của thành viên khác có ảnh mà không cần đẩy lên repo (C137, C139); kết luận sai là server đã tắt, bật thêm server làm mất dữ liệu đơn hàng (C146); đưa lệnh commit cho thay đổi đã commit và nhầm trạng thái N3 (C148); báo bug #67 "chưa tạo issue" khi issue đã có (C236). Phát hiện đúng: DB bị script tái hiện bug để lại dữ liệu thử (C229); kết quả N1, N3 ngược nhau ở CL-11, CL-24 có thể do ngôn ngữ trình duyệt, hướng dẫn kiểm bằng Chrome `--lang=vi` (C234 đến C238); seed vào ngày 11/11 làm ngày đặt không phân biệt được ngày/tháng (C249, C252) | Sinh viên yêu cầu **tính lại ước tính** (C81, C139), **sửa mục I5 của `03_instruments.md`** cho người tham gia điền SUS bằng link (C83), AI **tự điền thông tin máy** (C102), chuyển sang **kéo ảnh vào bình luận để lấy link** (C144, C147), xin **lệnh reset và seed để tự chạy** (C155), giao **viết report một lần** khi xong các task (C244) |
+| B13: T2 `plan`, `scenario`, `instruments` | Phiên Task 2 `de8fb2a8`: `plan` C18, C24, C29, C31, C33 (08/11 đến 09/11/2026); `scenario` C36, C37, C41, C51, C52; `instruments` C54, C57, C58, C60 (09/11/2026); sửa `instruments` theo cách điền SUS C84 đến C86 (10/11/2026) | `ai_raw/T2_plan.md`, `T2_scenario.md`, `T2_instruments.md`: Test plan 9 phần, 10 câu hỏi Q1 đến Q10, chặng M1 đến M3, số liệu D1 đến D10; kịch bản mục tiêu, phiếu dữ liệu, thời gian chuẩn đề xuất 1, 2, 4, 7 phút; bộ công cụ I1 đến I7, thang SUS, câu hỏi mở C1 đến C9, mã sự kiện | **INCOMPLETE** | Bảng thay đổi: `plan` 19 dòng (10 Thiếu, 1 Thừa, 8 Quyết định của SV), `scenario` 19 dòng (1 Sai, 3 Thiếu, 1 Thừa, 14 Quyết định của SV), `instruments` 22 dòng (7 Thiếu, 2 Mơ hồ, 13 Quyết định của SV). Thời gian chuẩn của bản AI không có căn cứ đo. AI chỉ biết giao diện qua ảnh: Sinh viên phải bổ sung ảnh trang Admin (C24, C29) và trả lời việc có thông báo sau khi tạo hay không (C31), các câu Q2, Q7 mới đúng thực tế. Ở C57 AI viết "người điều phối đọc nguyên văn" làm sinh viên hiểu là phải ghi âm | Sinh viên **tự làm và bấm giờ** để đặt thời gian chuẩn ×5 (C52), chốt **QĐ1** (không thêm chặng M4) và các **QĐ2** của kịch bản (C51), chốt cách **điền SUS trên điện thoại của người tham gia, đọc mã P** (C84 đến C86) |
+| B14: T2 `pilot`, phiên P1 đến P7 (phần AI hỗ trợ, dữ liệu đã ẩn danh) | Phiên `de8fb2a8`: Sửa sau pilot C118 (10/11/2026); ghi hồ sơ phiên C203 đến C221 (10/11 đến 11/11/2026). Hồ sơ trống P1 đến P7 do phiên điều phối tạo | Đề xuất sửa kịch bản, bộ công cụ, test plan theo `pilot/notes.md` mục 8; chép ghi chú tay đã ẩn danh của sinh viên vào `notes.md`, `scale.md`, `probe.md` của từng phiên, hỏi lại chỗ thiếu mốc | **INCOMPLETE** | Lúc ghi P5, AI tính nhẩm SUS ra 55, đúng là 52,5 (đính chính ở `04_scores.md` mục 8). AI tính thời lượng phiên theo cách khác cách sinh viên đo (C206, C214 đến C216: Sinh viên tính từ lúc bật quay, phần mở đầu đã gửi qua tin nhắn). AI ghi đúng các sai lệch quy trình của người điều phối (2 gợi ý ở P1, dừng sớm P7) thay vì bỏ qua | Sinh viên **ghi chú tay mọi phiên**, **chọn bội số ×3** sau pilot (C118), chốt **cách tính thời lượng phiên** (C206, C214), chốt **cách ghi P7** (C217, C218) và D6 của P4 (C227) |
+| B15: T2 `score`, `analysis`, `bugs` (#66, #67, script `edit_product_check.js`) | Phiên `de8fb2a8`: Bug #66 C189 đến C193 (10/11/2026); bug #67 và script C221 đến C231; `score`, `analysis` C232, C235, C239, C240 (11/11/2026) | `ai_raw/T2_score.md` và script `score_t2.py`; `ai_raw/T2_analysis.md` (9 phát hiện, severity theo Nielsen); script tái hiện 8 trường hợp E1 đến E8, issue #66, #67 | **INCOMPLETE** | `score`: Script tính trung bình thời gian tự kiểm tra có cả P4 với 00:00 (ra 00:10 thay vì 00:12); 2 Quyết định của SV (QĐ-S1, QĐ-S2). `analysis`: Bản AI chấm severity theo thang Nielsen 0 đến 4, sinh viên đổi sang thang 4 mức của nhóm nên phải chấm lại cả bảng (QĐ6); 4 dòng thay đổi đều là Quyết định của SV. Bug #67: Mô tả ban đầu hẹp hơn lỗi thật; sinh viên chỉ ra lỗi nghiêm trọng hơn và đề nghị viết script phủ các trường hợp (C222, C223); lần chạy đầu thiếu trường hợp, sinh viên bảo chạy lại có thêm E8 (C226) | Sinh viên **tự tái hiện** #67 trước khi có script (C221, C222), **đề nghị viết script** (C223), chốt **QĐ-S1** (a), **QĐ-S2** (b), **QĐ6** (thang của nhóm), **QĐ-A2** (F5 lên đầu) (C235, C239, C240), tải ảnh issue lên GitHub |
+| B16: T3 `setup`, `firefox_triage.md` | Phiên Task 3 `99fcf7b9`: `setup` C62, C72 đến C75, C77 (09/11/2026); triage C126, C199 (10/11/2026) | `ai_raw/` của `01_setup.md`: Phương án nền tảng, công cụ, lớp chữ đè, cách chụp, cách mở `localhost`; `firefox_triage.md`: 112 mục chia nhóm A (Console) 17, B (chạy tay) 44, C (không chạy lại) 51 | **INCOMPLETE** | `01_setup.md`: 26 dòng thay đổi, 5 Thiếu (lớp chữ đè cho điện thoại; cài `adb`; đặt tên khi cần nhiều ảnh dù quy tắc có sẵn ở WORKFLOW; các quyết định D-11 đến D-15), 21 Quyết định của SV. Bản AI chưa tính lớp chữ đè trên điện thoại (sinh viên chỉ ra ở C73). `firefox_triage.md`: 4 Quyết định của SV | Sinh viên chọn **N3 là điện thoại thật**, **không thêm nhãn nền tảng vào lớp chữ đè** (D-06b, C74), **BrowserStack Live** (D-03, C77), **lập triage trước khi đăng ký trial** (C126), chốt **D-16 đến D-19** (C199) |
+| B17: T3 script `n3_android_checklist.js` và lần chạy N3 | Phiên `99fcf7b9`: C156, C157, C159, C166, C169, C171, C173, C174, C180 đến C188, C191 (10/11/2026) | Script Playwright điều khiển Chrome trên điện thoại qua cáp USB, chia nhóm mục, tự chụp ảnh; nhóm H (CL-34), I (CL-05, CL-105) thêm sau | **INCOMPLETE** | Lần chạy đầu không chạy được: Kẹt ở bước bật cờ dòng lệnh (C157), điện thoại báo `localhost` không gửi dữ liệu vì web chỉ nghe IPv6 (C166), nhóm C dừng vì không đăng nhập được (C169). AI hướng dẫn chạy tay CL-05, CL-105 dù script làm được (C187); đòi ảnh CL-06 thấy URL dù danh sách tab của Chrome Android không hiện URL (C188) | Sinh viên **ngồi máy chạy mọi lần**, **reset DB** trước mỗi lần, yêu cầu **xóa bộ ảnh cũ và chạy lại** (C173, C174), **chụp tay** CL-33, CL-06 (C184, C195), **yêu cầu dùng script** cho CL-05, CL-105 (C187) |
+| B18: T3 N2, `compare`, `bugs` | Phiên `99fcf7b9`: Kiểm ngôn ngữ trình duyệt C241, C246 (11/11/2026); CL-24 cho N2 C255; ⏳ | Đề xuất cách ghi CL-11, CL-24 theo ngôn ngữ trình duyệt (D-20 đến D-26); ⏳ | ⏳ | ⏳ | Sinh viên **tự kiểm Chrome tiếng Việt** (`--lang=vi`) và chụp 4 ảnh, chốt **D-20 đến D-26**; ⏳ |
+| B19: Agent Skill `gui-checklist`, `usability-evaluation` | Phiên Agent Skill `a498e700`: C93, C97, C106 (10/11/2026); bổ sung bước sau C170, C176, C202 (10/11/2026), C247 (11/11/2026) | `skills/gui-checklist/`, `skills/usability-evaluation/`: `SKILL.md`, file từng bước, mẫu, script kiểm, `lessons.md`; chép sang `.claude/skills/` và kiểm `diff -r` | **INCOMPLETE** | Bản đầu viết cả các bước chưa làm thật; sinh viên giới hạn chỉ viết các bước đã xong, bước sau để khung (C97). Sinh viên quyết ngoại lệ "4 IA một lượt" ghi vào `SKILL.md` (C106), không đưa script riêng của EShop vào `scripts/` của skill (C176), thêm file tóm tắt `03_results.md` (C202). Các bước sau phiên của usability viết từ file thật của Task 2 ở C247, không đọc hồ sơ phiên | Sinh viên chốt **phạm vi 2 skill** (D9), **chỉ viết bước đã làm thật** (C97), **ngoại lệ ai-draft** (C106), **không đưa script EShop vào skill** (C176) |
 | B20: Tổng hợp: `checklist/03_results.md`, khung `report.md`, README, form | Phiên Tổng hợp, 10/11/2026 | Tóm tắt kết quả N1 và bug, khung báo cáo, Test Summary, bản `.md` của [AI-02], [AI-03], [AI-05] | ⏳ | ⏳ | ⏳ |
 
 ### Tổng kết độ chính xác AI

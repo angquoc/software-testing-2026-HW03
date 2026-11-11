@@ -28,7 +28,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 |---|---|
 | Task 1: GUI checklist | Màn hình chính: Hồ sơ cá nhân & lịch sử đơn hàng (Web, `/profile`); màn hình phụ: Đăng ký (`/register`), Đăng nhập (`/login`) |
 | Task 2: Usability | Luồng Web Admin: Đăng nhập Admin → Tạo danh mục → Thêm sản phẩm vào danh mục mới (7 người tham gia) |
-| Task 3: Cross-platform | Checklist của Task 1 trên 3 nền tảng: N1 Chrome trên Windows (lần chạy của Task 1), N2 Firefox trên BrowserStack Live, N3 Chrome trên điện thoại Android thật (`cross_platform/01_setup.md`) |
+| Task 3: Cross-platform | Checklist của Task 1 trên 3 nền tảng: N1 Chrome trên Windows (lần chạy của Task 1), N2 Firefox trên Windows (máy sinh viên; trial BrowserStack, LambdaTest không đủ thời gian), N3 Chrome trên điện thoại Android thật (`cross_platform/01_setup.md`) |
 
 ## Test Summary Report
 
@@ -41,7 +41,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Số mục checklist thiết kế | 112 (IA-01: 36, IA-02: 31, IA-03: 19, IA-04: 26); nguồn: AI 58, AI có SV sửa 49, SV thêm 5 |
 | Số nền tảng (Task 3) | 3 (N1, N2, N3) |
 | Số người tham gia (Task 2) | 7 (P1 đến P7) và 1 người pilot |
-| Số bug | Task 1: 33 issue (#33 đến #65) và 2 bình luận vào issue đã có (#18, #29). Task 2: ⏳. Task 3: ⏳ |
+| Số bug | Task 1: 33 issue (#33 đến #65) và 2 bình luận vào issue đã có (#18, #29). Task 2: 2 issue (#66, #67). Task 3: ⏳ |
 
 ### Kết quả chạy checklist theo nền tảng
 
@@ -50,7 +50,7 @@ SUT: [EShop](https://github.com/ttbhanh/eshop-sut) (commit `85af3ba`)
 | Nền tảng | Thiết kế | Đã chạy | Passed | Failed | N/A | Không chạy được |
 |---|---|---|---|---|---|---|
 | N1: Chrome 156, Windows 11 (Task 1) | 112 | 105 | 51 | 54 | 0 | 7 |
-| N2: Firefox, BrowserStack Live | 112 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| N2: Firefox, Windows 11 (máy cá nhân) | 112 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
 | N3: Chrome 156 Android, Samsung SM-G998B (điện thoại thật) | 112 | 97 | 45 | 52 | 8 | 7 |
 
 ### Task 3 theo IA (N3)
@@ -80,7 +80,7 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 | Task | Issue | Critical | High | Medium | Low |
 |---|---|---|---|---|---|
 | Task 1 | 33 (#33 đến #65) | 1 | 2 | 9 | 21 |
-| Task 2 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
+| Task 2 | 2 (#66, #67) | 1 | 0 | 1 | 0 |
 | Task 3 | ⏳ | ⏳ | ⏳ | ⏳ | ⏳ |
 
 ### Task 2: Usability
@@ -88,9 +88,10 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 | Chỉ số | Giá trị |
 |---|---|
 | Thang đo | SUS |
-| Điểm SUS trung bình (độ lệch chuẩn) | ⏳ |
-| Số người hoàn thành nhiệm vụ | ⏳ / 7 |
-| Số finding theo severity | ⏳ |
+| Điểm SUS trung bình (độ lệch chuẩn) | 61,25 (14,73), n = 6; P7 không điền vì phiên dừng ở M1 |
+| Số người hoàn thành nhiệm vụ | 3 / 7 tự hoàn thành (P2, P3, P6); không ai hoàn thành nhờ can thiệp |
+| Thời gian toàn luồng trung bình | 01:50 (chuẩn 02:18.75), n = 6 |
+| Số finding theo severity | 9: 1 critical, 6 medium, 2 low; trong đó 2 bug lên Issues (#66 medium, #67 critical), 7 vấn đề thiết kế |
 | Video phiên | Nộp đủ video quay màn hình của pilot và P1 đến P7 trong bản nộp (không commit lên git); cách nén, chia file chốt lúc đóng gói (⏳) |
 
 ## Video demo
