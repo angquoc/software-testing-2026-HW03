@@ -18800,6 +18800,212 @@ Kiểm tra commit, xuất log, đưa commit message, đồng thời đưa ca
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - PowerShell: Export log, show status, recent commits and recently changed files
+- Bash: Check oracle review pending marks and read demo session's latest reply
+- Bash: See what open marks remain in the demo oracle review
+
+**Output AI (nguyên văn):**
+
+````text
+Cả 4 điểm của bước oracle đã được ghi vào bản review; 4 dấu ⏳ còn trong `01_oracle.md` chỉ là phần chú thích và số đếm, không phải câu chờ chốt. Bản AI của bước ai-draft có 60 mục, đã sẵn sàng commit. Log đã xuất lại.
+
+## Kiểm commit
+
+- Chưa có commit nào sau 09:47.
+- Bản AI của oracle đã commit (`b5b0b39`), nên bỏ lệnh đầu tiên mà phiên demo đưa.
+- Chưa commit: Bản review oracle `01_oracle.md` (đã chốt, 14 dòng thay đổi) và 4 file `DEMO_draft_IA-01.md` đến `IA-04.md`.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add demo/gui-checklist/01_oracle.md
+git commit -m "[demo][oracle] Review A-01 UI requirement extract"
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-01.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-01"
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-02.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-02"
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-03.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-03"
+git add demo/gui-checklist/ai_raw/DEMO_draft_IA-04.md
+git commit -m "[demo][ai-draft] Add AI-generated checklist draft for IA-04"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+## Quyết định cho bước review (CHD-01 đến CHD-16)
+
+Những câu Task 1 đã có tiền lệ thì làm theo Task 1; các câu còn lại chọn phương án ít mục hơn để kịp thời gian. Dán cho phiên demo:
+
+```
+Review: Bạn lọc trước theo 5 tiêu chí như T1 (mục kiểm nhiều điều, mơ hồ, trùng, nguồn yếu, lệch oracle), tôi chốt.
+CHD-01: Chữ đỏ không nền vẫn tính là nút màu đỏ; mục kiểm màu đỏ dễ nhận ra.
+CHD-02: Ghi "Không chạy được", không tính Passed / Failed (giống T1).
+CHD-03: Đổi sang Nielsen hoặc WCAG nếu cùng ý; không đổi được thì bỏ mục.
+CHD-04: 100 ký tự.
+CHD-05: Không tính. Tên danh mục là dữ liệu, không phải chữ của giao diện.
+CHD-06: Giữ một mục.
+CHD-07: Không tính (giống T1).
+CHD-08: Có, chuỗi toàn khoảng trắng tính là để trống (giống T1).
+CHD-09: Bỏ mục required qua mã, giữ mục dấu *.
+CHD-10: role="alert" hoặc aria-live (giống T1).
+CHD-11: Có tính, nếu mục đó khác rõ so với chính nó khi ở trang khác (theo GĐ-03).
+CHD-12: Bỏ, để dành cho bước add.
+CHD-13: Hai mục riêng (một mục kiểm một điều).
+CHD-14: Không trái, giữ: Dòng mới hiện ra là trạng thái hiển thị.
+CHD-15: Preset "3G" (Slow 3G) của DevTools.
+CHD-16: Câu có đủ chủ ngữ và vị ngữ, không dùng từ kỹ thuật (giống T1).
+Sau review, tôi tự thêm mục ở bước add.
+```
+
+Căn cứ của các câu theo Task 1:
+- **CHD-02:** CHD-05 của T1 ghi "Không chạy được".
+- **CHD-07:** CHD-06 của T1 không tính bong bóng báo lỗi của trình duyệt.
+- **CHD-08:** CL-60 của T1 coi chuỗi toàn khoảng trắng là để trống.
+- **CHD-10:** CL-106 của T1 kiểm `role="alert"`.
+- **CHD-16:** CL-92 của T1 dùng tiêu chí câu đầy đủ.
+- **CHD-03:** Ở T1, sinh viên đã từng bắt lỗi AI ghi nguồn không có trong slide.
+
+**Để video thấy phần bạn tự làm,** ở bước review nên **tự sửa ít nhất 1 đến 2 mục** thay vì đồng ý hết bản lọc của AI. Ví dụ: Sửa một mục mơ hồ cho rõ, hoặc bỏ một mục trùng.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Script N2 sẵn sàng (112 mục) | Chạy N2 (không trùng lúc quay) → compare, bugs | ~1,75 giờ |
+| Agent Skill | Demo: Xong oracle và ai-draft (60 mục) | review → add → excel; tải video lên YouTube | ~0,4 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,1 giờ** làm việc | Còn **2 giờ 54 phút** tới deadline 13:00 11/11
+
+Việc còn lại đã nhiều hơn thời gian còn lại. Nếu phải cắt bớt, nên rút phạm vi N2 (chỉ chạy phần script, bỏ các mục chạy tay) trước, vì Task 3 là 20 điểm còn Agent Skill là 10 điểm.
+````
+
+---
+
+### C285 | 10:07 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Review: Bạn lọc trước theo 5 tiêu chí như T1 (mục kiểm nhiều điều, mơ hồ, trùng, nguồn yếu, lệch oracle), tôi chốt.
+CHD-01: Chữ đỏ không nền vẫn tính là nút màu đỏ; mục kiểm màu đỏ dễ nhận ra.
+CHD-02: Ghi "Không chạy được", không tính Passed / Failed (giống T1).
+CHD-03: Đổi sang Nielsen hoặc WCAG nếu cùng ý; không đổi được thì bỏ mục.
+CHD-04: 100 ký tự.
+CHD-05: Không tính. Tên danh mục là dữ liệu, không phải chữ của giao diện.
+CHD-06: Giữ một mục.
+CHD-07: Không tính (giống T1).
+CHD-08: Có, chuỗi toàn khoảng trắng tính là để trống (giống T1).
+CHD-09: Bỏ mục required qua mã, giữ mục dấu *.
+CHD-10: role="alert" hoặc aria-live (giống T1).
+CHD-11: Có tính, nếu mục đó khác rõ so với chính nó khi ở trang khác (theo GĐ-03).
+CHD-12: Bỏ, để dành cho bước add.
+CHD-13: Hai mục riêng (một mục kiểm một điều).
+CHD-14: Không trái, giữ: Dòng mới hiện ra là trạng thái hiển thị.
+CHD-15: Preset "3G" (Slow 3G) của DevTools.
+CHD-16: Câu có đủ chủ ngữ và vị ngữ, không dùng từ kỹ thuật (giống T1).
+Sau review, tôi tự thêm mục ở bước add.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read review step guide and checklist template
+
+**Output AI (nguyên văn):**
+
+````text
+Đọc hướng dẫn bước `review` và mẫu checklist trước khi lọc.
+
+Cách lọc trước theo đúng 5 tiêu chí bạn chọn (kiểm nhiều điều, mơ hồ, trùng, nguồn yếu, lệch oracle). Bảng đề xuất dưới đây chỉ nằm trong câu trả lời này, chưa áp vào file nào. Tôi đã đọc lại cả 4 bản AI cùng `01_oracle.md`.
+
+## A. Thay đổi do câu trả lời CHD
+
+Phần này tôi sẽ áp khi soạn `02_checklist.md`; bạn chỉ cần xem có đúng ý không.
+
+| Mục AI | Thay đổi | Theo |
+|---|---|---|
+| AI-01-07 | Mong đợi đổi thành: "Đăng xuất" có chữ **hoặc** nền màu đỏ | CHD-01 |
+| AI-01-04, AI-02-04, AI-02-06, AI-02-10, AI-02-12, AI-04-06, AI-04-10, AI-04-11, AI-04-13 | Thành phần cần kiểm không xuất hiện thì ghi "Không chạy được", không tính Passed hay Failed; quy ước này ghi ở mục 1 | CHD-02 |
+| AI-01-18 | Nếu còn giữ (xem P-02), tên dài dùng 100 ký tự | CHD-04 |
+| AI-01-03 | Ghi rõ không xét tên danh mục, vì đó là dữ liệu | CHD-05 |
+| AI-01-16 | Giữ một mục; phần nào không đạt thì ghi ở Notes | CHD-06 |
+| AI-02-03, AI-01-04 | Bong bóng báo lỗi mặc định của trình duyệt không tính là thông báo lỗi, kể cả ở mục kiểm ngôn ngữ | CHD-07 |
+| AI-02-05 | Giữ, căn cứ UI-R20 | CHD-08 |
+| AI-02-15 | Bỏ | CHD-09 |
+| AI-02-09 | Chỉ tính `role="alert"` hoặc `aria-live` | CHD-10 |
+| AI-03-01 | Chỉ khác màu chữ cũng tính là highlight, miễn khác rõ so với chính nó ở trang khác | CHD-11 (xem P-18) |
+| AI-03-06 | Bỏ, để bạn xét ở bước `add` | CHD-12 |
+| AI-03-09, AI-03-10 | Giữ hai mục riêng; bỏ câu dẫn tới CHD-13 trong mong đợi | CHD-13 |
+| AI-04-14 | Giữ | CHD-14 |
+| ĐK-07 | Giả lập mạng bằng preset "3G" của DevTools. Bản Chrome cũ gọi là "Slow 3G" | CHD-15 |
+| AI-04-02 | Tiêu chí: Câu có đủ chủ ngữ và vị ngữ, không dùng từ kỹ thuật | CHD-16 (xem P-19) |
+
+## B. Đề xuất lọc (bạn chốt từng mã P)
+
+**Nguồn yếu.** Đây là các mục dẫn slide hoặc template mà phiên này chưa đọc trực tiếp. Theo CHD-03, đổi được sang Nielsen hoặc WCAG cùng ý thì đổi, không thì bỏ.
+
+| Mã | Mục AI | Vấn đề | Đề xuất |
+|---|---|---|---|
+| P-01 | AI-01-15 (chữ hiển thị đủ dấu) | Nielsen và WCAG không có tiêu chí cùng ý | Bỏ |
+| P-02 | AI-01-18 (tên dài không tràn cột) | Không có tiêu chí cùng ý | Bỏ (khi đó CHD-04 không dùng tới) |
+| P-03 | AI-02-07 (focus về ô lỗi) | Nielsen heuristic 9 (giúp người dùng sửa lỗi) chỉ cùng ý một phần | Đổi nguồn sang Nielsen heuristic 9, hoặc bỏ |
+| P-04 | AI-02-08 (làm nổi bật ô lỗi) | WCAG 2.2 SC 3.3.1 cùng ý: Chỉ rõ ô bị lỗi | Đổi nguồn sang WCAG 2.2 SC 3.3.1 |
+| P-05 | AI-02-10 (Enter gửi form) | Nielsen heuristic 7 (Flexibility and efficiency of use) gần ý: Phím tắt | Đổi nguồn sang Nielsen heuristic 7, hoặc bỏ |
+| P-06 | AI-02-12 (lỗi cũ biến mất sau khi thêm thành công) | Đã có sẵn Nielsen heuristic 1 trong cột nguồn | Bỏ phần slide, giữ Nielsen heuristic 1 |
+| P-07 | AI-03-04, AI-03-05 (link mở đúng trang) | WCAG 2.2 SC 2.4.4 Link Purpose cùng ý: Link dẫn tới đúng nơi chữ của nó nói | Đổi nguồn sang WCAG 2.2 SC 2.4.4 |
+| P-08 | AI-03-07 (hiệu ứng khi rê chuột lên menu) | WCAG không đòi hiệu ứng rê chuột; Nielsen không có heuristic cùng ý | Bỏ |
+| P-09 | AI-04-14 (dòng mới hiện ngay) | Đã có Nielsen heuristic 1 | Bỏ phần slide, giữ Nielsen heuristic 1 |
+
+**Mục kiểm nhiều điều:**
+
+| Mã | Mục AI | Vấn đề | Đề xuất |
+|---|---|---|---|
+| P-10 | AI-01-04 | Có hai ý: Thông báo bằng tiếng Việt, và không có chữ kỹ thuật | Giữ một mục như cách T1 gom ý này (bạn ghi là giống T1); Notes ghi thông báo nào sai, sai ý nào. Hoặc tách thành hai mục |
+| P-11 | AI-01-17 (zoom 200%) | Có ba ý: Bị cắt, chồng lên nhau, còn bấm được | Mong đợi chỉ còn: Không có chữ, nút hay ô nào bị cắt hoặc chồng lên nhau |
+| P-12 | AI-03-09 (skip link) | Có hai ý: Link hiện ra, bấm Enter thì focus tới nội dung | Chỉ kiểm link hiện ra; bỏ vế Enter |
+| P-13 | AI-04-04 (đang tải) | Có hai ý: Có dấu hiệu đang tải, và không hiện bảng trống lúc đang tải | Chỉ kiểm có dấu hiệu đang tải |
+| P-14 | AI-04-08 (hộp xác nhận) | Có thêm vế "dòng chưa biến mất khi hộp đang mở" | Bỏ vế đó |
+| P-15 | AI-04-11 (bấm hủy) | Có hai ý: Hộp đóng, và dòng còn | Chỉ kiểm dòng vẫn còn trong bảng |
+| P-16 | AI-04-12 (mất kết nối) | Có thêm vế "không hiện như đã thêm thành công" | Chỉ kiểm có thông báo lỗi nhìn thấy được |
+
+**Mục mơ hồ:**
+
+| Mã | Mục AI | Vấn đề | Đề xuất |
+|---|---|---|---|
+| P-17 | AI-04-05 | "Làm nổi bật trong giây lát" không đo được | Sửa thành: Có thông báo thành công, hoặc dòng mới có nền khác các dòng còn lại ngay sau khi thêm |
+| P-18 | AI-03-01 | Câu trả lời CHD-11 dùng chữ "khác rõ", chưa có tiêu chí | Định nghĩa "khác rõ" là nhận ra được bằng mắt ở zoom 100% mà không cần phóng to; ghi vào mục Quy ước |
+| P-19 | AI-04-02 | CHD-16 đòi câu có chủ ngữ và vị ngữ, nhưng ví dụ của bản AI "Chưa có danh mục nào." là câu không có chủ ngữ | (a) Câu không chủ ngữ kiểu "Chưa có danh mục nào." tính là Failed; đổi ví dụ thành "Danh sách danh mục đang trống."; (b) Câu không chủ ngữ vẫn tính là câu đầy đủ |
+
+**Mục trùng:**
+
+| Mã | Mục AI | Vấn đề | Đề xuất |
+|---|---|---|---|
+| P-20 | AI-01-19 (mọi phần tử nhận focus bằng Tab) | Trùng kết quả với AI-01-10 và AI-01-11: Phần tử nào bị bỏ qua thì hai mục thứ tự Tab đã Failed | Bỏ |
+
+**Lệch oracle:** Ngoài AI-02-15 và AI-03-06 đã bỏ theo CHD-09, CHD-12, tôi không thấy mục nào kiểm cái đã bị loại hay mâu thuẫn với mã khác. AI-04-14 vẫn giữ vì bạn chốt ở CHD-14 là không trái. Tôi cũng không thấy mục nào có dữ liệu không tạo được, hay có cách kiểm đòi biết cấu trúc bên trong hệ thống.
+
+## Số mục nếu chấp nhận mọi đề xuất
+
+Bản AI có 60 mục. Bỏ 6 mục (AI-01-15, AI-01-18, AI-01-19, AI-02-15, AI-03-06, AI-03-07), còn **54 mục**. Riêng P-03 và P-05, bạn chọn "bỏ" thì còn 52 mục. Theo IA: IA-01 có 17, IA-02 có 14, IA-03 có 9, IA-04 có 14.
+
+Bạn trả lời từng mã P-01 đến P-20, ví dụ "đồng ý hết, P-03 bỏ, P-19 (a)". Sau đó tôi soạn `02_checklist.md`, đánh mã `CL-01` đến `CL-nn` theo thứ tự IA, kèm bảng thay đổi đầy đủ. Lượt này không có file mới nên chưa có gì để commit.
+````
+
+---
+
+### C286 | 10:09 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tiếp tục xuất log, đưa commit message nếu có và câu trả lời cho phiên demo
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Export log, show status and recent commits
 
 **Output AI (nguyên văn):**
 
