@@ -98,7 +98,7 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 
 | Nội dung | Link |
 |---|---|
-| Agent Skill: ⏳ | ⏳ |
+| Agent Skill `gui-checklist`: Chạy trọn từ `survey` tới `excel` trên màn hình Web Admin A-01 "Quản lý Danh mục" (kết quả ở `demo/gui-checklist/`) | https://youtu.be/_7iWiIJfpMw |
 
 ## Self-Assessment
 

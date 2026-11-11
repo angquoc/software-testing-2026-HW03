@@ -374,7 +374,7 @@ Nguyên tắc chung của cả hai skill, lấy từ cách làm bài:
 
 Demo dừng ở `excel` (không chạy `exec`, `bugs`) vì hết thời gian. Không demo `usability-evaluation`. Để kịp quay, câu trả lời cho các câu hỏi CH, CHD, đề xuất lọc P và bản nháp 4 mục ở bước `add` do phiên điều phối soạn theo yêu cầu của sinh viên, dựa trên các quyết định đã chốt ở Task 1; sinh viên đọc, sửa rồi gửi (Appendix B, B21).
 
-**Video demo:** ⏳
+**Video demo:** https://youtu.be/_7iWiIJfpMw (`gui-checklist` trên A-01 "Quản lý Danh mục", từ `survey` tới `excel`)
 
 ---
 
