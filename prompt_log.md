@@ -16731,11 +16731,1265 @@ Việc còn lại với #53: Khi phiên Task 3 tạo issue về CL-11, tôi thê
 **Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
 
 - Bash: Check repo, export log, verify skill sync, read Skill session's final reply
+- Bash: Check bug report change and scan skill files for personal contact data
+- Bash: Update tracker row for skill sync
+
+**Output AI (nguyên văn):**
+
+````text
+Agent Skill đã xong, kiểm hình thức không có lỗi:
+- Bản trong repo và bản trong `.claude/skills/` giống hệt nhau (`diff -rq` không ra khác biệt nào).
+- Các bước mới chỉ dùng mã P1 đến P7. Số điện thoại duy nhất có trong file là mẫu che số `091****678` lấy từ WORKFLOW.
+- Bug report đã có tiêu đề mới của #53.
+- Log đã xuất lại.
+
+## Kết quả của phiên Agent Skill
+
+- `usability-evaluation` có đủ 5 bước còn thiếu: participants, sessions, score, analysis, bugs.
+- Có thêm 2 mẫu `scores.md`, `findings.md`. File khung `step-later.md` đã xóa.
+- `lessons.md` có thêm 8 bài học từ Task 2. Ví dụ: Phải hỏi thang severity trước khi chấm, và lần AI tính nhẩm SUS sai ở P5.
+- `score_t2.py` và `edit_product_check.js` không chép vào skill; skill chỉ trỏ tới chúng làm ví dụ, giống cách đã làm ở Task 1.
+
+## Cần bạn quyết (sáng mai, không chặn commit)
+
+1. **⏳ Thêm lệnh `sus` vào `check_usability.py`?** Tôi đề xuất **không**. Đề không yêu cầu, bài học về tính nhẩm sai đã ghi trong `lessons.md`, và sáng mai không dư thời gian.
+2. **⏳ Phạm vi demo.** Phiên Agent Skill đề xuất demo cả hai skill: Checklist "Quản lý Danh mục" (survey → excel) và usability "Đổi trạng thái đơn hàng" (plan → instruments). Tôi đề xuất **chỉ quay checklist "Quản lý Danh mục"** cho video chính. Phần usability chỉ quay nếu tới 10:45 còn dư giờ.
+3. **⏳ CL-24 ở N2, phát sinh vì tắt máy.** Tắt máy thì file DB vẫn còn. Nhưng sáng mai phải mở lại backend, mà backend khởi động là khởi tạo lại DB, nên phải seed lại. Đơn seed ngày 11/11 sẽ hiện `11/11/2026`, đọc theo kiểu nào cũng giống nhau, nên ảnh trên Firefox không chứng minh được thứ tự ngày tháng. Bước 2 của hướng dẫn N2 đã có dòng Console ghi ngôn ngữ, đủ làm căn cứ. Sáng mai, trước khi chạy N2, gửi phiên Task 3:
+   ```
+   Sáng nay phải seed lại nên đơn mang ngày 11/11/2026, không phân biệt được ngày/tháng. Đề xuất cách ghi CL-24 cho N2 (ví dụ dựa vào dòng Console ngôn ngữ ở bước 2) trước khi tôi chạy.
+   ```
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add checklist/HW03_T1_GUI_Checklist.xlsx bugs/bug_report.md
+git commit -m "[T1][bugs] Update #53 root cause and CL-11, CL-24 notes; add platform language notes (T3 D-20)"
+git add skills/usability-evaluation
+git commit -m "[skill] Add participants, sessions, score, analysis and bugs steps to usability skill"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+`git add skills/usability-evaluation` gồm cả file `step-later.md` đã xóa, vì Git từ bản 2 trở đi tự đưa file đã xóa vào lần add này.
+
+## Sáng mai 8:00
+
+1. Mở máy, mở VS Code và nhắn tôi. Tôi kiểm cổng, mở backend, web (`--host ::`) và admin, rồi đưa bạn lệnh seed.
+2. Gửi tin ở mục 3 cho phiên Task 3, rồi chạy N2.
+3. Trong lúc bạn chạy N2, tôi viết report.
+
+Chúc bạn ngủ ngon.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Hướng dẫn N2 sẵn sàng | 8:00: Mở server, seed, hỏi cách ghi CL-24 → N2 → compare, bugs | ~2 giờ |
+| Agent Skill | ✅ Hai skill đủ bước, đã chép sang `.claude/skills/` | Chốt demo; quay video | ~0,75 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết sáng mai; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **3,75 giờ** làm việc | Còn **10 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C253 | 08:30 11/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>bnuurm567</task-id>
+<task-id>bl4v0wgxx</task-id>
+<task-id>brn7uz6bz</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: bnuurm567, bl4v0wgxx, brn7uz6bz.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
 
 **Output AI (nguyên văn):**
 
 ````text
 (Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C254 | 08:36 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Bây giờ tôi sẽ chạy N2, kiểm tra trạng thái các task, xuất log và commit message nếu có.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Show time, listening EShop ports, repo status and recent commits
+- Bash: Start EShop backend on port 3000
+- Bash: Start EShop web frontend on port 5173 listening on all addresses
+- Bash: Start EShop admin frontend on port 5174
+- Bash: Wait for servers and verify all ports including IPv4 and IPv6 web
+- PowerShell: Seed test orders and export prompt log
+- Bash: Read latest turns of Task 3 and Task 1 sessions
+
+**Output AI (nguyên văn):**
+
+````text
+Server đã tắt theo máy. Đang mở lại backend, web (`--host ::` cho tunnel) và admin.
+
+Server đã chạy đủ. Đang seed đơn hàng và xuất log.
+
+Server và dữ liệu đã sẵn sàng cho N2. Bạn bỏ qua mục 1 của bước 0 trong hướng dẫn N2, làm tiếp từ mục 2. Log đã xuất lại.
+
+## Đã chuẩn bị
+
+- **Ba server đã chạy lại:** Backend (cổng 3000), web (cổng 5173), admin (cổng 5174).
+- **Web mở bằng `--host ::`** đúng như hướng dẫn N2. Tôi đã thử: Cả `http://127.0.0.1:5173` và `http://[::1]:5173` đều mở được, nên tunnel sẽ vào được, không bị lỗi IPv6 như lần N3.
+- **DB:** Backend khởi động nên DB được khởi tạo lại. Tôi đã chạy seed lúc 08:37: 5 đơn của `test@eshop.com` (#1 Đã giao đến #5 Chờ xác nhận) và tài khoản `newuser@eshop.com` không có đơn. Danh mục và sản phẩm sạch.
+
+## Phiên Task 3 đang trả lời, chờ nó xong rồi hãy chạy N2
+
+Phiên đang xem script seed để tìm cách tạo đơn mang ngày khác, cho CL-24 ở N2. Có 2 khả năng:
+- **Phiên đề xuất chỉ dựa vào dòng Console ghi ngôn ngữ:** Chạy N2 ngay với dữ liệu hiện tại.
+- **Phiên đề xuất seed đơn mang ngày khác:** Báo tôi. Tôi reset bằng `node database.js` rồi chạy cách seed mới, không cần mở lại backend.
+
+Các mục 2 đến 6 của bước 0 bạn tự làm như hướng dẫn: Server phụ `python -m http.server 8099` cho phương án D-17, Sticky Notes, Notepad, dòng Console, `BrowserStackLocal.exe`. Không dán access key vào file hay vào chat.
+
+**Task 1:** Đã chèn 4 ảnh vào #53 và kiểm từng byte, đúng 4 file. Không có file mới cần commit; `bugs/image_links.txt` vẫn để ngoài. Còn một việc: Thêm dòng "Xem thêm issue T3 về CL-11" vào #53 sau khi Task 3 tạo issue.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Chạy N2 xong thì nhắn tôi. Tôi sẽ kiểm ảnh có đúng tên và đúng thư mục không, rồi reset DB. Trong lúc bạn chạy N2, tôi bắt đầu viết report phần Task 1, Task 2 và Agent Skill.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Server, dữ liệu sẵn sàng; phiên đang trả lời về CL-24 | N2 → compare, bugs (tạo issue CL-11) | ~2 giờ |
+| Agent Skill | ✅ Hai skill đủ bước | Chốt demo ("Quản lý Danh mục"); quay video | ~0,75 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết trong lúc N2 chạy; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **3,75 giờ** làm việc | Còn **4 giờ 22 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C255 | 08:36 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Sáng nay phải seed lại nên đơn mang ngày 11/11/2026, không phân biệt được ngày/tháng. Đề xuất cách ghi CL-24 cho N2 (ví dụ dựa vào dòng Console ngôn ngữ ở bước 2) trước khi tôi chạy.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read the order seeding script
+
+**Output AI (nguyên văn):**
+
+````text
+Đang xem script seed để biết có tạo được đơn mang ngày khác hay không.
+
+Seed lại mất khoảng nửa phút và không đổi được ngày. Script seed tạo đơn qua API, nên ngày đặt luôn là thời điểm tạo đơn: Hôm nay mọi đơn đều mang 11/11. Vì vậy CL-24 trên N2 không thể xem trực tiếp như cách làm ở N1 ("chọn đơn có số ngày khác số tháng"). Tôi chưa sửa file nào; dưới đây là đề xuất.
+
+## 1. Thêm 2 giá trị vào dòng Console ở bước 2
+
+D-23 hiện chỉ ghi ngôn ngữ. Tôi đề xuất thêm 2 giá trị để xem Firefox định dạng một ngày và một số tiền mặc định ra sao:
+
+```js
+[navigator.language, Intl.DateTimeFormat().resolvedOptions().locale, new Date(2026, 10, 9).toLocaleDateString(), (10000000).toLocaleString()]
+```
+
+- Ngày 9/11 được chọn vì ngày khác tháng, nên đọc ra được thứ tự.
+- Với Firefox tiếng Anh, có thể ra `["en-US", "en-US", "11/9/2026", "10,000,000"]`.
+- Lệnh này chỉ đọc cài đặt của trình duyệt, không đụng vào trang hay dữ liệu.
+- Việc thêm 2 giá trị là mở rộng D-23, nên cần bạn đồng ý (⏳ **D-26**).
+
+Sau đó đối chiếu với ảnh `overview_profile`. Tiền vẫn phân biệt được hôm nay: `10,000,000 ₫` hay `10.000.000 ₫`.
+- Nếu số tiền trên trang giống `toLocaleString()` của Firefox, thì trang đang định dạng theo ngôn ngữ của Firefox, giống những gì ảnh CL-24_locale_3, 4 cho thấy trên Chrome.
+- Từ đó **suy ra** ngày trên trang sẽ theo thứ tự của `toLocaleDateString()`.
+
+Đây vẫn là suy luận, không phải nhìn trực tiếp ngày đặt trên trang.
+
+## 2. Cách ghi CL-24 ở cột NT2 (⏳ D-25)
+
+| Cách | Kết quả | Notes (mẫu) | Nhận xét |
+|---|---|---|---|
+| **A (tôi nghiêng về cách này)** | `Không chạy được` | "Dữ liệu seed ngày 11/11/2026 có ngày trùng tháng nên không phân biệt được thứ tự. Bằng chứng gián tiếp: Firefox locale `en-US`, ngày mẫu 9/11 hiện `11/9/2026`, tiền trên trang `10,000,000 ₫` giống định dạng mặc định của Firefox; theo kiểm chứng trên Chrome (CL-24_locale_1 đến 4), trang có thể hiện tháng / ngày / năm (overview_env_2.png, overview_profile_1.png)" | Trung thực: Có thử nhưng không xác định được. Bằng chứng gián tiếp vẫn được ghi lại cho `02_compare.md` |
+| B | `Failed` (hoặc `Passed`) theo suy luận | Như trên, mở đầu bằng "(Suy ra, không nhìn trực tiếp)" | Có kết quả để so sánh, nhưng là kết quả không quan sát được trên trang |
+| C | Để trống | Như A | Giống cách ghi nhóm C (D-16), nhưng mục này thực ra có được thử |
+
+Lý do tôi nghiêng về A:
+- Kết quả trong Excel chỉ nên lấy từ lần chạy thật.
+- `Không chạy được` ở N1 cũng có nghĩa là đã thử nhưng không có điều kiện để kết luận.
+
+Dù chọn cách nào, `02_compare.md` cũng cần nêu rõ giới hạn này: N2 chạy với dữ liệu ngày 11/11. Phần so sánh CL-24 giữa các nền tảng dựa trên N1, N3 và 4 ảnh kiểm ngôn ngữ trên Chrome.
+
+## 3. Trường hợp không cần suy luận
+
+Nếu trên Firefox từ xa cột Ngày đặt **không** hiện 11/11/2026 thì xem trực tiếp như bình thường, khỏi dùng cách ở mục 2. Ví dụ ngày bị lệch do múi giờ của máy cloud, ra `11/10/2026` hoặc `10/11/2026`. Khi đó ghi vào Notes cả ngày tạo đơn thật (11/11) và ngày trang hiện.
+
+## 4. Các mục khác không bị ảnh hưởng
+
+- CL-11 và CL-10, CL-12 vẫn xem được vì số tiền phân biệt được dấu phẩy và dấu chấm.
+- Kết quả CL-24 đã ghi ở NT1 và NT3 giữ nguyên, vì hai lần chạy đó dùng dữ liệu ngày 10/11.
+
+Bạn chốt D-25 và D-26 là tôi cập nhật lại bước 2 trong bản tóm tắt N2 (chỉ trong chat, không sửa file).
+````
+
+---
+
+### C256 | 08:39 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Trước khi commit và chạy N2 thì xuất luôn lượt trả lời của task 3 này đi. Kiểm tra, xuất log và đưa commit message. Sau đó báo tôi xem đã chạy được n2 chưa.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Check repo, export log, read Task 3 session's latest reply
+
+**Output AI (nguyên văn):**
+
+````text
+Lượt trả lời mới nhất của phiên Task 3 (08:37) đã có trong log. Tôi xuất log lúc 08:39, sau lượt đó. Bạn **chạy N2 được ngay** sau khi trả lời 2 quyết định dưới đây cho phiên Task 3. Server và dữ liệu đã sẵn sàng.
+
+## Phiên Task 3 cần bạn chốt 2 điểm
+
+Phiên xác nhận seed không đổi được ngày: Đơn tạo qua API nên luôn mang ngày tạo, hôm nay là 11/11. Phiên chưa sửa file nào và không chạy seed lại. Câu "seed lại mất nửa phút" chỉ là phân tích, không phải đã chạy.
+
+- **⏳ D-26: Thêm 2 giá trị vào dòng Console ở bước 2.** Tôi đề xuất **đồng ý**.
+  - Đó là ngày mẫu 9/11 (ngày khác tháng nên đọc được thứ tự) và số tiền mẫu.
+  - Lệnh chỉ đọc cài đặt của trình duyệt, không đụng vào trang hay dữ liệu, và không tốn thêm phút trial.
+  - Đây là bằng chứng gián tiếp duy nhất cho CL-24 trên Firefox hôm nay.
+- **⏳ D-25: Cách ghi CL-24 ở cột NT2.** Tôi đề xuất **A: "Không chạy được"**, kèm bằng chứng gián tiếp trong Notes.
+  - Kết quả trong Excel chỉ nên lấy từ những gì nhìn thấy trên trang.
+  - Ghi Failed theo suy luận (cách B) dễ bị hỏi lại khi chấm.
+  - Nếu Firefox từ xa hiện ngày khác 11/11 (máy cloud ở múi giờ khác) thì xem trực tiếp như bình thường; phiên đã tính trường hợp này ở mục 3.
+
+Tin gửi phiên Task 3:
+```
+D-26: Đồng ý thêm ngày mẫu và số tiền mẫu vào dòng Console ở bước 2.
+D-25: Cách A (Không chạy được, Notes ghi bằng chứng gián tiếp). Nếu Firefox hiện ngày khác 11/11 thì xem trực tiếp theo mục 3.
+Đưa lại bước 2 đã cập nhật, ngắn gọn. Tôi chạy N2 ngay.
+```
+
+## Đã kiểm
+
+- **Server:** Đủ 3 server. Web vào được cả IPv4 lẫn IPv6.
+- **DB:** Seed lúc 08:37, có 5 đơn và tài khoản `newuser@eshop.com`. Từ đó chưa có gì sửa DB.
+- **Repo:** Chỉ có `prompt_log.md` thay đổi. `bugs/image_links.txt` vẫn để ngoài.
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Chạy N2 xong thì nhắn tôi để tôi kiểm ảnh và reset DB. Bước 18 (đổi Họ Tên) có sửa DB, nên để cuối cùng.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Sẵn sàng N2 | Bạn chốt D-25, D-26 → N2 → compare, bugs (issue CL-11) | ~2 giờ |
+| Agent Skill | ✅ Hai skill đủ bước | Chốt demo; quay video | ~0,75 giờ |
+| Tổng hợp | Report có Task 1 và N3 | Tôi viết trong lúc N2 chạy; docx, PDF, zip; tự chấm | ~1 giờ |
+
+⏱ Còn khoảng **3,75 giờ** làm việc | Còn **4 giờ 20 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C257 | 08:40 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+D-26: Đồng ý thêm ngày mẫu và số tiền mẫu vào dòng Console ở bước 2.
+D-25: Cách A (Không chạy được, Notes ghi bằng chứng gián tiếp). Nếu Firefox hiện ngày khác 11/11 thì xem trực tiếp theo mục 3.
+Đưa lại bước 2 đã cập nhật, ngắn gọn. Tôi chạy N2 ngay.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Đây là bước 2 đã cập nhật theo D-26 và D-25:
+
+**Bước 2 (`/login`, Console):**
+1. `F12`, chọn tab Console, gõ `allow pasting` rồi Enter.
+2. Dán dòng sau rồi Enter:
+   ```js
+   [navigator.language, Intl.DateTimeFormat().resolvedOptions().locale, new Date(2026, 10, 9).toLocaleDateString(), (10000000).toLocaleString()]
+   ```
+3. Chụp toàn màn hình, phải thấy cả kết quả, thanh địa chỉ Firefox và Sticky Notes. Tên ảnh: `overview_env_2.png`.
+4. Nếu không dán được: Mở `http://localhost:8099/devtools_check.js` ở tab khác, chép rồi dán (D-17). Dòng Console ở trên thì gõ tay.
+
+**Ở bước 7 (`overview_profile`), xem cột Ngày đặt:**
+- **Khác 11/11/2026:** Xem trực tiếp CL-24 như bình thường. Ghi vào Notes ngày tạo thật (11/11) và ngày trang hiện.
+- **Đúng 11/11/2026:** CL-24 ghi `Không chạy được` (D-25, cách A). Notes ghi bằng chứng gián tiếp: Locale, ngày mẫu, và định dạng tiền trên trang so với `(10000000).toLocaleString()`.
+
+Chúc bạn chạy N2 suôn sẻ. Xong thì gửi tôi ảnh và ghi chú Notepad.
+````
+
+---
+
+### C258 | 08:43 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi chưa hiểu cách chạy N2 lắm. Các bước chuẩn bị nào để chạy có thể nói rõ hoặc chuẩn bị cho tôi luôn không? 
+
+Mở Firefox trên Windows 11 là sao? Là sẽ tải Firefox về máy mình sao?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Check servers, Python and script file
+- PowerShell: Copy only the DevTools script into an empty folder
+- Bash: Serve the DevTools script on port 8099
+- PowerShell: Verify the script server responds
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn không cần cài Firefox. Trước khi giải thích, tôi kiểm xem server, script và Python trên máy đã sẵn sàng chưa.
+
+Bạn không cần tải Firefox về máy. Tôi đã chuẩn bị xong phần làm được trên máy; phần còn lại cần tài khoản của bạn nên bạn phải tự làm.
+
+## "Firefox trên Windows 11" nghĩa là gì
+
+BrowserStack Live cho bạn dùng một **máy Windows 11 thật trên cloud** có sẵn Firefox:
+- Bạn mở trang web BrowserStack bằng Chrome trên máy mình. Màn hình máy cloud hiện trong tab đó, giống điều khiển máy từ xa.
+- Bạn dùng chuột và phím như bình thường. Mọi thao tác chạy trên Firefox của máy cloud.
+
+Máy cloud không tự mở được `localhost:5173` của bạn, vì "localhost" của nó là chính nó. Vì vậy cần **BrowserStack Local** (tunnel): Ứng dụng chạy trên máy bạn, chuyển các yêu cầu `localhost` từ máy cloud về máy bạn.
+
+## Tôi đã chuẩn bị và kiểm xong
+
+| Việc | Kết quả |
+|---|---|
+| Web EShop `5173` và backend `3000` | Đang chạy, mở được cả qua IPv4 lẫn IPv6, nên không bị lỗi như lần N3 |
+| Server phục vụ script (D-17) | Đang chạy ở `http://localhost:8099/devtools_check.js`. Thư mục chỉ có đúng file này: `C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\n2_serve` |
+| Python | 3.12, có sẵn |
+
+- Server 8099 chạy nhờ phiên Claude này: Đừng đóng VS Code trong lúc chạy N2.
+- Nếu Windows Firewall hỏi quyền cho Python, bấm **Hủy** cũng được. Tunnel đi qua localhost nên không cần mở mạng LAN.
+
+## Bạn cần làm (cần tài khoản của bạn)
+
+**A. Trước khi mở máy cloud (chưa tốn phút):**
+1. Vào browserstack.com, đăng ký **Free Trial** và chọn sản phẩm **Live**. Ghi lại số phút trial thực tế được cho.
+2. Cài tunnel. Có hai cách:
+   - **Dễ nhất:** Ứng dụng **BrowserStack Local** cho Windows. Trang Live thường có mục "Local Testing" để tải. Cài, mở, và đăng nhập cùng tài khoản; khi kết nối xong thường có biểu tượng hoặc chữ "Connected". Cài trước khi mở phiên để khỏi tốn phút.
+   - **Dự phòng:** Tải `BrowserStackLocal.exe` (bản zip cho Windows). Lấy Access Key trong phần cài đặt tài khoản. Trong cmd chạy `BrowserStackLocal.exe --key <key>` và chờ dòng báo đã kết nối. **Không dán key vào chat hay vào file trong repo.**
+3. Ghim Sticky Notes (MSSV, họ tên, email) ở góc màn hình. Kiểm thanh tác vụ đang hiện. Mở Notepad để ghi kết quả.
+
+**B. Mở phiên (bắt đầu tốn phút):**
+4. Trong trang Live chọn **Windows 11**, rồi **Firefox** (bản mới nhất).
+5. Khi máy cloud hiện ra, gõ `http://localhost:5173/login` vào thanh địa chỉ của Firefox **trong màn hình cloud**, không phải thanh địa chỉ Chrome của bạn. Trang đăng nhập EShop hiện ra là tunnel đã chạy.
+6. Chọn độ phân giải trong thanh công cụ BrowserStack: 2560 x 1440, không có thì chọn mức lớn nhất.
+7. Làm theo bảng 18 bước tôi gửi trước đó, với bước 2 bản mới (dòng Console 4 giá trị).
+
+## Lưu ý khi thao tác qua máy cloud
+
+- **Phím tắt có thể bị Chrome của bạn "ăn" mất:** `Ctrl` + `+` có thể phóng to Chrome trên máy bạn thay vì Firefox, còn `Ctrl+Shift+M` có thể mở menu hồ sơ của Chrome. Nếu vậy, dùng menu ☰ của Firefox trong màn hình cloud:
+  - Zoom: ☰, rồi bấm nút `+` ở dòng Zoom.
+  - Responsive Design Mode: ☰ > More tools > Responsive Design Mode.
+  - Console: ☰ > More tools > Web Developer Tools.
+- **Chụp ảnh:** Dùng `Win+PrtSc` trên máy bạn. Ảnh phải có:
+  - Thanh công cụ BrowserStack (ghi Windows 11, Firefox và phiên bản).
+  - Thanh địa chỉ Firefox cloud có `localhost:5173/...`.
+  - Sticky Notes.
+
+  Không bấm F11 trên Chrome của bạn.
+- **Dán script:** Thử dán từ máy bạn trước. Nếu không được, mở tab mới trong Firefox cloud, vào `http://localhost:8099/devtools_check.js`, `Ctrl+A`, `Ctrl+C`, rồi dán vào Console của tab EShop.
+- **Thời gian:** Khi đã dùng khoảng 25 phút thì bỏ bước 17, 18 và đóng phiên.
+
+Xong phiên, bạn gửi tôi ảnh và ghi chú Notepad, rồi báo để tôi tắt server 8099.
+````
+
+---
+
+### C259 | 08:48 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là thông tin của browsertack.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read setup requirements, platforms and alternatives
+- Bash: Check platform options and assignment cloud requirement
+
+**Output AI (nguyên văn):**
+
+````text
+Ảnh này có một vấn đề lớn: Dòng chữ trên cùng ghi **"Each device is available for up to 1 minute during Free Trial"**, tức bản dùng thử chỉ cho mỗi cấu hình 1 phút. Kế hoạch N2 (khoảng 20 đến 25 phút) không chạy được. Tôi đang xem lại các phương án trong `01_setup.md`.
+
+Ảnh của bạn có dòng **"Each device is available for up to 1 minute during Free Trial"**, tức mỗi cấu hình chỉ được 1 phút. Nếu điều này đúng cho cả Firefox trên Windows thì không chạy N2 trên BrowserStack được: Kế hoạch cần khoảng 20 đến 25 phút.
+
+Tôi chưa chắc giới hạn 1 phút áp cho cả máy tính hay chỉ cho điện thoại. URL hiện tại của trang là `os=ios&device=iPhone+11` (đang chọn iPhone 11), nên câu này có thể chỉ nói về thiết bị di động.
+
+## Kiểm trước, chưa tốn phút
+
+1. Ở danh sách bên trái, bấm **Windows** (dấu `+`) rồi chọn **Windows 11**. **Chưa bấm** vào số phiên bản Firefox, vì bấm vào là bắt đầu phiên.
+2. Xem dòng chữ trên cùng còn ghi "1 minute" không. Đồng thời xem số phút trial còn lại, thường ở biểu tượng tài khoản hoặc "Plans and pricing".
+3. Chụp màn hình gửi tôi.
+
+## Nếu Windows cũng chỉ có 1 phút: ⏳ D-27, chọn nền tảng N2 khác
+
+| Cách | Làm gì | Ưu | Nhược |
+|---|---|---|---|
+| **A. LambdaTest (tôi nghiêng về cách này)** | Đăng ký trial LambdaTest (chưa dùng). Chạy Firefox trên Windows 11 với tunnel LambdaTest, cùng cách như kế hoạch BrowserStack | Đề cũng xếp LambdaTest vào nhóm "strongly preferred". Nguồn tổng hợp ghi khoảng 60 phút mỗi tháng | Chưa kiểm số phút thật. Có nguồn ghi mỗi phiên tối đa 10 phút, khi đó phải chia 3 phiên và đăng nhập lại mỗi phiên. Tốn thêm thời gian đăng ký |
+| B. Firefox cài trên máy bạn (P-02) | Tải Firefox về máy và chạy trực tiếp `localhost:5173`, như cách chạy N1 | Không giới hạn thời gian, chạy được cả 112 mục (khỏi để trống nhóm C), dùng DevTools thoải mái | Đề cho dùng thiết bị thật khi trial không dùng được, nhưng chạy trên máy cá nhân có bị trừ điểm không thì chưa rõ (Q-05). Trong `01_setup.md` và `02_compare.md` cần ghi lý do: Trial BrowserStack chỉ có 1 phút, kèm ảnh |
+| C. Thử A trước, không được thì B | | Giữ được công cụ cloud nếu LambdaTest đủ phút | Mất thêm thời gian nếu LambdaTest cũng không đủ |
+
+Dù chọn cách nào, bạn nên **giữ lại ảnh chụp vừa gửi**: Đó là bằng chứng trial BrowserStack không đủ phút. Lưu thành `cross_platform/screenshots/firefox/browserstack_trial_limit.png` hoặc tên khác bạn chọn. Kế hoạch 18 bước, dòng Console và cách ghi CL-24 vẫn dùng được, chỉ đổi nơi chạy.
+
+Server phục vụ script ở cổng 8099 vẫn đang chạy và dùng được cho cả A lẫn B.
+````
+
+---
+
+### C260 | 08:52 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đã đăng ký LambdaTest. Tôi nên chọn mục nào?
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Chọn thẻ **Realtime Testing** ("Exploratory tests on desktop browsers & virtual devices"). Đây là mục tương ứng với BrowserStack Live: Bạn điều khiển Firefox trên máy Windows của cloud.
+
+Các thẻ khác không dùng cho N2:
+- **Real Device:** Điện thoại thật.
+- **Automation, HyperExecute:** Chạy script tự động.
+- **KaneAI, Agent...:** Công cụ AI.
+
+Từ việc bạn đã đăng ký LambdaTest, tôi hiểu D-27 là **cách A**.
+
+## Các bước trong LambdaTest
+
+**Chưa tốn phút:**
+1. Bấm **Realtime Testing**, chọn **Browser Testing** (kiểm thử trên trình duyệt máy tính).
+2. **Xem số phút trial còn lại** và giới hạn mỗi phiên (thường ghi ở góc trên hoặc trong trang tài khoản). Chụp lại gửi tôi nếu thấy.
+3. **Bật tunnel trước khi mở phiên.** Thường có nút **Configure Tunnel** (hoặc biểu tượng tunnel) ở góc trên bên phải. Có hai cách:
+   - Tải ứng dụng **LambdaTest Tunnel** cho Windows, đăng nhập rồi bấm Start.
+   - Hoặc chạy lệnh mà trang đưa sẵn, dạng `LT.exe --user <username> --key <access key>`, và chờ dòng báo tunnel đã kết nối.
+
+   Không dán key vào chat hay vào file trong repo.
+
+**Mở phiên (bắt đầu tốn phút):**
+
+4. Trong form chọn máy:
+   - **URL:** `http://localhost:5173/login`
+   - **Hệ điều hành:** Windows 11
+   - **Trình duyệt:** Firefox, bản mới nhất (không chọn beta hay dev)
+   - **Độ phân giải:** 2560 x 1440, không có thì chọn mức lớn nhất
+   - **Tunnel:** Chọn tunnel vừa bật (nếu có ô này)
+5. Bấm **Start**. Trang đăng nhập EShop hiện ra là tunnel đã chạy. Sau đó làm theo 18 bước như trước.
+
+Nếu giới hạn mỗi phiên là 10 phút thì chia làm 3 phiên. Mỗi phiên mới phải đăng nhập lại `test@eshop.com`.
+
+| Phiên | Các bước |
+|---|---|
+| 1 | Bước 1 đến 8 (ảnh môi trường, Console, `/profile`) |
+| 2 | Bước 9 đến 14 (đăng xuất, `/login`) |
+| 3 | Bước 15 đến 18 (`/register`, Back, Họ Tên dài) |
+
+Server phục vụ script ở cổng 8099 vẫn chạy, dùng được qua tunnel LambdaTest như cũ.
+````
+
+---
+
+### C261 | 08:53 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Đây là thông tin khi vào.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Ảnh này cho biết gói miễn phí (**Freemium**) chỉ có **2 phiên** ("Browser Sessions 0/2"), không phải tính theo phút. Ảnh chưa cho biết mỗi phiên dài bao lâu. Vì vậy phải dồn 18 bước vào 2 phiên và không được dùng phiên nào để thử.
+
+## Trước khi bấm Start (chưa tốn phiên)
+
+1. Đóng popup "Upgrade Now".
+2. **Bật tunnel trước.** Bấm biểu tượng tunnel ở thanh trên cùng: Biểu tượng hình vòm, nằm bên trái cái loa, cạnh "Parallels Available". Làm theo hướng dẫn (ứng dụng LambdaTest Tunnel, hoặc lệnh `LT.exe --user ... --key ...`). Chờ tới khi tunnel báo đang chạy.
+3. Rê chuột lên "Browser Sessions 0/2" hoặc xem trang tài khoản để biết **mỗi phiên dài bao lâu**. Nếu có số phút, chụp gửi tôi để chia bước cho đúng.
+4. Chọn máy:
+   - **Ô URL:** `http://localhost:5173/login`
+   - **Hệ điều hành:** Bấm **Windows** (đang chọn nhầm MacOS), rồi chọn **Windows 11**.
+   - **Trình duyệt:** **Firefox**, chọn **158**. Bản 159 đang ghi "Beta", không chọn.
+   - **Độ phân giải:** **2560x1440**, giống N1. Danh sách độ phân giải của Windows có thể khác macOS; nếu không có thì chọn mức lớn nhất.
+   - **Tunnel:** Nếu form có ô chọn tunnel thì chọn tunnel vừa bật.
+5. Sticky Notes đã ghim, Notepad đã mở, dòng Console và nội dung form đã chép sẵn.
+
+## Chia 18 bước thành 2 phiên
+
+| Phiên | Bước | Ghi chú |
+|---|---|---|
+| **1** | 1 đến 10: Ảnh môi trường, Console, đăng nhập, `/profile` (script, Tab, ảnh tổng quan, zoom), đăng xuất, `/profile` chưa đăng nhập | Phần quan trọng nhất: Có ảnh tổng quan `/profile` cho 32 mục B-ảnh, kiểm CL-11 và CL-24 |
+| **2** | 11 đến 16: `/login`, `/register`. Sau đó, nếu còn thời gian: 17 (Back), 18 (Họ Tên dài) | Phiên mới chưa đăng nhập, nên bắt đầu ngay từ bước 11 |
+
+- Nếu phiên 1 bị cắt giữa chừng, ghi lại bước đang làm dở. Phiên 2 làm tiếp từ đó và bỏ bớt từ cuối danh sách (18, 17, rồi 16).
+- Ngay khi phiên mở, nhìn đồng hồ đếm giờ trên thanh công cụ LambdaTest (nếu có) để biết còn bao lâu.
+
+Sau khi chạy xong, tôi sẽ sửa tài liệu cho khớp: D-03 đổi sang LambdaTest, lý do bỏ BrowserStack (ảnh giới hạn 1 phút), và câu ghi lý do cho nhóm C ở D-16 đổi "BrowserStack" thành "LambdaTest".
+````
+
+---
+
+### C262 | 08:56 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+- Đây là ảnh bật tunnel. Hướng dẫn giúp tôi.
+- Không thấy browser sessions ghi nhiêu phiên. Tôi search mạng thì thấy có ghi 10 phút/phiên nhưng chưa rõ có thật không.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Download and extract the LambdaTest tunnel binary
+
+**Output AI (nguyên văn):**
+
+````text
+Ảnh của bạn hiện rõ **access key** của tài khoản LambdaTest, nên key này giờ đã nằm trong cuộc trò chuyện. Tôi sẽ không nhắc lại key.
+- Nếu phiên này được xuất ra prompt log, hãy che dòng đó và **không commit ảnh này** vào repo.
+- Chạy N2 xong thì vào LambdaTest, mục Account Settings, phần Access Key, bấm **Regenerate** để đổi key.
+
+Để bạn chỉ còn việc dán lệnh, tôi tải sẵn chương trình tunnel về máy.
+
+Tôi đã tải sẵn chương trình tunnel **LT.exe** và kiểm chữ ký số: Hợp lệ, do Lambdatest, Inc. ký.
+
+## Bật tunnel
+
+1. Nhấn `Win+R`, gõ `cmd`, Enter.
+2. Dán lệnh sau rồi Enter:
+   ```
+   cd /d "C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\lt"
+   ```
+3. Trong popup "Local Connection" của LambdaTest:
+   - Giữ tab **Command Line**.
+   - Giữ lựa chọn **Internal Website** (dùng cho localhost). Không chọn "Folder".
+   - Bấm **nút copy** bên phải ô lệnh, rồi dán vào cmd và Enter. Dùng nút copy cho đúng key, đừng gõ tay.
+4. Chờ cmd báo tunnel đã kết nối, thường có chữ "Secure connection established" hoặc "You can start testing now". Biểu tượng tunnel trên trang LambdaTest có thể đổi màu hoặc hiện tên tunnel.
+5. **Để cửa sổ cmd mở suốt 2 phiên.** Xong N2 thì bấm `Ctrl+C` để tắt.
+
+Nếu cmd báo lỗi, chụp màn hình gửi tôi, nhớ che phần key.
+
+## Độ dài mỗi phiên
+
+Tôi không kiểm được con số 10 phút. Nên tính an toàn: **Mỗi phiên khoảng 10 phút**. Nếu phiên dài hơn thì làm tiếp các bước của phiên sau ngay trong phiên đó. Khi phiên mở, xem trên thanh công cụ LambdaTest có đồng hồ đếm giờ không.
+
+Với 10 phút, phiên 1 không đủ cho cả bước 1 đến 10 (AI ước lượng khoảng 12 phút). Vì vậy tôi xếp lại theo thứ tự ưu tiên: Việc nào cho nhiều kết quả nhất thì làm trước.
+
+**Phiên 1 (đã đăng nhập, `/profile`):**
+
+| Thứ tự | Bước cũ | Việc |
+|---|---|---|
+| 1 | 3 | Đăng nhập `test@eshop.com`, xem navbar (CL-80) |
+| 2 | 7 | Chụp `overview_profile` (ảnh này dùng cho 32 mục B-ảnh, CL-11, CL-24) |
+| 3 | 2 | Console: Dán dòng 4 giá trị, chụp `overview_env_2` |
+| 4 | 4 | Responsive Design Mode 1366 x 768, dán script, chụp |
+| 5 | 6 | Tắt Responsive Design Mode, bấm Tab hết trang (CL-15, 16, 17, 21) |
+| 6 | 8 | Zoom 200% rồi về 100% (CL-33) |
+| 7 | 1 | Tab mới mở `about:support`, chụp `overview_env_1` |
+| 8 | 5, 9, 10 | Còn thời gian thì làm tiếp: Rộng 360 dán script, đăng xuất, `/profile` chưa đăng nhập |
+
+**Phiên 2:** Phần còn lại của phiên 1, rồi bước 11 đến 16 (`/login`, `/register`). Còn thời gian thì làm 17, 18.
+
+Khi chọn máy cho phiên 2, chọn lại đúng **Windows 11, Firefox 158** như phiên 1.
+````
+
+---
+
+### C263 | 08:59 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Chọn kích thước là bao nhiêu?
+Ghi rõ kịch bản của phiên 1 và phiên 2 để nhỡ phiên 1 xong sớm, tôi có thể làm tiếp.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+## Độ phân giải: Chọn **1920x1080**
+
+Đây là đề xuất của tôi, khác D-10 ("cùng độ phân giải với N1", tức 2560x1440), nên cần bạn đồng ý.
+- **Lý do đổi:** Màn hình N1 là 2560x1440 nhưng Windows phóng to 150%, nên trang thực tế chỉ rộng khoảng 1707 x 960. Máy cloud thường để 100%. Nếu chọn 2560x1440, chữ sẽ rất nhỏ, lại bị thu nhỏ thêm khi hiện trong tab Chrome của bạn, nên ảnh khó đọc. 1920x1080 gần kích thước thật của N1 hơn và dễ đọc hơn.
+- Các mục đo bố cục vẫn đo ở 1366 x 768 bằng Responsive Design Mode, giống N1.
+- Nếu bạn muốn giữ đúng D-10 thì chọn 2560x1440. Tôi sẽ ghi lựa chọn của bạn vào tài liệu sau.
+
+---
+
+## Kịch bản N2 (một danh sách liên tục)
+
+**Cách dùng:**
+- **Phiên 1:** Bắt đầu từ A1 và làm lần lượt, hết giờ thì dừng.
+- **Phiên 2:** Làm tiếp từ bước chưa xong. Nếu bước đó thuộc phần A, B hoặc E1, phải **đăng nhập trước** (như A1, không cần chụp lại).
+- **Notepad:** Ghi mỗi bước một dòng, ví dụ `A6: CL-15 Failed, focus nhảy vào ô Email trước navbar | ảnh số 5`.
+- **Tài khoản:** `test@eshop.com` / `Test1234!`
+- **Phím tắt bị Chrome của bạn chiếm:** Dùng menu ☰ của Firefox (More tools > Responsive Design Mode / Web Developer Tools; Zoom +/−).
+
+### Phần A: `/profile` khi đã đăng nhập
+
+| Bước | Làm | Xem / ghi | Ảnh |
+|---|---|---|---|
+| A1 | Mở `http://localhost:5173/login`, đăng nhập | Navbar đổi sang "Chào, Test User" và "Thoát" không (**CL-80**) | |
+| A2 | Bấm lời chào để vào `/profile`. Chụp phần trên (thấy đủ 5 đơn), rồi cuộn xuống chụp phần footer | Cột **Ngày đặt**: Đúng `11/11/2026` hay ngày khác (CL-24)? Cột **Tổng tiền**: Dùng dấu phẩy hay dấu chấm (CL-11)? | `overview_profile_1`, `_2` |
+| A3 | `F12`, mở Console, gõ `allow pasting`, rồi dán dòng 4 giá trị | Ghi 4 giá trị Console trả về | `overview_env_2` |
+| A4 | Bật Responsive Design Mode, đặt **1366 x 768**. Dán `devtools_check.js` vào Console. Không dán được thì mở tab mới `http://localhost:8099/devtools_check.js`, `Ctrl+A`, `Ctrl+C`, quay lại dán | Bảng kết quả của script (nhóm A) | Chụp bảng |
+| A5 | Đặt rộng **360**, dán lại script | **CL-109** | Chụp bảng |
+| A6 | Tắt Responsive Design Mode. Bấm vào thanh địa chỉ, rồi bấm Tab qua hết trang | **CL-15:** Navbar trái sang phải trước nội dung? **CL-16:** Form trên xuống dưới? **CL-17:** Hết form trái rồi mới sang bảng, bảng đi từ dòng trên xuống? **CL-21:** Có viền focus nhìn thấy? | Chụp chỗ sai, nếu có |
+| A7 | Zoom **200%** | **CL-33:** Có bị cắt hay chồng chữ không? | Chụp |
+| | Về 100% (`Ctrl+0` hoặc menu) | | |
+| A8 | Tab mới, mở `about:support`, chụp phần đầu (phiên bản Firefox, OS), rồi đóng tab | | `overview_env_1` |
+
+### Phần B: Đăng xuất
+
+| Bước | Làm | Xem / ghi | Ảnh |
+|---|---|---|---|
+| B1 | Ở `/profile` bấm **"Thoát"** | **CL-81:** Hết hiện dữ liệu hồ sơ? **CL-82:** Navbar về trạng thái chưa đăng nhập? | |
+| B2 | Mở `http://localhost:5173/profile`, dán script | **CL-78:** Có link hoặc nút dẫn tới trang đăng nhập không? | Chụp trang và bảng script |
+
+### Phần C: `/login` (chưa đăng nhập)
+
+| Bước | Làm | Xem / ghi | Ảnh |
+|---|---|---|---|
+| C1 | Mở `/login`, bấm vào thanh địa chỉ, rồi Tab qua hết trang | CL-15, CL-16, CL-21 như A6 | `overview_login` |
+| C2 | Ô thứ nhất nhập `abc`, mật khẩu `123456`, bấm **"Sign In"** | **CL-45:** Firefox có hiện bong bóng báo email sai không? | Chụp |
+| C3 | Khi thông báo lỗi còn hiện: Bật Responsive Design Mode, dán script ở 1366 x 768, rồi ở rộng 360 | CL-32, CL-106, CL-109, nhóm A | Chụp 2 bảng |
+| C4 | Tắt Responsive Design Mode, zoom 200% | **CL-33** | Chụp |
+| | Về 100% | | |
+
+### Phần D: `/register`
+
+| Bước | Làm | Xem / ghi | Ảnh |
+|---|---|---|---|
+| D1 | Mở `/register`, Tab qua hết trang | CL-15, CL-16, CL-21 | `overview_register` |
+| D2 | Nhập Họ Tên `Nguyen Van A`, Email `n2test@example.com`, Mật khẩu `abc`, bấm **"Đăng Ký"** để có thông báo lỗi. Dán script ở 1366 x 768, rồi ở rộng 360. Tắt Responsive Design Mode, zoom 200%, rồi về 100% | CL-106, nhóm A, CL-33 | Chụp 2 bảng và ảnh zoom |
+
+### Phần E: Làm nếu còn thời gian
+
+| Bước | Làm | Xem / ghi | Ảnh |
+|---|---|---|---|
+| E1 | Ở `/login` bấm "Đăng ký ngay", rồi bấm **Back**. Đăng nhập, bấm lời chào để tới `/profile`, rồi bấm **Back** | **CL-77:** Back đưa về đúng trang trước, trang hiện đúng không? | |
+| E2 | Ở `/profile` đổi Họ Tên thành `Trần Nguyễn Hoàng Phương Thảo Minh Khôi Anh Thư Ly`, bấm "Cập nhật". Xem navbar ở `/profile`, rồi mở `/login` và `/register` | **CL-34:** Lời chào có tràn hay đẩy lệch navbar không? | Chụp nếu lỗi |
+
+**Mỗi ảnh chụp toàn màn hình (`Win+PrtSc`) phải thấy:**
+- Thanh công cụ LambdaTest (Windows 11, Firefox 158).
+- Thanh địa chỉ Firefox có `localhost:5173/...`.
+- Sticky Notes.
+
+Xong phiên 2, gửi tôi các ảnh trong `Pictures\Screenshots` và nội dung Notepad. Sau đó nhớ tắt tunnel (`Ctrl+C` trong cmd) và đổi access key.
+````
+
+---
+
+### C264 | 09:00 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Bạn có thể viết report trong lúc tôi và task 3 chạy N2 rồi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Get sizes and section headings of report, README and source files
+- Read: d:\Dang\Test\Homeworks\HW03\report.md
+- Read: d:\Dang\Test\Homeworks\HW03\usability\04_scores.md
+- Read: d:\Dang\Test\Homeworks\HW03\usability\05_findings.md
+- Bash: List headings of plan, scenario, instruments and count change-table rows by type
+- Bash: Read purpose, questions, objectives and method of the test plan
+- Bash: Read scenario wording, time standard and pilot changes
+- Bash: Read the platform table and section list of Task 3 setup
+- Bash: Read the skill step tables and file lists
+- Bash: Get date, time and mode of each usability session
+- Edit: d:\Dang\Test\Homeworks\HW03\report.md
+- Bash: Read user profile section of the test plan
+- Bash: Fix two statements in the Task 2 report section
+- Edit: d:\Dang\Test\Homeworks\HW03\report.md
+- Edit: d:\Dang\Test\Homeworks\HW03\report.md
+- Bash: Check the N2 triage group definitions and D-16, D-17
+- Bash: Fill Agent Skill section, Task 2 summary row and Mandatory Disclosure in the report
+- Bash: Confirm the lesson examples cited in the report exist in skill files
+- Bash: Check whether the static-screenshot lesson is in gui-checklist lessons
+- Bash: Inspect prompt log turn heading format
+- Bash: List prompt log turns of Task 2, Task 3 and Skill sessions with a short preview
+- Bash: Count change-table rows by type for Task 3 setup and triage
+- Bash: Fill Appendix B rows B13 to B19 in the report
+- Bash: Correct attributions in Appendix B rows and check forbidden separators
+- Bash: List recent coordination session turn codes and times
+- Bash: Extend the coordination row of Appendix B and list remaining open items
+- Bash: Update CL-11 and CL-24 note in the report and read README Task 2 section
+- Bash: Fill README Task 2 metrics and show summary tables
+- Bash: Fill README Task 2 bug counts, check style, export log and show status
+- Bash: List N2 Firefox screenshots so far
+- Bash: Read the last three turns of the Task 3 session
+- Bash: Find every BrowserStack and LambdaTest mention in report and README
+- Bash: Change N2 platform wording from BrowserStack to local Firefox with trial evidence
+- Bash: Fix the requirement bullet for N2 in the report
+- Bash: Verify EShop servers still respond
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu viết report. Trước hết tôi đọc report hiện tại và README để biết phần nào đã có.
+
+Report hiện có Task 1 và N3; phần Task 2, setup Task 3, Agent Skill và Appendix B (B13 trở đi) còn ⏳. Tôi đọc kết quả Task 2 trước.
+
+Đã đọc xong kết quả Task 2, setup Task 3 và hai skill. Giờ lấy ngày giờ từng phiên rồi viết vào `report.md`.
+
+Đã viết xong phần Task 2 và phần setup Task 3; đang viết phần Agent Skill, Test Summary và Mandatory Disclosure.
+
+Phần thân report đã xong. Giờ điền Appendix B (B13 đến B19), cần mã lượt `Cnn` trong prompt log của từng phiên.
+
+Đang điền các dòng B13 đến B19 của Appendix B.
+
+Đang điền nốt số bug của Task 2 vào README, rồi kiểm lại toàn bộ thay đổi.
+
+N2 có vẻ đang gặp vấn đề: Thư mục ảnh Firefox chỉ có ảnh "trial limit" của cả BrowserStack lẫn LambdaTest. Tôi đọc lượt mới nhất của phiên Task 3.
+
+Tôi đã viết xong các phần chưa phụ thuộc N2. **Phải lưu ý thời gian:** Việc còn lại khoảng 3,5 giờ mà chỉ còn 3 giờ 54 phút tới deadline, nên gần như không còn dự phòng.
+
+## Đã viết trong `report.md` và `README.md`
+
+Các phần mới, bạn đọc và sửa thẳng vào file:
+
+| Chỗ | Nội dung |
+|---|---|
+| Mục 3 (Task 2) | Đã viết cả 5 phần con: Plan, kịch bản, bộ công cụ và các sửa sau pilot; bảng 7 phiên; số liệu và SUS; 9 phát hiện theo severity kèm đề xuất và hạn chế; 2 bug |
+| Mục 4.1 (Task 3) | Bảng 3 nền tảng, lớp chữ đè, cách phân loại 112 mục. **Đã ghi việc N2 chuyển sang Firefox trên máy**, kèm 3 ảnh bằng chứng trial không đủ thời gian |
+| Mục 4.3 | Kết luận CL-11, CL-24 đổi theo ngôn ngữ trình duyệt, dẫn tới 4 ảnh locale và #53 |
+| Mục 5 (Agent Skill) | Các bước và thành phần của 2 skill, các nguyên tắc chung, ví dụ bài học trong `lessons.md` |
+| Mục 6, Mandatory Disclosure | Thêm Task 2; thêm phần AI làm và phần bạn tự làm ở Task 2, Task 3, Agent Skill |
+| Appendix B | Viết dòng B13 đến B19 kèm mã lượt `Cnn` và lý do verdict; B18 còn ⏳ chờ N2. Bổ sung B12 (phiên điều phối) tới 11/11, gồm cả lần tôi báo nhầm #67 |
+| README | Số liệu Task 2 (SUS 61,25, 3/7 tự hoàn thành, 9 phát hiện, 2 bug). Sửa mọi chỗ ghi "N2 BrowserStack" |
+
+**Cần bạn kiểm kỹ nhất:** Verdict của B13 đến B19. Tôi chọn từ bảng thay đổi và log, nhưng đây là đánh giá của bạn.
+
+**Còn để sau N2:** Mục 4.2 đến 4.4, dòng N2 trong các bảng, B18, video, AI Critique, phần tổng kết Appendix B, tự chấm. Riêng đoạn "Kết luận: Khi nào nên dùng AI" mẫu ghi là sinh viên viết.
+
+## N2 trên máy: Một điểm nên hỏi phiên Task 3
+
+Server vẫn chạy bình thường (tôi vừa kiểm cả `127.0.0.1` và `[::1]`). Lỗi `connection refused` trên LambdaTest không phải do server.
+
+Nếu script dùng Playwright thì Playwright **không điều khiển Firefox bạn cài từ mozilla.org**, mà dùng bản Firefox riêng của nó (`npx playwright install firefox`). Nên nhắn phiên Task 3:
+```
+Script Playwright chạy bản Firefox nào? Ghi đúng tên và phiên bản đó vào sheet Môi trường, ảnh about:support chụp từ chính cửa sổ script mở. Mục nào chạy tay thì làm trên Firefox đã cài và ghi riêng phiên bản.
+```
+
+**⏳ D-29:** Tôi đề xuất **giữ phạm vi đã phân loại** (khoảng 61 mục nhóm A và B), vì không còn thời gian cho nhóm C.
+
+## Kế hoạch tới 13:00
+
+| Giờ | Việc |
+|---|---|
+| 9:10 đến 10:00 | N2 bằng script trên Firefox ở máy |
+| 10:00 đến 10:45 | Task 3: Compare, bugs (issue CL-11) |
+| 10:45 đến 11:30 | Video demo: Chỉ `gui-checklist` trên 1 màn hình; bỏ video usability |
+| Song song | Tôi viết nốt mục 4, AI Critique, tổng kết Appendix B |
+| 11:30 đến 12:30 | Bạn đọc report, tự chấm; xuất PDF, docx; đóng gói zip, video |
+| 12:30 đến 13:00 | Nộp Moodle |
+
+## Lệnh commit
+
+```powershell
+cd D:\Dang\Test\Homeworks\HW03
+git add report.md README.md
+git commit -m "[report] Add Task 2, Task 3 setup, Agent Skill sections and audit rows B13 to B19"
+git add prompt_log.md
+git commit -m "[setup] Update prompt log"
+git push
+```
+
+Các ảnh trong `cross_platform/screenshots/firefox/` để phiên Task 3 commit cùng kết quả N2.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong (đã vào report) | | 0 |
+| Task 3 | N2 đổi sang Firefox trên máy (D-28); phiên đang viết script | D-29 → chạy N2 → compare, bugs | ~1,75 giờ |
+| Agent Skill | ✅ Hai skill đủ bước | Chốt màn hình demo; quay video | ~0,75 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill, B13 đến B19 | Mục 4, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,5 giờ** làm việc | Còn **3 giờ 54 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C265 | 09:01 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Mà cũng không được, 1 phiên có 2 phút à.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Check time, servers and tunnel process
+
+**Output AI (nguyên văn):**
+
+````text
+Có hai vấn đề: Tunnel không vào được web EShop, và mỗi phiên chỉ có khoảng 2 phút. Tôi kiểm server và giờ hiện tại trước.
+
+Kết luận: N2 không chạy được trên LambdaTest.
+- **Đồng hồ đếm ngược:** Ảnh cho thấy phiên chỉ còn 01:36. Gói Freemium có 2 phiên, mỗi phiên khoảng 2 phút, tổng cộng chừng 4 phút. Kế hoạch cần 20 đến 25 phút.
+- **Lỗi kết nối:** Dòng `dial tcp 127.0.0.1:5173 ... refused` nghĩa là tunnel đã chạy tới máy bạn, nhưng lúc đó web EShop không trả lời. Tôi vừa kiểm lại: Web `5173`, backend `3000` và tunnel `LT` hiện đều đang chạy. Có thể web vừa khởi động lại đúng lúc đó. Tuy vậy, với 2 phút mỗi phiên thì sửa lỗi này cũng không giúp được gì.
+
+Bây giờ là 09:01, còn khoảng 4 giờ tới hạn nộp 13:00.
+
+## ⏳ D-28: Chạy N2 ở đâu
+
+| Cách | Làm gì | Ưu | Nhược |
+|---|---|---|---|
+| **A. Firefox cài trên máy bạn (tôi nghiêng về cách này)** | Tải Firefox từ mozilla.org, cài, mở `http://localhost:5173` như cách chạy N1 | Không giới hạn thời gian. Không cần tunnel. Kịch bản A1 đến E2, dòng Console và cách ghi CL-24 dùng nguyên được. Đề cho phép dùng thiết bị thật khi trial không dùng được | Không dùng công cụ cloud mà đề ưu tiên. Chưa rõ có bị trừ điểm không (Q-05), nên phải ghi lý do kèm ảnh chứng minh |
+| B. Thử Sauce Labs (đề cho phép thay thế) | Đăng ký trial, dựng tunnel Sauce Connect | Vẫn là cloud | Chưa biết giới hạn của trial. Tunnel phức tạp hơn. Rủi ro mất thêm 30 đến 60 phút rồi cũng không được, trong khi còn 4 giờ cho N2, bug và `02_compare.md` |
+
+**Nếu chọn A, bạn cần giữ bằng chứng trial không đủ:**
+- Ảnh BrowserStack ghi "1 minute".
+- Ảnh LambdaTest vừa rồi (đồng hồ 01:36, Freemium, "Browser Sessions"). Ảnh này không lộ key.
+
+Bạn cần tự lưu bản gốc hai ảnh trên vào `cross_platform/screenshots/firefox/`, ví dụ `browserstack_trial_limit.png` và `lambdatest_trial_limit.png`. Các ảnh này dùng làm lý do trong `01_setup.md` và `02_compare.md`.
+
+⏳ **D-29 (chỉ khi chọn A): Phạm vi chạy.**
+- Giữ kế hoạch triage: Khoảng 61 mục (nhóm A và B), nhóm C để trống.
+- Hoặc chạy thêm nhóm C vì không còn giới hạn phút. D-16 được chốt khi còn giới hạn phút trial, nên cần chốt lại. Với 4 giờ còn lại, tôi nghiêng về giữ kế hoạch triage, còn dư giờ thì làm thêm vài mục C.
+
+## Dọn dẹp ngay
+
+- Trong cửa sổ cmd của tunnel, bấm `Ctrl+C` để tắt LT.
+- Vào LambdaTest, đổi lại access key (Regenerate).
+
+Bạn chốt D-28 và D-29 là tôi đưa cách cài Firefox và kịch bản chạy trên máy.
+````
+
+---
+
+### C266 | 09:03 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+Nếu chọn A, bạn cần giữ bằng chứng trial không đủ:
+
+Ảnh BrowserStack ghi "1 minute".
+Ảnh LambdaTest vừa rồi (đồng hồ 01:36, Freemium, "Browser Sessions"). Ảnh này không lộ key.
+
+
+-> Cả hai ảnh đặt vào folder, đặt đúng tên cho tôi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Copy trial-limit screenshots into firefox folder
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã chép hai ảnh vào `cross_platform/screenshots/firefox/`. Mã MD5 trùng với bản bạn gửi, tức nội dung không bị đổi:
+- [browserstack_trial_limit.png](cross_platform/screenshots/firefox/browserstack_trial_limit.png): Trang BrowserStack Live có dòng "Each device is available for up to 1 minute during Free Trial".
+- [lambdatest_trial_limit.png](cross_platform/screenshots/firefox/lambdatest_trial_limit.png): Phiên LambdaTest Firefox 158, Windows 11, 1920x1080, đồng hồ còn 01:36.
+
+**Tôi đã mô tả sai ảnh LambdaTest ở tin trước.** Ảnh này chỉ có đồng hồ, không có chữ "Freemium" hay "Browser Sessions". Hai chữ đó nằm ở ảnh bạn gửi trước đó, ảnh form chọn máy ghi "Freemium", "Browser Sessions 0/2". Muốn đủ bằng chứng "2 phiên, mỗi phiên khoảng 2 phút" thì nên thêm cả ảnh đó, khi ấy đặt tên `lambdatest_trial_limit_1.png` (form) và `lambdatest_trial_limit_2.png` (đồng hồ). Bạn đồng ý thì tôi làm.
+
+Ảnh LambdaTest còn có dòng lỗi `connection refused`. Lỗi này không ảnh hưởng gì vì ảnh chỉ dùng để chứng minh thời lượng phiên.
+
+Quy ước tên ảnh ở WORKFLOW §5 chỉ có `<mã mục>.png` và `overview_<màn hình>.png`. Hai ảnh này không thuộc loại nào nên tôi dùng tên mô tả nội dung.
+
+Còn chờ bạn chốt D-28 (Firefox trên máy hay Sauce Labs) và D-29 (phạm vi chạy) để đưa cách cài Firefox và kịch bản chạy.
+````
+
+---
+
+### C267 | 09:04 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+khi ấy đặt tên lambdatest_trial_limit_1.png (form) và lambdatest_trial_limit_2.png (đồng hồ). Bạn đồng ý thì tôi làm. -> Đồng ý.
+
+Giờ thì sẽ chạy firefox trên máy tôi. Viết script đi. Có thể tham khảo các script cũ đã có.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- PowerShell: Rename LambdaTest images and list existing tools
+- Bash: Inspect N1 script structure and Chrome-specific parts
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n1_chrome_checklist.js
+- Bash: Inspect N3 script header and Android-specific parts
+- Bash: Find Chrome-dependent calls in N1 script
+- Bash: Read CL-24, CDP use, clipboard and N3 shot helpers
+- Bash: Read phone, long-name and slow-network sections
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\make_n2.py
+- Bash: Make PowerShell patch preserve line endings
+- Read: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\make_n2.py
+- Edit: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\make_n2.py
+- Bash: Fix escaped newline literals in patch script
+- Write: C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\scratchpad\fix_make.py
+- Bash: Fix patch script then generate N2 Firefox script
+- Bash: Syntax-check N2 script and verify ps1 patch
+- Bash: Download Playwright's Firefox build
+- Bash: Review references to new helpers
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\package.json
+- Edit: d:\Dang\Test\Homeworks\HW03\checklist\tools\package.json
+- Read: d:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js
+
+**Output AI (nguyên văn):**
+
+````text
+Đã nhận D-28: Chạy Firefox trên máy bạn. Tôi đặt lại tên hai ảnh LambdaTest trước, rồi đọc các script cũ.
+
+Đang sửa một lỗi nhỏ trong công cụ tạo script (dấu xuống dòng), rồi sẽ tạo file N2 và kiểm thử.
+
+Script đã qua kiểm cú pháp. Tôi đang tải Firefox của Playwright (khoảng 100 MB), sau đó chạy chế độ `--check` (không đổi dữ liệu) để thử.
+
+Firefox vẫn đang tải (mạng chậm, đã quá 10 phút). Trong lúc chờ, tôi đọc lại các phần vừa sửa trong script.
+
+Script `n2_firefox_checklist.js` đã viết xong và qua kiểm cú pháp, nhưng chưa chạy thử. Firefox của Playwright vẫn đang tải: Đã quá 10 phút, mạng có vẻ chậm. Khi tải xong, tôi sẽ chạy `--check` (mở Firefox, vào trang Đăng nhập, in phiên bản; không đổi dữ liệu) rồi đưa bạn lệnh chạy thật.
+
+**Những gì đã làm:**
+- **Ảnh LambdaTest:** Ảnh form "Freemium, Browser Sessions 0/2" đặt tên `lambdatest_trial_limit_1.png`, ảnh đồng hồ đổi tên thành `lambdatest_trial_limit_2.png`.
+- **Script N2 [n2_firefox_checklist.js](checklist/tools/n2_firefox_checklist.js):**
+  - Dựa trên script N1. Ảnh chụp theo cách của N3: Lưu vào `cross_platform/screenshots/firefox/CL-xx.png`, mục trong bảng đơn thì cuộn tới bảng trước khi chụp, mục có hộp thoại thì lưu thêm `_1`, `_2`.
+  - Những chỗ Firefox không làm được như Chrome đã đổi cách làm:
+    - Mạng chậm: Giữ mỗi request tới backend thêm 2 giây.
+    - CL-108: Xóa cookie và storage của trang.
+    - CL-63: Ghi mật khẩu mẫu vào clipboard của Windows.
+  - CL-24 làm theo D-25: Nếu ngày đặt là 11/11 thì ghi "Không chạy được", Notes kèm bằng chứng gián tiếp (ngôn ngữ, cách Firefox viết ngày và số mẫu).
+  - Nhóm I chụp `overview_env_1` (`about:support`). Với `overview_env_2`, script dừng để bạn tự dán dòng Console, rồi chụp giúp.
+- **Hai file cũ sửa nhẹ:**
+  - `capture_screen.ps1`: Thêm tham số `-Proc` (mặc định vẫn là `chrome`, nên N1 không đổi).
+  - `package.json`: Thêm lệnh `n2` và `n2:check`.
+
+**Bạn cần biết trước khi chạy:**
+- **Firefox ở đây là bản do Playwright tải về, không phải bản cài từ mozilla.org.** Vẫn là engine Gecko của Firefox nhưng có vá thêm để điều khiển tự động; Playwright không điều khiển được Firefox thường. Tôi đã ghi điều này ở đầu script, và sẽ ghi vào Notes môi trường của NT2.
+- **Phạm vi chạy đổi so với D-16:** Script chạy cả 112 mục như N1 và N3, nên nhóm C cũng có kết quả. D-16 (để trống nhóm C) được chốt khi còn giới hạn phút trial, giờ không còn cần. Bạn xác nhận giúp: Bỏ D-16 cho N2?
+````
+
+---
+
+### C268 | 09:08 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Trong lúc task 3 đang viết script, tôi muốn chuyển sang quay video skill.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Locate the SRS file and check the demo folder instructions
+- Bash: Find where the EShop SRS lives
+- Bash: Confirm the SRS is in the EShop README and how WORKFLOW refers to it
+
+**Output AI (nguyên văn):**
+
+````text
+Quay video được, vì demo dùng màn hình Admin, không đụng tới các trang web mà N2 đang kiểm.
+
+## Chuẩn bị (2 phút)
+
+1. **Đóng các tab có thông tin không nên lên video:** `participants.md`, `_NOTES.md`, `bugs/image_links.txt`, các trang BrowserStack và LambdaTest. Không mở file nào trong `usability/sessions/`.
+2. **Công cụ quay:** Dùng **Snipping Tool** (`Win+Shift+R`), chọn cả màn hình.
+   - Không dùng Xbox Game Bar: Nó chỉ quay một cửa sổ, nên khi bạn sang trình duyệt chụp ảnh khảo sát thì video không có phần đó.
+   - Không cần lồng tiếng.
+3. **Mở một cuộc trò chuyện Claude Code mới** trong VS Code, ở thư mục `D:\Dang\Test` như các phiên khác. Skill đã cài trong `.claude/skills/` nên phiên mới dùng được ngay.
+
+## Lời nhắn mở đầu cho phiên demo
+
+Dán nguyên văn:
+
+```
+/gui-checklist Đây là phiên demo để quay video Agent Skill của HW03. Chạy skill gui-checklist cho một màn hình: Web Admin "Quản lý Danh mục" (http://localhost:5174, đăng nhập Admin rồi chọn "Danh mục" ở menu trái).
+- SRS: Homeworks/eshop-sut/README.md.
+- Lưu mọi kết quả vào Homeworks/HW03/demo/gui-checklist/ theo cấu trúc của skill.
+- Không đọc Homeworks/HW03/checklist/, usability/, cross_platform/, bugs/, _NOTES.md, prompt_log.md và mã nguồn EShop.
+- Đi lần lượt survey, oracle, ai-draft (4 IA một lượt), review, add, excel; mỗi bước dừng chờ tôi. Viết gọn để kịp quay trong khoảng 40 phút.
+```
+
+## Khi quay
+
+- **Survey:** Phiên sẽ đưa danh sách ảnh cần chụp. Chụp ảnh trang "Quản lý Danh mục" rồi lưu đúng tên phiên yêu cầu.
+  - Được bấm "Thêm mới" để có ảnh danh sách có thêm dòng: Việc này chỉ thêm danh mục, không ảnh hưởng N2.
+  - **Không chạy `node database.js`** cho tới khi N2 xong, vì N2 đang dùng dữ liệu đã seed.
+- **Oracle, ai-draft, review, add:** Để video gọn, trả lời nhanh các câu hỏi ⏳, ví dụ "Đồng ý đề xuất". Ở bước add, tự thêm **1 mục** kèm lý do, để video cho thấy phần bạn tự làm.
+- **⏳ Có chạy `exec` không:** Phạm vi tôi đề xuất là từ survey tới excel. Nếu lúc đó còn dư thời gian, chạy tay khoảng 5 mục để video có cả phần chạy checklist; quyết định khi tới bước excel.
+- Quay xong: Tải video lên YouTube ở chế độ **Unlisted** và gửi tôi link. Không cần cắt ghép video.
+
+## Sau khi quay xong
+
+Báo tôi để tôi:
+- Thêm mã phiên demo vào danh sách trắng của `export_prompt_log.py` (log phải có phiên này, đề §8).
+- Kiểm thư mục `demo/gui-checklist/`.
+- Đưa lệnh commit, dạng `[skill][demo] Run gui-checklist on admin category screen`.
+- Ghi link video vào README và report.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Phiên đang viết script N2 cho Firefox trên máy | D-29; chạy N2 → compare, bugs | ~1,75 giờ |
+| Agent Skill | Bắt đầu quay demo `gui-checklist` ("Quản lý Danh mục") | Quay, tải lên YouTube, commit `demo/` | ~0,75 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,5 giờ** làm việc | Còn khoảng **3 giờ 50 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C269 | 09:12 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+<command-message>gui-checklist</command-message>
+<command-name>/gui-checklist</command-name>
+<command-args>Cho 1 màn hình: Web Admin "Quản lý Danh mục" (http://localhost:5174, đăng nhập Admin rồi chọn "Danh mục" ở menu trái).
+- SRS: Homeworks/eshop-sut/README.md.
+- Lưu mọi kết quả vào Homeworks/HW03/demo/gui-checklist/ theo cấu trúc của skill.
+- Không đọc Homeworks/HW03/checklist/, usability/, cross_platform/, bugs/, _NOTES.md, prompt_log.md và mã nguồn EShop.</command-args>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List HW03 folder, demo folder and skill files
+- Bash: Read demo README and HW03 workflow
+- Bash: Read skill rules, lessons, survey step and templates
+- Read: C:\Users\Lenovo\.claude\projects\d--Dang-Test\d485f4ce-a5e5-492e-8abc-bece588f6206\tool-results\bq22d49n9.txt
+- Bash: Find headings and category mentions in SRS
+- Bash: Read SRS overview, admin and GUI sections
+- Bash: Search HW03 README for admin screen codes
+- Bash: Search assignment PDF for screen codes
+- Bash: Read PDF section about pools and screens
+- AskUserQuestion
+- Bash: Get current time and create demo folders
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_survey.md
+- Bash: Copy survey and run skill checks
+
+**Output AI (nguyên văn):**
+
+````text
+Bắt đầu Bước 0: Đọc quy trình dự án, tài liệu của skill và kiểm thư mục làm việc.
+
+Thư mục `demo/gui-checklist/` chưa có, nên bước tiếp theo là `survey` pha 1. Đọc SRS để xác định mã màn hình, FR liên quan và trạng thái.
+
+SRS không có bảng mã màn hình. Kiểm README của HW03 (được phép đọc) xem có mã màn hình Admin không.
+
+Đề bài (PDF, được phép đọc) có thể có bảng mã màn hình. Tìm trong đó.
+
+Đã chốt: Mã `A-01`, chụp cả 4 nhóm trạng thái, danh sách trống tạo bằng cách xóa hết qua giao diện, tiền tố `DEMO_`. Viết bản AI của `survey` pha 1.
+
+Chép thành `00_survey.md` và chạy kiểm tra của skill.
+
+Xong `survey` pha 1 cho màn hình A-01 Quản lý Danh mục. Hai file mới giống hệt nhau, đúng như skill yêu cầu:
+- [ai_raw/DEMO_survey.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md): Bản gốc của AI, từ giờ không sửa nữa.
+- [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md): Bản để bạn điền.
+
+Script kiểm tra của skill báo hai file giống hệt nhau và 0 lỗi định dạng. Thư mục `screenshots/` đã tạo sẵn và đang trống.
+
+**Bản survey gồm:** Bảng môi trường lúc chụp, danh sách 6 ảnh, bảng quan sát cho A-01 (thông tin chung, ô nhập, nút, danh sách, hộp xác nhận xóa, khung thêm) và một mục riêng cho menu trái và thanh trên cùng.
+
+**Ảnh cần chụp** (chụp cả cửa sổ trình duyệt để thấy tiêu đề tab và thanh địa chỉ, lưu vào `screenshots/`):
+
+| Số | File | Trạng thái |
+|---|---|---|
+| 01 | `survey_01_category_logged_out.png` | Chưa đăng nhập, gõ thẳng đường dẫn trang Danh mục |
+| 02 | `survey_02_category_list.png` | Có dữ liệu sau reset |
+| 03 | `survey_03_category_add_open.png` | Khung thêm đang mở. Nếu form luôn hiện sẵn trên trang thì ghi `Không có` |
+| 04 | `survey_04_category_delete_confirm.png` | Hộp xác nhận xóa đang mở, chụp trước khi bấm |
+| 05 | `survey_05_dashboard_sidebar.png` | Một trang Admin khác, để so xem mục "Danh mục" trên menu trái có được làm nổi bật không |
+| 06 | `survey_06_category_empty.png` | Đã xóa hết danh mục. Nếu bị chặn thì chụp lúc bị chặn và chép nguyên văn thông báo |
+
+Ảnh 05 không nằm trong 4 trạng thái bạn chọn. Tôi thêm vì muốn biết mục "Danh mục" có được làm nổi bật không thì phải so nó với chính nó ở một trang khác. Không cần thì bỏ.
+
+Chụp theo thứ tự này: Đăng nhập trước để biết đường dẫn trang (ảnh 02 đến 05), rồi đăng xuất và gõ đường dẫn đó (ảnh 01). Xóa hết danh mục ở cuối cùng (ảnh 06), sau đó reset bằng `cd backend && node database.js`. Ghi đường dẫn thật của trang vào các ô đang để `?`.
+
+**Nhắc khi chụp:** Ảnh tĩnh không cho biết chữ nào là link. Hãy rê chuột và bấm thử logo, tên Admin và các chữ khác màu, rồi ghi lại chữ nào là link và dẫn tới đâu.
+
+**Bạn chọn cách điền bảng quan sát:**
+- **(a)** Bạn tự điền toàn bộ bảng trong `00_survey.md`.
+- **(b)** Bạn điền bảng môi trường và cột "Đã chụp", rồi nhờ AI điền các bảng còn lại từ ảnh. Những ô ảnh không cho thấy thì bạn xem trực tiếp rồi điền, ví dụ tiêu đề tab nếu ảnh bị cắt, chữ nào là link, ô nào bị khóa.
+
+**Commit bản AI.** `WORKFLOW.md` chưa có phạm vi commit cho thư mục demo, nên tôi dùng `[demo]`. Phạm vi này cũng đã ghi ở dòng "Bước" đầu bản AI. Muốn dùng phạm vi khác thì báo tôi:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md Homeworks/HW03/demo/gui-checklist/00_survey.md
+git commit -m "[demo][survey] Add A-01 category screen survey table (AI draft)"
+```
+
+Sau khi chụp ảnh và điền xong phần của mình, bạn commit riêng trước rồi gọi lại skill để làm pha 3 (kiểm ảnh và đối chiếu).
+````
+
+---
+
+### C270 | 09:22 11/11/2026 | Tool: Claude Code (n/a) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>b14vpv2d4</task-id>
+<task-id>bunfl4x9f</task-id>
+<task-id>bx7wuc6i6</task-id>
+<task-id>__orphan_summary__:shell</task-id>
+<status>stopped</status>
+<summary>3 background shell command tasks didn't finish before the previous session ended. Task ids: b14vpv2d4, bunfl4x9f, bx7wuc6i6.</summary>
+<note>No completion record was found for them in the previous session. They may have been stopped (via the UI, Monitor timeout, or agent teardown — these leave no transcript marker), or they may have been running when the previous Claude Code process exited. They have been marked stopped. Task ids in this notification beginning with "__orphan_summary" are internal scan markers, not tasks.</note>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
+````
+
+---
+
+### C271 | 09:23 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+<task-notification>
+<task-id>b15zq3dbl</task-id>
+<tool-use-id>toolu_0125ZnyGauyjmdgLavHrcN7q</tool-use-id>
+<output-file>C:\Users\Lenovo\AppData\Local\Temp\claude\1ee42ba0f2ad5af7\99fcf7b9-eb3b-4691-b21a-fd831b8e6157\tasks\b15zq3dbl.output</output-file>
+<status>completed</status>
+<summary>Background command "Download Playwright's Firefox build" completed (exit code 0)</summary>
+</task-notification>
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Run the N2 script check mode
+- Bash: Test screen capture with Firefox process option
+
+**Output AI (nguyên văn):**
+
+````text
+`--check` đạt: Firefox 159.0, mở được trang Đăng nhập, ngôn ngữ en-US. Tôi thử thêm phần chụp màn hình với tham số mới.
+````
+
+---
+
+### C272 | 09:23 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Tôi đang quay skill thì phải commit, không biết commit như này đã thành công chưa?
+
+
+D:\Dang\Test\Homeworks\HW03>git add Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md Homeworks/HW03/demo/gui-checklist/00_survey.md
+fatal: pathspec 'Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md' did not match any files
+
+D:\Dang\Test\Homeworks\HW03>git commit -m "[demo][survey] Add A-01 category screen survey table (AI draft)"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+        modified:   checklist/tools/capture_screen.ps1
+        modified:   checklist/tools/package.json
+        modified:   prompt_log.md
+        modified:   report.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        bugs/image_links.txt
+        checklist/tools/n2_firefox_checklist.js
+        cross_platform/screenshots/firefox/
+        demo/gui-checklist/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+Có cần xuất log không? Đồng thời tôi cần commit message cho phần ảnh tôi đã thêm.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List demo files and repo status
+- Bash: Identify the demo session ID and view the prompt log whitelist
+- Bash: Confirm d485f4ce is the demo session and view whitelist entries
+- Edit: d:\Dang\Test\Homeworks\HW03\tools\export_prompt_log.py
+- PowerShell: Export prompt log with demo session and check Task 3 tool changes
+
+**Output AI (nguyên văn):**
+
+````text
+Phiên demo là `d485f4ce` (bắt đầu 09:12). Tôi thêm nó vào danh sách trắng rồi xuất log.
 ````
 
 

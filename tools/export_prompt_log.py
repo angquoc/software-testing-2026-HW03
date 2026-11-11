@@ -32,6 +32,7 @@ SESSIONS = [
     "99fcf7b9-eb3b-4691-b21a-fd831b8e6157",  # 09/11/2026: phiên thiết kế Task 3 (cross-platform), bắt đầu từ bước setup
     "a498e700-7577-4448-9f6b-acab1d1b9fec",  # 10/11/2026: phiên Agent Skill (GUI checklist, usability)
     "c934f0c0-5bfe-4a4e-8582-6d4f32335fd7",  # 10/11/2026: phiên Tổng hợp (report, README, forms)
+    "d485f4ce-a5e5-492e-8abc-bece588f6206",  # 11/11/2026: phiên demo Agent Skill (gui-checklist, quay video)
 ]
 
 # Ghi chú của sinh viên cho từng phiên (8 ký tự đầu của session id), hiển thị dưới tiêu đề mỗi mục
