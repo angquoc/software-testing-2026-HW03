@@ -205,7 +205,7 @@ Mỗi phiên có `notes.md` (phiếu ghi chú, nhật ký sự kiện theo mốc
 
 Sai lệch quy trình của người điều phối, ghi đúng như đã xảy ra: P1 nhận 2 lần gợi ý ngoài quy trình (tính là `CT1`); P7 bị dừng sớm thay vì can thiệp mức 1 theo `02_scenario.md` mục 6; D6 của P4 không xác định được vì người điều phối kiểm bằng form "Sửa" trên trang chưa tải lại, đúng chỗ bug #67 làm sai.
 
-Video quay màn hình của mọi phiên (pilot và P1 đến P7) nộp kèm trong bản nộp, không commit lên git. Cách nén và chia file theo giới hạn dung lượng của Moodle chốt lúc đóng gói (⏳).
+Video quay màn hình của mọi phiên (pilot và P1 đến P7, tổng khoảng 1,7 GB, không có âm thanh) để trên Google Drive vì vượt giới hạn dung lượng của Moodle (20 file, mỗi file 20 MB): https://drive.google.com/drive/folders/1F3yh5FepAw1AIM6zg_cOZecwqOl_TKtI?usp=sharing. Video không commit lên git.
 
 ### 3.3 Phase 3: Điểm thang đo và số liệu hiệu suất
 

@@ -92,7 +92,7 @@ So với N1, 13 mục có kết quả khác: 8 mục thành N/A trên điện th
 | Số người hoàn thành nhiệm vụ | 3 / 7 tự hoàn thành (P2, P3, P6); không ai hoàn thành nhờ can thiệp |
 | Thời gian toàn luồng trung bình | 01:50 (chuẩn 02:18.75), n = 6 |
 | Số finding theo severity | 9: 1 critical, 6 medium, 2 low; trong đó 2 bug lên Issues (#66 medium, #67 critical), 7 vấn đề thiết kế |
-| Video phiên | Nộp đủ video quay màn hình của pilot và P1 đến P7 trong bản nộp (không commit lên git); cách nén, chia file chốt lúc đóng gói (⏳) |
+| Video phiên | 8 video quay màn hình (pilot và P1 đến P7, khoảng 1,7 GB) trên Google Drive vì vượt giới hạn dung lượng Moodle: https://drive.google.com/drive/folders/1F3yh5FepAw1AIM6zg_cOZecwqOl_TKtI?usp=sharing |
 
 ## Video demo
 
