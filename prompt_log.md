@@ -17932,11 +17932,47 @@ Sau khi chụp ảnh và điền xong phần của mình, bạn commit riêng tr
 
 - Bash: Run the N2 script check mode
 - Bash: Test screen capture with Firefox process option
+- ToolSearch
+- TaskStop
 
 **Output AI (nguyên văn):**
 
 ````text
 `--check` đạt: Firefox 159.0, mở được trang Đăng nhập, ngôn ngữ en-US. Tôi thử thêm phần chụp màn hình với tham số mới.
+
+Script N2 đã sẵn sàng, và lần thử `--check` đạt:
+- **Firefox:** Bản 159.0 do Playwright tải về.
+- **Trang EShop:** Mở được `/login`, thấy nút "Sign In".
+- **Ngôn ngữ:** `["en-US", "en-US", "11/9/2026", "10,000,000"]`, tức Firefox tiếng Anh, viết ngày theo tháng / ngày / năm và tiền dùng dấu phẩy.
+- **Chụp màn hình:** Chụp được toàn màn hình 2560 x 1440 với tham số `-Proc firefox`.
+
+Tôi đã tắt server phục vụ script ở cổng 8099, vì chạy trên máy thì script tự kiểm nhóm A, không cần dán nữa.
+
+## Lệnh chạy N2
+
+**Trước khi chạy:**
+- **Dữ liệu:** Từ lúc seed sáng nay chưa có gì đổi dữ liệu (LambdaTest không vào được trang, `--check` không đăng nhập), nên không cần reset. Nếu muốn chắc thì reset DB và seed lại.
+- **Màn hình:** Ghim Sticky Notes ở góc màn hình, để thanh tác vụ luôn hiện.
+- **Trong lúc chạy:** Không dùng chuột hay bàn phím, không che cửa sổ Firefox.
+
+Mở cmd:
+```
+cd /d D:\Dang\Test\Homeworks\HW03\checklist\tools
+```
+
+| Lần | Lệnh | Ghi chú |
+|---|---|---|
+| 1 | `node n2_firefox_checklist.js --log=n2_run_log.txt` | Nhóm A đến G, gõ `co` để bắt đầu. Có **2 lần dừng** để bạn tự chuẩn bị giỏ hàng trong cửa sổ Firefox (CL-68: 2 sản phẩm khác nhau, mỗi sản phẩm số lượng 1; CL-69: xóa giỏ cũ, thêm đúng 1 sản phẩm số lượng 2), giống lần N1 |
+| 2 | Chờ khoảng 1 phút (cuối lần 1 tài khoản bị khóa 30 giây), rồi chạy `node n2_firefox_checklist.js --only=H --log=n2_cl34_log.txt` | CL-34 Họ Tên dài, tự trả lại tên cũ |
+| | **Reset DB và seed lại** (`node database.js` trong backend, rồi `python tools/seed_orders.py`) | Ảnh tổng quan `/profile` phải là dữ liệu vừa seed |
+| 3 | `node n2_firefox_checklist.js --only=I --log=n2_extra_log.txt` | Ảnh tổng quan, CL-105, CL-05. Script dừng một lần để bạn bấm F12 trong Firefox, dán dòng Console mà script in ra, rồi về cmd bấm Enter; script chụp `overview_env_2` |
+
+Ảnh lưu thẳng vào `cross_platform/screenshots/firefox/`, đã đúng tên. Chạy xong cả 3 lần thì báo tôi, tôi sẽ đọc log và ảnh rồi soạn bản nháp kết quả cột NT2 như N3.
+
+## Còn chờ bạn
+
+- **D-16:** Script chạy cả 112 mục, kể cả nhóm C, nên cột NT2 sẽ không cần để trống nhóm C nữa. Bỏ D-16 cho N2?
+- **Bảo mật:** Nếu chưa làm, tắt tunnel LambdaTest (`Ctrl+C` trong cmd) và đổi access key.
 ````
 
 ---
@@ -17990,6 +18026,425 @@ Có cần xuất log không? Đồng thời tôi cần commit message cho 
 
 ````text
 Phiên demo là `d485f4ce` (bắt đầu 09:12). Tôi thêm nó vào danh sách trắng rồi xuất log.
+
+**Commit đó chưa thành công: Chưa có gì được commit.** Bạn đang đứng trong `D:\Dang\Test\Homeworks\HW03`, nên đường dẫn phải bắt đầu từ `demo/...`; phần `Homeworks/HW03/` ở đầu bị thừa. `git add` báo lỗi và không thêm file nào, nên `git commit` sau đó cũng không có gì để commit.
+
+**Có xuất log.** Tôi đã thêm phiên demo (`d485f4ce`, bắt đầu 09:12) vào danh sách trắng của `tools/export_prompt_log.py` và xuất lại log: 272 lượt từ 7 phiên. Đề yêu cầu log phải có phiên này, vì AI đã được dùng trong lúc quay demo.
+
+## Lệnh commit
+
+Chạy ở `D:\Dang\Test\Homeworks\HW03`:
+
+```powershell
+git add demo/gui-checklist
+git commit -m "[skill][demo] Add survey of admin category screen (AI draft and screenshots)"
+git add report.md README.md
+git commit -m "[report] Add Task 2, Task 3 setup, Agent Skill sections and audit rows B13 to B19"
+git add tools/export_prompt_log.py prompt_log.md
+git commit -m "[setup] Add demo session to prompt log whitelist and update log"
+git push
+```
+
+- Commit thứ hai là phần report tôi viết lúc trước; bạn chưa commit nó.
+- **Không** add các file của Task 3: `checklist/tools/n2_firefox_checklist.js`, `capture_screen.ps1`, `package.json`, `cross_platform/screenshots/firefox/`. Phiên Task 3 đang sửa chúng, để nó đưa lệnh commit khi N2 xong.
+- Ở các bước demo sau, cứ mỗi bước xong thì chạy `git add demo/gui-checklist` rồi commit, ví dụ `[skill][demo] Add oracle of admin category screen`. Nếu phiên demo đưa lệnh có `Homeworks/HW03/` ở đầu đường dẫn thì bỏ phần đó đi.
+
+**Ảnh khảo sát:** Hiện có `survey_01`, `02`, `05`, `06`, thiếu `03`, `04`. Nếu danh sách của phiên demo có 2 ảnh này thì chụp bổ sung; nếu bạn cố ý bỏ thì báo phiên demo một câu để nó ghi vào bảng khảo sát.
+
+## Trạng thái
+
+| Task | Đang ở | Chờ | Còn |
+|---|---|---|---|
+| Task 2 | ✅ Xong | | 0 |
+| Task 3 | Phiên đã viết `n2_firefox_checklist.js` | Chạy N2 trên Firefox ở máy → compare, bugs | ~1,75 giờ |
+| Agent Skill | Đang quay demo; xong bước survey | oracle → ai-draft → review → add → excel; tải video lên YouTube | ~0,6 giờ |
+| Tổng hợp | Report đã có Task 1, 2, setup Task 3, Skill | Mục 4, link video, AI Critique, tổng kết; bạn đọc, tự chấm; PDF, zip | ~1 giờ |
+
+⏱ Còn khoảng **3,3 giờ** làm việc | Còn **3 giờ 36 phút** tới deadline 13:00 11/11
+````
+
+---
+
+### C273 | 09:24 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Về các ảnh:
+- Danh mục không có đường dẫn, tất cả đều xài chung http://localhost:5174/
+- Form mở sẵn nên không có ảnh 3
+- Không có hộp thoại xác nhận khi xóa nên không có ảnh 4.
+
+Tôi chọn cách b.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: List screenshots and diff survey against AI draft
+- Read: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\screenshots\survey_01_category_logged_out.png
+- Read: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\screenshots\survey_02_category_list.png
+- Read: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\screenshots\survey_05_dashboard_sidebar.png
+- Read: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\screenshots\survey_06_category_empty.png
+- Bash: Read PNG dimensions and current time
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\00_survey.md
+- Bash: Run format check and confirm AI draft untouched
+
+**Output AI (nguyên văn):**
+
+````text
+Bạn chọn (b). Kiểm ảnh trong `screenshots/` và phần bạn đã điền trong `00_survey.md` trước.
+
+Có 4 ảnh (01, 02, 05, 06). Bảng môi trường và cột "Đã chụp" chưa điền. Xem từng ảnh.
+
+Ảnh đủ dùng: 03 và 04 không có vì form luôn hiện sẵn và không có hộp xác nhận, khớp với ảnh 02. Kiểm kích thước ảnh để ghi môi trường.
+
+Viết lại `00_survey.md`: Điền từ ảnh, để `?` ở những ô ảnh không cho thấy, thêm mục đối chiếu.
+
+Chỉ là cảnh báo chính tả của IDE với chữ tiếng Việt. Chạy kiểm tra định dạng và xác nhận bản AI gốc không bị đụng.
+
+Xong `survey` pha 3. Tôi đã điền [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md) từ 4 ảnh theo cách (b) bạn chọn. [ai_raw/DEMO_survey.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md) vẫn giữ nguyên lúc 09:15, và kiểm tra định dạng báo 0 lỗi.
+
+**Ảnh:** Đủ dùng, không cần chụp lại. Ảnh 03 và 04 ghi `Không có` theo lời bạn. Ảnh 02 và 06 đều thấy ô nhập và nút "Thêm mới" ngay khi vào trang, khớp với việc form luôn hiện sẵn. Riêng việc không có hộp xác nhận thì ảnh không cho thấy được, nên tôi ghi theo lời bạn.
+
+**Những gì ghi được từ ảnh** (chỉ ghi lại, chưa đánh giá đúng sai):
+- Tab trình duyệt luôn là "frontend-admin"; mọi trang Admin đều ở `localhost:5174`.
+- Ô nhập không có nhãn, không có `*`, chỉ có placeholder "Tên danh mục mới".
+- Nút "Thêm mới" màu xanh dương, nút "Xóa" màu đỏ.
+- Bảng có 3 cột "ID", "Tên Danh Mục", "Hành động" và 3 dòng; không có phân trang, tìm kiếm hay nút sửa.
+- Khi danh sách trống chỉ còn dòng tên cột: Không có thông báo, không có icon.
+- Menu trái làm nổi bật mục đang mở bằng chữ xanh dương. "Đăng xuất" chữ đỏ, nằm cuối menu. Không có lời chào Admin, không có footer, không có breadcrumb.
+- Có chữ tiếng Anh: "Dashboard", "ID", và "Admin Login", "Email", "Password", "Login" ở trang đăng nhập.
+- Tôi đọc giờ chụp từ đồng hồ trong ảnh: 09:18 đến 09:20 ngày 11/11/2026.
+
+**Cần bạn xem trực tiếp rồi điền** (mục 5, dòng 4 đến 8). Các điểm này ảnh tĩnh không cho thấy, và bước `oracle` sẽ cần:
+1. Bảng môi trường: Phiên bản Chrome và Windows, độ phân giải, zoom, scale của OS, tài khoản đã dùng, đã reset trước khi chụp và sau ảnh 06 chưa.
+2. Bấm "Xóa" thì dòng mất ngay hay sau một lúc, và có thông báo nào hiện lên không. Nếu thông báo tự tắt nhanh thì chụp thêm `survey_07_category_after_delete.png`, sau đó reset dữ liệu.
+3. "EShop Admin" có phải link không, dẫn tới đâu.
+4. Khi rê chuột, "Đăng xuất" trông như nút hay link.
+5. Đang ở Danh mục mà bấm F5 thì vẫn ở Danh mục hay về trang khác. Tôi hỏi vì mọi trang dùng chung một địa chỉ.
+
+Bạn điền thẳng vào các ô `?`, hoặc trả lời ở đây để tôi ghi vào.
+
+**Commit:** Ảnh là phần bạn làm nên commit trước. Bản đối chiếu commit sau khi đã xử lý các ô `?`:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/screenshots/
+git commit -m "[demo][survey] Record A-01 survey screenshots"
+
+git add Homeworks/HW03/demo/gui-checklist/00_survey.md
+git commit -m "[demo][survey] Review A-01 survey against screenshots"
+```
+
+Xong các ô `?` thì sang bước `oracle`: Trích yêu cầu giao diện từ SRS, chủ yếu FR-14 và FR-21 đến FR-24.
+````
+
+---
+
+### C274 | 09:26 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `99fcf7b9`
+
+**Prompt (nguyên văn):**
+
+````text
+- Đồng ý bỏ D-16
+- Đã tắt Ctrl+C trong cmd. Cần hướng dẫn đổi access key.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- (không)
+
+**Output AI (nguyên văn):**
+
+````text
+Đã ghi nhận: Bỏ D-16 cho N2, nên cả 112 mục ở cột NT2 sẽ có kết quả. Tôi sẽ ghi việc này vào `firefox_triage.md` cùng lúc với D-24, sau khi chạy xong N2.
+
+## Đổi access key LambdaTest
+
+1. Đăng nhập lambdatest.com, bấm **ảnh đại diện** ở góc trên bên phải, chọn **Account Settings**.
+2. Mở tab **Password & Security**. Tên tab có thể hơi khác, tìm mục có chữ "Access Key".
+3. Ở mục **Access Key**, bấm **Regenerate**, rồi xác nhận.
+4. Kiểm lại: Key mới hiện ra khác key cũ. Key cũ (lộ trong ảnh bạn gửi) hết hiệu lực từ đây.
+
+Không cần lưu key mới, vì N2 không dùng LambdaTest nữa. Nếu không tìm thấy mục này, chụp màn hình trang Account Settings gửi tôi; nhớ che phần key.
+
+Chương trình tunnel `LT.exe` vẫn còn trong thư mục tạm của phiên này, không nằm trong repo. Bạn muốn thì tôi xóa luôn.
+
+Giờ bạn chạy N2 được rồi: Lệnh lần 1 là `node n2_firefox_checklist.js --log=n2_run_log.txt`.
+````
+
+---
+
+### C275 | 09:29 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+1. Bảng môi trường lấy lại của T1. Tài khoản đã dùng là admin@eshop.com
+2. Biến mất ngay lập tức.
+3. Không phải link
+4. Giống các nút khác trên menu nhưng màu đỏ thôi.
+5. Về lại dashboard.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record student answers into survey and check format
+- Bash: Correct update time and list remaining open cells
+
+**Output AI (nguyên văn):**
+
+````text
+Không đọc được bảng môi trường của T1: Nó nằm trong `Homeworks/HW03/checklist/00_survey.md`, mà bạn đã dặn phiên này không đọc `checklist/`. Tôi ghi 4 câu trả lời còn lại, phần môi trường vẫn để `?`.
+
+Tôi đã ghi 4 câu trả lời vào [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md):
+- Tài khoản đã dùng là `admin@eshop.com`.
+- Bấm "Xóa" thì dòng biến mất ngay lập tức.
+- "EShop Admin" không phải link.
+- "Đăng xuất" giống các nút khác trên menu, chỉ khác màu đỏ.
+- Bấm F5 ở trang Danh mục thì về lại Dashboard. Tôi thêm một dòng riêng cho ý này ở mục 3.1.
+
+Mỗi câu trả lời đều ghi rõ là "SV ghi". Kiểm tra định dạng báo 0 lỗi.
+
+Còn 2 chỗ chưa có, nên bước `survey` chưa xong:
+
+1. **Bảng môi trường.** Nó nằm trong thư mục `checklist/` mà bạn đã cấm phiên này đọc, nên tôi chưa mở. Có hai cách:
+   - (a) Bạn dán các giá trị vào đây: Phiên bản Chrome, phiên bản Windows, độ phân giải, zoom, scale của OS. Thêm hai ý riêng của lần này: Đã reset dữ liệu trước khi chụp chưa, và đã reset sau khi xóa hết danh mục ở ảnh 06 chưa. Hai ý này T1 không có.
+   - (b) Bạn cho phép tôi đọc **chỉ bảng môi trường** trong `checklist/00_survey.md`. Tôi sẽ không đọc phần còn lại và ghi lại ngoại lệ này trong file.
+2. **Thông báo sau khi xóa.** Bạn trả lời là dòng biến mất ngay, nhưng chưa nói có thông báo nào hiện lên không, ví dụ "Đã xóa...". Có thì chép nguyên văn, nó hiện ở đâu, tự tắt hay phải bấm đóng.
+
+Có đủ hai điểm này thì tôi chốt survey và đưa lệnh commit (ảnh trước, bản đối chiếu sau), rồi sang `oracle`.
+````
+
+---
+
+### C276 | 09:30 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Cho phép đọc file 00_survey.md để lấy thông tin môi trường.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Extract only the environment table from T1 survey
+- Bash: Fill environment values into survey and recheck
+
+**Output AI (nguyên văn):**
+
+````text
+Đọc **chỉ bảng môi trường** trong `checklist/00_survey.md` (lọc theo tiêu đề bảng, không mở phần còn lại).
+
+Lấy 5 giá trị máy và trình duyệt. Ngày giờ, tài khoản và việc reset của T1 thuộc lần chụp ngày 08/11 nên không chép sang.
+
+Tôi đã ghi 5 thông số môi trường vào [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md):
+
+| Mục | Giá trị |
+|---|---|
+| Trình duyệt | Chrome 156.0.8078.81 |
+| OS | Windows 11 Version 26H2 (Build 26300.9818) |
+| Độ phân giải | 2560 x 1440 |
+| Zoom | 100% |
+| Scale | 150% |
+
+Tôi chỉ trích bảng môi trường trong `checklist/00_survey.md`, không mở phần còn lại của file. Trong file demo có ghi rõ ngoại lệ này và nguồn của từng giá trị. Ngày giờ, tài khoản và việc reset của T1 tôi không chép sang, vì chúng thuộc lần chụp ngày 08/11. Kiểm tra định dạng báo 0 lỗi.
+
+Còn 3 ô `?` trước khi chốt survey:
+1. Đã reset dữ liệu trước khi chụp hôm nay chưa?
+2. Đã reset sau khi xóa hết danh mục ở ảnh 06 chưa? Nếu chưa thì nên chạy `cd backend && node database.js` trước bước sau.
+3. Bấm "Xóa" xong có thông báo nào hiện lên không? Nếu có thì chép nguyên văn, cho biết hiện ở đâu, tự tắt hay phải bấm đóng.
+
+Bạn trả lời 3 câu này thì tôi chốt survey, đưa lệnh commit (ảnh trước, bản đối chiếu sau) rồi sang `oracle`.
+````
+
+---
+
+### C277 | 09:30 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+2. Không có thông báo nào sau khi xóa cả.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record no-notification answer and list open cells
+
+**Output AI (nguyên văn):**
+
+````text
+Tôi đã ghi vào [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md): Bấm "Xóa" thì dòng biến mất ngay và không có thông báo nào. Điều này khớp với ảnh 06, vì ảnh không thấy thông báo, nên không cần chụp thêm ảnh 07. Kiểm tra định dạng báo 0 lỗi.
+
+Cả file chỉ còn 2 ô `?` trong bảng môi trường, cùng về việc reset dữ liệu:
+- Đã reset trước khi chụp hôm nay chưa?
+- Đã reset sau khi xóa hết danh mục ở ảnh 06 chưa?
+
+Câu thứ hai quan trọng cho bước sau. Nếu chưa reset thì EShop đang không còn danh mục nào. Hãy chạy `cd backend && node database.js` trước khi làm tiếp.
+
+Bạn trả lời 2 câu này (chỉ cần "có" hoặc "chưa") thì tôi ghi vào rồi survey xong. Commit ảnh trước, rồi commit bản đối chiếu sau khi đã điền 2 ô đó:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/screenshots/
+git commit -m "[demo][survey] Record A-01 survey screenshots"
+
+git add Homeworks/HW03/demo/gui-checklist/00_survey.md
+git commit -m "[demo][survey] Review A-01 survey against screenshots"
+```
+
+Sau đó gọi lại skill để sang bước `oracle`.
+````
+
+---
+
+### C278 | 09:33 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã làm cả hai bước bạn hỏi.
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Record reset answers and confirm no open cells
+
+**Output AI (nguyên văn):**
+
+````text
+Survey đã xong. Tôi đã ghi vào [00_survey.md](Homeworks/HW03/demo/gui-checklist/00_survey.md) là dữ liệu được reset cả trước khi chụp lẫn sau ảnh 06. File không còn ô `?` nào, và kiểm tra định dạng báo 0 lỗi. [ai_raw/DEMO_survey.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md) vẫn giữ nguyên như lúc giao (09:15).
+
+Commit theo thứ tự này: Ảnh do bạn chụp trước, bản AI điền và đối chiếu sau.
+
+```
+git add Homeworks/HW03/demo/gui-checklist/screenshots/
+git commit -m "[demo][survey] Record A-01 survey screenshots"
+
+git add Homeworks/HW03/demo/gui-checklist/00_survey.md
+git commit -m "[demo][survey] Review A-01 survey against screenshots"
+```
+
+Nếu bạn chưa commit bản AI ở pha 1 thì chạy lệnh này trước hai lệnh trên. Lưu ý lúc này `00_survey.md` đã khác bản AI, nên commit đó chỉ gồm file `ai_raw/`:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_survey.md
+git commit -m "[demo][survey] Add A-01 category screen survey table (AI draft)"
+```
+
+Bước tiếp theo là `oracle`: Trích nguyên văn yêu cầu giao diện từ SRS (FR-14, FR-12 và FR-21 đến FR-24), gán mã `UI-Rnn`, ghi IA và màn hình áp dụng, kèm các câu hỏi `CH-nn` để bạn chốt. Commit xong thì gọi lại skill để làm bước này.
+````
+
+---
+
+### C279 | 09:34 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `d485f4ce`
+
+**Prompt (nguyên văn):**
+
+````text
+Đã commit xong.
+
+/gui-checklist
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Skill
+- Bash: Read oracle step guide and template
+- AskUserQuestion
+- Bash: Read SRS FR-01 to FR-11 and FR-20
+- Bash: Inspect oracle check rules in script
+- Bash: Read sources reference and current time
+- Write: d:\Dang\Test\Homeworks\HW03\demo\gui-checklist\ai_raw\DEMO_oracle.md
+- Bash: Run oracle and format checks on AI draft
+- Bash: Verify quoted SRS text matches verbatim
+
+**Output AI (nguyên văn):**
+
+````text
+Bước tiếp theo là `oracle`. Đọc hướng dẫn và mẫu của bước này.
+
+Sinh viên chốt: (a) Chỉ kiểm hiển thị; có trích ý giao diện ở FR khác và SEC. Đọc phần còn lại của SRS để tìm các ý giao diện ở FR khác.
+
+Xem script kiểm `oracle` đòi định dạng bảng thế nào.
+
+Script chỉ kiểm IA và cột Màn hình ở các dòng "Áp dụng". Xem `references/sources.md` để ghi nguồn khuyến nghị đúng cách.
+
+Viết bản AI `ai_raw/DEMO_oracle.md`.
+
+Số đếm khớp với mục 3. Kiểm từng câu trích nguyên văn có đúng từng chữ trong SRS không.
+
+Xong bản AI của bước `oracle`: [ai_raw/DEMO_oracle.md](Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_oracle.md). Script kiểm `oracle` và `format` đều báo 0 lỗi, và cả 32 câu trích đều khớp từng chữ với SRS.
+
+**Kết quả xét áp dụng:** Có 32 mã `UI-R01` đến `UI-R32`.
+- 10 mã áp dụng hẳn, 2 mã áp dụng một phần, 18 mã không áp dụng, 2 mã chờ bạn quyết.
+- Hai mã áp dụng một phần là FR-14 "Thêm / Xem / Xóa" và "Tên bắt buộc". Theo lựa chọn (a) của bạn, chỉ kiểm phần nhìn thấy được trên giao diện.
+- FR-12 và SEC-04 ghi không áp dụng, cũng theo lựa chọn (a).
+- Có 2 cặp mã trùng ý, mỗi cặp sẽ chỉ sinh một mục: UI-R04 với UI-R25 (`<h1>`), UI-R06 với UI-R20 (dấu `*`).
+
+**Cần bạn lưu ý:** Với một màn hình Admin, SRS chỉ cho IA-03 2 mã áp dụng và IA-04 đúng 1 mã. Muốn hai IA này có thêm mục thì phải dùng nguồn ngoài SRS, ghi là khuyến nghị (CH-08, CH-09, CH-10). Đề bài cũng đã cảnh báo một màn hình khó đạt trên 40 mục có nghĩa.
+
+**Câu hỏi cần bạn trả lời** (chi tiết phương án ở mục 4.1 của file):
+
+| Mã | Câu hỏi | Phương án |
+|---|---|---|
+| CH-01 | Trang "Admin Login" có thuộc phạm vi A-01 không | (a) Không; (b) Có, xét đủ FR-21 và FR-22, gồm cả Email và Password; (c) Chỉ xét FR-21 |
+| CH-02 | Chữ tiếng Anh nào được giữ | (a) "ID"; (b) "ID" và "Dashboard"; (c) Không từ nào; (d) Bạn liệt kê. Riêng "EShop Admin": (e) Tên riêng, không dịch; (f) Phải dịch |
+| CH-03 | Tiêu đề tab `frontend-admin` có tính vào yêu cầu ngôn ngữ không | (a) Có; (b) Không |
+| CH-04 | Nhóm màu của nút "Đăng xuất" | (a) Không thuộc nhóm nào; (b) Nguy hiểm, đỏ; (c) Tích cực, xanh dương; (d) Phân khác |
+| CH-05 | Thứ tự Tab với bố cục hai cột | (a) Hết menu trái rồi tới nội dung; (b) Theo từng hàng; (c) Chỉ xét vùng nội dung |
+| CH-06 | Dấu `*` khi ô nhập không có nhãn | (a) Phải có nhãn và `*`; (b) `*` sát ô là đạt; (c) Tách hai mục, mục "có nhãn" là khuyến nghị theo WCAG |
+| CH-07 | Bấm "Thêm mới" khi ô tên trống thì kiểm gì | (a) Kiểm có thông báo lỗi và vị trí của nó; (b) Chỉ kiểm vị trí; (c) Không kiểm |
+| CH-08 | Có kiểm phản hồi sau khi Thêm hoặc Xóa không (khuyến nghị) | (a) Không; (b) Cả hai; (c) Chỉ Thêm; (d) Chỉ Xóa |
+| CH-09 | Có kiểm hộp xác nhận khi Xóa không (khuyến nghị) | (a) Không; (b) Có |
+| CH-10 | Có kiểm trạng thái loading của danh sách không (khuyến nghị) | (a) Không; (b) Có |
+| CH-11 | "Message thân thiện" khi danh sách trống kiểm thế nào | (a) Có câu tiếng Việt nói chưa có danh mục; (b) Như (a) và có gợi ý bước tiếp theo; (c) Bỏ chữ "thân thiện", chỉ kiểm có message |
+
+Bạn cũng xác nhận hoặc sửa 6 giả định của tôi ở mục 4.2 (`GĐ-01` đến `GĐ-06`). Ví dụ: Menu trái được coi là "Navbar"; mục được làm nổi bật được so với chính nó ở trang khác. Mục 5.1 liệt kê 10 điểm thấy ở survey mà SRS không yêu cầu. Bạn muốn đưa điểm nào vào checklist thì nêu ra, tôi sẽ ghi thành mục khuyến nghị `NR-nn`.
+
+Commit bản AI:
+
+```
+git add Homeworks/HW03/demo/gui-checklist/ai_raw/DEMO_oracle.md
+git commit -m "[demo][oracle] Add A-01 UI requirement extract (AI draft)"
+```
+
+Bạn trả lời các câu trên xong thì tôi viết bản review `01_oracle.md`.
+````
+
+---
+
+### C280 | 09:42 11/11/2026 | Tool: Claude Code (claude-opus-5-5) | Session `949bce7e`
+
+**Prompt (nguyên văn):**
+
+````text
+Vì để hoàn thành nhanh phần quay demo cho thấy skill hoạt động, tôi cần bạn xuất log và đưa tôi commit, đồng thời trả lời các câu hỏi này cho tôi, hầu như phần T1 tôi đã trả lời qua vài phần, phần nào chưa có thể cân nhắc thời gian để chọn.
+
+
+Mã	Câu hỏi	Phương án
+CH-01	Trang "Admin Login" có thuộc phạm vi A-01 không	(a) Không; (b) Có, xét đủ FR-21 và FR-22, gồm cả Email và Password; (c) Chỉ xét FR-21
+CH-02	Chữ tiếng Anh nào được giữ	(a) "ID"; (b) "ID" và "Dashboard"; (c) Không từ nào; (d) Bạn liệt kê. Riêng "EShop Admin": (e) Tên riêng, không dịch; (f) Phải dịch
+CH-03	Tiêu đề tab frontend-admin có tính vào yêu cầu ngôn ngữ không	(a) Có; (b) Không
+CH-04	Nhóm màu của nút "Đăng xuất"	(a) Không thuộc nhóm nào; (b) Nguy hiểm, đỏ; (c) Tích cực, xanh dương; (d) Phân khác
+CH-05	Thứ tự Tab với bố cục hai cột	(a) Hết menu trái rồi tới nội dung; (b) Theo từng hàng; (c) Chỉ xét vùng nội dung
+CH-06	Dấu * khi ô nhập không có nhãn	(a) Phải có nhãn và *; (b) * sát ô là đạt; (c) Tách hai mục, mục "có nhãn" là khuyến nghị theo WCAG
+CH-07	Bấm "Thêm mới" khi ô tên trống thì kiểm gì	(a) Kiểm có thông báo lỗi và vị trí của nó; (b) Chỉ kiểm vị trí; (c) Không kiểm
+CH-08	Có kiểm phản hồi sau khi Thêm hoặc Xóa không (khuyến nghị)	(a) Không; (b) Cả hai; (c) Chỉ Thêm; (d) Chỉ Xóa
+CH-09	Có kiểm hộp xác nhận khi Xóa không (khuyến nghị)	(a) Không; (b) Có
+CH-10	Có kiểm trạng thái loading của danh sách không (khuyến nghị)	(a) Không; (b) Có
+CH-11	"Message thân thiện" khi danh sách trống kiểm thế nào	(a) Có câu tiếng Việt nói chưa có danh mục; (b) Như (a) và có gợi ý bước tiếp theo; (c) Bỏ chữ "thân thiện", chỉ kiểm có message
+````
+
+**Thao tác AI đã thực hiện (đọc/ghi file, chạy lệnh):**
+
+- Bash: Read Task 1 decisions on oracle and draft questions for consistency
+- Bash: Check Task 1 items for friendly message, focus order and tab title
+- PowerShell: Export log, show repo status, commits and demo files
+
+**Output AI (nguyên văn):**
+
+````text
+(Không có phản hồi: Phiên bị dừng hoặc chưa hoàn tất)
 ````
 
 
