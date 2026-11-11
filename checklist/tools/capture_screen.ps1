@@ -1,9 +1,11 @@
 ﻿# Chụp toàn màn hình Windows (gồm cửa sổ Chrome, thanh địa chỉ, taskbar) cho n1_chrome_checklist.js.
 # Đưa cửa sổ Chrome do script mở (tiến trình chrome khởi động sau thời điểm -SinceMs) lên trước rồi mới chụp.
-# Cách dùng: powershell -NoProfile -ExecutionPolicy Bypass -File capture_screen.ps1 -Out <file.png> -SinceMs <epoch ms>
+# Cách dùng: powershell -NoProfile -ExecutionPolicy Bypass -File capture_screen.ps1 -Out <file.png> -SinceMs <epoch ms> [-Proc firefox]
+# -Proc: Tên tiến trình trình duyệt cần đưa lên trước (mặc định chrome; n2_firefox_checklist.js dùng firefox).
 param(
   [Parameter(Mandatory = $true)][string]$Out,
-  [long]$SinceMs = 0
+  [long]$SinceMs = 0,
+  [string]$Proc = 'chrome'
 )
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 Add-Type @"
@@ -22,7 +24,7 @@ public class HwWin {
 
 if ($SinceMs -gt 0) {
   $since = [DateTimeOffset]::FromUnixTimeMilliseconds($SinceMs).LocalDateTime
-  $win = Get-Process chrome -ErrorAction SilentlyContinue |
+  $win = Get-Process $Proc -ErrorAction SilentlyContinue |
     Where-Object { $_.MainWindowHandle -ne [IntPtr]::Zero -and $_.StartTime -ge $since } |
     Sort-Object StartTime | Select-Object -First 1
   if ($win) {
@@ -33,7 +35,7 @@ if ($SinceMs -gt 0) {
     [HwWin]::keybd_event(0x12, 0, 2, 0)
     Start-Sleep -Milliseconds 500
   } else {
-    Write-Output "WARN: Không tìm thấy cửa sổ Chrome của script; vẫn chụp màn hình hiện tại"
+    Write-Output "WARN: Không tìm thấy cửa sổ $Proc của script; vẫn chụp màn hình hiện tại"
   }
 }
 

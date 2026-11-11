@@ -1,0 +1,578 @@
+
+===== Lần chạy 11:03:37 11/11/2026 | --only=K --log=n2_recheck_log.txt =====
+=== HW03 Task 3, N2: Firefox trên Windows (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend và frontend web đang chạy; frontend ở http://localhost:5173.
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n2.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng (CL-68, CL-69).
+Đã làm đủ BƯỚC 0? Gõ "co" rồi Enter để bắt đầu (Enter trống để thoát): co
+Firefox (Playwright) phiên bản 159.0; Windows 10.0.26300
+
+[5s] Bắt đầu nhóm K
+
+=== K. Làm tay: CL-33 (zoom 200%) và kiểm lại CL-72, CL-77, CL-81, CL-82, CL-97 đến CL-100 (sinh viên bấm, script đọc kết quả) ===
+
+Nhóm K dừng vì lỗi: Error: EXDEV: cross-device link not permitted, rename 'D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-100.png' -> 'C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblgk89\CL-100.png' /     at Object.renameSync (node:fs:1019:11) /     at phaseRecheck (D:\Dang\Test\Homeworks\HW03\checklist\tools\n2_firefox_checklist.js:1871:10)
+Bấm Enter để chạy nhóm tiếp theo... 
+
+=== KẾT QUẢ NHÁP N2 (Firefox trên Windows). Sinh viên chốt trong Excel (cột NT2); mục Failed cần ảnh ===
+┌─────────┬──────────┬──────────────┬─────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ (index) │ Mã CL    │ Kết quả nháp │ Ảnh │ Lý do                                                                                                            │
+├─────────┼──────────┼──────────────┼─────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 0       │ 'CL-01'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của nhãn và placeholder'                                                                 │
+│ 1       │ 'CL-02'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của nút và link'                                                                         │
+│ 2       │ 'CL-03'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của tiêu đề'                                                                             │
+│ 3       │ 'CL-04'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của navbar và footer'                                                                    │
+│ 4       │ 'CL-05'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của thông báo (script in các thông báo bắt được ở cuối dòng này) | Thông báo bắt được: ' │
+│ 5       │ 'CL-06'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Ngôn ngữ của tiêu đề tab | Tiêu đề tab: '                                                         │
+│ 6       │ 'CL-07'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Chữ trạng thái đơn (ma trận) | Chữ trạng thái: '                                                  │
+│ 7       │ 'CL-08'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Màu nút tích cực'                                                                                 │
+│ 8       │ 'CL-09'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Màu nút nguy hiểm / hủy bỏ'                                                                       │
+│ 9       │ 'CL-10'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 10      │ 'CL-11'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 11      │ 'CL-12'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 12      │ 'CL-13'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 13      │ 'CL-14'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 14      │ 'CL-15'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 15      │ 'CL-16'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 16      │ 'CL-17'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 17      │ 'CL-18'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 18      │ 'CL-19'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 19      │ 'CL-20'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 20      │ 'CL-21'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 21      │ 'CL-22'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 22      │ 'CL-23'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 23      │ 'CL-24'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 24      │ 'CL-25'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Dùng từ nhất quán'                                                                                │
+│ 25      │ 'CL-26'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Kiểu viết hoa tiêu đề'                                                                            │
+│ 26      │ 'CL-27'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Kiểu viết hoa nút và navbar'                                                                      │
+│ 27      │ 'CL-28'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 28      │ 'CL-29'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 29      │ 'CL-30'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 30      │ 'CL-31'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Căn lề nhãn và ô nhập'                                                                            │
+│ 31      │ 'CL-32'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 32      │ 'CL-33'  │ 'Chạy tay'   │ ''  │ '[-] Làm tay: Zoom 200% bằng bàn phím (Ctrl và dấu +)'                                                           │
+│ 33      │ 'CL-34'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Họ Tên dài trên navbar'                                                                           │
+│ 34      │ 'CL-35'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Chính tả'                                                                                         │
+│ 35      │ 'CL-36'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 36      │ 'CL-37'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 37      │ 'CL-38'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 38      │ 'CL-39'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 39      │ 'CL-40'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 40      │ 'CL-41'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 41      │ 'CL-42'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 42      │ 'CL-43'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 43      │ 'CL-44'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 44      │ 'CL-45'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 45      │ 'CL-46'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 46      │ 'CL-47'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 47      │ 'CL-48'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 48      │ 'CL-49'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 49      │ 'CL-50'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 50      │ 'CL-51'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 51      │ 'CL-52'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 52      │ 'CL-53'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 53      │ 'CL-54'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 54      │ 'CL-55'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 55      │ 'CL-56'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Thông báo có nêu điều kiện cần đạt không | Thông báo bắt được: '                                  │
+│ 56      │ 'CL-57'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 57      │ 'CL-58'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 58      │ 'CL-59'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 59      │ 'CL-60'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 60      │ 'CL-61'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 61      │ 'CL-62'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 62      │ 'CL-63'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 63      │ 'CL-64'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 64      │ 'CL-65'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 65      │ 'CL-66'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Highlight mục navbar'                                                                             │
+│ 66      │ 'CL-67'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Highlight sai trên navbar'                                                                        │
+│ 67      │ 'CL-68'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 68      │ 'CL-69'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 69      │ 'CL-70'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 70      │ 'CL-71'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 71      │ 'CL-72'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 72      │ 'CL-73'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 73      │ 'CL-74'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 74      │ 'CL-75'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 75      │ 'CL-76'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 76      │ 'CL-77'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 77      │ 'CL-78'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 78      │ 'CL-79'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 79      │ 'CL-80'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 80      │ 'CL-81'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 81      │ 'CL-82'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 82      │ 'CL-83'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 83      │ 'CL-84'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Tên màu nền nhãn trạng thái (ma trận) | Màu đo được: '                                            │
+│ 84      │ 'CL-85'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 85      │ 'CL-86'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 86      │ 'CL-87'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 87      │ 'CL-88'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 88      │ 'CL-89'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 89      │ 'CL-90'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 90      │ 'CL-91'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 91      │ 'CL-92'  │ 'Chạy tay'   │ ''  │ '[-] Cần nhìn: Câu thông báo lịch sử đơn trống | Khối lịch sử trống: ""'                                         │
+│ 92      │ 'CL-93'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 93      │ 'CL-94'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 94      │ 'CL-95'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 95      │ 'CL-96'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 96      │ 'CL-97'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 97      │ 'CL-98'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 98      │ 'CL-99'  │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 99      │ 'CL-100' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 100     │ 'CL-101' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 101     │ 'CL-102' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 102     │ 'CL-103' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 103     │ 'CL-104' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 104     │ 'CL-105' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 105     │ 'CL-106' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 106     │ 'CL-107' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 107     │ 'CL-108' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 108     │ 'CL-109' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 109     │ 'CL-110' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 110     │ 'CL-111' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+│ 111     │ 'CL-112' │ 'Chưa chạy'  │ ''  │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                  │
+└─────────┴──────────┴──────────────┴─────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Mã CL	Kết quả nháp	Ảnh	Lý do
+CL-01	Chạy tay		[-] Cần nhìn: Ngôn ngữ của nhãn và placeholder
+CL-02	Chạy tay		[-] Cần nhìn: Ngôn ngữ của nút và link
+CL-03	Chạy tay		[-] Cần nhìn: Ngôn ngữ của tiêu đề
+CL-04	Chạy tay		[-] Cần nhìn: Ngôn ngữ của navbar và footer
+CL-05	Chạy tay		[-] Cần nhìn: Ngôn ngữ của thông báo (script in các thông báo bắt được ở cuối dòng này) | Thông báo bắt được: 
+CL-06	Chạy tay		[-] Cần nhìn: Ngôn ngữ của tiêu đề tab | Tiêu đề tab: 
+CL-07	Chạy tay		[-] Cần nhìn: Chữ trạng thái đơn (ma trận) | Chữ trạng thái: 
+CL-08	Chạy tay		[-] Cần nhìn: Màu nút tích cực
+CL-09	Chạy tay		[-] Cần nhìn: Màu nút nguy hiểm / hủy bỏ
+CL-10	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-11	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-12	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-13	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-14	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-15	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-16	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-17	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-18	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-19	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-20	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-21	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-22	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-23	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-24	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-25	Chạy tay		[-] Cần nhìn: Dùng từ nhất quán
+CL-26	Chạy tay		[-] Cần nhìn: Kiểu viết hoa tiêu đề
+CL-27	Chạy tay		[-] Cần nhìn: Kiểu viết hoa nút và navbar
+CL-28	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-29	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-30	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-31	Chạy tay		[-] Cần nhìn: Căn lề nhãn và ô nhập
+CL-32	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-33	Chạy tay		[-] Làm tay: Zoom 200% bằng bàn phím (Ctrl và dấu +)
+CL-34	Chạy tay		[-] Cần nhìn: Họ Tên dài trên navbar
+CL-35	Chạy tay		[-] Cần nhìn: Chính tả
+CL-36	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-37	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-38	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-39	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-40	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-41	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-42	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-43	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-44	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-45	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-46	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-47	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-48	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-49	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-50	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-51	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-52	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-53	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-54	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-55	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-56	Chạy tay		[-] Cần nhìn: Thông báo có nêu điều kiện cần đạt không | Thông báo bắt được: 
+CL-57	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-58	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-59	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-60	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-61	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-62	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-63	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-64	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-65	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-66	Chạy tay		[-] Cần nhìn: Highlight mục navbar
+CL-67	Chạy tay		[-] Cần nhìn: Highlight sai trên navbar
+CL-68	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-69	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-70	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-71	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-72	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-73	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-74	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-75	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-76	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-77	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-78	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-79	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-80	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-81	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-82	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-83	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-84	Chạy tay		[-] Cần nhìn: Tên màu nền nhãn trạng thái (ma trận) | Màu đo được: 
+CL-85	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-86	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-87	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-88	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-89	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-90	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-91	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-92	Chạy tay		[-] Cần nhìn: Câu thông báo lịch sử đơn trống | Khối lịch sử trống: ""
+CL-93	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-94	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-95	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-96	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-97	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-98	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-99	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-100	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-101	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-102	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-103	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-104	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-105	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-106	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-107	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-108	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-109	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-110	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-111	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-112	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+Passed 0 | Failed 0 | Không chạy được 0 | Chạy tay 21 | Chưa chạy 91
+Tổng thời gian: 14s
+
+Bấm Enter để đóng Firefox và kết thúc... 
+Log đã ghi vào D:\Dang\Test\Homeworks\HW03\checklist\tools\n2_recheck_log.txt
+
+===== Lần chạy 11:07:53 11/11/2026 | --only=K --log=n2_recheck_log.txt =====
+=== HW03 Task 3, N2: Firefox trên Windows (kết quả NHÁP) ===
+BƯỚC 0, PHIÊN ĐIỀU PHỐI làm trước (script KHÔNG tự làm):
+  1. Không có phiên usability nào đang dùng chung backend / DB.
+  2. Reset DB: cd backend && node database.js
+  3. Chạy tools/seed_orders.py (5 đơn ở 5 trạng thái cho test@eshop.com; newuser@eshop.com không có đơn).
+  4. Backend và frontend web đang chạy; frontend ở http://localhost:5173.
+Script sẽ đổi dữ liệu: Tạo tài khoản hw03.n2.*, sửa hồ sơ test@eshop.com, hủy 2 đơn, khóa tạm test@eshop.com 30 giây ở cuối.
+Sau lần chạy này cần reset DB và seed lại. Có 2 lần dừng để bạn tự chuẩn bị giỏ hàng (CL-68, CL-69).
+Đã làm đủ BƯỚC 0? Gõ "co" rồi Enter để bắt đầu (Enter trống để thoát): co
+Firefox (Playwright) phiên bản 159.0; Windows 10.0.26300
+
+[4s] Bắt đầu nhóm K
+
+=== K. Làm tay: CL-33 (zoom 200%), ảnh CL-105_2 và kiểm lại CL-72, CL-77, CL-81, CL-82, CL-97 đến CL-102, CL-52 (sinh viên bấm, script đọc kết quả) ===
+  Chuyển ảnh cũ CL-100.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-101.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-102.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-52.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-72.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-77.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-81.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-82.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-97.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+  Chuyển ảnh cũ CL-99.png sang C:\Users\Lenovo\AppData\Local\Temp\hw03_n2_backup_mwblm23d
+
+>>> CL-33: Bấm vào trang EShop trong cửa sổ Firefox, giữ Ctrl và bấm phím + nhiều lần cho tới khi thanh địa chỉ hiện 200% (6 lần: 110, 120, 133, 150, 170, 200).
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-33 [W-06 (đăng nhập) 200%] Chạy tay: Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mức zoom); vùng trang rộng 683 px; cuộn ngang không; xem ảnh CL-33_1
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_1.png
+CL-33 [W-04 (đăng nhập) 200%] Chạy tay: Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mức zoom); vùng trang rộng 683 px; cuộn ngang không; xem ảnh CL-33_2
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_2.png
+CL-33 [W-03 (đăng nhập) 200%] Chạy tay: Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mức zoom); vùng trang rộng 683 px; cuộn ngang không; xem ảnh CL-33_3
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-33_3.png
+
+>>> CL-33 xong: Trong cửa sổ Firefox bấm Ctrl và 0 (số không) để về zoom 100%.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+
+>>> CL-72: Firefox đang ở /profile (chưa đăng nhập). Bấm chuột vào logo "EShop" ở góc trái navbar.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-72 [W-06 (chưa đăng nhập, SV bấm)] Passed: SV bấm logo: tới /
+
+>>> CL-77: Firefox đang ở /login. Bấm link "Đăng ký ngay", chờ trang Đăng ký hiện, rồi bấm nút Back (mũi tên trái) trên thanh công cụ của Firefox.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-77 [W-03 (SV bấm)] Passed: Sau khi SV bấm Back: trang /login; form đăng nhập có
+
+>>> CL-81, CL-82: Firefox đang ở /profile, đã đăng nhập. Bấm nút "Thoát" trên navbar.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-81 [W-06 (đăng nhập, SV bấm)] Passed: Sau khi SV bấm Thoát (trang /profile): ô Họ Tên không, bảng đơn không, email không
+CL-82 [W-06 (đăng nhập, SV bấm)] Passed: Navbar sau khi SV bấm Thoát: EShop, Giỏ hàng, Đăng nhập, Đăng ký
+
+>>> CL-97: Firefox đang ở /profile. Bấm nút "Hủy đơn" ở dòng đơn #5 (Chờ xác nhận). Nếu hiện hộp hỏi xác nhận của trình duyệt, script tự chọn Cancel.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-97 [W-06 (đăng nhập, SV bấm)] Failed: SV bấm "Hủy đơn" đơn #5: không có hộp xác nhận; trạng thái sau khi bấm "Đã hủy"
+    Ảnh: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-97_1.png
+    (Ảnh _1 chụp lúc hộp thoại "Hủy đơn thành công!" đang hiện)
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-97_2.png
+CL-98 [W-06 (đăng nhập, SV bấm)] Không chạy được: Không có hộp xác nhận (CL-97 Failed)
+CL-99 [W-06 (đăng nhập, SV bấm)] Passed: Lần bấm ở CL-97 đã hủy luôn; trạng thái (không tải lại): "Đã hủy"
+CL-100 [W-06 (đăng nhập, SV bấm)] Passed: Thông báo: (hộp) Hủy đơn thành công!
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-105_2.png
+
+>>> CL-105: Script đã ngắt mạng của Firefox. Bấm nút "Cập nhật" (script tự chụp hộp thoại lỗi nếu có rồi đóng nó).
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-105 [W-06 (đăng nhập, SV bấm, mất kết nối)] Chạy tay: Mất kết nối, SV bấm Cập nhật: thông báo (hộp) Lỗi cập nhật; xem ảnh CL-105_2
+
+>>> CL-101: Script đã điền Số điện thoại 0912345678. Bấm nút "Cập nhật" (đóng hộp thoại nếu có, script tự đóng hộp alert).
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-101 [W-06 (đăng nhập, SV bấm)] Failed: SV bấm Cập nhật với Số điện thoại 0912345678: thông báo (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số. | (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.
+    Ảnh: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-101_1.png
+    (Ảnh _1 chụp lúc hộp thoại "Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số." đang hiện)
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-101_2.png
+
+>>> CL-52: Script đã điền Số điện thoại 0912345678 và Địa chỉ "227 Nguyễn Văn Cừ". Bấm nút "Cập nhật".
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-52 [W-06 (đăng nhập, SV bấm)] Failed: Sau khi tải lại: Email "test@eshop.com", Họ Tên "Test User", SĐT "", Địa chỉ ""; lúc SV bấm Cập nhật: (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-52.png
+
+>>> CL-102: Script đã điền Họ Tên "Test User Moi" và Số điện thoại 912345678. Bấm nút "Cập nhật", KHÔNG tải lại trang.
+    Làm xong, quay lại cửa sổ dòng lệnh này bấm Enter... 
+CL-102 [W-06 (đăng nhập, SV bấm)] Failed: Lời chào sau khi SV bấm Cập nhật (không tải lại): "Chào, Test User"; thông báo (hộp) Cập nhật thành công!
+    Ảnh: D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-102_1.png
+    (Ảnh _1 chụp lúc hộp thoại "Cập nhật thành công!" đang hiện)
+    Ảnh: OK 2560x1440 D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox\CL-102_2.png
+  (Nhóm K đã hủy 1 đơn Chờ xác nhận và đổi Số điện thoại, Địa chỉ của test@eshop.com)
+
+=== KẾT QUẢ NHÁP N2 (Firefox trên Windows). Sinh viên chốt trong Excel (cột NT2); mục Failed cần ảnh ===
+┌─────────┬──────────┬───────────────────┬────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ (index) │ Mã CL    │ Kết quả nháp      │ Ảnh            │ Lý do                                                                                                                                                                                                                          │
+├─────────┼──────────┼───────────────────┼────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 0       │ 'CL-01'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của nhãn và placeholder'                                                                                                                                                                               │
+│ 1       │ 'CL-02'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của nút và link'                                                                                                                                                                                       │
+│ 2       │ 'CL-03'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của tiêu đề'                                                                                                                                                                                           │
+│ 3       │ 'CL-04'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của navbar và footer'                                                                                                                                                                                  │
+│ 4       │ 'CL-05'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của thông báo (script in các thông báo bắt được ở cuối dòng này) | Thông báo bắt được: (hộp alert) Hủy đơn thành công! | (hộp alert) Lỗi cập nhật | (hộp alert) Số điện thoại không hợp lệ. Vui lòng ' │
+│ 5       │ 'CL-06'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Ngôn ngữ của tiêu đề tab | Tiêu đề tab: '                                                                                                                                                                       │
+│ 6       │ 'CL-07'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Chữ trạng thái đơn (ma trận) | Chữ trạng thái: '                                                                                                                                                                │
+│ 7       │ 'CL-08'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Màu nút tích cực'                                                                                                                                                                                               │
+│ 8       │ 'CL-09'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Màu nút nguy hiểm / hủy bỏ'                                                                                                                                                                                     │
+│ 9       │ 'CL-10'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 10      │ 'CL-11'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 11      │ 'CL-12'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 12      │ 'CL-13'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 13      │ 'CL-14'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 14      │ 'CL-15'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 15      │ 'CL-16'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 16      │ 'CL-17'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 17      │ 'CL-18'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 18      │ 'CL-19'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 19      │ 'CL-20'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 20      │ 'CL-21'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 21      │ 'CL-22'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 22      │ 'CL-23'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 23      │ 'CL-24'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 24      │ 'CL-25'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Dùng từ nhất quán'                                                                                                                                                                                              │
+│ 25      │ 'CL-26'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Kiểu viết hoa tiêu đề'                                                                                                                                                                                          │
+│ 26      │ 'CL-27'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Kiểu viết hoa nút và navbar'                                                                                                                                                                                    │
+│ 27      │ 'CL-28'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 28      │ 'CL-29'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 29      │ 'CL-30'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 30      │ 'CL-31'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Căn lề nhãn và ô nhập'                                                                                                                                                                                          │
+│ 31      │ 'CL-32'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 32      │ 'CL-33'  │ 'Chạy tay'        │ ''             │ '[W-06 (đăng nhập) 200%] Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mức zoom); vùng trang rộng 683 px; cuộn ngang không; xem ảnh CL-33_1 || [W-04 (đăng nhập) 200%] Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mứ' │
+│ 33      │ 'CL-34'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Họ Tên dài trên navbar'                                                                                                                                                                                         │
+│ 34      │ 'CL-35'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Chính tả'                                                                                                                                                                                                       │
+│ 35      │ 'CL-36'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 36      │ 'CL-37'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 37      │ 'CL-38'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 38      │ 'CL-39'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 39      │ 'CL-40'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 40      │ 'CL-41'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 41      │ 'CL-42'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 42      │ 'CL-43'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 43      │ 'CL-44'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 44      │ 'CL-45'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 45      │ 'CL-46'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 46      │ 'CL-47'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 47      │ 'CL-48'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 48      │ 'CL-49'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 49      │ 'CL-50'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 50      │ 'CL-51'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 51      │ 'CL-52'  │ 'Failed'          │ 'CL-52.png'    │ '[W-06 (đăng nhập, SV bấm)] Sau khi tải lại: Email "test@eshop.com", Họ Tên "Test User", SĐT "", Địa chỉ ""; lúc SV bấm Cập nhật: (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.'                           │
+│ 52      │ 'CL-53'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 53      │ 'CL-54'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 54      │ 'CL-55'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 55      │ 'CL-56'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Thông báo có nêu điều kiện cần đạt không | Thông báo bắt được: (hộp alert) Hủy đơn thành công! | (hộp alert) Lỗi cập nhật | (hộp alert) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số. | (hộp ale' │
+│ 56      │ 'CL-57'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 57      │ 'CL-58'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 58      │ 'CL-59'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 59      │ 'CL-60'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 60      │ 'CL-61'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 61      │ 'CL-62'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 62      │ 'CL-63'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 63      │ 'CL-64'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 64      │ 'CL-65'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 65      │ 'CL-66'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Highlight mục navbar'                                                                                                                                                                                           │
+│ 66      │ 'CL-67'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Highlight sai trên navbar'                                                                                                                                                                                      │
+│ 67      │ 'CL-68'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 68      │ 'CL-69'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 69      │ 'CL-70'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 70      │ 'CL-71'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 71      │ 'CL-72'  │ 'Passed'          │ ''             │ '[W-06 (chưa đăng nhập, SV bấm)] SV bấm logo: tới /'                                                                                                                                                                           │
+│ 72      │ 'CL-73'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 73      │ 'CL-74'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 74      │ 'CL-75'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 75      │ 'CL-76'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 76      │ 'CL-77'  │ 'Passed'          │ ''             │ '[W-03 (SV bấm)] Sau khi SV bấm Back: trang /login; form đăng nhập có'                                                                                                                                                         │
+│ 77      │ 'CL-78'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 78      │ 'CL-79'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 79      │ 'CL-80'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 80      │ 'CL-81'  │ 'Passed'          │ ''             │ '[W-06 (đăng nhập, SV bấm)] Sau khi SV bấm Thoát (trang /profile): ô Họ Tên không, bảng đơn không, email không'                                                                                                                │
+│ 81      │ 'CL-82'  │ 'Passed'          │ ''             │ '[W-06 (đăng nhập, SV bấm)] Navbar sau khi SV bấm Thoát: EShop, Giỏ hàng, Đăng nhập, Đăng ký'                                                                                                                                  │
+│ 82      │ 'CL-83'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 83      │ 'CL-84'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Tên màu nền nhãn trạng thái (ma trận) | Màu đo được: '                                                                                                                                                          │
+│ 84      │ 'CL-85'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 85      │ 'CL-86'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 86      │ 'CL-87'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 87      │ 'CL-88'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 88      │ 'CL-89'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 89      │ 'CL-90'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 90      │ 'CL-91'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 91      │ 'CL-92'  │ 'Chạy tay'        │ ''             │ '[-] Cần nhìn: Câu thông báo lịch sử đơn trống | Khối lịch sử trống: ""'                                                                                                                                                       │
+│ 92      │ 'CL-93'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 93      │ 'CL-94'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 94      │ 'CL-95'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 95      │ 'CL-96'  │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 96      │ 'CL-97'  │ 'Failed'          │ 'CL-97_1.png'  │ '[W-06 (đăng nhập, SV bấm)] SV bấm "Hủy đơn" đơn #5: không có hộp xác nhận; trạng thái sau khi bấm "Đã hủy"'                                                                                                                   │
+│ 97      │ 'CL-98'  │ 'Không chạy được' │ ''             │ '[W-06 (đăng nhập, SV bấm)] Không có hộp xác nhận (CL-97 Failed)'                                                                                                                                                              │
+│ 98      │ 'CL-99'  │ 'Passed'          │ ''             │ '[W-06 (đăng nhập, SV bấm)] Lần bấm ở CL-97 đã hủy luôn; trạng thái (không tải lại): "Đã hủy"'                                                                                                                                 │
+│ 99      │ 'CL-100' │ 'Passed'          │ ''             │ '[W-06 (đăng nhập, SV bấm)] Thông báo: (hộp) Hủy đơn thành công!'                                                                                                                                                              │
+│ 100     │ 'CL-101' │ 'Failed'          │ 'CL-101_1.png' │ '[W-06 (đăng nhập, SV bấm)] SV bấm Cập nhật với Số điện thoại 0912345678: thông báo (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số. | (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.'     │
+│ 101     │ 'CL-102' │ 'Failed'          │ 'CL-102_1.png' │ '[W-06 (đăng nhập, SV bấm)] Lời chào sau khi SV bấm Cập nhật (không tải lại): "Chào, Test User"; thông báo (hộp) Cập nhật thành công!'                                                                                         │
+│ 102     │ 'CL-103' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 103     │ 'CL-104' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 104     │ 'CL-105' │ 'Chạy tay'        │ ''             │ '[W-06 (đăng nhập, SV bấm, mất kết nối)] Mất kết nối, SV bấm Cập nhật: thông báo (hộp) Lỗi cập nhật; xem ảnh CL-105_2'                                                                                                         │
+│ 105     │ 'CL-106' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 106     │ 'CL-107' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 107     │ 'CL-108' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 108     │ 'CL-109' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 109     │ 'CL-110' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 110     │ 'CL-111' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+│ 111     │ 'CL-112' │ 'Chưa chạy'       │ ''             │ 'Script dừng hoặc bỏ qua trước khi tới mục này'                                                                                                                                                                                │
+└─────────┴──────────┴───────────────────┴────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Mã CL	Kết quả nháp	Ảnh	Lý do
+CL-01	Chạy tay		[-] Cần nhìn: Ngôn ngữ của nhãn và placeholder
+CL-02	Chạy tay		[-] Cần nhìn: Ngôn ngữ của nút và link
+CL-03	Chạy tay		[-] Cần nhìn: Ngôn ngữ của tiêu đề
+CL-04	Chạy tay		[-] Cần nhìn: Ngôn ngữ của navbar và footer
+CL-05	Chạy tay		[-] Cần nhìn: Ngôn ngữ của thông báo (script in các thông báo bắt được ở cuối dòng này) | Thông báo bắt được: (hộp alert) Hủy đơn thành công! | (hộp alert) Lỗi cập nhật | (hộp alert) Số điện thoại không hợp lệ. Vui lòng 
+CL-06	Chạy tay		[-] Cần nhìn: Ngôn ngữ của tiêu đề tab | Tiêu đề tab: 
+CL-07	Chạy tay		[-] Cần nhìn: Chữ trạng thái đơn (ma trận) | Chữ trạng thái: 
+CL-08	Chạy tay		[-] Cần nhìn: Màu nút tích cực
+CL-09	Chạy tay		[-] Cần nhìn: Màu nút nguy hiểm / hủy bỏ
+CL-10	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-11	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-12	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-13	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-14	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-15	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-16	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-17	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-18	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-19	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-20	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-21	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-22	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-23	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-24	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-25	Chạy tay		[-] Cần nhìn: Dùng từ nhất quán
+CL-26	Chạy tay		[-] Cần nhìn: Kiểu viết hoa tiêu đề
+CL-27	Chạy tay		[-] Cần nhìn: Kiểu viết hoa nút và navbar
+CL-28	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-29	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-30	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-31	Chạy tay		[-] Cần nhìn: Căn lề nhãn và ô nhập
+CL-32	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-33	Chạy tay		[W-06 (đăng nhập) 200%] Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mức zoom); vùng trang rộng 683 px; cuộn ngang không; xem ảnh CL-33_1 || [W-04 (đăng nhập) 200%] Zoom: devicePixelRatio 1 (CHƯA ĐỦ 200%: kiểm lại mứ
+CL-34	Chạy tay		[-] Cần nhìn: Họ Tên dài trên navbar
+CL-35	Chạy tay		[-] Cần nhìn: Chính tả
+CL-36	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-37	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-38	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-39	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-40	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-41	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-42	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-43	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-44	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-45	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-46	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-47	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-48	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-49	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-50	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-51	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-52	Failed	CL-52.png	[W-06 (đăng nhập, SV bấm)] Sau khi tải lại: Email "test@eshop.com", Họ Tên "Test User", SĐT "", Địa chỉ ""; lúc SV bấm Cập nhật: (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.
+CL-53	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-54	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-55	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-56	Chạy tay		[-] Cần nhìn: Thông báo có nêu điều kiện cần đạt không | Thông báo bắt được: (hộp alert) Hủy đơn thành công! | (hộp alert) Lỗi cập nhật | (hộp alert) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số. | (hộp ale
+CL-57	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-58	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-59	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-60	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-61	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-62	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-63	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-64	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-65	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-66	Chạy tay		[-] Cần nhìn: Highlight mục navbar
+CL-67	Chạy tay		[-] Cần nhìn: Highlight sai trên navbar
+CL-68	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-69	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-70	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-71	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-72	Passed		[W-06 (chưa đăng nhập, SV bấm)] SV bấm logo: tới /
+CL-73	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-74	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-75	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-76	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-77	Passed		[W-03 (SV bấm)] Sau khi SV bấm Back: trang /login; form đăng nhập có
+CL-78	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-79	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-80	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-81	Passed		[W-06 (đăng nhập, SV bấm)] Sau khi SV bấm Thoát (trang /profile): ô Họ Tên không, bảng đơn không, email không
+CL-82	Passed		[W-06 (đăng nhập, SV bấm)] Navbar sau khi SV bấm Thoát: EShop, Giỏ hàng, Đăng nhập, Đăng ký
+CL-83	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-84	Chạy tay		[-] Cần nhìn: Tên màu nền nhãn trạng thái (ma trận) | Màu đo được: 
+CL-85	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-86	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-87	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-88	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-89	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-90	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-91	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-92	Chạy tay		[-] Cần nhìn: Câu thông báo lịch sử đơn trống | Khối lịch sử trống: ""
+CL-93	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-94	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-95	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-96	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-97	Failed	CL-97_1.png	[W-06 (đăng nhập, SV bấm)] SV bấm "Hủy đơn" đơn #5: không có hộp xác nhận; trạng thái sau khi bấm "Đã hủy"
+CL-98	Không chạy được		[W-06 (đăng nhập, SV bấm)] Không có hộp xác nhận (CL-97 Failed)
+CL-99	Passed		[W-06 (đăng nhập, SV bấm)] Lần bấm ở CL-97 đã hủy luôn; trạng thái (không tải lại): "Đã hủy"
+CL-100	Passed		[W-06 (đăng nhập, SV bấm)] Thông báo: (hộp) Hủy đơn thành công!
+CL-101	Failed	CL-101_1.png	[W-06 (đăng nhập, SV bấm)] SV bấm Cập nhật với Số điện thoại 0912345678: thông báo (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số. | (hộp) Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.
+CL-102	Failed	CL-102_1.png	[W-06 (đăng nhập, SV bấm)] Lời chào sau khi SV bấm Cập nhật (không tải lại): "Chào, Test User"; thông báo (hộp) Cập nhật thành công!
+CL-103	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-104	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-105	Chạy tay		[W-06 (đăng nhập, SV bấm, mất kết nối)] Mất kết nối, SV bấm Cập nhật: thông báo (hộp) Lỗi cập nhật; xem ảnh CL-105_2
+CL-106	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-107	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-108	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-109	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-110	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-111	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+CL-112	Chưa chạy		Script dừng hoặc bỏ qua trước khi tới mục này
+Ảnh mục Failed lưu ở D:\Dang\Test\Homeworks\HW03\cross_platform\screenshots\firefox (4 ảnh). Xem lại từng ảnh; ảnh chụp lúc chưa đúng màn hình thì chụp bổ sung bằng tay.
+Passed 6 | Failed 4 | Không chạy được 1 | Chạy tay 22 | Chưa chạy 79
+Tổng thời gian: 256s
+
+Bấm Enter để đóng Firefox và kết thúc... 
+Log đã ghi vào D:\Dang\Test\Homeworks\HW03\checklist\tools\n2_recheck_log.txt

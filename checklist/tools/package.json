@@ -4,6 +4,8 @@
   "description": "HW03 Task 1: Công cụ hỗ trợ bước exec (kết quả nháp, sinh viên chốt)",
   "scripts": {
     "n1": "node n1_chrome_checklist.js",
+    "n2:check": "node n2_firefox_checklist.js --check",
+    "n2": "node n2_firefox_checklist.js --log=n2_run_log.txt",
     "n3:check": "node n3_android_checklist.js --check",
     "n3": "node n3_android_checklist.js --log=n3_run_log.txt"
   },
