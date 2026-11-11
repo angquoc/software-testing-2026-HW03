@@ -4,7 +4,7 @@ Kết quả khi chạy hai skill trong `skills/` trên màn hình và luồng **
 
 | Thư mục | Skill | Phạm vi demo |
 |---|---|---|
-| `gui-checklist/` | `skills/gui-checklist` | ⏳ Chốt khi quay video |
-| `usability-evaluation/` | `skills/usability-evaluation` | ⏳ Chốt khi quay video |
+| `gui-checklist/` | `skills/gui-checklist` | A-01 "Quản lý Danh mục" (Web Admin), từ `survey` tới `excel`, 59 mục (55 mục AI, 4 mục SV thêm) |
+| `usability-evaluation/` | `skills/usability-evaluation` | Không demo |
 
 Mỗi thư mục có cấu trúc giống thư mục của task tương ứng: Bản AI nguyên văn ở `ai_raw/`, bản đã review, ảnh ở `screenshots/`. Phiên demo không đọc `checklist/`, `usability/` (kết quả trên chính các màn hình này làm lệch bản AI).
