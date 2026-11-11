@@ -138,3 +138,48 @@ Issue Task 2 có label `bug`, `platform: admin`, `task: T2 usability`, được 
 ## 7. Ảnh danh sách issue (Task 2)
 
 Trang Issues đã lọc `author:angquoc label:"task: T2 usability"`, đủ #66 và #67: `bugs/screenshots/issues_list_T2.png` (WORKFLOW mục 5; một ảnh nên không có hậu tố).
+
+---
+
+# Bug report: Task 3 (Cross-Browser / Cross-Platform)
+
+- Người báo: 23120061, Nguyễn Thị Ánh Ngọc
+- Nguồn: Các mục có kết quả khác nhau giữa 3 nền tảng trong `checklist/HW03_T1_GUI_Checklist.xlsx` (cột NT1, NT2, NT3), xem `cross_platform/02_compare.md`
+- Nền tảng: N1 Chrome 156 trên Windows 11 (lần chạy Task 1), N2 Firefox 159 trên Windows 11, N3 Chrome 156 trên Android 15 (Samsung SM-G998B)
+- Ảnh: `cross_platform/screenshots/<nền tảng>/`
+- Chỉ báo bug **chỉ xuất hiện trên một số nền tảng** (WORKFLOW mục 3.3); bug xuất hiện trên mọi nền tảng đã có issue ở Task 1
+
+## 8. Issue đã tạo (Task 3)
+
+| Mã | Issue | Tiêu đề | Mục CL | Nền tảng lỗi | Severity | IA | Ảnh |
+|---|---|---|---|---|---|---|---|
+| B-T3-01 | [#104](https://github.com/angquoc/software-testing-2026-HW03-group/issues/104) | [W-06][Android Chrome] Tổng tiền dùng dấu chấm phân cách hàng nghìn khi trình duyệt dùng tiếng Việt: "10.000.000 ₫" thay vì "10,000,000 ₫" | CL-11 | N3 (Chrome Android tiếng Việt); không lỗi ở N1, N2 (tiếng Anh) | low | IA-01 | `android-chrome/CL-11.png`, `chrome/CL-24_locale_1.png`, `chrome/CL-24_locale_2.png` |
+
+Issue Task 3 có label `bug`, `platform: web`, `task: T3 cross-platform`, được gán cho chính người báo.
+
+### B-T3-01: Chi tiết
+
+- **Điều kiện tiên quyết:** Đã reset DB và seed; đăng nhập test@eshop.com; Chrome trên điện thoại dùng tiếng Việt.
+- **Các bước tái hiện:** Mở `/profile`, xem cột "Tổng tiền"; đối chiếu bằng Chrome Windows tiếng Anh và Chrome mở bằng `--lang=vi`.
+- **Kết quả mong đợi:** CL-11 (UI-R33, SRS FR-09 viết `300,000 ₫`): Dấu phẩy phân cách hàng nghìn trên mọi trình duyệt.
+- **Kết quả thực tế:** Trình duyệt tiếng Việt (N3, Chrome `--lang=vi`) hiện "10.000.000 ₫"; trình duyệt tiếng Anh (N1, N2) hiện "10,000,000 ₫".
+- **Severity:** `low`, giống #53. Theo README nhóm mục 4.3: Không mất dữ liệu, không chặn luồng (câu 1: Không); chỉ sai cách viết số, người dùng vẫn đọc đúng số tiền.
+- **IA:** IA-01 (định dạng số theo chuẩn chung).
+- **Ghi chú:** Cùng hiện tượng với #53 nhưng ngược chiều (ngày sai khi trình duyệt tiếng Anh, tiền sai khi trình duyệt tiếng Việt), nên không trình duyệt nào đạt cả CL-11 lẫn CL-24. Nguyên nhân "định dạng theo ngôn ngữ trình duyệt" là suy ra từ hiện tượng (kiểm hộp đen, không đọc mã nguồn).
+
+## 9. Bình luận vào issue đã có (Task 3)
+
+| Issue | Nội dung bổ sung |
+|---|---|
+| [#53](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53) (B-21, CL-24) | Kết quả CL-24 trên 3 nền tảng: N1 Chrome tiếng Anh Failed, N3 Chrome Android tiếng Việt Passed (hiện đúng "10/11/2026"), N2 Firefox tiếng Anh Không chạy được (dữ liệu seed ngày 11/11). Lỗi chỉ xảy ra khi trình duyệt dùng tiếng Anh; liên kết tới #104 ([bình luận](https://github.com/angquoc/software-testing-2026-HW03-group/issues/53#issuecomment-6787006335)). Tiêu đề #53 giữ nguyên, chỉ nói về ngày |
+
+## 10. Nền tảng không có bug riêng
+
+- **N2 Firefox 159 trên Windows:** Không có bug riêng. Kết quả NT2 giống NT1 ở 111 / 112 mục; mục khác duy nhất là CL-24 ("Không chạy được" vì dữ liệu seed ngày 11/11/2026 có số ngày trùng số tháng, D-25), không phải lỗi của trang. Các mục Failed trên Firefox đều đã có issue ở Task 1.
+- **N3, các mục khác N1 nhưng không báo bug:**
+  - CL-15, CL-16, CL-17, CL-21, CL-32, CL-73, CL-74, CL-107: N/A vì điện thoại không có phím Tab, con trỏ chuột, cửa sổ 1366 x 768.
+  - CL-33 (zoom 200%) và CL-34 (Họ Tên dài) Failed trên điện thoại: Không báo issue (D-33, quyết định của SV); ghi khác biệt trong `cross_platform/02_compare.md`.
+
+## 11. Ảnh danh sách issue (Task 3)
+
+Trang Issues đã lọc `author:angquoc label:"task: T3 cross-platform"`: `bugs/screenshots/issues_list_T3.png` (chụp sau khi tạo issue; có #104).

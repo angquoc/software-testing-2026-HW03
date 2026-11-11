@@ -3,6 +3,7 @@
 - Bước: `[T3][firefox]` (chuẩn bị trước khi đăng ký trial)
 - Bản gốc của AI: `ai_raw/T3_firefox_triage.md` (giữ nguyên, không sửa)
 - Trạng thái: Đã review; đã chốt D-16 đến D-19 (mục 6)
+- Cập nhật sau khi chạy N2 (D-24, 11/11/2026): Trial cloud không đủ (BrowserStack 1 phút mỗi thiết bị, LambdaTest 2 phiên khoảng 2 phút) nên N2 chạy Firefox trên máy SV (D-28), bằng script `checklist/tools/n2_firefox_checklist.js`, **đủ 112 mục**. Vì vậy cách chia nhóm A, B, C và thứ tự phiên cloud ở mục 2 đến 4 không còn dùng; D-16 (để trống nhóm C) đã bỏ. Kết quả: `ai_raw/T3_firefox_manual.md`, cột NT2 của Excel, so sánh ở `02_compare.md`
 
 ---
 
@@ -35,7 +36,7 @@ Danh sách mã theo nhóm:
 
 Hai mục nên chú ý:
 
-- **CL-24 (định dạng ngày):** Chrome hiện tháng / ngày / năm. Kiểu lỗi này thường do trang định dạng ngày theo locale của trình duyệt, nên Firefox trên máy cloud (và Chrome trên điện thoại ở N3) có thể ra kết quả khác. Đây là ứng viên tốt nhất cho bug "chỉ xuất hiện trên một số nền tảng". Ảnh tổng quan `/profile` phải thấy rõ cột Ngày đặt.
+- **CL-24 (định dạng ngày):** Chrome hiện tháng / ngày / năm. Kiểu lỗi này thường do trang định dạng ngày theo locale của trình duyệt, nên Firefox trên máy cloud (và Chrome trên điện thoại ở N3) có thể ra kết quả khác. Đây là ứng viên tốt nhất cho bug "chỉ xuất hiện trên một số nền tảng". Ảnh tổng quan `/profile` phải thấy rõ cột Ngày đặt. **Kết quả (D-24):** Định dạng ngày và số đổi theo ngôn ngữ trình duyệt (tiếng Anh: Tháng / ngày / năm, "10,000,000 ₫"; tiếng Việt: Ngày / tháng / năm, "10.000.000 ₫"). Firefox trên N2 dùng `en-US`; CL-24 trên N2 "Không chạy được" vì đơn seed ngày 11/11/2026 (D-25).
 - **CL-33, CL-34:** Đã chạy trên Chrome (NT1 có kết quả và ảnh): Cả hai Passed. Trên Android Chrome (NT3) cả hai Failed (zoom 200% làm navbar và bảng bị cắt; Họ Tên dài làm lời chào xuống 4 dòng, đẩy lệch navbar), nên đây là hai mục có kết quả khác nhau giữa nền tảng, đáng chạy trên Firefox.
 
 ## 3. Thứ tự trong phiên cloud
@@ -94,7 +95,7 @@ BrowserStack Live thường cho dán chữ từ máy SV sang máy từ xa, nhưn
 
 Cột kết quả trong Excel chỉ nhận `Passed`, `Failed`, `N/A`, `Không chạy được`; ô trống được sheet "Tổng hợp" đếm là "Chưa chạy (trống)".
 
-Đã chốt D-16: **Để trống**.
+Đã chốt D-16: **Để trống**. **Đã bỏ sau khi chạy N2:** N2 chạy trên máy SV, không giới hạn phút, nên nhóm C cũng có kết quả.
 
 | Lựa chọn D-16 | Cách ghi | Nhận xét |
 |---|---|---|
@@ -113,7 +114,7 @@ Hệ quả cần nêu trong `02_compare.md`: Trên N2 chỉ chạy khoảng 61 /
 
 | Mã | Quyết định | Các lựa chọn | Đã chốt |
 |---|---|---|---|
-| D-16 | Cách ghi nhóm C trên N2 | Để trống, ghi lý do ở Notes / Chạy tiếp nếu còn phút, phần còn lại để trống | Để trống, ghi lý do ở Notes |
+| D-16 | Cách ghi nhóm C trên N2 | Để trống, ghi lý do ở Notes / Chạy tiếp nếu còn phút, phần còn lại để trống | Để trống, ghi lý do ở Notes. **Đã bỏ (D-24):** N2 chạy đủ 112 mục trên máy SV |
 | D-17 | Cách dự phòng nếu không dán được script | Phục vụ file qua tunnel / Kiểm nhóm A bằng tay | Phục vụ file script qua tunnel: Mở server tạm trên máy SV, mở URL của file trong Firefox từ xa |
 | D-18 | Có giữ cách xem B-ảnh từ ảnh tổng quan sau phiên không | Giữ (32 mục, không tốn phút) / Chuyển một phần sang C | Giữ nguyên |
 | D-19 | Có chạy CL-33, CL-34 trên Chrome trước khi chạy N2 không | Có / Không | Không cần: CL-33, CL-34 đã chạy trên Chrome (NT1 có kết quả và ảnh) |
@@ -244,4 +245,5 @@ Hệ quả cần nêu trong `02_compare.md`: Trên N2 chỉ chạy khoảng 61 /
 | Mục 5, 6 (D-16) | Nhóm C trên N2: Để trống ô Kết quả, ghi lý do ở Notes | Quyết định của SV | | Đúng thực tế; không chép kết quả Chrome, không ghi N/A hay Không chạy được |
 | Mục 4, 6 (D-17) | Cách dự phòng khi không dán được script: Phục vụ file script qua tunnel (server tạm trên máy SV, mở URL trong Firefox từ xa) | Quyết định của SV | | Không phụ thuộc đồng bộ clipboard, giữ được nhóm A chạy bằng script |
 | Mục 2, 6 (D-18) | Giữ cách xem 32 mục B-ảnh từ ảnh tổng quan sau phiên | Quyết định của SV | | Không tốn phút trial |
+| Đầu file, mục 2, 5, 6 (D-24) | Ghi kết quả sau khi chạy N2: Trial cloud không đủ nên chạy Firefox trên máy SV đủ 112 mục (D-28); bỏ D-16; ghi kết quả CL-24 | Quyết định của SV | | Kết quả thật của N2 (`ai_raw/T3_firefox_manual.md`) |
 | Mục 2, 6, 7 (D-19) | Không cần chạy thêm CL-33, CL-34 trên Chrome; sửa các chỗ ghi "Chrome chưa chạy" thành kết quả thật của NT1 (Passed cả hai) và ghi kết quả NT3 (Failed cả hai) | Quyết định của SV | | NT1 đã có kết quả và ảnh cho CL-33, CL-34 sau khi bản AI được viết |
